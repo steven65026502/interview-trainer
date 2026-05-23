@@ -378,13 +378,6 @@
       gap: 8px;
     }
 
-    .response-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 300px;
-      gap: 14px;
-      align-items: start;
-    }
-
     .response-main {
       display: grid;
       gap: 14px;
@@ -669,6 +662,10 @@
       align-self: start;
     }
 
+    .inline-feedback.is-hidden {
+      display: none;
+    }
+
     .model-answer {
       border: 1px solid var(--line);
       border-radius: 6px;
@@ -757,25 +754,29 @@
       white-space: nowrap;
     }
 
-    .followup {
-      min-height: 96px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #fbfcfc;
-      padding: 13px;
-      line-height: 1.7;
-      font-size: 14px;
-      color: var(--ink);
+    .followup-section {
+      border-left: 4px solid var(--warn);
+      background: #fffbf5;
+      border-radius: var(--radius);
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .followup-section.is-hidden {
+      display: none;
+    }
+
+    .followup-question {
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--warn);
     }
 
     .followup-form {
       display: grid;
       gap: 10px;
-      margin-top: 12px;
-    }
-
-    .followup-form.is-hidden {
-      display: none;
     }
 
     .followup-form label {
@@ -817,10 +818,6 @@
       }
 
       .layout {
-        grid-template-columns: 1fr;
-      }
-
-      .response-grid {
         grid-template-columns: 1fr;
       }
 
@@ -908,55 +905,63 @@
 
           <div class="guide is-hidden" id="guideGrid"></div>
 
-          <div class="response-grid">
-            <div class="response-main">
-              <div class="answer-box">
-                <label for="answerInput">你的回答</label>
-                <textarea id="answerInput" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。"></textarea>
-                <div class="answer-meta">
-                  <span id="wordCount">0 字</span>
-                  <span id="saveState">自動儲存</span>
-                </div>
-              </div>
-
-              <div class="self-check">
-                <div class="self-check-head">
-                  <strong>自評檢核</strong>
-                  <span>先勾你覺得有回答到的點，系統會再比對文字是否清楚寫出。</span>
-                </div>
-                <div class="checklist-grid" id="checklistGrid"></div>
-              </div>
-
-              <div class="answer-actions">
-                <button class="btn primary" id="feedbackBtn" type="button">取得回饋</button>
-                <button class="btn" id="followupBtn" type="button">面試官追問</button>
-                <button class="btn" id="templateBtn" type="button">插入回答結構</button>
+          <div class="response-main">
+            <div class="answer-box">
+              <label for="answerInput">你的回答</label>
+              <textarea id="answerInput" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。"></textarea>
+              <div class="answer-meta">
+                <span id="wordCount">0 字</span>
+                <span id="saveState">自動儲存</span>
               </div>
             </div>
 
-            <div class="inline-feedback">
-              <div class="feedback-score">
-                <div class="score-circle" id="scoreCircle">0</div>
-                <div>
-                  <strong id="feedbackTitle">先寫一段回答</strong>
-                  <span id="feedbackSummary">按下「取得回饋」後，會依照具體性、結構、專案連結、驗證與領域關鍵點評分。</span>
-                </div>
+            <div class="self-check">
+              <div class="self-check-head">
+                <strong>自評檢核</strong>
+                <span>先勾你覺得有回答到的點，系統會再比對文字是否清楚寫出。</span>
               </div>
+              <div class="checklist-grid" id="checklistGrid"></div>
+            </div>
 
-              <div class="feedback-block">
-                <h4>做得好的地方</h4>
-                <ul id="strengthList"></ul>
-              </div>
+            <div class="answer-actions">
+              <button class="btn primary" id="feedbackBtn" type="button">取得回饋</button>
+              <button class="btn" id="followupBtn" type="button">面試官追問</button>
+              <button class="btn" id="templateBtn" type="button">插入回答結構</button>
+            </div>
+          </div>
 
-              <div class="feedback-block">
-                <h4>要改進的地方</h4>
-                <ul id="issueList"></ul>
+          <div class="inline-feedback is-hidden" id="feedbackPanel">
+            <div class="feedback-score">
+              <div class="score-circle" id="scoreCircle">0</div>
+              <div>
+                <strong id="feedbackTitle">先寫一段回答</strong>
+                <span id="feedbackSummary">按下「取得回饋」後，會依照具體性、結構、專案連結、驗證與領域關鍵點評分。</span>
               </div>
+            </div>
 
-              <div class="feedback-block" id="modelAnswerBlock">
-                <h4>回饋後改寫骨架</h4>
-                <div class="model-answer" id="modelAnswer"></div>
-              </div>
+            <div class="feedback-block">
+              <h4>做得好的地方</h4>
+              <ul id="strengthList"></ul>
+            </div>
+
+            <div class="feedback-block">
+              <h4>要改進的地方</h4>
+              <ul id="issueList"></ul>
+            </div>
+
+            <div class="feedback-block" id="modelAnswerBlock">
+              <h4>回饋後改寫骨架</h4>
+              <div class="model-answer" id="modelAnswer"></div>
+            </div>
+          </div>
+
+          <div class="followup-section is-hidden" id="followupSection">
+            <div class="followup-question" id="followupOutput">按「面試官追問」取得下一個問題。</div>
+            <div class="followup-form" id="followupAnswerBox">
+              <label for="followupInput">你對追問的回答</label>
+              <textarea id="followupInput" placeholder="回答追問時，請直接補充剛剛答案中最容易被挑戰的地方。"></textarea>
+              <button class="btn primary" id="followupFeedbackBtn" type="button">取得追問回饋</button>
+              <div class="followup-feedback" id="followupFeedbackResult"></div>
             </div>
           </div>
 
@@ -1025,21 +1030,6 @@
           </div>
         </section>
 
-        <section class="panel">
-          <div class="panel-head">
-            <h3>追問</h3>
-            <span>接著回答 60-90 秒</span>
-          </div>
-          <div class="side-body">
-            <div class="followup" id="followupOutput">按「面試官追問」取得下一個問題。</div>
-            <div class="followup-form is-hidden" id="followupAnswerBox">
-              <label for="followupInput">你對追問的回答</label>
-              <textarea id="followupInput" placeholder="回答追問時，請直接補充剛剛答案中最容易被挑戰的地方。"></textarea>
-              <button class="btn primary" id="followupFeedbackBtn" type="button">取得追問回饋</button>
-              <div class="followup-feedback" id="followupFeedbackResult"></div>
-            </div>
-          </div>
-        </section>
       </aside>
     </main>
 
@@ -1627,6 +1617,7 @@
       scoreCircle: document.getElementById("scoreCircle"),
       feedbackTitle: document.getElementById("feedbackTitle"),
       feedbackSummary: document.getElementById("feedbackSummary"),
+      feedbackPanel: document.getElementById("feedbackPanel"),
       strengthList: document.getElementById("strengthList"),
       issueList: document.getElementById("issueList"),
       modelAnswerBlock: document.getElementById("modelAnswerBlock"),
@@ -1639,6 +1630,7 @@
       bars: document.getElementById("bars"),
       taskList: document.getElementById("taskList"),
       taskMeta: document.getElementById("taskMeta"),
+      followupSection: document.getElementById("followupSection"),
       followupOutput: document.getElementById("followupOutput"),
       followupAnswerBox: document.getElementById("followupAnswerBox"),
       followupInput: document.getElementById("followupInput"),
@@ -1968,6 +1960,7 @@
     function renderFeedback() {
       const current = state.feedback[state.current];
       if (!current) {
+        els.feedbackPanel.classList.add("is-hidden");
         els.scoreCircle.textContent = "0";
         setScoreClass(null);
         els.feedbackTitle.textContent = "先寫一段回答";
@@ -1977,6 +1970,7 @@
         els.modelAnswerBlock.style.display = "none";
         els.modelAnswer.textContent = "";
       } else {
+        els.feedbackPanel.classList.remove("is-hidden");
         els.scoreCircle.textContent = current.score;
         setScoreClass(current.score);
         els.feedbackTitle.textContent = current.title;
@@ -2073,6 +2067,10 @@
       state.followupAnswers[state.current] = "";
       state.followupFeedback[state.current] = null;
       renderFollowup();
+      els.followupSection.classList.remove("is-hidden");
+      window.requestAnimationFrame(() => {
+        els.followupSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
       save();
     }
 
@@ -2080,7 +2078,7 @@
       const question = state.followupQuestions[state.current];
       const feedback = state.followupFeedback[state.current];
       els.followupOutput.textContent = question || "按「面試官追問」取得下一個問題。";
-      els.followupAnswerBox.classList.toggle("is-hidden", !question);
+      els.followupSection.classList.toggle("is-hidden", !question);
       els.followupInput.value = state.followupAnswers[state.current] || "";
       if (!question) {
         els.followupFeedbackResult.textContent = "";
@@ -2218,6 +2216,7 @@
       state.followupFeedback = Array(questions.length).fill(null);
       localStorage.removeItem("rongDataMockInterview");
       els.followupOutput.textContent = "按「面試官追問」取得下一個問題。";
+      els.followupSection.classList.add("is-hidden");
       renderAll();
     });
 
