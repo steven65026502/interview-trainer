@@ -211,9 +211,11 @@
     }
 
     .context-block {
-      border: 1px solid var(--line);
+      margin-top: 18px;
+      border: 2px solid rgba(15, 118, 110, 0.24);
+      border-left: 5px solid var(--accent);
       border-radius: 6px;
-      background: #fbfcfc;
+      background: #fbfefe;
       overflow: hidden;
     }
 
@@ -222,12 +224,24 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 12px;
-      border-bottom: 1px solid var(--line);
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(15, 118, 110, 0.18);
+      background: #eef8f7;
+    }
+
+    .context-title {
+      display: grid;
+      gap: 5px;
+    }
+
+    .context-kicker {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
     }
 
     .context-head strong {
-      font-size: 13px;
+      font-size: 15px;
     }
 
     .context-head span {
@@ -236,7 +250,7 @@
     }
 
     .context-body {
-      padding: 12px;
+      padding: 14px;
       display: grid;
       gap: 12px;
     }
@@ -1918,7 +1932,10 @@
       const context = questionContexts[state.current];
       els.questionContext.innerHTML = `
         <div class="context-head">
-          <strong>題目資料：${context.title}</strong>
+          <div class="context-title">
+            <span class="context-kicker">請先看這裡</span>
+            <strong>題目資料 / 表格：${context.title}</strong>
+          </div>
           <span>${context.note}</span>
         </div>
         <div class="context-body">${context.html}</div>
