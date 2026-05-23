@@ -210,6 +210,99 @@
       line-height: 1.75;
     }
 
+    .context-block {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfc;
+      overflow: hidden;
+    }
+
+    .context-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .context-head strong {
+      font-size: 13px;
+    }
+
+    .context-head span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .context-body {
+      padding: 12px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .context-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+      background: #fff;
+    }
+
+    .data-table caption {
+      text-align: left;
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .data-table th,
+    .data-table td {
+      border: 1px solid var(--line);
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .data-table th {
+      background: #f0f4f5;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .mini-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .mini-flow span {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 7px 9px;
+      color: var(--ink);
+    }
+
+    .code-sample {
+      margin: 0;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 10px;
+      overflow: auto;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
     .guide {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -261,6 +354,19 @@
       gap: 8px;
     }
 
+    .response-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .response-main {
+      display: grid;
+      gap: 14px;
+      min-width: 0;
+    }
+
     .answer-box label {
       color: var(--muted);
       font-size: 12px;
@@ -268,7 +374,7 @@
 
     textarea {
       width: 100%;
-      min-height: 190px;
+      min-height: 170px;
       resize: vertical;
       border: 1px solid var(--line-strong);
       border-radius: 6px;
@@ -531,6 +637,14 @@
       font-size: 13px;
     }
 
+    .inline-feedback {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 16px;
+      background: #fbfcfc;
+      align-self: start;
+    }
+
     .model-answer {
       border: 1px solid var(--line);
       border-radius: 6px;
@@ -682,9 +796,14 @@
         grid-template-columns: 1fr;
       }
 
+      .response-grid {
+        grid-template-columns: 1fr;
+      }
+
       .toolbar,
       .guide,
-      .checklist-grid {
+      .checklist-grid,
+      .context-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
@@ -756,6 +875,8 @@
             <p id="questionHint"></p>
           </div>
 
+          <div class="context-block" id="questionContext"></div>
+
           <div class="hint-row">
             <span>提示預設收起，先自己回答；真的卡住再打開。</span>
             <button class="btn" id="hintToggleBtn" type="button">▾ 顯示答題提示</button>
@@ -763,27 +884,56 @@
 
           <div class="guide is-hidden" id="guideGrid"></div>
 
-          <div class="answer-box">
-            <label for="answerInput">你的回答</label>
-            <textarea id="answerInput" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。"></textarea>
-            <div class="answer-meta">
-              <span id="wordCount">0 字</span>
-              <span id="saveState">自動儲存</span>
-            </div>
-          </div>
+          <div class="response-grid">
+            <div class="response-main">
+              <div class="answer-box">
+                <label for="answerInput">你的回答</label>
+                <textarea id="answerInput" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。"></textarea>
+                <div class="answer-meta">
+                  <span id="wordCount">0 字</span>
+                  <span id="saveState">自動儲存</span>
+                </div>
+              </div>
 
-          <div class="self-check">
-            <div class="self-check-head">
-              <strong>自評檢核</strong>
-              <span>先勾你覺得有回答到的點，系統會再比對文字是否清楚寫出。</span>
-            </div>
-            <div class="checklist-grid" id="checklistGrid"></div>
-          </div>
+              <div class="self-check">
+                <div class="self-check-head">
+                  <strong>自評檢核</strong>
+                  <span>先勾你覺得有回答到的點，系統會再比對文字是否清楚寫出。</span>
+                </div>
+                <div class="checklist-grid" id="checklistGrid"></div>
+              </div>
 
-          <div class="answer-actions">
-            <button class="btn primary" id="feedbackBtn" type="button">取得回饋</button>
-            <button class="btn" id="followupBtn" type="button">面試官追問</button>
-            <button class="btn" id="templateBtn" type="button">插入回答結構</button>
+              <div class="answer-actions">
+                <button class="btn primary" id="feedbackBtn" type="button">取得回饋</button>
+                <button class="btn" id="followupBtn" type="button">面試官追問</button>
+                <button class="btn" id="templateBtn" type="button">插入回答結構</button>
+              </div>
+            </div>
+
+            <div class="inline-feedback">
+              <div class="feedback-score">
+                <div class="score-circle" id="scoreCircle">0</div>
+                <div>
+                  <strong id="feedbackTitle">先寫一段回答</strong>
+                  <span id="feedbackSummary">按下「取得回饋」後，會依照具體性、結構、專案連結、驗證與領域關鍵點評分。</span>
+                </div>
+              </div>
+
+              <div class="feedback-block">
+                <h4>做得好的地方</h4>
+                <ul id="strengthList"></ul>
+              </div>
+
+              <div class="feedback-block">
+                <h4>要改進的地方</h4>
+                <ul id="issueList"></ul>
+              </div>
+
+              <div class="feedback-block" id="modelAnswerBlock">
+                <h4>回饋後改寫骨架</h4>
+                <div class="model-answer" id="modelAnswer"></div>
+              </div>
+            </div>
           </div>
 
           <div class="nav">
@@ -828,37 +978,6 @@
             <div class="time-bars" id="todayPlanTime"></div>
 
             <div class="week-goal" id="todayPlanGoal"></div>
-          </div>
-        </section>
-
-        <section class="panel">
-          <div class="panel-head">
-            <h3>回饋</h3>
-            <span>本地規則式分析</span>
-          </div>
-          <div class="side-body">
-            <div class="feedback-score">
-              <div class="score-circle" id="scoreCircle">0</div>
-              <div>
-                <strong id="feedbackTitle">先寫一段回答</strong>
-                <span id="feedbackSummary">按下「取得回饋」後，會依照具體性、結構、專案連結、驗證與領域關鍵點評分。</span>
-              </div>
-            </div>
-
-            <div class="feedback-block">
-              <h4>做得好的地方</h4>
-              <ul id="strengthList"></ul>
-            </div>
-
-            <div class="feedback-block">
-              <h4>要改進的地方</h4>
-              <ul id="issueList"></ul>
-            </div>
-
-            <div class="feedback-block" id="modelAnswerBlock">
-              <h4>回饋後改寫骨架</h4>
-              <div class="model-answer" id="modelAnswer"></div>
-            </div>
           </div>
         </section>
 
@@ -1266,6 +1385,190 @@
 
     const weekdayLabels = ["日", "一", "二", "三", "四", "五", "六"];
 
+    const questionContexts = [
+      {
+        title: "兩張表的 JOIN 情境",
+        note: "面試官會期待你先看主鍵、外鍵與聚合粒度。",
+        html: `
+          <div class="context-grid">
+            <table class="data-table">
+              <caption>orders</caption>
+              <tr><th>order_id</th><th>user_id</th><th>created_at</th><th>amount</th></tr>
+              <tr><td>101</td><td>U01</td><td>2026-05-01</td><td>800</td></tr>
+              <tr><td>102</td><td>U01</td><td>2026-05-01</td><td>450</td></tr>
+              <tr><td>103</td><td>U02</td><td>2026-05-02</td><td>1200</td></tr>
+            </table>
+            <table class="data-table">
+              <caption>users</caption>
+              <tr><th>user_id</th><th>region</th><th>signup_date</th></tr>
+              <tr><td>U01</td><td>North</td><td>2026-04-20</td></tr>
+              <tr><td>U02</td><td>South</td><td>2026-04-23</td></tr>
+              <tr><td>U03</td><td>North</td><td>2026-05-01</td></tr>
+            </table>
+          </div>
+          <table class="data-table">
+            <caption>目標：計算每日各區域訂單金額</caption>
+            <tr><th>target_date</th><th>region</th><th>total_amount</th><th>order_count</th></tr>
+            <tr><td>2026-05-01</td><td>North</td><td>1250</td><td>2</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "Window Function 小資料",
+        note: "目標是找每位使用者最新一筆事件，同時保留明細欄位。",
+        html: `
+          <table class="data-table">
+            <caption>events</caption>
+            <tr><th>user_id</th><th>event_time</th><th>event_type</th><th>score</th></tr>
+            <tr><td>U01</td><td>09:00</td><td>login</td><td>10</td></tr>
+            <tr><td>U01</td><td>10:30</td><td>purchase</td><td>80</td></tr>
+            <tr><td>U02</td><td>09:20</td><td>login</td><td>20</td></tr>
+            <tr><td>U02</td><td>11:10</td><td>logout</td><td>5</td></tr>
+          </table>
+          <pre class="code-sample">請說明你會如何用 ROW_NUMBER() OVER (
+  PARTITION BY user_id
+  ORDER BY event_time DESC
+) 找最新事件。</pre>
+        `
+      },
+      {
+        title: "髒資料清洗樣本",
+        note: "請說明欄位型別、空值、異常值與輸出驗證。",
+        html: `
+          <table class="data-table">
+            <caption>raw_measurements.csv</caption>
+            <tr><th>station_id</th><th>timestamp</th><th>speed_kn</th><th>lat</th><th>lon</th></tr>
+            <tr><td>A01</td><td>2026/05/01 09:00</td><td>0.72</td><td>25.04</td><td>121.53</td></tr>
+            <tr><td>A02</td><td>2026-05-01T10:00</td><td>NULL</td><td>25.10</td><td>121.60</td></tr>
+            <tr><td>A03</td><td>bad_time</td><td>-9</td><td></td><td>121.70</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "複雜度分析情境",
+        note: "請定義 n 是什麼，並指出瓶頸。",
+        html: `
+          <pre class="code-sample">def count_by_user(rows):
+    result = {}
+    for row in rows:
+        user_id = row["user_id"]
+        result[user_id] = result.get(user_id, 0) + 1
+    return result</pre>
+          <table class="data-table">
+            <tr><th>輸入</th><th>n 的定義</th><th>額外空間</th></tr>
+            <tr><td>rows</td><td>資料列筆數</td><td>不同 user_id 的數量</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "S-111 ETL 流程圖",
+        note: "請把流程講成 Extract、Transform、Load、Validate。",
+        html: `
+          <div class="mini-flow">
+            <span>S-111 / NetCDF 原始檔</span>→<span>解析時間與格點</span>→<span>計算誤差與 hotspot</span>→<span>PostGIS 入庫</span>→<span>API / QGIS 顯示</span>
+          </div>
+          <table class="data-table">
+            <tr><th>欄位</th><th>用途</th></tr>
+            <tr><td>target_date, lead_hours</td><td>篩選預報批次</td></tr>
+            <tr><td>lon, lat</td><td>空間位置</td></tr>
+            <tr><td>error_type, value, severity</td><td>hotspot 分級與繪圖</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "批次重跑與 upsert 情境",
+        note: "請判斷哪些欄位應該成為唯一鍵。",
+        html: `
+          <table class="data-table">
+            <caption>hotspot_points 重跑樣本</caption>
+            <tr><th>run_id</th><th>target_date</th><th>target_timestamp</th><th>lead_hours</th><th>lon</th><th>lat</th><th>metric</th></tr>
+            <tr><td>R1</td><td>2026-04-10</td><td>00:00</td><td>24</td><td>120.30</td><td>26.34</td><td>speed</td></tr>
+            <tr><td>R2</td><td>2026-04-10</td><td>00:00</td><td>24</td><td>120.30</td><td>26.34</td><td>speed</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "Threshold hotspot API 規格草稿",
+        note: "請說明參數、回傳欄位與前端用途。",
+        html: `
+          <table class="data-table">
+            <tr><th>Query param</th><th>範例</th><th>用途</th></tr>
+            <tr><td>date</td><td>2026-04-10</td><td>指定資料日期</td></tr>
+            <tr><td>lead_hours</td><td>24</td><td>指定預報時效</td></tr>
+            <tr><td>bbox</td><td>120,25,122,27</td><td>限制地圖範圍</td></tr>
+            <tr><td>threshold</td><td>0.5</td><td>hotspot 閾值</td></tr>
+          </table>
+          <pre class="code-sample">{
+  "lon": 120.30,
+  "lat": 26.34,
+  "value": 0.72,
+  "severity": "warning",
+  "color": "#f59e0b"
+}</pre>
+        `
+      },
+      {
+        title: "PostgreSQL/PostGIS 表與索引",
+        note: "請說明 DB 不是只存資料，而是支援查詢與交接。",
+        html: `
+          <table class="data-table">
+            <tr><th>table</th><th>常用條件</th><th>可能索引</th></tr>
+            <tr><td>hotspot_points</td><td>target_date, lead_hours, error_type</td><td>(target_date, lead_hours, error_type)</td></tr>
+            <tr><td>geometry</td><td>bbox / map extent</td><td>GIST geometry index</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "S-111 專案 STAR 提示",
+        note: "請用這些素材組成 90 秒回答，不要逐字照念。",
+        html: `
+          <table class="data-table">
+            <tr><th>STAR</th><th>素材</th></tr>
+            <tr><td>Situation</td><td>S-111 驗證資料需要可查詢、可展示、可交接</td></tr>
+            <tr><td>Task</td><td>建立資料處理、DB、API 與 QGIS/前端使用流程</td></tr>
+            <tr><td>Action</td><td>PostGIS、threshold hotspot、API 文件、部署</td></tr>
+            <tr><td>Result</td><td>其他人可依日期、lead_hours、threshold 查詢與展示</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "Bug 排查紀錄樣本",
+        note: "請講現象、定位、修正、驗證，不要只說很複雜。",
+        html: `
+          <table class="data-table">
+            <tr><th>時間</th><th>觀察</th><th>可能原因</th></tr>
+            <tr><td>09:10</td><td>API 有資料但 QGIS 圖層空白</td><td>欄位名稱或 bbox 條件</td></tr>
+            <tr><td>09:25</td><td>DB count 正常，GeoJSON 缺 color</td><td>API mapping 漏欄位</td></tr>
+            <tr><td>09:40</td><td>修正後前端可顯示 warning/critical</td><td>需補 regression check</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "查詢結果轉指標",
+        note: "請把表格數字轉成可解釋的決策語言。",
+        html: `
+          <table class="data-table">
+            <tr><th>date</th><th>lead_hours</th><th>warning</th><th>critical</th><th>total</th></tr>
+            <tr><td>2026-04-10</td><td>24</td><td>134</td><td>4</td><td>138</td></tr>
+            <tr><td>2026-04-10</td><td>48</td><td>248</td><td>9</td><td>257</td></tr>
+            <tr><td>2026-04-10</td><td>72</td><td>317</td><td>12</td><td>329</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "API 效能排查資料",
+        note: "請判斷瓶頸可能在哪一段，並提出優先改善。",
+        html: `
+          <table class="data-table">
+            <tr><th>步驟</th><th>耗時</th><th>觀察</th></tr>
+            <tr><td>DB query</td><td>1800ms</td><td>沒有 bbox 時掃描筆數過大</td></tr>
+            <tr><td>JSON serialize</td><td>420ms</td><td>回傳 50,000 rows</td></tr>
+            <tr><td>Network</td><td>900ms</td><td>payload 8MB</td></tr>
+          </table>
+        `
+      }
+    ];
+
     const state = {
       current: 0,
       answers: Array(questions.length).fill(""),
@@ -1282,6 +1585,7 @@
       domainTag: document.getElementById("domainTag"),
       questionTitle: document.getElementById("questionTitle"),
       questionHint: document.getElementById("questionHint"),
+      questionContext: document.getElementById("questionContext"),
       guideGrid: document.getElementById("guideGrid"),
       hintToggleBtn: document.getElementById("hintToggleBtn"),
       checklistGrid: document.getElementById("checklistGrid"),
@@ -1593,6 +1897,7 @@
       els.domainTag.textContent = domains[question.domain];
       els.questionTitle.textContent = question.title;
       els.questionHint.textContent = question.hint;
+      renderQuestionContext();
       els.guideGrid.innerHTML = question.guide.map(item => `
         <div class="guide-item">
           <strong>${item[0]}</strong>
@@ -1607,6 +1912,17 @@
       updateWordCount();
       renderFollowup();
       renderFeedback();
+    }
+
+    function renderQuestionContext() {
+      const context = questionContexts[state.current];
+      els.questionContext.innerHTML = `
+        <div class="context-head">
+          <strong>題目資料：${context.title}</strong>
+          <span>${context.note}</span>
+        </div>
+        <div class="context-body">${context.html}</div>
+      `;
     }
 
     function renderChecklist(question) {
