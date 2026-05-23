@@ -317,6 +317,16 @@
       line-height: 1.55;
     }
 
+    .context-note {
+      border: 1px solid rgba(15, 118, 110, 0.16);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+      padding: 9px 10px;
+    }
+
     .guide {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1439,10 +1449,13 @@
             <tr><td>U02</td><td>09:20</td><td>login</td><td>20</td></tr>
             <tr><td>U02</td><td>11:10</td><td>logout</td><td>5</td></tr>
           </table>
-          <pre class="code-sample">請說明你會如何用 ROW_NUMBER() OVER (
-  PARTITION BY user_id
-  ORDER BY event_time DESC
-) 找最新事件。</pre>
+          <table class="data-table">
+            <caption>目標輸出：每位使用者最新一筆事件</caption>
+            <tr><th>user_id</th><th>event_time</th><th>event_type</th><th>score</th></tr>
+            <tr><td>U01</td><td>10:30</td><td>purchase</td><td>80</td></tr>
+            <tr><td>U02</td><td>11:10</td><td>logout</td><td>5</td></tr>
+          </table>
+          <div class="context-note">請說明你會如何保留整列明細、避免只用 GROUP BY 造成欄位遺失或結果不穩定。</div>
         `
       },
       {
