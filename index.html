@@ -1,0 +1,1890 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rong Data Mock Interview Console</title>
+  <style>
+    :root {
+      --bg: #f5f7f8;
+      --panel: #ffffff;
+      --ink: #1d2528;
+      --muted: #687478;
+      --line: #dce3e5;
+      --line-strong: #c5d0d3;
+      --accent: #08756f;
+      --accent-soft: #e8f3f2;
+      --warn: #b97022;
+      --danger: #aa4b57;
+      --ok: #3f7a46;
+      --radius: 8px;
+      font-family: Inter, "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+    }
+
+    button,
+    select,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    .shell {
+      width: min(1240px, calc(100vw - 48px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 18px;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: 26px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .title p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .actions,
+    .nav,
+    .answer-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      min-height: 38px;
+      border-radius: 6px;
+      border: 1px solid var(--line-strong);
+      background: var(--panel);
+      color: var(--ink);
+      padding: 0 14px;
+    }
+
+    .btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+
+    .btn.danger {
+      color: var(--danger);
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1.2fr 0.75fr 0.75fr 0.75fr;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    select {
+      min-height: 38px;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--ink);
+      padding: 0 10px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 390px;
+      gap: 14px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 18px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .panel-head h2,
+    .panel-head h3 {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.2;
+    }
+
+    .panel-head span {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    .interview {
+      padding: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .progress-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .progress {
+      height: 8px;
+      background: #edf1f2;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .progress span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 180ms ease;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 28px;
+      padding: 0 9px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .question h2 {
+      margin: 0;
+      max-width: 780px;
+      font-size: 28px;
+      line-height: 1.32;
+      letter-spacing: 0;
+    }
+
+    .question p {
+      margin: 12px 0 0;
+      max-width: 760px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .guide {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .hint-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfc;
+    }
+
+    .hint-row span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .guide.is-hidden {
+      display: none;
+    }
+
+    .guide-item {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      min-height: 86px;
+      background: #fbfcfc;
+    }
+
+    .guide-item strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .guide-item span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .answer-box {
+      display: grid;
+      gap: 8px;
+    }
+
+    .answer-box label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 190px;
+      resize: vertical;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      padding: 14px;
+      line-height: 1.7;
+      color: var(--ink);
+      background: #fff;
+    }
+
+    textarea:focus {
+      outline: 2px solid rgba(8, 117, 111, 0.16);
+      border-color: var(--accent);
+    }
+
+    .answer-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .self-check {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 12px;
+      background: #fbfcfc;
+      display: grid;
+      gap: 10px;
+    }
+
+    .self-check-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: baseline;
+    }
+
+    .self-check-head strong {
+      font-size: 13px;
+    }
+
+    .self-check-head span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 36px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .check-item input {
+      accent-color: var(--accent);
+    }
+
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border-top: 1px solid var(--line);
+    }
+
+    .metric {
+      background: #fbfcfc;
+      padding: 16px;
+      min-height: 94px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: 30px;
+      line-height: 1;
+    }
+
+    .side {
+      display: grid;
+      gap: 14px;
+    }
+
+    .side-body {
+      padding: 16px 18px 18px;
+    }
+
+    .today-topic {
+      margin: 0 0 14px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .today-topic strong {
+      color: var(--accent);
+    }
+
+    .plan-label {
+      margin: 14px 0 8px;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .plan-questions {
+      display: grid;
+      gap: 8px;
+    }
+
+    .plan-question {
+      width: 100%;
+      min-height: 38px;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfc;
+      color: var(--ink);
+      padding: 0 10px;
+      text-align: left;
+      font-size: 13px;
+    }
+
+    .plan-question:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .plan-question.done {
+      color: var(--ok);
+      border-color: #d9eadb;
+      background: #f4faf5;
+    }
+
+    .time-bars {
+      display: grid;
+      gap: 8px;
+    }
+
+    .time-row {
+      display: grid;
+      grid-template-columns: 92px 1fr 48px;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .time-track {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--line);
+      overflow: hidden;
+    }
+
+    .time-track span {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+    }
+
+    .week-goal {
+      margin-top: 14px;
+      border-top: 1px solid var(--line);
+      padding-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .feedback-score {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .score-circle {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      border: 8px solid var(--accent-soft);
+      color: var(--accent);
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    .score-circle.low {
+      border-color: #fca5a5;
+      color: var(--danger);
+    }
+
+    .score-circle.mid {
+      border-color: #fde68a;
+      color: var(--warn);
+    }
+
+    .score-circle.good {
+      border-color: #fcd34d;
+      color: #92400e;
+    }
+
+    .score-circle.excellent {
+      border-color: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .feedback-score strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .feedback-score span {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .feedback-block {
+      border-top: 1px solid var(--line);
+      padding-top: 13px;
+      margin-top: 13px;
+    }
+
+    .feedback-block h4 {
+      margin: 0 0 8px;
+      font-size: 13px;
+    }
+
+    .feedback-block ul {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 13px;
+    }
+
+    .model-answer {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfc;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 13px;
+      padding: 12px;
+      white-space: pre-wrap;
+    }
+
+    .model-answer.locked {
+      color: var(--muted);
+      background: #f7f9f9;
+      border-style: dashed;
+    }
+
+    .bars {
+      display: grid;
+      gap: 10px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 70px 1fr 34px;
+      gap: 10px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .bar {
+      height: 8px;
+      background: #edf1f2;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--accent);
+      transition: width 180ms ease;
+    }
+
+    .tasks {
+      display: grid;
+      gap: 0;
+    }
+
+    .task {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: start;
+      padding: 12px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .task:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .task input {
+      margin-top: 4px;
+      accent-color: var(--accent);
+    }
+
+    .task strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+    }
+
+    .task span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .task small {
+      color: var(--warn);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .followup {
+      min-height: 96px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfc;
+      padding: 13px;
+      line-height: 1.7;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .followup-form {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .followup-form.is-hidden {
+      display: none;
+    }
+
+    .followup-form label {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .followup-form textarea {
+      min-height: 120px;
+    }
+
+    .followup-feedback {
+      border-top: 1px solid var(--line);
+      margin-top: 12px;
+      padding-top: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .followup-feedback strong {
+      color: var(--ink);
+    }
+
+    .footer-note {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1180px) {
+      body {
+        min-width: 0;
+      }
+
+      .shell {
+        width: calc(100vw - 32px);
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar,
+      .guide,
+      .checklist-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header>
+      <div class="title">
+        <h1>Rong Data Mock Interview Console</h1>
+        <p>用文字回答模擬面試題，取得針對 SQL、Python、Pipeline、API/DB 與 S-111 專案表達的回饋。</p>
+      </div>
+      <div class="actions">
+        <button class="btn danger" id="resetBtn" type="button">清空練習</button>
+        <button class="btn primary" id="feedbackBtnTop" type="button">取得回饋</button>
+      </div>
+    </header>
+
+    <section class="toolbar" aria-label="settings">
+      <label class="field">
+        目標職位
+        <select id="roleSelect">
+          <option value="de" selected>資料工程師 / 資料應用工程師</option>
+          <option value="da">資料分析師 / BI Analyst</option>
+          <option value="aiapp">AI 應用工程師</option>
+          <option value="ds">資料科學家入門準備</option>
+        </select>
+      </label>
+      <label class="field">
+        今日時間
+        <select id="timeSelect">
+          <option value="60">60 分鐘</option>
+          <option value="120" selected>120 分鐘</option>
+          <option value="180">180 分鐘</option>
+        </select>
+      </label>
+      <label class="field">
+        模擬強度
+        <select id="modeSelect">
+          <option value="steady" selected>穩定練習</option>
+          <option value="rush">面試前衝刺</option>
+          <option value="light">低壓維持</option>
+        </select>
+      </label>
+      <label class="field">
+        回答方式
+        <select id="answerModeSelect">
+          <option value="written" selected>文字草稿</option>
+          <option value="spoken">口說逐字稿</option>
+        </select>
+      </label>
+    </section>
+
+    <main class="layout">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>模擬面試題</h2>
+          <span id="questionCount">第 1 題 / 12</span>
+        </div>
+
+        <div class="interview">
+          <div class="progress-row">
+            <div class="progress"><span id="progressFill"></span></div>
+            <span class="tag" id="domainTag">SQL</span>
+          </div>
+
+          <div class="question">
+            <h2 id="questionTitle"></h2>
+            <p id="questionHint"></p>
+          </div>
+
+          <div class="hint-row">
+            <span>提示預設收起，先自己回答；真的卡住再打開。</span>
+            <button class="btn" id="hintToggleBtn" type="button">▾ 顯示答題提示</button>
+          </div>
+
+          <div class="guide is-hidden" id="guideGrid"></div>
+
+          <div class="answer-box">
+            <label for="answerInput">你的回答</label>
+            <textarea id="answerInput" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。"></textarea>
+            <div class="answer-meta">
+              <span id="wordCount">0 字</span>
+              <span id="saveState">自動儲存</span>
+            </div>
+          </div>
+
+          <div class="self-check">
+            <div class="self-check-head">
+              <strong>自評檢核</strong>
+              <span>先勾你覺得有回答到的點，系統會再比對文字是否清楚寫出。</span>
+            </div>
+            <div class="checklist-grid" id="checklistGrid"></div>
+          </div>
+
+          <div class="answer-actions">
+            <button class="btn primary" id="feedbackBtn" type="button">取得回饋</button>
+            <button class="btn" id="followupBtn" type="button">面試官追問</button>
+            <button class="btn" id="templateBtn" type="button">插入回答結構</button>
+          </div>
+
+          <div class="nav">
+            <button class="btn" id="prevBtn" type="button">上一題</button>
+            <button class="btn" id="nextBtn" type="button">下一題</button>
+          </div>
+        </div>
+
+        <div class="summary-grid">
+          <div class="metric">
+            <span>完成回答</span>
+            <strong id="completeMetric">0%</strong>
+          </div>
+          <div class="metric">
+            <span>本題分數</span>
+            <strong id="currentScoreMetric">0</strong>
+          </div>
+          <div class="metric">
+            <span>今日主線</span>
+            <strong id="focusMetric">SQL</strong>
+          </div>
+          <div class="metric">
+            <span>平均分數</span>
+            <strong id="averageMetric">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <aside class="side">
+        <section class="panel" id="todayPlanPanel">
+          <div class="panel-head">
+            <h3>今日計畫</h3>
+            <span id="todayPlanMeta">週日・第 1 週</span>
+          </div>
+          <div class="side-body">
+            <p class="today-topic">今日主題：<strong id="todayPlanTopic">載入中</strong></p>
+
+            <div class="plan-label">推薦練習</div>
+            <div class="plan-questions" id="todayPlanQuestions"></div>
+
+            <div class="plan-label">今日時間配置</div>
+            <div class="time-bars" id="todayPlanTime"></div>
+
+            <div class="week-goal" id="todayPlanGoal"></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h3>回饋</h3>
+            <span>本地規則式分析</span>
+          </div>
+          <div class="side-body">
+            <div class="feedback-score">
+              <div class="score-circle" id="scoreCircle">0</div>
+              <div>
+                <strong id="feedbackTitle">先寫一段回答</strong>
+                <span id="feedbackSummary">按下「取得回饋」後，會依照具體性、結構、專案連結、驗證與領域關鍵點評分。</span>
+              </div>
+            </div>
+
+            <div class="feedback-block">
+              <h4>做得好的地方</h4>
+              <ul id="strengthList"></ul>
+            </div>
+
+            <div class="feedback-block">
+              <h4>要改進的地方</h4>
+              <ul id="issueList"></ul>
+            </div>
+
+            <div class="feedback-block" id="modelAnswerBlock">
+              <h4>回饋後改寫骨架</h4>
+              <div class="model-answer" id="modelAnswer"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h3>能力分布</h3>
+            <span>依已送出回答</span>
+          </div>
+          <div class="side-body">
+            <div class="bars" id="bars"></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h3>今日任務</h3>
+            <span id="taskMeta">120 分鐘</span>
+          </div>
+          <div class="side-body">
+            <div class="tasks" id="taskList"></div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h3>追問</h3>
+            <span>接著回答 60-90 秒</span>
+          </div>
+          <div class="side-body">
+            <div class="followup" id="followupOutput">按「面試官追問」取得下一個問題。</div>
+            <div class="followup-form is-hidden" id="followupAnswerBox">
+              <label for="followupInput">你對追問的回答</label>
+              <textarea id="followupInput" placeholder="回答追問時，請直接補充剛剛答案中最容易被挑戰的地方。"></textarea>
+              <button class="btn primary" id="followupFeedbackBtn" type="button">取得追問回饋</button>
+              <div class="followup-feedback" id="followupFeedbackResult"></div>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <p class="footer-note">建議用法：先不看骨架，直接回答；送出回饋後，把「要改進的地方」改寫進答案，再回答一次追問。</p>
+  </div>
+
+  <script>
+    const domains = {
+      sql: "SQL",
+      python: "Python",
+      pipeline: "Pipeline",
+      api: "API/DB",
+      story: "專案表達"
+    };
+
+    const questions = [
+      {
+        domain: "sql",
+        title: "看到兩張表，你會如何決定 JOIN 條件與聚合粒度？",
+        hint: "請用面試口吻回答：你會先確認哪些欄位、如何避免重複計算、如何驗證結果可信。",
+        guide: [
+          ["先講結論", "我會先確認主鍵、外鍵與分析粒度。"],
+          ["說步驟", "檢查欄位、join 後筆數、聚合層級。"],
+          ["補風險", "避免 many-to-many 造成指標膨脹。"],
+          ["講驗證", "用筆數、抽樣、對帳查詢確認。"]
+        ],
+        expected: [
+          ["JOIN 條件", /join|主鍵|外鍵|key|id|關聯|條件/i],
+          ["聚合粒度", /粒度|group|group by|聚合|分組|層級|每日|每小時/i],
+          ["重複計算風險", /重複|many|膨脹|錯誤分母|duplicate|去重/i],
+          ["驗證方式", /驗證|檢查|筆數|抽樣|對帳|count/i]
+        ],
+        skeleton: "我會先確認兩張表的主鍵、外鍵與我要回答的分析粒度。接著我會先做 join 前後筆數檢查，確認是否有 many-to-many 導致資料膨脹。聚合時我會明確指定是以天、使用者或事件為單位。最後我會用抽樣資料、count 檢查與對帳查詢確認結果沒有重複計算。",
+        followups: [
+          "如果 JOIN 後筆數突然增加 5 倍，你會怎麼查？",
+          "如果面試官要求你用 SQL 找出重複計算來源，你會怎麼寫？",
+          "你會怎麼向非工程背景的人解釋『聚合粒度』？"
+        ]
+      },
+      {
+        domain: "sql",
+        title: "什麼情境你會用 Window Function，而不是只用 GROUP BY？",
+        hint: "請回答使用時機、例子，以及你會如何避免查詢結果被誤解。",
+        guide: [
+          ["比較差異", "GROUP BY 會壓縮列，Window 保留明細。"],
+          ["給例子", "排名、最新一筆、移動平均、前後期比較。"],
+          ["說語法", "ROW_NUMBER、LAG、SUM OVER。"],
+          ["補解讀", "說明 partition 與 order 的意義。"]
+        ],
+        expected: [
+          ["保留明細列", /保留|明細|原本列|row|每一筆/i],
+          ["Window 語法", /row_number|rank|lag|lead|over|partition|order/i],
+          ["使用情境", /排名|最新|移動平均|累積|前後|趨勢/i],
+          ["結果解讀", /partition|排序|order|分組|解讀|誤解/i]
+        ],
+        skeleton: "我會在需要保留每一筆明細、但又要計算組內排名或前後期比較時使用 Window Function。GROUP BY 會把資料壓成每組一列，但 ROW_NUMBER 或 LAG 可以在保留明細的情況下找最新一筆、排名或趨勢。我會特別說清楚 PARTITION BY 是分組範圍，ORDER BY 是比較順序，避免結果被誤解。",
+        followups: [
+          "請口頭描述 ROW_NUMBER 找每組最新一筆的 SQL 結構。",
+          "LAG 和自我 JOIN 都可以比較前後期，你會怎麼選？",
+          "如果資料有同時間戳記，你的排序條件要怎麼補？"
+        ]
+      },
+      {
+        domain: "python",
+        title: "如果給你一份髒資料，你會如何用 Python 清洗並保證輸出穩定？",
+        hint: "請說明輸入檢查、欄位轉換、錯誤處理、測試資料與可維護性。",
+        guide: [
+          ["定義輸入", "先確認欄位、型別、缺失值。"],
+          ["拆成函式", "清洗、驗證、輸出分開。"],
+          ["處理例外", "空值、異常值、格式錯誤。"],
+          ["補測試", "用小樣本檢查輸出。"]
+        ],
+        expected: [
+          ["欄位與型別", /欄位|型別|schema|格式|缺失|空值|null/i],
+          ["函式化", /函式|function|模組|拆開|維護/i],
+          ["例外處理", /例外|錯誤|try|except|異常|防呆/i],
+          ["測試或驗證", /測試|驗證|sample|小樣本|assert|檢查/i]
+        ],
+        skeleton: "我會先定義輸入資料應該有哪些欄位與型別，再把清洗流程拆成讀取、欄位標準化、異常值處理、輸出驗證幾個函式。對空值、格式錯誤或超出範圍的資料，我會先記錄 log，不讓整批流程無聲失敗。最後用小樣本和 assert 檢查輸出欄位與筆數是否符合預期。",
+        followups: [
+          "如果資料有 5% 欄位缺失，你會刪除、補值，還是標記？",
+          "你會怎麼讓清洗腳本之後容易被別人接手？",
+          "如果資料量變大，Pandas 開始很慢，你會先怎麼處理？"
+        ]
+      },
+      {
+        domain: "python",
+        title: "你如何向面試官說明一段 Python 解法的時間與空間複雜度？",
+        hint: "請用具體例子說明，不需要競賽等級，但要能指出瓶頸。",
+        guide: [
+          ["說資料量", "先定義 n 代表什麼。"],
+          ["說主要迴圈", "找出最耗時的部分。"],
+          ["說記憶體", "有沒有額外 dict/list。"],
+          ["說優化", "可否用索引或 hash map。"]
+        ],
+        expected: [
+          ["n 的定義", /n|資料量|筆數|長度|規模/i],
+          ["時間複雜度", /時間|O\(|複雜度|迴圈|loop|遍歷/i],
+          ["空間複雜度", /空間|記憶體|dict|list|set|額外/i],
+          ["瓶頸或優化", /瓶頸|優化|hash|索引|快取|改善/i]
+        ],
+        skeleton: "我會先定義 n 是輸入資料筆數，再找出程式中主要迴圈或巢狀迴圈。如果只掃過資料一次，時間大約是 O(n)；如果建立 dict 做查找，空間會多 O(n)。我會說明瓶頸在哪裡，例如重複查找或巢狀比對，並提出用 hash map、索引或預先分組降低成本。",
+        followups: [
+          "如果你的解法有兩層迴圈，什麼情況下可以改成 O(n)？",
+          "你會怎麼在口頭回答中避免把 Big O 講得太抽象？",
+          "空間複雜度變高但速度變快時，你會怎麼取捨？"
+        ]
+      },
+      {
+        domain: "pipeline",
+        title: "請把 S-111 資料從原始檔到 API 的流程講成一條 ETL 管線。",
+        hint: "請包含資料來源、解析、轉換、入庫、API 輸出與驗證。",
+        guide: [
+          ["Extract", "原始資料來源與格式。"],
+          ["Transform", "欄位、單位、hotspot 閾值。"],
+          ["Load", "PostgreSQL/PostGIS 入庫。"],
+          ["Validate", "筆數、範圍、API 回傳。"]
+        ],
+        expected: [
+          ["資料來源", /原始|來源|NetCDF|nc|S-111|檔案|資料/i],
+          ["轉換流程", /轉換|清洗|欄位|單位|threshold|hotspot|0\.48/i],
+          ["資料庫", /PostgreSQL|PostGIS|入庫|資料庫|table|索引/i],
+          ["API 與驗證", /API|endpoint|驗證|檢查|回傳|GeoJSON|QGIS/i]
+        ],
+        skeleton: "我會把 S-111 流程拆成 Extract、Transform、Load、Validate。Extract 是讀取原始 S-111/NetCDF 類型資料；Transform 會把時間、座標、誤差欄位與 hotspot 閾值轉成 API 可用的資料列；Load 會寫入 PostgreSQL/PostGIS，讓查詢可以依日期、lead_hours、bbox 篩選；最後用筆數、欄位範圍與 API 回傳結果驗證資料是可信的。",
+        followups: [
+          "如果同一天資料要重跑，你怎麼確保結果不會重複寫入？",
+          "你會把哪些檢查放在 pipeline 最後？",
+          "如果 API 查不到資料，你會怎麼判斷是入庫問題還是查詢條件問題？"
+        ]
+      },
+      {
+        domain: "pipeline",
+        title: "如果批次資料重跑，你會怎麼避免重複寫入或覆蓋錯誤？",
+        hint: "請說明 upsert key、idempotency、log、驗證與 rollback 思維。",
+        guide: [
+          ["定義唯一鍵", "日期、時間、lead_hours、座標或指標。"],
+          ["重跑安全", "同樣輸入產出同樣結果。"],
+          ["記錄流程", "log、批次版本、錯誤紀錄。"],
+          ["驗證回復", "比對筆數與可 rollback。"]
+        ],
+        expected: [
+          ["唯一鍵", /key|唯一|upsert|constraint|date|lead_hours|timestamp/i],
+          ["重跑安全", /idempotent|重跑|覆蓋|重複|同樣結果|安全/i],
+          ["log 或版本", /log|版本|batch|紀錄|manifest|錯誤/i],
+          ["驗證或回復", /驗證|rollback|restore|比對|檢查|備份/i]
+        ],
+        skeleton: "我會先定義資料列的唯一鍵，例如 target_date、target_timestamp、lead_hours 與必要的空間或 metric 欄位。重跑時用 upsert，而不是盲目 append，讓同一批輸入重跑後結果一致。每次批次會留下 log、版本或 manifest，最後比對筆數與抽樣結果；如果結果異常，能用備份或 dump 回復。",
+        followups: [
+          "如果 upsert key 設錯，可能會造成什麼後果？",
+          "你會怎麼設計批次 log 讓交接者看得懂？",
+          "重跑後筆數少了 20%，你會先查哪裡？"
+        ]
+      },
+      {
+        domain: "api",
+        title: "請設計一個查詢 threshold hotspot 的 API，並說明參數與回傳欄位。",
+        hint: "請用 /api/threshold-hotspots 這類情境回答，包含前端需要什麼資料。",
+        guide: [
+          ["定義用途", "查可繪圖的 hotspot rows。"],
+          ["列參數", "date、lead_hours、threshold、bbox。"],
+          ["列回傳", "lon、lat、value、severity、color。"],
+          ["補限制", "limit、分頁、錯誤訊息。"]
+        ],
+        expected: [
+          ["查詢參數", /date|lead_hours|threshold|bbox|limit|error_type|參數/i],
+          ["回傳欄位", /lon|lat|value|severity|color|unit|欄位|JSON|GeoJSON/i],
+          ["前端用途", /前端|繪圖|地圖|QGIS|圖層|顏色/i],
+          ["限制或錯誤", /limit|分頁|錯誤|空結果|timeout|防止|保護/i]
+        ],
+        skeleton: "我會把這個 API 定義成查詢可繪圖的 threshold hotspot rows。參數會包含 date、lead_hours、error_type、threshold、bbox 與 limit。回傳欄位至少要有 lon、lat、value、unit、severity、color、target_timestamp，讓前端或 QGIS 可以直接畫點與分級。為了避免一次查太多資料，我會加 limit、bbox 與清楚的空結果或錯誤訊息。",
+        followups: [
+          "如果前端說地圖載入很慢，你會怎麼調 API？",
+          "threshold 應該由前端傳，還是後端固定？你怎麼取捨？",
+          "你會怎麼設計 API 文件讓交接者能直接用？"
+        ]
+      },
+      {
+        domain: "api",
+        title: "PostgreSQL/PostGIS 在你的專案裡解決了什麼問題？",
+        hint: "請不要只說『存資料』，要說查詢、空間條件、效能與交接價值。",
+        guide: [
+          ["資料集中", "把批次結果結構化管理。"],
+          ["查詢條件", "日期、lead_hours、bbox、error_type。"],
+          ["效能思考", "索引、limit、空間篩選。"],
+          ["交接價值", "API 和文件可重複使用。"]
+        ],
+        expected: [
+          ["結構化資料", /資料庫|table|結構化|集中|管理/i],
+          ["查詢條件", /date|lead_hours|bbox|error_type|threshold|查詢/i],
+          ["效能或索引", /索引|index|效能|limit|空間|PostGIS|bbox/i],
+          ["API 或交接", /API|交接|文件|部署|前端|QGIS/i]
+        ],
+        skeleton: "PostgreSQL/PostGIS 不只是存資料，而是讓批次驗證結果變成可查詢、可交接的資料服務。我的查詢會依 date、lead_hours、error_type、threshold 或 bbox 篩選 hotspot。PostGIS 能處理空間條件，搭配索引與 limit 可以避免 API 一次回傳過多資料。這也讓前端、QGIS 或文件使用者能用固定 API 重複取得結果。",
+        followups: [
+          "如果資料表越來越大，你會先加什麼索引？",
+          "bbox 查詢和全表查詢的差異，你會怎麼說明？",
+          "你會怎麼判斷瓶頸在 DB 還是 API server？"
+        ]
+      },
+      {
+        domain: "story",
+        title: "請用 90 秒介紹 S-111 viewer 專案，讓非海洋領域的人也聽得懂。",
+        hint: "請用 STAR：情境、任務、行動、結果。要講清楚你的角色與產出。",
+        guide: [
+          ["Situation", "問題背景與使用者需求。"],
+          ["Task", "你負責解決什麼。"],
+          ["Action", "資料、DB、API、視覺化。"],
+          ["Result", "交付成果與可驗證結果。"]
+        ],
+        expected: [
+          ["情境", /背景|需求|問題|情境|老師|使用者/i],
+          ["任務與角色", /負責|任務|我做|角色|目標/i],
+          ["具體行動", /API|PostgreSQL|PostGIS|QGIS|資料|pipeline|視覺化/i],
+          ["結果", /結果|產出|交接|部署|文件|改善|完成|驗證/i]
+        ],
+        skeleton: "這個專案的背景是需要把 S-111 海流驗證資料從研究輸出變成可以查詢與展示的系統。我負責把原始資料處理成結構化資料，建立 PostgreSQL/PostGIS 資料庫與 API，並讓 QGIS 或前端可以依日期、lead_hours、threshold 查詢 hotspot。最後的成果是可交接的 API、資料庫文件與視覺化流程，讓非開發者也能重複查看警示與關鍵案例。",
+        followups: [
+          "如果面試官問『這跟一般資料專案差在哪』，你怎麼回答？",
+          "你在這個專案裡最能證明工程能力的是哪一段？",
+          "請把這個專案改成 30 秒版本。"
+        ]
+      },
+      {
+        domain: "story",
+        title: "請說一個你遇過最難的 bug，以及你如何定位、修正、驗證。",
+        hint: "請避免只說『很複雜』，要說清楚排查路線與最後證據。",
+        guide: [
+          ["問題現象", "哪裡不對、誰受到影響。"],
+          ["定位方法", "log、資料比對、最小重現。"],
+          ["修正策略", "改哪裡、為什麼這樣改。"],
+          ["驗證證據", "測試、筆數、截圖或 API 回傳。"]
+        ],
+        expected: [
+          ["問題現象", /問題|bug|錯誤|異常|現象|失敗/i],
+          ["定位", /定位|排查|log|比對|重現|trace|檢查/i],
+          ["修正", /修正|修改|解決|調整|改成|fix/i],
+          ["驗證", /驗證|測試|確認|結果|筆數|截圖|API/i]
+        ],
+        skeleton: "我會先描述問題現象，例如 API 回傳資料與預期不一致，或某個 hotspot 圖層沒有正確顯示。接著我會從 log、資料庫查詢與小範圍測試資料定位問題，確認是資料處理、入庫還是 API 查詢條件造成。修正後我會用相同案例重跑，檢查筆數、欄位值與 API 回傳，確定問題真的被解掉。",
+        followups: [
+          "如果 bug 不是你寫的程式造成，你會怎麼溝通？",
+          "你如何判斷修正沒有造成新的 regression？",
+          "請把這個 bug 故事講得更像履歷專案亮點。"
+        ]
+      },
+      {
+        domain: "sql",
+        title: "查詢結果出來後，你會如何解釋成面試官聽得懂的指標？",
+        hint: "請把 SQL 結果轉成決策語言，而不只是報數字。",
+        guide: [
+          ["說問題", "這個查詢回答什麼。"],
+          ["說指標", "分母、分子、時間範圍。"],
+          ["說趨勢", "比較不同群組或時間。"],
+          ["說限制", "資料缺口或解讀邊界。"]
+        ],
+        expected: [
+          ["查詢目的", /問題|目的|回答|想知道|指標/i],
+          ["分母分子", /分母|分子|比例|平均|總數|count|rate/i],
+          ["比較或趨勢", /比較|趨勢|變化|時間|群組|分布/i],
+          ["限制", /限制|注意|可能|偏誤|資料缺口|不能代表/i]
+        ],
+        skeleton: "我會先說這個查詢回答的是什麼問題，再定義指標的分母、分子與時間範圍。接著我會看不同日期、lead_hours 或 error_type 的分布差異，說明趨勢或異常點。最後我會補資料限制，例如樣本範圍、缺失值或閾值設定，避免把查詢結果過度解讀。",
+        followups: [
+          "如果面試官問這個指標能不能拿來做決策，你怎麼回答？",
+          "你會怎麼確認指標沒有被資料粒度影響？",
+          "請用 S-111 hotspot 的例子講一次。"
+        ]
+      },
+      {
+        domain: "api",
+        title: "如果 API 變慢或資料量變大，你會提出哪些排查與改善方向？",
+        hint: "請從查詢、資料量、索引、分頁、快取、背景任務等角度回答。",
+        guide: [
+          ["先量測", "看慢在哪一段。"],
+          ["查 DB", "索引、查詢條件、資料量。"],
+          ["控回傳", "limit、分頁、bbox。"],
+          ["架構改善", "快取、背景任務、預先聚合。"]
+        ],
+        expected: [
+          ["量測瓶頸", /量測|profile|log|瓶頸|時間|慢在哪/i],
+          ["DB 查詢", /SQL|DB|索引|index|查詢|explain/i],
+          ["回傳控制", /limit|分頁|bbox|資料量|payload|回傳/i],
+          ["架構改善", /快取|cache|背景|queue|預先|聚合|非同步/i]
+        ],
+        skeleton: "我會先量測慢在哪一段，是 DB 查詢、API 處理還是回傳資料太大。DB 端會看查詢條件、索引與 explain；API 端會加 limit、分頁或 bbox，避免一次回傳過多 hotspot rows。如果是重複查詢，我會考慮快取或預先聚合；如果是大量批次處理，則會改成背景任務或 queue。",
+        followups: [
+          "如果只能先做一個改善，你會先做哪個？",
+          "你會怎麼向主管解釋 API 變慢不是單純 server 不夠快？",
+          "如果資料要即時更新，快取會有什麼風險？"
+        ]
+      }
+    ];
+
+    const taskBank = {
+      sql: [
+        ["重寫 SQL 回答", "補上 JOIN 條件、粒度、驗證三件事。"],
+        ["練一題 Window Function", "用 ROW_NUMBER 或 LAG 說明使用時機。"],
+        ["指標口說", "把查詢結果轉成決策語言。"]
+      ],
+      python: [
+        ["寫一段清洗流程", "輸入、轉換、例外、測試拆開。"],
+        ["複雜度口述", "用 n、時間、空間、瓶頸講一次。"],
+        ["補測試資料", "替清洗程式設計 3 個邊界案例。"]
+      ],
+      pipeline: [
+        ["畫 ETL 流程", "用 S-111 寫 Extract、Transform、Load、Validate。"],
+        ["設計重跑策略", "列出 upsert key、log、驗證與 rollback。"],
+        ["資料品質檢查", "定義筆數、欄位範圍、時間粒度檢查。"]
+      ],
+      api: [
+        ["設計 API 回答", "列出參數、回傳欄位、限制與錯誤處理。"],
+        ["DB 效能排查", "說明索引、bbox、limit、分頁的用途。"],
+        ["API 文件草稿", "把一個 endpoint 寫成可交接說明。"]
+      ],
+      story: [
+        ["90 秒 STAR", "用 S-111 講情境、任務、行動、結果。"],
+        ["最難 bug 故事", "補上定位、修正、驗證證據。"],
+        ["非技術版說明", "把 NetCDF/PostGIS/API 講給外行聽。"]
+      ]
+    };
+
+    const dailyPlans = {
+      0: {
+        topic: "模擬面試 + 補弱點",
+        indexes: "weakest",
+        time: [["模擬", 60], ["複習", 30]]
+      },
+      1: {
+        topic: "SQL JOIN / GROUP BY",
+        indexes: [0, 10],
+        time: [["SQL", 40], ["面試輸出", 10]]
+      },
+      2: {
+        topic: "SQL CTE / Window Function",
+        indexes: [1, 0],
+        time: [["SQL", 40], ["面試輸出", 10]]
+      },
+      3: {
+        topic: "Python 資料清洗 / 複雜度",
+        indexes: [2, 3],
+        time: [["Python 清洗", 30], ["面試輸出", 10]]
+      },
+      4: {
+        topic: "PostgreSQL / PostGIS / 資料表設計",
+        indexes: [7, 6],
+        time: [["DB", 40], ["面試輸出", 10]]
+      },
+      5: {
+        topic: "API / ETL / 錯誤處理",
+        indexes: [4, 5, 11],
+        time: [["工程情境", 40], ["面試輸出", 10]]
+      },
+      6: {
+        topic: "專案故事 STAR 練習",
+        indexes: [8, 9],
+        time: [["STAR 寫作", 40], ["口說練習", 20]]
+      }
+    };
+
+    const weekGoals = [
+      "把 SQL 手感拉起來：每天至少完成 2 題並取得回饋",
+      "把 S-111 專案整理成 3 個故事：ETL 流程、效能排查、API 設計",
+      "每天練 1 題情境題追問，分數穩定過 70 才算過關",
+      "找真人模擬面試，工具退場輔助用"
+    ];
+
+    const weekdayLabels = ["日", "一", "二", "三", "四", "五", "六"];
+
+    const state = {
+      current: 0,
+      answers: Array(questions.length).fill(""),
+      feedback: Array(questions.length).fill(null),
+      hintsOpen: Array(questions.length).fill(false),
+      selfChecks: questions.map(question => Array(question.expected.length).fill(false)),
+      followupQuestions: Array(questions.length).fill(""),
+      followupAnswers: Array(questions.length).fill(""),
+      followupFeedback: Array(questions.length).fill(null)
+    };
+
+    const els = {
+      questionCount: document.getElementById("questionCount"),
+      domainTag: document.getElementById("domainTag"),
+      questionTitle: document.getElementById("questionTitle"),
+      questionHint: document.getElementById("questionHint"),
+      guideGrid: document.getElementById("guideGrid"),
+      hintToggleBtn: document.getElementById("hintToggleBtn"),
+      checklistGrid: document.getElementById("checklistGrid"),
+      answerInput: document.getElementById("answerInput"),
+      wordCount: document.getElementById("wordCount"),
+      saveState: document.getElementById("saveState"),
+      progressFill: document.getElementById("progressFill"),
+      completeMetric: document.getElementById("completeMetric"),
+      currentScoreMetric: document.getElementById("currentScoreMetric"),
+      focusMetric: document.getElementById("focusMetric"),
+      averageMetric: document.getElementById("averageMetric"),
+      scoreCircle: document.getElementById("scoreCircle"),
+      feedbackTitle: document.getElementById("feedbackTitle"),
+      feedbackSummary: document.getElementById("feedbackSummary"),
+      strengthList: document.getElementById("strengthList"),
+      issueList: document.getElementById("issueList"),
+      modelAnswerBlock: document.getElementById("modelAnswerBlock"),
+      modelAnswer: document.getElementById("modelAnswer"),
+      todayPlanMeta: document.getElementById("todayPlanMeta"),
+      todayPlanTopic: document.getElementById("todayPlanTopic"),
+      todayPlanQuestions: document.getElementById("todayPlanQuestions"),
+      todayPlanTime: document.getElementById("todayPlanTime"),
+      todayPlanGoal: document.getElementById("todayPlanGoal"),
+      bars: document.getElementById("bars"),
+      taskList: document.getElementById("taskList"),
+      taskMeta: document.getElementById("taskMeta"),
+      followupOutput: document.getElementById("followupOutput"),
+      followupAnswerBox: document.getElementById("followupAnswerBox"),
+      followupInput: document.getElementById("followupInput"),
+      followupFeedbackResult: document.getElementById("followupFeedbackResult"),
+      roleSelect: document.getElementById("roleSelect"),
+      timeSelect: document.getElementById("timeSelect"),
+      modeSelect: document.getElementById("modeSelect"),
+      answerModeSelect: document.getElementById("answerModeSelect")
+    };
+
+    function load() {
+      try {
+        const saved = JSON.parse(localStorage.getItem("rongDataMockInterview"));
+        if (!saved) return;
+        state.current = Number.isInteger(saved.current) ? saved.current : 0;
+        state.answers = Array.isArray(saved.answers) && saved.answers.length === questions.length ? saved.answers : state.answers;
+        state.feedback = Array.isArray(saved.feedback) && saved.feedback.length === questions.length ? saved.feedback : state.feedback;
+        state.hintsOpen = Array.isArray(saved.hintsOpen) && saved.hintsOpen.length === questions.length ? saved.hintsOpen : state.hintsOpen;
+        state.selfChecks = Array.isArray(saved.selfChecks) && saved.selfChecks.length === questions.length ? saved.selfChecks : state.selfChecks;
+        state.followupQuestions = Array.isArray(saved.followupQuestions) && saved.followupQuestions.length === questions.length ? saved.followupQuestions : state.followupQuestions;
+        state.followupAnswers = Array.isArray(saved.followupAnswers) && saved.followupAnswers.length === questions.length ? saved.followupAnswers : state.followupAnswers;
+        state.followupFeedback = Array.isArray(saved.followupFeedback) && saved.followupFeedback.length === questions.length ? saved.followupFeedback : state.followupFeedback;
+        ["roleSelect", "timeSelect", "modeSelect", "answerModeSelect"].forEach(id => {
+          if (saved[id]) els[id].value = saved[id];
+        });
+        state.selfChecks = questions.map((question, index) => {
+          const savedChecks = state.selfChecks[index];
+          return Array.isArray(savedChecks) && savedChecks.length === question.expected.length
+            ? savedChecks
+            : Array(question.expected.length).fill(false);
+        });
+      } catch {
+        localStorage.removeItem("rongDataMockInterview");
+      }
+    }
+
+    function save() {
+      localStorage.setItem("rongDataMockInterview", JSON.stringify({
+        current: state.current,
+        answers: state.answers,
+        feedback: state.feedback,
+        hintsOpen: state.hintsOpen,
+        selfChecks: state.selfChecks,
+        followupQuestions: state.followupQuestions,
+        followupAnswers: state.followupAnswers,
+        followupFeedback: state.followupFeedback,
+        roleSelect: els.roleSelect.value,
+        timeSelect: els.timeSelect.value,
+        modeSelect: els.modeSelect.value,
+        answerModeSelect: els.answerModeSelect.value
+      }));
+      els.saveState.textContent = "已自動儲存";
+    }
+
+    function normalize(text) {
+      return text.trim();
+    }
+
+    function contains(text, regex) {
+      return regex.test(text);
+    }
+
+    function analyzeAnswer(question, answer, checks = []) {
+      const text = normalize(answer);
+      const lower = text.toLowerCase();
+      const length = text.length;
+      let score = 0;
+      const strengths = [];
+      const issues = [];
+
+      if (length >= 180) {
+        score += 22;
+        strengths.push("回答長度足夠，已經有接近面試口答的完整度。");
+      } else if (length >= 100) {
+        score += 16;
+        strengths.push("回答有基本內容，但還可以補更多步驟與例子。");
+      } else if (length >= 45) {
+        score += 8;
+        issues.push("回答偏短，建議至少補到 100-180 字，才像完整面試回答。");
+      } else {
+        issues.push("回答太短，目前比較像筆記，不像面試現場的完整說明。");
+      }
+
+      if (/首先|第一|接著|然後|最後|我會先|流程|步驟|再來|其次/.test(text)) {
+        score += 14;
+        strengths.push("有使用順序或流程語言，面試官比較容易跟上你的思路。");
+      } else {
+        issues.push("缺少回答結構。建議用「我會先...接著...最後...」讓邏輯更穩。");
+      }
+
+      if (/S-111|PostgreSQL|PostGIS|QGIS|API|NetCDF|Flask|FastAPI|SQL|Python|hotspot|0\.48|lead_hours|bbox/i.test(text)) {
+        score += 10;
+        strengths.push("有連到具體技術或 S-111 專案，這會讓回答更有辨識度。");
+      } else {
+        issues.push("缺少具體專案或技術名詞。建議連到 S-111、PostgreSQL/PostGIS、API、QGIS 或資料管線。");
+      }
+
+      if (/驗證|檢查|測試|比對|筆數|log|assert|結果|確認|對帳|抽樣/i.test(text)) {
+        score += 12;
+        strengths.push("有提到驗證或檢查，這是資料職缺很重要的可信度訊號。");
+      } else {
+        issues.push("缺少驗證方式。面試回答最好補：你怎麼知道結果是對的。");
+      }
+
+      if (/取捨|風險|限制|瓶頸|避免|如果|fallback|retry|rollback|idempotent|重跑|效能|索引|分頁|快取/i.test(text)) {
+        score += 12;
+        strengths.push("有提到風險、限制或取捨，回答不像只會照本宣科。");
+      } else {
+        issues.push("缺少風險或取捨。可以補一句：如果資料量變大、API 變慢、或資料重跑時你會怎麼處理。");
+      }
+
+      const missingExpected = [];
+      const uncheckedButPresent = [];
+      const checkedButUnclear = [];
+      question.expected.forEach(([label, regex], index) => {
+        const present = contains(lower, regex);
+        const checked = Boolean(checks[index]);
+        if (present && checked) {
+          score += 8;
+        } else if (present) {
+          score += 4;
+          uncheckedButPresent.push(label);
+        } else if (checked) {
+          score += 2;
+          checkedButUnclear.push(label);
+        } else {
+          missingExpected.push(label);
+        }
+      });
+
+      if (missingExpected.length) {
+        issues.push(`本題還缺：${missingExpected.join("、")}。`);
+      }
+      if (checkedButUnclear.length) {
+        issues.push(`你自評有答到「${checkedButUnclear.join("、")}」，但文字裡還不夠明確，建議直接寫出關鍵步驟。`);
+      }
+      if (uncheckedButPresent.length) {
+        issues.push(`文字裡似乎有提到「${uncheckedButPresent.join("、")}」，但你沒有勾自評；請確認自己是否真的講清楚。`);
+      }
+      if (!missingExpected.length && !checkedButUnclear.length) {
+        strengths.push("本題關鍵點都有碰到，可以開始練更精簡的口說版本。");
+      }
+
+      if (!checks.some(Boolean) && length >= 80) {
+        score -= 8;
+        issues.push("你沒有勾自評檢核。面試練習時請先判斷自己答到了哪些點，避免只靠關鍵字得分。");
+      }
+
+      if (/很複雜|很多東西|等等|之類|應該可以|大概|可能就是/.test(text)) {
+        score -= 6;
+        issues.push("回答出現偏模糊的語氣。把「大概、之類」改成具體步驟或證據。");
+      }
+
+      if (els.answerModeSelect.value === "spoken") {
+        if (/呃|嗯|然後然後|就是就是|那個/.test(text)) {
+          score -= 4;
+          issues.push("口說逐字稿有明顯填充詞，建議改成短句停頓，不要用「呃、嗯、就是」撐時間。");
+        }
+        if (length > 420) {
+          score -= 4;
+          issues.push("口說版本偏長，建議壓到 60-90 秒內，先講結論再補一個例子。");
+        }
+      }
+
+      score = Math.max(0, Math.min(100, Math.round(score)));
+
+      let title = "需要補強";
+      if (score >= 80) title = "接近可面試";
+      else if (score >= 65) title = "方向正確";
+      else if (score >= 45) title = "有骨架但不夠穩";
+
+      const summary = score >= 80
+        ? "這題已經能被追問，接下來練精簡和臨場口說。"
+        : score >= 65
+          ? "回答方向對，但還要補證據、限制或專案細節。"
+          : score >= 45
+            ? "有回答到一部分，但面試官可能會追問你具體怎麼做。"
+            : "目前還不夠像面試答案，先照改寫骨架重寫一次。";
+
+      return { score, title, summary, strengths, issues };
+    }
+
+    function completedCount() {
+      return state.feedback.filter(Boolean).length;
+    }
+
+    function averageScore() {
+      const items = state.feedback.filter(Boolean);
+      if (!items.length) return 0;
+      return Math.round(items.reduce((sum, item) => sum + item.score, 0) / items.length);
+    }
+
+    function domainScores() {
+      const totals = {};
+      Object.keys(domains).forEach(domain => totals[domain] = { sum: 0, count: 0 });
+      state.feedback.forEach((feedback, index) => {
+        if (!feedback) return;
+        const domain = questions[index].domain;
+        totals[domain].sum += feedback.score;
+        totals[domain].count += 1;
+      });
+      return Object.fromEntries(Object.entries(totals).map(([domain, item]) => {
+        return [domain, item.count ? Math.round(item.sum / item.count) : 0];
+      }));
+    }
+
+    function weakestDomain() {
+      const scores = domainScores();
+      const answered = Object.keys(scores).filter(domain => {
+        return state.feedback.some((feedback, index) => feedback && questions[index].domain === domain);
+      });
+      if (!answered.length) return "sql";
+      return answered.sort((a, b) => scores[a] - scores[b])[0];
+    }
+
+    function getInterviewStartDate() {
+      const key = "rongInterviewStartDate";
+      let startDate = localStorage.getItem(key);
+      if (!startDate) {
+        startDate = new Date().toISOString().slice(0, 10);
+        localStorage.setItem(key, startDate);
+      }
+      return startDate;
+    }
+
+    function currentWeekNumber() {
+      const startDate = getInterviewStartDate();
+      const start = new Date(`${startDate}T00:00:00`);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const diffDays = Math.max(0, Math.floor((today - start) / 86400000));
+      return Math.min(4, Math.ceil(diffDays / 7) + 1);
+    }
+
+    function todayRecommendationIndexes(dayIndex) {
+      const plan = dailyPlans[dayIndex];
+      if (plan.indexes !== "weakest") return plan.indexes;
+      const scored = state.feedback
+        .map((feedback, index) => feedback ? { index, score: feedback.score } : null)
+        .filter(Boolean)
+        .sort((a, b) => a.score - b.score)
+        .slice(0, 2)
+        .map(item => item.index);
+      return scored.length ? scored : [0, 8];
+    }
+
+    function truncateTitle(title) {
+      return title.length > 20 ? `${title.slice(0, 20)}...` : title;
+    }
+
+    function renderTodayPlan() {
+      const dayIndex = new Date().getDay();
+      const plan = dailyPlans[dayIndex];
+      const week = currentWeekNumber();
+      const indexes = todayRecommendationIndexes(dayIndex);
+      const maxMinutes = Math.max(...plan.time.map(item => item[1]));
+
+      els.todayPlanMeta.textContent = `週${weekdayLabels[dayIndex]}・第 ${week} 週`;
+      els.todayPlanTopic.textContent = plan.topic;
+      els.todayPlanGoal.textContent = `第 ${week} 週目標：${weekGoals[week - 1]}`;
+      els.todayPlanQuestions.innerHTML = indexes.map(index => {
+        const done = Boolean(state.feedback[index]);
+        const prefix = done ? "✓" : "▶";
+        return `
+          <button class="plan-question ${done ? "done" : ""}" type="button" data-plan-question="${index}">
+            <span>${prefix}</span>
+            <span>Q${index + 1} ${truncateTitle(questions[index].title)}</span>
+          </button>
+        `;
+      }).join("");
+      els.todayPlanTime.innerHTML = plan.time.map(([label, minutes]) => `
+        <div class="time-row">
+          <span>${label}</span>
+          <div class="time-track"><span style="width:${Math.max(12, Math.round(minutes / maxMinutes * 100))}%"></span></div>
+          <span>${minutes}min</span>
+        </div>
+      `).join("");
+    }
+
+    function renderQuestion() {
+      const question = questions[state.current];
+      els.questionCount.textContent = `第 ${state.current + 1} 題 / ${questions.length}`;
+      els.domainTag.textContent = domains[question.domain];
+      els.questionTitle.textContent = question.title;
+      els.questionHint.textContent = question.hint;
+      els.guideGrid.innerHTML = question.guide.map(item => `
+        <div class="guide-item">
+          <strong>${item[0]}</strong>
+          <span>${item[1]}</span>
+        </div>
+      `).join("");
+      els.guideGrid.classList.toggle("is-hidden", !state.hintsOpen[state.current]);
+      els.hintToggleBtn.textContent = state.hintsOpen[state.current] ? "▴ 收起提示" : "▾ 顯示答題提示";
+      renderChecklist(question);
+      els.answerInput.value = state.answers[state.current] || "";
+      updateAnswerModeText();
+      updateWordCount();
+      renderFollowup();
+      renderFeedback();
+    }
+
+    function renderChecklist(question) {
+      const checks = state.selfChecks[state.current] || Array(question.expected.length).fill(false);
+      els.checklistGrid.innerHTML = question.expected.map(([label], index) => `
+        <label class="check-item">
+          <input type="checkbox" data-check="${index}" ${checks[index] ? "checked" : ""}>
+          <span>${label}</span>
+        </label>
+      `).join("");
+    }
+
+    function renderFeedback() {
+      const current = state.feedback[state.current];
+      if (!current) {
+        els.scoreCircle.textContent = "0";
+        setScoreClass(null);
+        els.feedbackTitle.textContent = "先寫一段回答";
+        els.feedbackSummary.textContent = "按下「取得回饋」後，會依照具體性、結構、專案連結、驗證與領域關鍵點評分。";
+        els.strengthList.innerHTML = "<li>尚未分析。</li>";
+        els.issueList.innerHTML = "<li>先回答這題，再取得回饋。</li>";
+        els.modelAnswerBlock.style.display = "none";
+        els.modelAnswer.textContent = "";
+      } else {
+        els.scoreCircle.textContent = current.score;
+        setScoreClass(current.score);
+        els.feedbackTitle.textContent = current.title;
+        els.feedbackSummary.textContent = current.summary;
+        els.strengthList.innerHTML = current.strengths.map(item => `<li>${item}</li>`).join("");
+        els.issueList.innerHTML = current.issues.map(item => `<li>${item}</li>`).join("");
+        els.modelAnswerBlock.style.display = "block";
+        els.modelAnswer.textContent = questions[state.current].skeleton;
+      }
+      renderSummary();
+    }
+
+    function setScoreClass(score) {
+      els.scoreCircle.classList.remove("low", "mid", "good", "excellent");
+      if (score === null) {
+        els.scoreCircle.style.borderColor = "var(--accent-soft)";
+        els.scoreCircle.style.color = "var(--accent)";
+        return;
+      }
+      if (score < 45) els.scoreCircle.classList.add("low");
+      else if (score < 65) els.scoreCircle.classList.add("mid");
+      else if (score < 80) els.scoreCircle.classList.add("good");
+      else els.scoreCircle.classList.add("excellent");
+      els.scoreCircle.style.borderColor = "";
+      els.scoreCircle.style.color = "";
+    }
+
+    function renderSummary() {
+      const complete = completedCount();
+      const current = state.feedback[state.current];
+      const focus = weakestDomain();
+      els.progressFill.style.width = `${complete / questions.length * 100}%`;
+      els.completeMetric.textContent = `${Math.round(complete / questions.length * 100)}%`;
+      els.currentScoreMetric.textContent = current ? current.score : "0";
+      els.focusMetric.textContent = domains[focus];
+      els.averageMetric.textContent = averageScore();
+      renderTodayPlan();
+      renderBars();
+      renderTasks();
+    }
+
+    function renderBars() {
+      const scores = domainScores();
+      els.bars.innerHTML = Object.keys(domains).map(domain => `
+        <div class="bar-row">
+          <span>${domains[domain]}</span>
+          <div class="bar"><span style="width:${scores[domain]}%"></span></div>
+          <span>${scores[domain]}</span>
+        </div>
+      `).join("");
+    }
+
+    function renderTasks() {
+      const focus = weakestDomain();
+      const minutes = Number(els.timeSelect.value);
+      const mode = els.modeSelect.value;
+      const chunks = mode === "light" ? [25, 20, 15] : minutes === 60 ? [25, 20, 15] : minutes === 180 ? [45, 40, 35, 30] : [35, 30, 30, 25];
+      const tasks = [
+        ["重寫目前這題", "把右側缺口補進回答，重新送出一次。"],
+        ...taskBank[focus]
+      ];
+      els.taskMeta.textContent = `${minutes} 分鐘`;
+      els.taskList.innerHTML = chunks.map((chunk, index) => {
+        const task = tasks[index % tasks.length];
+        return `
+          <label class="task">
+            <input type="checkbox">
+            <span>
+              <strong>${task[0]}</strong>
+              <span>${task[1]}</span>
+            </span>
+            <small>${chunk}m</small>
+          </label>
+        `;
+      }).join("");
+    }
+
+    function updateWordCount() {
+      const count = normalize(els.answerInput.value).length;
+      els.wordCount.textContent = `${count} 字`;
+    }
+
+    function submitFeedback() {
+      state.answers[state.current] = els.answerInput.value;
+      state.feedback[state.current] = analyzeAnswer(questions[state.current], els.answerInput.value, state.selfChecks[state.current]);
+      renderFeedback();
+      save();
+    }
+
+    function showFollowup() {
+      const question = questions[state.current];
+      const list = question.followups;
+      state.followupQuestions[state.current] = list[Math.floor(Math.random() * list.length)];
+      state.followupAnswers[state.current] = "";
+      state.followupFeedback[state.current] = null;
+      renderFollowup();
+      save();
+    }
+
+    function renderFollowup() {
+      const question = state.followupQuestions[state.current];
+      const feedback = state.followupFeedback[state.current];
+      els.followupOutput.textContent = question || "按「面試官追問」取得下一個問題。";
+      els.followupAnswerBox.classList.toggle("is-hidden", !question);
+      els.followupInput.value = state.followupAnswers[state.current] || "";
+      if (!question) {
+        els.followupFeedbackResult.textContent = "";
+      } else if (!feedback) {
+        els.followupFeedbackResult.textContent = "寫完追問回答後，按「取得追問回饋」。";
+      } else {
+        els.followupFeedbackResult.innerHTML = `<strong>${feedback.title}｜${feedback.score} 分</strong><br>${feedback.summary}<br>${feedback.issues.slice(0, 2).join(" ")}`;
+      }
+    }
+
+    function submitFollowupFeedback() {
+      if (!state.followupQuestions[state.current]) {
+        showFollowup();
+      }
+      state.followupAnswers[state.current] = els.followupInput.value;
+      const feedback = analyzeFollowup(els.followupInput.value);
+      state.followupFeedback[state.current] = feedback;
+      renderFollowup();
+      save();
+    }
+
+    function analyzeFollowup(answer) {
+      const text = normalize(answer);
+      let score = 0;
+      const issues = [];
+      if (text.length >= 100) score += 30;
+      else if (text.length >= 50) {
+        score += 18;
+        issues.push("追問回答還可以再補一個具體例子。");
+      } else {
+        issues.push("追問回答太短，面試官會覺得你沒有補充到重點。");
+      }
+      if (/因為|所以|取捨|風險|限制|如果|我會/.test(text)) score += 25;
+      else issues.push("追問需要更直接回到原因、取捨或下一步行動。");
+      if (/S-111|PostgreSQL|PostGIS|API|QGIS|SQL|Python|資料|hotspot|pipeline/i.test(text)) score += 20;
+      else issues.push("建議把追問回答連回你的資料專案或具體技術。");
+      if (/驗證|檢查|測試|比對|筆數|確認|log/i.test(text)) score += 20;
+      else issues.push("補一句你會如何驗證，回答會更像工程實戰。");
+      if (/大概|可能就是|之類|等等/.test(text)) {
+        score -= 5;
+        issues.push("追問回答裡有模糊語氣，請改成明確判斷。");
+      }
+      score = Math.max(0, Math.min(100, Math.round(score)));
+      const title = score >= 80 ? "追問可用" : score >= 60 ? "方向可用" : "追問需補強";
+      const summary = score >= 80 ? "這個追問回答已有補充價值，可以再練更精簡。" : score >= 60 ? "方向是對的，但請補一個例子或驗證方式。" : "目前追問回答還不夠像面試補充，先補原因、例子與驗證。";
+      return { score, title, summary, issues };
+    }
+
+    function insertTemplate() {
+      const writtenTemplate = `我的結論是：\n\n我會先：\n\n接著我會：\n\n如果連到我的 S-111 / 資料專案經驗：\n\n我會怎麼驗證結果：\n\n可能的風險或取捨：`;
+      const spokenTemplate = `所以我的回答是：\n\n我會先...\n\n原因是...\n\n如果用我之前的 S-111 專案來說的話...\n\n最後我會確認結果是對的，做法是...`;
+      const template = els.answerModeSelect.value === "spoken" ? spokenTemplate : writtenTemplate;
+      if (!normalize(els.answerInput.value)) {
+        els.answerInput.value = template;
+      } else {
+        els.answerInput.value += `\n\n回答結構：\n${template}`;
+      }
+      state.answers[state.current] = els.answerInput.value;
+      updateWordCount();
+      save();
+    }
+
+    function updateAnswerModeText() {
+      if (els.answerModeSelect.value === "spoken") {
+        els.answerInput.placeholder = "請像在面試現場開口一樣，把你要說的話逐字打出來。不用追求文法完美，說出思路比寫得漂亮更重要。";
+      } else {
+        els.answerInput.placeholder = "請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。";
+      }
+    }
+
+    function renderAll() {
+      renderQuestion();
+      renderSummary();
+      save();
+    }
+
+    els.answerInput.addEventListener("input", () => {
+      state.answers[state.current] = els.answerInput.value;
+      updateWordCount();
+      save();
+    });
+
+    els.checklistGrid.addEventListener("change", event => {
+      const input = event.target.closest("[data-check]");
+      if (!input) return;
+      const index = Number(input.dataset.check);
+      state.selfChecks[state.current][index] = input.checked;
+      save();
+    });
+
+    els.hintToggleBtn.addEventListener("click", () => {
+      state.hintsOpen[state.current] = !state.hintsOpen[state.current];
+      els.guideGrid.classList.toggle("is-hidden", !state.hintsOpen[state.current]);
+      els.hintToggleBtn.textContent = state.hintsOpen[state.current] ? "▴ 收起提示" : "▾ 顯示答題提示";
+      save();
+    });
+
+    els.followupInput.addEventListener("input", () => {
+      state.followupAnswers[state.current] = els.followupInput.value;
+      save();
+    });
+
+    els.todayPlanQuestions.addEventListener("click", event => {
+      const button = event.target.closest("[data-plan-question]");
+      if (!button) return;
+      state.current = Number(button.dataset.planQuestion);
+      renderAll();
+      window.scrollTo({ top: 0 });
+    });
+
+    document.getElementById("feedbackBtn").addEventListener("click", submitFeedback);
+    document.getElementById("feedbackBtnTop").addEventListener("click", submitFeedback);
+    document.getElementById("followupBtn").addEventListener("click", showFollowup);
+    document.getElementById("followupFeedbackBtn").addEventListener("click", submitFollowupFeedback);
+    document.getElementById("templateBtn").addEventListener("click", insertTemplate);
+
+    document.getElementById("prevBtn").addEventListener("click", () => {
+      state.current = Math.max(0, state.current - 1);
+      renderAll();
+    });
+
+    document.getElementById("nextBtn").addEventListener("click", () => {
+      state.current = Math.min(questions.length - 1, state.current + 1);
+      renderAll();
+    });
+
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      state.current = 0;
+      state.answers = Array(questions.length).fill("");
+      state.feedback = Array(questions.length).fill(null);
+      state.hintsOpen = Array(questions.length).fill(false);
+      state.selfChecks = questions.map(question => Array(question.expected.length).fill(false));
+      state.followupQuestions = Array(questions.length).fill("");
+      state.followupAnswers = Array(questions.length).fill("");
+      state.followupFeedback = Array(questions.length).fill(null);
+      localStorage.removeItem("rongDataMockInterview");
+      els.followupOutput.textContent = "按「面試官追問」取得下一個問題。";
+      renderAll();
+    });
+
+    [els.roleSelect, els.timeSelect, els.modeSelect, els.answerModeSelect].forEach(select => {
+      select.addEventListener("change", () => {
+        updateAnswerModeText();
+        renderSummary();
+        save();
+      });
+    });
+
+    load();
+    renderAll();
+  </script>
+</body>
+</html>
