@@ -618,12 +618,15 @@
       min-height: 34px;
       display: grid;
       place-items: center;
+      padding: 6px 8px;
       border: 1px solid var(--line);
       border-radius: 6px;
       background: #fff;
       color: var(--accent);
       font-size: 13px;
       font-weight: 800;
+      line-height: 1.25;
+      text-align: center;
       text-decoration: none;
     }
 
@@ -634,6 +637,29 @@
 
     .knowledge-start {
       margin-top: 12px;
+    }
+
+    .knowledge-outcomes {
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 6px;
+      margin-top: 12px;
+      padding-top: 12px;
+    }
+
+    .knowledge-outcomes strong {
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .knowledge-outcomes ul {
+      color: var(--muted);
+      display: grid;
+      gap: 5px;
+      font-size: 13px;
+      line-height: 1.5;
+      margin: 0;
+      padding-left: 18px;
     }
 
     .time-bars {
@@ -1098,10 +1124,16 @@
               <p id="dailyKnowledgeConcept"></p>
               <div class="knowledge-tags" id="dailyKnowledgeTags"></div>
               <p class="knowledge-s111" id="dailyKnowledgeS111"></p>
-              <div class="video-links" aria-label="今日新知影片學習連結">
-                <span>影片學習</span>
-                <a id="dailyYoutubeLink" href="#" target="_blank" rel="noreferrer">YouTube</a>
-                <a id="dailyBilibiliLink" href="#" target="_blank" rel="noreferrer">Bilibili</a>
+              <div class="video-links" aria-label="今日新知學習資源">
+                <span>學習資源</span>
+                <a id="dailyYoutubeLink" href="#" target="_blank" rel="noreferrer">影片：YouTube</a>
+                <a id="dailyBilibiliLink" href="#" target="_blank" rel="noreferrer">影片：Bilibili</a>
+                <a id="dailyReferenceLink" href="#" target="_blank" rel="noreferrer">官方 / 文章</a>
+                <a id="dailyPracticeLink" href="#" target="_blank" rel="noreferrer">練習題</a>
+              </div>
+              <div class="knowledge-outcomes">
+                <strong>今日驗收</strong>
+                <ul id="dailyKnowledgeOutcomes"></ul>
               </div>
               <button class="plan-question knowledge-start" id="dailyKnowledgeBtn" type="button">
                 <span id="dailyKnowledgeBtnIcon">▶</span>
@@ -2025,6 +2057,9 @@
       dailyKnowledgeS111: document.getElementById("dailyKnowledgeS111"),
       dailyYoutubeLink: document.getElementById("dailyYoutubeLink"),
       dailyBilibiliLink: document.getElementById("dailyBilibiliLink"),
+      dailyReferenceLink: document.getElementById("dailyReferenceLink"),
+      dailyPracticeLink: document.getElementById("dailyPracticeLink"),
+      dailyKnowledgeOutcomes: document.getElementById("dailyKnowledgeOutcomes"),
       dailyKnowledgeBtn: document.getElementById("dailyKnowledgeBtn"),
       dailyKnowledgeBtnIcon: document.getElementById("dailyKnowledgeBtnIcon"),
       dailyKnowledgeBtnText: document.getElementById("dailyKnowledgeBtnText"),
@@ -2300,6 +2335,98 @@
       return `https://search.bilibili.com/all?keyword=${query}`;
     }
 
+    function googleSearchUrl(query) {
+      return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    }
+
+    function referenceResource(lesson) {
+      const title = lesson.title.toLowerCase();
+      if (/etl/.test(title)) {
+        return { label: "IBM ETL", url: "https://www.ibm.com/think/topics/etl" };
+      }
+      if (/window/.test(title)) {
+        return { label: "PostgreSQL Window", url: "https://www.postgresql.org/docs/current/tutorial-window.html" };
+      }
+      if (/cte|subquery/.test(title)) {
+        return { label: "PostgreSQL WITH", url: "https://www.postgresql.org/docs/current/queries-with.html" };
+      }
+      if (/primary|foreign|granularity/.test(title)) {
+        return { label: "PostgreSQL keys", url: "https://www.postgresql.org/docs/current/ddl-constraints.html" };
+      }
+      if (/dtype/.test(title)) {
+        return { label: "pandas dtype", url: "https://pandas.pydata.org/docs/user_guide/basics.html#dtypes" };
+      }
+      if (/null|outlier/.test(title)) {
+        return { label: "pandas missing", url: "https://pandas.pydata.org/docs/user_guide/missing_data.html" };
+      }
+      if (/assert|validation/.test(title)) {
+        return { label: "Python errors", url: "https://docs.python.org/3/tutorial/errors.html" };
+      }
+      if (/time complexity|hash map/.test(title)) {
+        return { label: "Python complexity", url: "https://wiki.python.org/moin/TimeComplexity" };
+      }
+      if (/schema/.test(title)) {
+        return { label: "PostgreSQL DDL", url: "https://www.postgresql.org/docs/current/ddl.html" };
+      }
+      if (/upsert|on conflict/.test(title)) {
+        return { label: "PostgreSQL INSERT", url: "https://www.postgresql.org/docs/current/sql-insert.html" };
+      }
+      if (/json|geojson/.test(title)) {
+        return { label: "GeoJSON RFC", url: "https://datatracker.ietf.org/doc/html/rfc7946" };
+      }
+      if (/bbox|postgis|gist/.test(title)) {
+        return { label: "PostGIS workshop", url: "https://postgis.net/workshops/postgis-intro/" };
+      }
+      if (/explain/.test(title)) {
+        return { label: "PostgreSQL EXPLAIN", url: "https://www.postgresql.org/docs/current/using-explain.html" };
+      }
+      if (/cache/.test(title)) {
+        return { label: "MDN Cache", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" };
+      }
+      if (/endpoint|query parameter|pagination|timeout|error handling/.test(title)) {
+        return { label: "REST guidelines", url: "https://github.com/microsoft/api-guidelines" };
+      }
+      return { label: "搜尋文章", url: googleSearchUrl(`${lesson.title} data engineering interview`) };
+    }
+
+    function practiceResource(lesson) {
+      if (lesson.domain === "sql") {
+        return { label: "LeetCode SQL", url: "https://leetcode.com/problemset/database/" };
+      }
+      if (lesson.domain === "python") {
+        return { label: "Kaggle Pandas", url: "https://www.kaggle.com/learn/pandas" };
+      }
+      if (lesson.domain === "api") {
+        return { label: "Postman Learn", url: "https://learning.postman.com/docs/introduction/overview/" };
+      }
+      if (lesson.domain === "story") {
+        return { label: "STAR practice", url: googleSearchUrl(`${lesson.title} interview practice`) };
+      }
+      return { label: "工程練習", url: googleSearchUrl(`${lesson.title} data engineering exercise`) };
+    }
+
+    function setResourceLink(element, prefix, resource) {
+      element.href = resource.url;
+      element.textContent = `${prefix}：${resource.label}`;
+      element.title = resource.url;
+      element.setAttribute("aria-label", `${prefix}：${resource.label}`);
+    }
+
+    function learningOutcomes(lesson) {
+      const domainOutcome = {
+        sql: "能用一個小表或查詢流程說明，不只背語法。",
+        python: "能說出檢查、清洗、例外資料與測試方式。",
+        pipeline: "能說出資料怎麼進來、怎麼重跑、怎麼避免髒資料進庫。",
+        api: "能說出 endpoint、參數、回傳、效能與錯誤處理。",
+        story: "能用 STAR 或取捨語言，把技術選擇講成面試答案。"
+      };
+      return [
+        `不用背定義，也能白話說出 ${lesson.terms[0]} 解決什麼問題。`,
+        domainOutcome[lesson.domain],
+        `能回答：「${lesson.challenge}」並補一句驗證、風險或取捨。`
+      ];
+    }
+
     function todayRecommendationIndexes(dayIndex) {
       const plan = dailyPlans[dayIndex];
       const plannedIndexes = plan.indexes !== "weakest"
@@ -2362,6 +2489,9 @@
       els.dailyYoutubeLink.title = `在 YouTube 搜尋：${videoSearchQuery(lesson, "youtube")}`;
       els.dailyBilibiliLink.href = videoSearchUrl("bilibili", lesson);
       els.dailyBilibiliLink.title = `在 Bilibili 搜尋：${videoSearchQuery(lesson, "bilibili")}`;
+      setResourceLink(els.dailyReferenceLink, "文件", referenceResource(lesson));
+      setResourceLink(els.dailyPracticeLink, "練習", practiceResource(lesson));
+      els.dailyKnowledgeOutcomes.innerHTML = learningOutcomes(lesson).map(outcome => `<li>${outcome}</li>`).join("");
       els.dailyKnowledgeBtn.classList.toggle("done", done);
       els.dailyKnowledgeBtnIcon.textContent = done ? "✓" : "▶";
       els.dailyKnowledgeBtnText.textContent = done ? "今日新知已完成" : "用今日新知考我";
