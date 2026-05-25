@@ -97,7 +97,8 @@
 
     .btn:disabled,
     .plan-question:disabled,
-    .nav-item:disabled {
+    .nav-item:disabled,
+    .video-links a.locked {
       cursor: not-allowed;
       opacity: 0.58;
     }
@@ -1098,6 +1099,35 @@
       background: var(--accent-soft);
     }
 
+    .video-links a.done {
+      border-color: rgba(22, 163, 74, 0.26);
+      background: #f1fbf5;
+      color: var(--ok);
+    }
+
+    .video-links a.current {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .video-links a.locked {
+      border-color: var(--line);
+      background: #f5f6f7;
+      color: var(--muted);
+    }
+
+    .video-links a.locked:hover {
+      border-color: var(--line);
+      background: #f5f6f7;
+    }
+
+    .resource-status {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+      margin-top: 8px;
+    }
+
     .knowledge-start {
       margin-top: 12px;
     }
@@ -1486,6 +1516,7 @@
               <a id="learningReferenceLink" href="#" target="_blank" rel="noreferrer">文件</a>
               <a id="learningPracticeLink" href="#" target="_blank" rel="noreferrer">練習</a>
             </div>
+            <div class="resource-status" id="learningResourceStatus">請依序點開學習資源。</div>
             <div class="knowledge-outcomes">
               <strong>今日驗收</strong>
               <ul id="learningOutcomes"></ul>
@@ -1700,6 +1731,7 @@
                 <a id="dailyReferenceLink" href="#" target="_blank" rel="noreferrer">官方 / 文章</a>
                 <a id="dailyPracticeLink" href="#" target="_blank" rel="noreferrer">練習題</a>
               </div>
+              <div class="resource-status" id="dailyResourceStatus">請依序點開學習資源。</div>
               <div class="knowledge-outcomes">
                 <strong>今日驗收</strong>
                 <ul id="dailyKnowledgeOutcomes"></ul>
@@ -2585,6 +2617,7 @@
       learnedLessons: Array(dailyLessons.length).fill(false),
       lessonReflections: Array(dailyLessons.length).fill(""),
       lessonReadiness: Array(dailyLessons.length).fill(null),
+      lessonResources: Array.from({ length: dailyLessons.length }, () => Array(4).fill(false)),
       answers: Array(questions.length).fill(""),
       feedback: Array(questions.length).fill(null),
       hintsOpen: Array(questions.length).fill(false),
@@ -2635,6 +2668,7 @@
       learningBilibiliLink: document.getElementById("learningBilibiliLink"),
       learningReferenceLink: document.getElementById("learningReferenceLink"),
       learningPracticeLink: document.getElementById("learningPracticeLink"),
+      learningResourceStatus: document.getElementById("learningResourceStatus"),
       learningOutcomes: document.getElementById("learningOutcomes"),
       lessonReflectionInput: document.getElementById("lessonReflectionInput"),
       lessonReadinessResult: document.getElementById("lessonReadinessResult"),
@@ -2660,6 +2694,7 @@
       dailyBilibiliLink: document.getElementById("dailyBilibiliLink"),
       dailyReferenceLink: document.getElementById("dailyReferenceLink"),
       dailyPracticeLink: document.getElementById("dailyPracticeLink"),
+      dailyResourceStatus: document.getElementById("dailyResourceStatus"),
       dailyKnowledgeOutcomes: document.getElementById("dailyKnowledgeOutcomes"),
       dailyKnowledgeBtn: document.getElementById("dailyKnowledgeBtn"),
       dailyKnowledgeBtnIcon: document.getElementById("dailyKnowledgeBtnIcon"),
@@ -2711,6 +2746,16 @@
       });
     }
 
+    function normalizeLessonResources(savedResources, learnedLessons = []) {
+      return Array.from({ length: dailyLessons.length }, (_, lessonIndex) => {
+        const savedItems = Array.isArray(savedResources) ? savedResources[lessonIndex] : null;
+        if (Array.isArray(savedItems)) {
+          return Array.from({ length: 4 }, (_, stepIndex) => Boolean(savedItems[stepIndex]));
+        }
+        return Array(4).fill(Boolean(learnedLessons[lessonIndex]));
+      });
+    }
+
     function backfillReadinessForLearned() {
       state.learnedLessons.forEach((learned, index) => {
         if (learned && !state.lessonReadiness[index]) {
@@ -2722,6 +2767,9 @@
             strengths: ["已保留原本完成進度。"],
             issues: ["想更穩的話，可以補寫學習檢核再重新分析。"]
           };
+        }
+        if (learned && Array.isArray(state.lessonResources[index])) {
+          state.lessonResources[index] = Array(4).fill(true);
         }
       });
     }
@@ -2737,6 +2785,7 @@
         state.learnedLessons = normalizeLearnedLessons(saved.learnedLessons, state.feedback);
         state.lessonReflections = mergeSavedArray(saved.lessonReflections, "");
         state.lessonReadiness = normalizeLessonReadiness(saved.lessonReadiness);
+        state.lessonResources = normalizeLessonResources(saved.lessonResources, state.learnedLessons);
         backfillReadinessForLearned();
         const maxOffset = highestUnlockedLessonOffset();
         state.lessonOffset = Number.isInteger(saved.lessonOffset)
@@ -2765,6 +2814,7 @@
         learnedLessons: state.learnedLessons,
         lessonReflections: state.lessonReflections,
         lessonReadiness: state.lessonReadiness,
+        lessonResources: state.lessonResources,
         answers: state.answers,
         feedback: state.feedback,
         hintsOpen: state.hintsOpen,
@@ -2808,7 +2858,7 @@
     function progressPayload() {
       return {
         app: "rong-data-interview-learning-console",
-        version: 2,
+        version: 3,
         exportedAt: new Date().toISOString(),
         state: {
           current: state.current,
@@ -2817,6 +2867,7 @@
           learnedLessons: state.learnedLessons,
           lessonReflections: state.lessonReflections,
           lessonReadiness: state.lessonReadiness,
+          lessonResources: state.lessonResources,
           answers: state.answers,
           feedback: state.feedback,
           hintsOpen: state.hintsOpen,
@@ -2839,6 +2890,7 @@
       state.learnedLessons = normalizeLearnedLessons(incoming.learnedLessons, state.feedback);
       state.lessonReflections = mergeSavedArray(incoming.lessonReflections, "");
       state.lessonReadiness = normalizeLessonReadiness(incoming.lessonReadiness);
+      state.lessonResources = normalizeLessonResources(incoming.lessonResources, state.learnedLessons);
       backfillReadinessForLearned();
       const maxOffset = highestUnlockedLessonOffset();
       state.lessonOffset = Number.isInteger(incoming.lessonOffset)
@@ -3397,11 +3449,94 @@
       return lessonResource(curatedPractice, lesson, { label: "Roadmap Projects", url: "https://roadmap.sh/projects" });
     }
 
-    function setResourceLink(element, prefix, resource) {
-      element.href = resource.url;
-      element.textContent = `${prefix}：${resource.label}`;
+    function lessonResourceSequence(lesson) {
+      return [
+        { prefix: "YouTube", resource: videoResource("youtube", lesson) },
+        { prefix: "Bilibili", resource: videoResource("bilibili", lesson) },
+        { prefix: "文件", resource: referenceResource(lesson) },
+        { prefix: "練習", resource: practiceResource(lesson) }
+      ];
+    }
+
+    function completedResourceCount(offset) {
+      const resources = Array.isArray(state.lessonResources[offset]) ? state.lessonResources[offset] : [];
+      return resources.filter(Boolean).length;
+    }
+
+    function nextResourceStep(offset) {
+      const resources = Array.isArray(state.lessonResources[offset]) ? state.lessonResources[offset] : [];
+      const index = resources.findIndex(done => !done);
+      return index === -1 ? 4 : index;
+    }
+
+    function areLessonResourcesDone(offset) {
+      return completedResourceCount(offset) >= 4;
+    }
+
+    function isResourceStepUnlocked(offset, step) {
+      return isLessonUnlocked(offset) && (isLessonLearned(offset) || step <= nextResourceStep(offset));
+    }
+
+    function setResourceLink(element, prefix, resource, options = {}) {
+      const { offset = null, step = null } = options;
+      const tracked = Number.isInteger(offset) && Number.isInteger(step);
+      const done = tracked ? Boolean(state.lessonResources[offset] && state.lessonResources[offset][step]) : false;
+      const unlocked = tracked ? isResourceStepUnlocked(offset, step) : true;
+      const status = done ? "✓" : unlocked ? "開啟" : "鎖";
+      const label = tracked ? `${step + 1}. ${prefix}：${resource.label} ${status}` : `${prefix}：${resource.label}`;
+
+      element.textContent = label;
       element.title = resource.url;
-      element.setAttribute("aria-label", `${prefix}：${resource.label}`);
+      element.setAttribute("aria-label", label);
+      element.classList.toggle("done", done);
+      element.classList.toggle("current", tracked && unlocked && !done);
+      element.classList.toggle("locked", tracked && !unlocked);
+      element.dataset.resourceUrl = resource.url;
+
+      if (tracked) {
+        element.dataset.resourceOffset = String(offset);
+        element.dataset.resourceStep = String(step);
+      } else {
+        delete element.dataset.resourceOffset;
+        delete element.dataset.resourceStep;
+      }
+
+      if (unlocked) {
+        element.href = resource.url;
+        element.setAttribute("target", "_blank");
+        element.setAttribute("rel", "noreferrer");
+        element.removeAttribute("aria-disabled");
+      } else {
+        element.href = "#";
+        element.removeAttribute("target");
+        element.setAttribute("aria-disabled", "true");
+      }
+    }
+
+    function resourceStatusText(offset) {
+      const done = completedResourceCount(offset);
+      if (isLessonLearned(offset)) return "本課資源與檢核已完成，可以進入挑戰或下一天。";
+      if (done >= 4) return "4 / 4 個資源已點開。現在可以寫學習檢核，達到 60 分後解鎖下一天。";
+      return `${done} / 4 個資源已點開。請依序開啟下一個資源，全部完成後才開放檢核與練習。`;
+    }
+
+    function markLessonResourceVisited(offset, step) {
+      if (!isResourceStepUnlocked(offset, step)) {
+        setSyncStatus(`請先完成 D${offset + 1} 的前一個學習資源。`, "error");
+        return false;
+      }
+      if (!Array.isArray(state.lessonResources[offset])) {
+        state.lessonResources[offset] = Array(4).fill(false);
+      }
+      const changed = !state.lessonResources[offset][step];
+      state.lessonResources[offset][step] = true;
+      if (changed) {
+        setSyncStatus(`D${offset + 1} 資源進度 ${completedResourceCount(offset)} / 4。`, "ok");
+        save();
+        renderAll();
+        maybeAutoUploadProgress();
+      }
+      return true;
     }
 
     function learningOutcomes(lesson) {
@@ -3865,6 +4000,7 @@
       const week = currentWeekNumber();
       const indexes = todayRecommendationIndexes(dayIndex);
       const maxMinutes = Math.max(...plan.time.map(item => item[1]));
+      const practiceUnlocked = areLessonResourcesDone(todayLearningOffset());
 
       els.todayPlanMeta.textContent = `第 ${learnedLessonCount()} / ${dailyLessons.length} 天`;
       els.todayPlanTopic.textContent = `目前課程：${dailyLessons[todayLearningOffset()].title}`;
@@ -3872,9 +4008,9 @@
       renderDailyKnowledge();
       els.todayPlanQuestions.innerHTML = indexes.map(index => {
         const done = Boolean(state.feedback[index]);
-        const prefix = done ? "✓" : "▶";
+        const prefix = done ? "✓" : practiceUnlocked ? "▶" : "鎖";
         return `
-          <button class="plan-question ${done ? "done" : ""}" type="button" data-plan-question="${index}">
+          <button class="plan-question ${done ? "done" : ""}" type="button" ${practiceUnlocked ? `data-plan-question="${index}"` : "disabled"}>
             <span>${prefix}</span>
             <span>Q${index + 1} ${truncateTitle(questions[index].title)}</span>
           </button>
@@ -3902,14 +4038,16 @@
       els.dailyKnowledgeConcept.textContent = lesson.concept;
       els.dailyKnowledgeTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
       els.dailyKnowledgeS111.textContent = lesson.s111;
-      setResourceLink(els.dailyYoutubeLink, "YouTube", videoResource("youtube", lesson));
-      setResourceLink(els.dailyBilibiliLink, "Bilibili", videoResource("bilibili", lesson));
-      setResourceLink(els.dailyReferenceLink, "文件", referenceResource(lesson));
-      setResourceLink(els.dailyPracticeLink, "練習", practiceResource(lesson));
+      const resources = lessonResourceSequence(lesson);
+      setResourceLink(els.dailyYoutubeLink, resources[0].prefix, resources[0].resource, { offset, step: 0 });
+      setResourceLink(els.dailyBilibiliLink, resources[1].prefix, resources[1].resource, { offset, step: 1 });
+      setResourceLink(els.dailyReferenceLink, resources[2].prefix, resources[2].resource, { offset, step: 2 });
+      setResourceLink(els.dailyPracticeLink, resources[3].prefix, resources[3].resource, { offset, step: 3 });
+      els.dailyResourceStatus.textContent = resourceStatusText(offset);
       els.dailyKnowledgeOutcomes.innerHTML = learningOutcomes(lesson).map(outcome => `<li>${outcome}</li>`).join("");
       els.dailyKnowledgeBtn.classList.toggle("done", learned);
       els.dailyKnowledgeBtnIcon.textContent = learned ? "✓" : "▶";
-      els.dailyKnowledgeBtnText.textContent = learned ? "用本課考我" : "先讀這一課";
+      els.dailyKnowledgeBtnText.textContent = learned ? "用本課考我" : areLessonResourcesDone(offset) ? "寫學習檢核" : "先完成學習資源";
     }
 
     function activeLearningOffset() {
@@ -3925,9 +4063,11 @@
       els.lessonReflectionInput.value = state.lessonReflections[offset] || "";
       els.lessonReadinessResult.classList.remove("ok", "error");
       if (!readiness) {
+        const resourcesDone = areLessonResourcesDone(offset);
+        els.lessonReadinessResult.classList.toggle("error", !resourcesDone);
         els.lessonReadinessResult.innerHTML = `
-          <strong>尚未檢核</strong>
-          <span>寫完後按「分析學習程度」。達到 60 分就會自動解鎖下一天。</span>
+          <strong>${resourcesDone ? "尚未檢核" : "先完成學習資源"}</strong>
+          <span>${resourcesDone ? "寫完後按「分析學習程度」。達到 60 分就會自動解鎖下一天。" : "請先依序點開 4 個學習資源，再寫學習檢核。這樣才不會只靠猜題進入練習。"}</span>
         `;
         return;
       }
@@ -3969,17 +4109,20 @@
       els.learningLessonTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
       els.learningLessonS111.textContent = lesson.s111;
       els.learningTeaching.innerHTML = renderTeachingCards(lesson);
-      setResourceLink(els.learningYoutubeLink, "YouTube", videoResource("youtube", lesson));
-      setResourceLink(els.learningBilibiliLink, "Bilibili", videoResource("bilibili", lesson));
-      setResourceLink(els.learningReferenceLink, "文件", referenceResource(lesson));
-      setResourceLink(els.learningPracticeLink, "練習", practiceResource(lesson));
+      const resources = lessonResourceSequence(lesson);
+      setResourceLink(els.learningYoutubeLink, resources[0].prefix, resources[0].resource, { offset, step: 0 });
+      setResourceLink(els.learningBilibiliLink, resources[1].prefix, resources[1].resource, { offset, step: 1 });
+      setResourceLink(els.learningReferenceLink, resources[2].prefix, resources[2].resource, { offset, step: 2 });
+      setResourceLink(els.learningPracticeLink, resources[3].prefix, resources[3].resource, { offset, step: 3 });
+      els.learningResourceStatus.textContent = resourceStatusText(offset);
       els.learningOutcomes.innerHTML = learningOutcomes(lesson).map(outcome => `<li>${outcome}</li>`).join("");
       els.lessonReflectionInput.placeholder = `例如：我理解 ${lesson.title} 是... 它會用在... 在 S-111 裡我可以連到... 我會用...確認結果。`;
       renderLessonReadiness(offset);
-      els.startLessonChallengeBtn.disabled = false;
+      const resourcesDone = areLessonResourcesDone(offset);
+      els.startLessonChallengeBtn.disabled = !learned && !resourcesDone;
       els.startLessonChallengeBtn.textContent = learned
         ? offset < dailyLessons.length - 1 ? "前往下一天" : "已完成全部課程"
-        : state.lessonReadiness[offset] ? "重新分析學習程度" : "分析學習程度";
+        : !resourcesDone ? "先完成 4 個學習資源" : state.lessonReadiness[offset] ? "重新分析學習程度" : "分析學習程度";
       els.openTodayLessonBtn.disabled = !learned;
       els.openTodayLessonBtn.textContent = learned ? "用本課考我" : "達到 60 分後再考我";
       els.learningPlanTopic.textContent = plan.topic;
@@ -4012,6 +4155,7 @@
       els.courseNavMeta.textContent = state.view === "learn" ? "學習" : "答題";
       renderCourseProgress();
       const challengeUnlocked = isLessonLearned(todayOffset);
+      const practiceUnlocked = areLessonResourcesDone(todayOffset);
       const quickItems = [
         `<button class="nav-item ${state.view === "learn" && selectedOffset === todayOffset ? "active" : ""}" type="button" data-nav-home="today">
           <span>1</span><span>目前學習</span><small>D${todayOffset + 1}</small>
@@ -4037,10 +4181,10 @@
         const active = state.view === "interview" && state.current === index;
         const done = Boolean(state.feedback[index]);
         return `
-          <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""}" type="button" data-question="${index}">
+          <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""} ${practiceUnlocked ? "" : "locked"}" type="button" ${practiceUnlocked ? `data-question="${index}"` : "disabled"}>
             <span>Q${index + 1}</span>
             <span>${question.title}</span>
-            <small>${done ? "✓" : domains[question.domain]}</small>
+            <small>${done ? "✓" : practiceUnlocked ? domains[question.domain] : "鎖定"}</small>
           </button>
         `;
       }).join("");
@@ -4077,6 +4221,11 @@
 
     function openQuestion(index) {
       const target = Math.min(Math.max(index, 0), questions.length - 1);
+      if (target < baseQuestionCount && !areLessonResourcesDone(todayLearningOffset())) {
+        openLearning(todayLearningOffset());
+        setSyncStatus("請先依序點完本課 4 個學習資源，再進入練習題。", "error");
+        return;
+      }
       if (target >= dailyLessonStartIndex) {
         const offset = target - dailyLessonStartIndex;
         if (!isLessonLearned(offset)) {
@@ -4246,6 +4395,11 @@
 
     function submitLessonReadiness() {
       const offset = activeLearningOffset();
+      if (!areLessonResourcesDone(offset)) {
+        renderLessonReadiness(offset);
+        setSyncStatus(`D${offset + 1} 請先依序點完 4 個學習資源，再做 60 分檢核。`, "error");
+        return;
+      }
       const lesson = dailyLessons[offset];
       state.lessonReflections[offset] = els.lessonReflectionInput.value;
       const readiness = analyzeLessonReadiness(lesson, els.lessonReflectionInput.value);
@@ -4385,6 +4539,20 @@
       save();
     });
 
+    document.addEventListener("click", event => {
+      const resourceLink = event.target.closest("[data-resource-step]");
+      if (!resourceLink) return;
+      const offset = Number(resourceLink.dataset.resourceOffset);
+      const step = Number(resourceLink.dataset.resourceStep);
+      if (!Number.isInteger(offset) || !Number.isInteger(step)) return;
+      if (!isResourceStepUnlocked(offset, step)) {
+        event.preventDefault();
+        setSyncStatus(`D${offset + 1} 請先完成前一個學習資源。`, "error");
+        return;
+      }
+      markLessonResourceVisited(offset, step);
+    });
+
     els.todayPlanQuestions.addEventListener("click", event => {
       const button = event.target.closest("[data-plan-question]");
       if (!button) return;
@@ -4470,6 +4638,7 @@
       state.learnedLessons = Array(dailyLessons.length).fill(false);
       state.lessonReflections = Array(dailyLessons.length).fill("");
       state.lessonReadiness = Array(dailyLessons.length).fill(null);
+      state.lessonResources = Array.from({ length: dailyLessons.length }, () => Array(4).fill(false));
       state.answers = Array(questions.length).fill("");
       state.feedback = Array(questions.length).fill(null);
       state.hintsOpen = Array(questions.length).fill(false);
