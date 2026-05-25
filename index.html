@@ -2335,6 +2335,68 @@
       return `https://search.bilibili.com/all?keyword=${query}`;
     }
 
+    const curatedVideos = {
+      youtube: [
+        { match: /etl|data pipeline/i, label: "IBM ETL", url: "https://www.youtube.com/watch?v=OW5OgsLpDCQ" },
+        { match: /primary|foreign/i, label: "PK/FK + JOIN", url: "https://www.youtube.com/watch?v=G3lJAxg1cy8" },
+        { match: /granularity/i, label: "SQL Join Case", url: "https://www.youtube.com/watch?v=3lXayXnaO5Y" },
+        { match: /window|row_number|partition/i, label: "SQL Window", url: "https://www.youtube.com/watch?v=rIcB4zMYMas" },
+        { match: /cte|subquery/i, label: "CTE vs Subquery", url: "https://www.youtube.com/watch?v=LJC8277LONg" },
+        { match: /dtype/i, label: "pandas dtype", url: "https://www.youtube.com/watch?v=1pJJNSMrxRs" },
+        { match: /null|outlier|missing/i, label: "pandas cleaning", url: "https://www.youtube.com/watch?v=bDhvCp3_lYw" },
+        { match: /assert|validation|exception/i, label: "Python exceptions", url: "https://www.youtube.com/watch?v=V_NXT2-QIlE" },
+        { match: /time complexity/i, label: "Big O", url: "https://www.youtube.com/watch?v=XMUe3zFhM5c" },
+        { match: /hash map|dict/i, label: "Hash map", url: "https://www.youtube.com/watch?v=y11XNXi9dgs" },
+        { match: /schema/i, label: "DB design", url: "https://www.youtube.com/watch?v=lWX5mk2adrg" },
+        { match: /idempotent/i, label: "Idempotency", url: "https://www.youtube.com/watch?v=GsZ_ZtlRCBg" },
+        { match: /upsert|on conflict/i, label: "Postgres upsert", url: "https://www.youtube.com/watch?v=QMJYq5G42As" },
+        { match: /manifest|version/i, label: "Data versioning", url: "https://www.youtube.com/watch?v=kLKBcPonMYw" },
+        { match: /endpoint|query parameter|timeout|error handling/i, label: "REST API", url: "https://www.youtube.com/watch?v=-mN3VyJuCjM" },
+        { match: /json|geojson/i, label: "GeoJSON APIs", url: "https://www.youtube.com/watch?v=W_9I2UNs8CY" },
+        { match: /pagination|limit/i, label: "API pagination", url: "https://www.youtube.com/watch?v=14K_a2kKTxU" },
+        { match: /bbox|postgis|gist/i, label: "PostGIS spatial DB", url: "https://www.youtube.com/watch?v=FKzw9HJ6XYA" },
+        { match: /explain/i, label: "Postgres EXPLAIN", url: "https://www.youtube.com/watch?v=P7EUFtjeAmI" },
+        { match: /cache/i, label: "HTTP caching", url: "https://www.youtube.com/watch?v=HiBDZgTNpXY" },
+        { match: /star/i, label: "STAR method", url: "https://www.youtube.com/watch?v=uQEuo7woEEk" },
+        { match: /trade-off|tradeoff/i, label: "System trade-offs", url: "https://www.youtube.com/watch?v=1nENigGr-a0" },
+        { match: /bottleneck|profiling/i, label: "Profiling", url: "https://www.youtube.com/watch?v=i24jvJ-PN84" },
+        { match: /regression/i, label: "Regression testing", url: "https://www.youtube.com/watch?v=AWX6WvYktwk" }
+      ],
+      bilibili: [
+        { match: /etl|data pipeline/i, label: "數據工程 ETL", url: "https://www.bilibili.com/video/BV1kt421473m/" },
+        { match: /primary|foreign/i, label: "主鍵與外鍵", url: "https://www.bilibili.com/video/BV1hS4y1i7mD/" },
+        { match: /granularity|join/i, label: "SQL JOIN", url: "https://www.bilibili.com/video/BV1Xm4y1973L/" },
+        { match: /window|row_number|partition/i, label: "SQL 窗口函數", url: "https://www.bilibili.com/video/BV1b34y147Re/" },
+        { match: /cte|subquery|schema/i, label: "PostgreSQL 速通", url: "https://www.bilibili.com/video/BV1XrqwBXEGX/" },
+        { match: /dtype|null|outlier|missing/i, label: "Pandas 清洗", url: "https://www.bilibili.com/video/BV1M64y187bz/" },
+        { match: /assert/i, label: "Python assert", url: "https://www.bilibili.com/video/BV1VA411r7wp/" },
+        { match: /validation|exception/i, label: "Python 異常", url: "https://www.bilibili.com/video/BV1g7NizLEAZ/" },
+        { match: /time complexity/i, label: "時間複雜度", url: "https://www.bilibili.com/video/BV1Zw411w7u1/" },
+        { match: /hash map|dict/i, label: "Python 字典", url: "https://www.bilibili.com/video/BV1Km4y187gw/" },
+        { match: /idempotent|manifest/i, label: "ETL 資料處理", url: "https://www.bilibili.com/video/BV1uD42157g5/" },
+        { match: /upsert|on conflict/i, label: "PostgreSQL 速通", url: "https://www.bilibili.com/video/BV1XrqwBXEGX/" },
+        { match: /endpoint|query parameter|pagination|timeout|error handling/i, label: "REST API 設計", url: "https://www.bilibili.com/video/BV1rk7azRE2F/" },
+        { match: /json|geojson/i, label: "JSON 入門", url: "https://www.bilibili.com/video/BV1AnJazZEPe/" },
+        { match: /bbox|postgis|gist/i, label: "PostGIS 實戰", url: "https://www.bilibili.com/video/BV1AN411U76a/" },
+        { match: /explain/i, label: "PostgreSQL 優化", url: "https://www.bilibili.com/video/BV1fS4y1F7a4/" },
+        { match: /cache/i, label: "REST API Cache", url: "https://www.bilibili.com/video/BV1ksR5YsEFC/" },
+        { match: /star/i, label: "資料分析 STAR", url: "https://www.bilibili.com/video/BV1jb411X7Su/" },
+        { match: /trade-off|tradeoff/i, label: "系統設計基礎", url: "https://www.bilibili.com/video/BV1LN411w7yH/" },
+        { match: /bottleneck|profiling/i, label: "性能測試", url: "https://www.bilibili.com/video/BV1hL4y1B7Et/" },
+        { match: /regression/i, label: "回歸測試", url: "https://www.bilibili.com/video/av219886511" }
+      ]
+    };
+
+    function videoResource(platform, lesson) {
+      const target = `${lesson.title} ${lesson.terms.join(" ")} ${lesson.domain}`;
+      const resource = curatedVideos[platform].find(item => item.match.test(target));
+      if (resource) return resource;
+      return {
+        label: "搜尋備用",
+        url: videoSearchUrl(platform, lesson)
+      };
+    }
+
     function googleSearchUrl(query) {
       return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
     }
@@ -2485,10 +2547,8 @@
       els.dailyKnowledgeConcept.textContent = lesson.concept;
       els.dailyKnowledgeTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
       els.dailyKnowledgeS111.textContent = lesson.s111;
-      els.dailyYoutubeLink.href = videoSearchUrl("youtube", lesson);
-      els.dailyYoutubeLink.title = `在 YouTube 搜尋：${videoSearchQuery(lesson, "youtube")}`;
-      els.dailyBilibiliLink.href = videoSearchUrl("bilibili", lesson);
-      els.dailyBilibiliLink.title = `在 Bilibili 搜尋：${videoSearchQuery(lesson, "bilibili")}`;
+      setResourceLink(els.dailyYoutubeLink, "YouTube", videoResource("youtube", lesson));
+      setResourceLink(els.dailyBilibiliLink, "Bilibili", videoResource("bilibili", lesson));
       setResourceLink(els.dailyReferenceLink, "文件", referenceResource(lesson));
       setResourceLink(els.dailyPracticeLink, "練習", practiceResource(lesson));
       els.dailyKnowledgeOutcomes.innerHTML = learningOutcomes(lesson).map(outcome => `<li>${outcome}</li>`).join("");
