@@ -279,7 +279,7 @@
     }
 
     .lesson-deep {
-      border: 1px solid var(--line);
+      border: 1px solid #dfe7e8;
       border-radius: 6px;
       background: #fff;
       display: grid;
@@ -288,7 +288,7 @@
 
     .lesson-deep-section,
     .lesson-term-list {
-      border-top: 1px solid var(--line);
+      border-top: 1px solid #e7ecec;
       padding: 14px;
     }
 
@@ -302,7 +302,7 @@
     }
 
     .lesson-deep-grid .lesson-deep-section:nth-child(2) {
-      border-left: 1px solid var(--line);
+      border-left: 1px solid #e7ecec;
     }
 
     .lesson-deep-section strong,
@@ -325,17 +325,17 @@
     }
 
     .lesson-s111-bridge {
-      background: #f8fbfb;
+      background: #fff;
     }
 
     .lesson-answer-frame {
-      border-left: 3px solid var(--accent);
+      border-left: 3px solid #b8c7c9;
       color: var(--ink) !important;
       padding-left: 10px;
     }
 
     .lesson-term-list {
-      background: #fbfcfc;
+      background: #fff;
       display: grid;
       gap: 10px;
     }
@@ -377,7 +377,7 @@
     }
 
     .lesson-warning {
-      background: #fff8ed;
+      background: #fff;
     }
 
     .lesson-actions {
@@ -3133,74 +3133,71 @@
       };
     }
 
-    function googleSearchUrl(query) {
-      return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+    const curatedReferences = [
+      { match: /etl/i, label: "IBM ETL", url: "https://www.ibm.com/think/topics/etl" },
+      { match: /primary|foreign/i, label: "PostgreSQL constraints", url: "https://www.postgresql.org/docs/current/ddl-constraints.html" },
+      { match: /granularity/i, label: "Kimball grain", url: "https://www.kimballgroup.com/2008/11/fact-tables/" },
+      { match: /window/i, label: "PostgreSQL Window", url: "https://www.postgresql.org/docs/current/tutorial-window.html" },
+      { match: /cte|subquery/i, label: "PostgreSQL WITH", url: "https://www.postgresql.org/docs/current/queries-with.html" },
+      { match: /dtype/i, label: "pandas dtypes", url: "https://pandas.pydata.org/docs/user_guide/basics.html#dtypes" },
+      { match: /null|outlier/i, label: "pandas missing data", url: "https://pandas.pydata.org/docs/user_guide/missing_data.html" },
+      { match: /assert|validation/i, label: "Pandera schemas", url: "https://pandera.readthedocs.io/en/stable/dataframe_schemas.html" },
+      { match: /time complexity/i, label: "Python complexity", url: "https://wiki.python.org/moin/TimeComplexity" },
+      { match: /hash map|dict/i, label: "Python dict", url: "https://docs.python.org/3/tutorial/datastructures.html#dictionaries" },
+      { match: /schema/i, label: "PostgreSQL DDL", url: "https://www.postgresql.org/docs/current/ddl.html" },
+      { match: /idempotent/i, label: "MDN idempotent", url: "https://developer.mozilla.org/en-US/docs/Glossary/Idempotent" },
+      { match: /upsert|on conflict/i, label: "PostgreSQL INSERT", url: "https://www.postgresql.org/docs/current/sql-insert.html" },
+      { match: /manifest/i, label: "Frictionless Data Package", url: "https://specs.frictionlessdata.io/data-package/" },
+      { match: /endpoint|query parameter/i, label: "Microsoft API guidelines", url: "https://github.com/microsoft/api-guidelines" },
+      { match: /json|geojson/i, label: "GeoJSON RFC 7946", url: "https://datatracker.ietf.org/doc/html/rfc7946" },
+      { match: /pagination|limit/i, label: "Microsoft pagination", url: "https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#pagination" },
+      { match: /bbox|postgis|gist/i, label: "PostGIS workshop", url: "https://postgis.net/workshops/postgis-intro/" },
+      { match: /explain/i, label: "PostgreSQL EXPLAIN", url: "https://www.postgresql.org/docs/current/using-explain.html" },
+      { match: /cache/i, label: "MDN HTTP caching", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" },
+      { match: /timeout|error handling/i, label: "Microsoft REST errors", url: "https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#errors" },
+      { match: /star/i, label: "MIT STAR method", url: "https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews/" },
+      { match: /trade-off|tradeoff/i, label: "Google SRE risk", url: "https://sre.google/sre-book/embracing-risk/" },
+      { match: /bottleneck|profiling/i, label: "Python profiling", url: "https://docs.python.org/3/library/profile.html" },
+      { match: /regression/i, label: "Regression test", url: "https://martinfowler.com/bliki/RegressionTest.html" }
+    ];
+
+    const curatedPractice = [
+      { match: /etl/i, label: "Kaggle Data Cleaning", url: "https://www.kaggle.com/learn/data-cleaning" },
+      { match: /primary|foreign/i, label: "SQLBolt joins", url: "https://sqlbolt.com/lesson/select_queries_with_joins" },
+      { match: /granularity/i, label: "SQLBolt aggregates", url: "https://sqlbolt.com/lesson/select_queries_with_aggregates" },
+      { match: /window/i, label: "LeetCode SQL 50", url: "https://leetcode.com/studyplan/top-sql-50/" },
+      { match: /cte|subquery/i, label: "pgexercises", url: "https://pgexercises.com/" },
+      { match: /dtype/i, label: "Kaggle Pandas", url: "https://www.kaggle.com/learn/pandas" },
+      { match: /null|outlier/i, label: "Kaggle Data Cleaning", url: "https://www.kaggle.com/learn/data-cleaning" },
+      { match: /assert|validation/i, label: "Pandera examples", url: "https://pandera.readthedocs.io/en/stable/#examples" },
+      { match: /time complexity/i, label: "HackerRank Python", url: "https://www.hackerrank.com/domains/python" },
+      { match: /hash map|dict/i, label: "LeetCode hash table", url: "https://leetcode.com/explore/learn/card/hash-table/" },
+      { match: /schema/i, label: "db<>fiddle", url: "https://dbfiddle.uk/" },
+      { match: /idempotent/i, label: "httpbin methods", url: "https://httpbin.org/" },
+      { match: /upsert|on conflict/i, label: "db<>fiddle PostgreSQL", url: "https://dbfiddle.uk/" },
+      { match: /manifest/i, label: "Frictionless tools", url: "https://framework.frictionlessdata.io/" },
+      { match: /endpoint|query parameter|pagination|timeout|error handling/i, label: "Postman Learn", url: "https://learning.postman.com/docs/introduction/overview/" },
+      { match: /json|geojson/i, label: "geojson.io", url: "https://geojson.io/" },
+      { match: /bbox|postgis|gist/i, label: "PostGIS workshop", url: "https://postgis.net/workshops/postgis-intro/" },
+      { match: /explain/i, label: "Use The Index, Luke", url: "https://use-the-index-luke.com/sql/explain-plan/postgresql" },
+      { match: /cache/i, label: "http caching demo", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" },
+      { match: /star/i, label: "MIT STAR worksheet", url: "https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews/" },
+      { match: /trade-off|tradeoff/i, label: "System design primer", url: "https://github.com/donnemartin/system-design-primer" },
+      { match: /bottleneck|profiling/i, label: "Python profiler", url: "https://docs.python.org/3/library/profile.html" },
+      { match: /regression/i, label: "Testing practice", url: "https://exercism.org/tracks/python/concepts" }
+    ];
+
+    function lessonResource(list, lesson, fallback) {
+      const target = `${lesson.title} ${lesson.terms.join(" ")} ${lesson.domain}`;
+      return list.find(item => item.match.test(target)) || fallback;
     }
 
     function referenceResource(lesson) {
-      const title = lesson.title.toLowerCase();
-      if (/etl/.test(title)) {
-        return { label: "IBM ETL", url: "https://www.ibm.com/think/topics/etl" };
-      }
-      if (/window/.test(title)) {
-        return { label: "PostgreSQL Window", url: "https://www.postgresql.org/docs/current/tutorial-window.html" };
-      }
-      if (/cte|subquery/.test(title)) {
-        return { label: "PostgreSQL WITH", url: "https://www.postgresql.org/docs/current/queries-with.html" };
-      }
-      if (/primary|foreign|granularity/.test(title)) {
-        return { label: "PostgreSQL keys", url: "https://www.postgresql.org/docs/current/ddl-constraints.html" };
-      }
-      if (/dtype/.test(title)) {
-        return { label: "pandas dtype", url: "https://pandas.pydata.org/docs/user_guide/basics.html#dtypes" };
-      }
-      if (/null|outlier/.test(title)) {
-        return { label: "pandas missing", url: "https://pandas.pydata.org/docs/user_guide/missing_data.html" };
-      }
-      if (/assert|validation/.test(title)) {
-        return { label: "Python errors", url: "https://docs.python.org/3/tutorial/errors.html" };
-      }
-      if (/time complexity|hash map/.test(title)) {
-        return { label: "Python complexity", url: "https://wiki.python.org/moin/TimeComplexity" };
-      }
-      if (/schema/.test(title)) {
-        return { label: "PostgreSQL DDL", url: "https://www.postgresql.org/docs/current/ddl.html" };
-      }
-      if (/upsert|on conflict/.test(title)) {
-        return { label: "PostgreSQL INSERT", url: "https://www.postgresql.org/docs/current/sql-insert.html" };
-      }
-      if (/json|geojson/.test(title)) {
-        return { label: "GeoJSON RFC", url: "https://datatracker.ietf.org/doc/html/rfc7946" };
-      }
-      if (/bbox|postgis|gist/.test(title)) {
-        return { label: "PostGIS workshop", url: "https://postgis.net/workshops/postgis-intro/" };
-      }
-      if (/explain/.test(title)) {
-        return { label: "PostgreSQL EXPLAIN", url: "https://www.postgresql.org/docs/current/using-explain.html" };
-      }
-      if (/cache/.test(title)) {
-        return { label: "MDN Cache", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" };
-      }
-      if (/endpoint|query parameter|pagination|timeout|error handling/.test(title)) {
-        return { label: "REST guidelines", url: "https://github.com/microsoft/api-guidelines" };
-      }
-      return { label: "搜尋文章", url: googleSearchUrl(`${lesson.title} data engineering interview`) };
+      return lessonResource(curatedReferences, lesson, { label: "Roadmap Data Engineering", url: "https://roadmap.sh/data-engineer" });
     }
 
     function practiceResource(lesson) {
-      if (lesson.domain === "sql") {
-        return { label: "LeetCode SQL", url: "https://leetcode.com/problemset/database/" };
-      }
-      if (lesson.domain === "python") {
-        return { label: "Kaggle Pandas", url: "https://www.kaggle.com/learn/pandas" };
-      }
-      if (lesson.domain === "api") {
-        return { label: "Postman Learn", url: "https://learning.postman.com/docs/introduction/overview/" };
-      }
-      if (lesson.domain === "story") {
-        return { label: "STAR practice", url: googleSearchUrl(`${lesson.title} interview practice`) };
-      }
-      return { label: "工程練習", url: googleSearchUrl(`${lesson.title} data engineering exercise`) };
+      return lessonResource(curatedPractice, lesson, { label: "Roadmap Projects", url: "https://roadmap.sh/projects" });
     }
 
     function setResourceLink(element, prefix, resource) {
