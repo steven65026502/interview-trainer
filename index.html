@@ -280,38 +280,32 @@
     }
 
     .lesson-deep {
-      border: 1px solid #dfe7e8;
-      border-radius: 6px;
-      background: #fff;
       display: grid;
-      overflow: hidden;
+      gap: 10px;
     }
 
     .lesson-deep-section,
     .lesson-term-list {
-      border-top: 1px solid #e7ecec;
+      border: 1px solid #d7e0e2;
+      border-radius: 6px;
+      background: #fff;
       padding: 14px;
-    }
-
-    .lesson-deep-section:first-child {
-      border-top: 0;
     }
 
     .lesson-deep-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .lesson-deep-grid .lesson-deep-section:nth-child(2) {
-      border-left: 1px solid #e7ecec;
+      gap: 10px;
     }
 
     .lesson-deep-section strong,
     .lesson-term-list strong {
+      border-bottom: 1px solid #edf1f2;
       color: var(--ink);
       display: block;
       font-size: 13px;
       margin-bottom: 8px;
+      padding-bottom: 8px;
     }
 
     .lesson-deep-section p {
@@ -348,9 +342,13 @@
     }
 
     .term-row {
+      border: 1px solid #e7ecec;
+      border-radius: 6px;
+      background: #fbfcfc;
       display: grid;
       gap: 5px;
       min-width: 0;
+      padding: 10px;
     }
 
     .term-row b {
@@ -378,6 +376,7 @@
     }
 
     .lesson-warning {
+      border-color: #d7e0e2;
       background: #fff;
     }
 
