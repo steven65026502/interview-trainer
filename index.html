@@ -95,29 +95,6 @@
       color: var(--danger);
     }
 
-    .toolbar {
-      display: grid;
-      grid-template-columns: 1.2fr 0.75fr 0.75fr 0.75fr;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .field {
-      display: grid;
-      gap: 6px;
-      color: var(--muted);
-      font-size: 12px;
-    }
-
-    select {
-      min-height: 38px;
-      border: 1px solid var(--line-strong);
-      border-radius: 6px;
-      background: var(--panel);
-      color: var(--ink);
-      padding: 0 10px;
-    }
-
     .layout {
       display: grid;
       grid-template-columns: 300px minmax(0, 1fr);
@@ -1108,7 +1085,6 @@
         grid-template-columns: 1fr;
       }
 
-      .toolbar,
       .guide,
       .checklist-grid,
       .context-grid,
@@ -1137,41 +1113,6 @@
         <button class="btn primary" id="feedbackBtnTop" type="button">取得回饋</button>
       </div>
     </header>
-
-    <section class="toolbar" aria-label="settings">
-      <label class="field">
-        目標職位
-        <select id="roleSelect">
-          <option value="de" selected>資料工程師 / 資料應用工程師</option>
-          <option value="da">資料分析師 / BI Analyst</option>
-          <option value="aiapp">AI 應用工程師</option>
-          <option value="ds">資料科學家入門準備</option>
-        </select>
-      </label>
-      <label class="field">
-        今日時間
-        <select id="timeSelect">
-          <option value="60">60 分鐘</option>
-          <option value="120" selected>120 分鐘</option>
-          <option value="180">180 分鐘</option>
-        </select>
-      </label>
-      <label class="field">
-        模擬強度
-        <select id="modeSelect">
-          <option value="steady" selected>穩定練習</option>
-          <option value="rush">面試前衝刺</option>
-          <option value="light">低壓維持</option>
-        </select>
-      </label>
-      <label class="field">
-        回答方式
-        <select id="answerModeSelect">
-          <option value="written" selected>文字草稿</option>
-          <option value="spoken">口說逐字稿</option>
-        </select>
-      </label>
-    </section>
 
     <main class="layout">
       <section class="panel interview-panel">
@@ -2360,11 +2301,7 @@
       followupOutput: document.getElementById("followupOutput"),
       followupAnswerBox: document.getElementById("followupAnswerBox"),
       followupInput: document.getElementById("followupInput"),
-      followupFeedbackResult: document.getElementById("followupFeedbackResult"),
-      roleSelect: document.getElementById("roleSelect"),
-      timeSelect: document.getElementById("timeSelect"),
-      modeSelect: document.getElementById("modeSelect"),
-      answerModeSelect: document.getElementById("answerModeSelect")
+      followupFeedbackResult: document.getElementById("followupFeedbackResult")
     };
 
     function mergeSavedArray(savedArray, fallbackValue) {
@@ -2389,9 +2326,6 @@
         state.followupQuestions = mergeSavedArray(saved.followupQuestions, "");
         state.followupAnswers = mergeSavedArray(saved.followupAnswers, "");
         state.followupFeedback = mergeSavedArray(saved.followupFeedback, null);
-        ["roleSelect", "timeSelect", "modeSelect", "answerModeSelect"].forEach(id => {
-          if (saved[id]) els[id].value = saved[id];
-        });
         state.selfChecks = questions.map((question, index) => {
           const savedChecks = Array.isArray(saved.selfChecks) ? saved.selfChecks[index] : null;
           return Array.isArray(savedChecks) && savedChecks.length === question.expected.length
@@ -2414,11 +2348,7 @@
         selfChecks: state.selfChecks,
         followupQuestions: state.followupQuestions,
         followupAnswers: state.followupAnswers,
-        followupFeedback: state.followupFeedback,
-        roleSelect: els.roleSelect.value,
-        timeSelect: els.timeSelect.value,
-        modeSelect: els.modeSelect.value,
-        answerModeSelect: els.answerModeSelect.value
+        followupFeedback: state.followupFeedback
       }));
       els.saveState.textContent = "已自動儲存";
     }
@@ -2520,17 +2450,6 @@
       if (/很複雜|很多東西|等等|之類|應該可以|大概|可能就是/.test(text)) {
         score -= 6;
         issues.push("回答出現偏模糊的語氣。把「大概、之類」改成具體步驟或證據。");
-      }
-
-      if (els.answerModeSelect.value === "spoken") {
-        if (/呃|嗯|然後然後|就是就是|那個/.test(text)) {
-          score -= 4;
-          issues.push("口說逐字稿有明顯填充詞，建議改成短句停頓，不要用「呃、嗯、就是」撐時間。");
-        }
-        if (length > 420) {
-          score -= 4;
-          issues.push("口說版本偏長，建議壓到 60-90 秒內，先講結論再補一個例子。");
-        }
       }
 
       score = Math.max(0, Math.min(100, Math.round(score)));
@@ -3091,9 +3010,8 @@
 
     function renderTasks() {
       const focus = weakestDomain();
-      const minutes = Number(els.timeSelect.value);
-      const mode = els.modeSelect.value;
-      const chunks = mode === "light" ? [25, 20, 15] : minutes === 60 ? [25, 20, 15] : minutes === 180 ? [45, 40, 35, 30] : [35, 30, 30, 25];
+      const minutes = 120;
+      const chunks = [35, 30, 30, 25];
       const tasks = [
         ["重寫目前這題", "把右側缺口補進回答，重新送出一次。"],
         ...taskBank[focus]
@@ -3195,8 +3113,7 @@
 
     function insertTemplate() {
       const writtenTemplate = `我的結論是：\n\n我會先：\n\n接著我會：\n\n如果連到我的 S-111 / 資料專案經驗：\n\n我會怎麼驗證結果：\n\n可能的風險或取捨：`;
-      const spokenTemplate = `所以我的回答是：\n\n我會先...\n\n原因是...\n\n如果用我之前的 S-111 專案來說的話...\n\n最後我會確認結果是對的，做法是...`;
-      const template = els.answerModeSelect.value === "spoken" ? spokenTemplate : writtenTemplate;
+      const template = writtenTemplate;
       if (!normalize(els.answerInput.value)) {
         els.answerInput.value = template;
       } else {
@@ -3208,11 +3125,7 @@
     }
 
     function updateAnswerModeText() {
-      if (els.answerModeSelect.value === "spoken") {
-        els.answerInput.placeholder = "請像在面試現場開口一樣，把你要說的話逐字打出來。不用追求文法完美，說出思路比寫得漂亮更重要。";
-      } else {
-        els.answerInput.placeholder = "請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。";
-      }
+      els.answerInput.placeholder = "請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。";
     }
 
     function renderAll() {
@@ -3307,14 +3220,6 @@
       els.followupOutput.textContent = "按「面試官追問」取得下一個問題。";
       els.followupSection.classList.add("is-hidden");
       renderAll();
-    });
-
-    [els.roleSelect, els.timeSelect, els.modeSelect, els.answerModeSelect].forEach(select => {
-      select.addEventListener("change", () => {
-        updateAnswerModeText();
-        renderSummary();
-        save();
-      });
     });
 
     load();
