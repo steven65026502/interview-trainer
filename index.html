@@ -600,6 +600,38 @@
       padding-left: 10px;
     }
 
+    .video-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .video-links span {
+      grid-column: 1 / -1;
+      color: var(--ink);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .video-links a {
+      min-height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .video-links a:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
     .knowledge-start {
       margin-top: 12px;
     }
@@ -1066,6 +1098,11 @@
               <p id="dailyKnowledgeConcept"></p>
               <div class="knowledge-tags" id="dailyKnowledgeTags"></div>
               <p class="knowledge-s111" id="dailyKnowledgeS111"></p>
+              <div class="video-links" aria-label="今日新知影片學習連結">
+                <span>影片學習</span>
+                <a id="dailyYoutubeLink" href="#" target="_blank" rel="noreferrer">YouTube</a>
+                <a id="dailyBilibiliLink" href="#" target="_blank" rel="noreferrer">Bilibili</a>
+              </div>
               <button class="plan-question knowledge-start" id="dailyKnowledgeBtn" type="button">
                 <span id="dailyKnowledgeBtnIcon">▶</span>
                 <span id="dailyKnowledgeBtnText">開始今日新知挑戰</span>
@@ -1986,6 +2023,8 @@
       dailyKnowledgeConcept: document.getElementById("dailyKnowledgeConcept"),
       dailyKnowledgeTags: document.getElementById("dailyKnowledgeTags"),
       dailyKnowledgeS111: document.getElementById("dailyKnowledgeS111"),
+      dailyYoutubeLink: document.getElementById("dailyYoutubeLink"),
+      dailyBilibiliLink: document.getElementById("dailyBilibiliLink"),
       dailyKnowledgeBtn: document.getElementById("dailyKnowledgeBtn"),
       dailyKnowledgeBtnIcon: document.getElementById("dailyKnowledgeBtnIcon"),
       dailyKnowledgeBtnText: document.getElementById("dailyKnowledgeBtnText"),
@@ -2245,6 +2284,22 @@
       return dailyLessonStartIndex + todayLearningOffset();
     }
 
+    function videoSearchQuery(lesson, platform) {
+      const terms = lesson.terms.join(" ");
+      if (platform === "youtube") {
+        return `${terms} data engineering tutorial interview`;
+      }
+      return `${lesson.title} ${terms} 數據工程 面試 教程`;
+    }
+
+    function videoSearchUrl(platform, lesson) {
+      const query = encodeURIComponent(videoSearchQuery(lesson, platform));
+      if (platform === "youtube") {
+        return `https://www.youtube.com/results?search_query=${query}`;
+      }
+      return `https://search.bilibili.com/all?keyword=${query}`;
+    }
+
     function todayRecommendationIndexes(dayIndex) {
       const plan = dailyPlans[dayIndex];
       const plannedIndexes = plan.indexes !== "weakest"
@@ -2303,6 +2358,10 @@
       els.dailyKnowledgeConcept.textContent = lesson.concept;
       els.dailyKnowledgeTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
       els.dailyKnowledgeS111.textContent = lesson.s111;
+      els.dailyYoutubeLink.href = videoSearchUrl("youtube", lesson);
+      els.dailyYoutubeLink.title = `在 YouTube 搜尋：${videoSearchQuery(lesson, "youtube")}`;
+      els.dailyBilibiliLink.href = videoSearchUrl("bilibili", lesson);
+      els.dailyBilibiliLink.title = `在 Bilibili 搜尋：${videoSearchQuery(lesson, "bilibili")}`;
       els.dailyKnowledgeBtn.classList.toggle("done", done);
       els.dailyKnowledgeBtnIcon.textContent = done ? "✓" : "▶";
       els.dailyKnowledgeBtnText.textContent = done ? "今日新知已完成" : "用今日新知考我";
