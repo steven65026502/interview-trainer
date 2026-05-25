@@ -229,6 +229,48 @@
       margin: 0;
     }
 
+    .lesson-teaching {
+      border-top: 1px solid var(--line);
+      display: grid;
+      gap: 10px;
+      padding-top: 14px;
+    }
+
+    .lesson-teaching-title {
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      margin: 0;
+    }
+
+    .teaching-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .teaching-card {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      display: grid;
+      gap: 6px;
+      min-height: 112px;
+      padding: 12px;
+    }
+
+    .teaching-card strong {
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .teaching-card p {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+      margin: 0;
+    }
+
     .lesson-actions {
       display: flex;
       flex-wrap: wrap;
@@ -1088,6 +1130,7 @@
       .guide,
       .checklist-grid,
       .context-grid,
+      .teaching-grid,
       .learning-steps,
       .learning-time {
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1154,8 +1197,9 @@
             <p class="lesson-copy" id="learningLessonConcept"></p>
             <div class="knowledge-tags" id="learningLessonTags"></div>
             <p class="knowledge-s111 lesson-copy" id="learningLessonS111"></p>
+            <div class="lesson-teaching" id="learningTeaching"></div>
             <div class="video-links" aria-label="本課學習資源">
-              <span>學習資源</span>
+              <span>延伸資源</span>
               <a id="learningYoutubeLink" href="#" target="_blank" rel="noreferrer">YouTube</a>
               <a id="learningBilibiliLink" href="#" target="_blank" rel="noreferrer">Bilibili</a>
               <a id="learningReferenceLink" href="#" target="_blank" rel="noreferrer">文件</a>
@@ -2263,6 +2307,7 @@
       learningLessonConcept: document.getElementById("learningLessonConcept"),
       learningLessonTags: document.getElementById("learningLessonTags"),
       learningLessonS111: document.getElementById("learningLessonS111"),
+      learningTeaching: document.getElementById("learningTeaching"),
       learningYoutubeLink: document.getElementById("learningYoutubeLink"),
       learningBilibiliLink: document.getElementById("learningBilibiliLink"),
       learningReferenceLink: document.getElementById("learningReferenceLink"),
@@ -2704,6 +2749,235 @@
       ];
     }
 
+    const teachingDetails = [
+      {
+        match: /etl/i,
+        simple: "ETL 不是單純把檔案轉格式，而是把資料來源、轉換規則、載入位置串成可重跑的流程。面試時要講清楚輸入、處理、輸出。",
+        steps: "先說 Extract：資料從 NetCDF 或 API 來；再說 Transform：轉欄位、型別、單位、時間與 hotspot 規則；最後說 Load：寫入 PostgreSQL/PostGIS 或輸出 GeoJSON。",
+        interview: "你可以說：我做的是一條可驗證的資料管線，不只是寫 script。每一步都有欄位檢查、筆數確認與重跑策略。",
+        mistake: "不要只說「我有清資料」。要說清楚資料從哪裡來、轉了什麼、存到哪裡，以及怎麼知道結果是對的。"
+      },
+      {
+        match: /primary|foreign/i,
+        simple: "Primary key 是一列資料的身分證，foreign key 是連到另一張表的關係。JOIN 前要先確認 key 的唯一性與對應關係。",
+        steps: "先檢查每張表一列代表什麼，再確認 key 是否唯一，接著看 JOIN 後筆數是否合理，最後才做聚合或分析。",
+        interview: "你可以說：我不會一開始就 JOIN，我會先確認粒度與 key，避免 one-to-many 或 many-to-many 讓金額、筆數被放大。",
+        mistake: "不要看到同名欄位就拿來 JOIN。欄位名稱相同不代表語意相同，也不代表粒度一致。"
+      },
+      {
+        match: /granularity/i,
+        simple: "Granularity 是一列資料代表的層級。資料表可能是一人一列、一天一列、一小時一列，或一個 hotspot 一列。",
+        steps: "讀表時先問：一列代表誰、什麼時間、什麼空間範圍。JOIN 或 GROUP BY 前先把兩邊粒度對齊。",
+        interview: "你可以說：我會先確認資料粒度，因為粒度不同直接合併，可能讓統計結果重複計算。",
+        mistake: "不要只看欄位完整就放心。粒度錯了，SQL 語法正確也會算出錯的結果。"
+      },
+      {
+        match: /window/i,
+        simple: "Window Function 是在不壓扁明細列的情況下，計算組內排名、前後筆、累積值或最新一筆。",
+        steps: "先用 PARTITION BY 定義組，再用 ORDER BY 定義組內順序，最後用 ROW_NUMBER、RANK 或聚合 window 取得需要的結果。",
+        interview: "你可以說：如果我需要保留原始欄位，又要在每個群組內找最新或最高的一筆，我會用 window function，而不是只用 GROUP BY。",
+        mistake: "不要把 Window Function 和 GROUP BY 混成同一件事。GROUP BY 會改變列數，Window Function 通常保留列數。"
+      },
+      {
+        match: /cte|subquery/i,
+        simple: "CTE 是用 WITH 把複雜查詢拆成可讀的階段；subquery 適合比較短、只用一次的中間結果。",
+        steps: "把查詢拆成過濾、清洗、聚合、排序幾段。每段 CTE 都要能單獨解釋它的輸入與輸出。",
+        interview: "你可以說：當 SQL 同時有日期、bbox、threshold 和排序邏輯時，我會用 CTE 拆段，讓面試官看得懂也方便 debug。",
+        mistake: "不要為了炫技把所有查詢都塞 CTE。重點是可讀、可驗證，不是語法看起來複雜。"
+      },
+      {
+        match: /dtype/i,
+        simple: "dtype 是欄位型別。時間被當字串、數字被當文字、座標變成空值，都會讓排序、計算與查詢出錯。",
+        steps: "先檢查欄位型別，再轉換 timestamp、numeric、category，接著處理轉換失敗的列，最後確認統計範圍合理。",
+        interview: "你可以說：我會先做 schema 與 dtype 檢查，因為資料型別錯誤會讓後面的 API 查詢和分析結果不可信。",
+        mistake: "不要直接拿資料開始算。先看 dtype，常常比直接 debug 統計結果更快。"
+      },
+      {
+        match: /null|outlier/i,
+        simple: "Null 是缺資料，不等於 0；outlier 是異常值，不一定是錯值。處理前要先看資料來源與規則。",
+        steps: "先標記缺值與異常值，再分成可刪、可補、需保留三類，最後把規則記錄下來讓結果可追溯。",
+        interview: "你可以說：我不會一律刪 outlier，而是先確認它是觀測異常、格式問題，還是真實但罕見的現象。",
+        mistake: "不要把缺值補 0 當萬用解。對流速、座標或誤差來說，0 可能有真實意義。"
+      },
+      {
+        match: /assert|validation/i,
+        simple: "Validation 是把你對資料的假設寫成檢查。它讓 pipeline 失敗得早、失敗得清楚，而不是默默產生錯結果。",
+        steps: "檢查欄位存在、型別正確、筆數不是 0、時間範圍合理、severity 分級符合固定規則，最後記錄 log。",
+        interview: "你可以說：我會把資料品質檢查放進流程，讓每次重跑都能確認輸入與輸出沒有偏掉。",
+        mistake: "不要只靠肉眼看幾列資料。面試官會想知道你如何自動化驗證。"
+      },
+      {
+        match: /time complexity/i,
+        simple: "Time complexity 是資料量變大時，程式耗時怎麼成長。資料工程不一定要競賽級，但要能指出主要瓶頸。",
+        steps: "先找主要迴圈與查找動作，再判斷是不是 O(n)、O(n log n) 或 O(n^2)，最後用資料結構或批次處理改善。",
+        interview: "你可以說：如果資料量變大，我會先看是否有巢狀迴圈或重複查找，再考慮用 dict、索引或資料庫查詢取代。",
+        mistake: "不要只說「效能不好」。要說清楚慢在哪一段、資料量增加時會怎麼變慢。"
+      },
+      {
+        match: /hash map|dict/i,
+        simple: "Hash map 在 Python 裡常用 dict 實作，適合用 key 快速查值，避免每次都掃完整份資料。",
+        steps: "先決定 key，例如日期、時間、座標或 id，再把資料整理成 dict，最後用一次查找取代重複迴圈。",
+        interview: "你可以說：我會用 dict 建索引，把重複掃描改成 key lookup，讓資料配對更穩定也更快。",
+        mistake: "不要為了用 dict 而忽略 key 是否唯一。key 設錯，查得快也只是快地查錯。"
+      },
+      {
+        match: /schema/i,
+        simple: "Schema 是資料欄位、型別與約束的契約。它讓資料進資料庫前有規格，交接時也知道每欄代表什麼。",
+        steps: "先定義欄位名稱與型別，再定義唯一鍵、必要欄位、索引與單位，最後把 schema 寫進文件或 migration。",
+        interview: "你可以說：我會先固定 schema，因為 pipeline、API 和前端都依賴同一份資料契約。",
+        mistake: "不要讓資料表長成『先塞進去再說』。沒有 schema，後面 API 與分析都很難穩定。"
+      },
+      {
+        match: /idempotent/i,
+        simple: "Idempotent 是同一批資料重跑多次，結果仍然一致，不會越跑越多，也不會覆蓋錯誤資料。",
+        steps: "先設唯一鍵或批次識別，再用 upsert 或先刪後寫控制重跑結果，最後比對筆數與摘要統計。",
+        interview: "你可以說：資料工程要能重跑，所以我會設計冪等流程，避免 append 導致重複列。",
+        mistake: "不要只說『重跑一次就好』。重跑如果沒有冪等設計，可能會把錯誤放大。"
+      },
+      {
+        match: /upsert/i,
+        simple: "Upsert 是有資料就更新、沒有就新增。它通常需要搭配唯一鍵，否則資料庫不知道哪一列該更新。",
+        steps: "先定義唯一鍵，再決定衝突時更新哪些欄位，最後驗證重跑前後筆數不會增加。",
+        interview: "你可以說：我會用 upsert 讓同一天同一 lead_hours 的結果可重跑，避免重複寫入 hotspot rows。",
+        mistake: "不要只說『避免重複』。要說唯一鍵怎麼設，衝突時更新什麼。"
+      },
+      {
+        match: /on conflict/i,
+        simple: "ON CONFLICT 是 PostgreSQL 常見的 upsert 語法。它在唯一鍵衝突時改成 DO UPDATE 或 DO NOTHING。",
+        steps: "先建立 unique constraint，再寫 INSERT ... ON CONFLICT，最後決定更新欄位與 updated_at。",
+        interview: "你可以說：我會用 ON CONFLICT DO UPDATE 讓重跑結果覆蓋同一批資料，而不是新增重複列。",
+        mistake: "不要忘記唯一鍵。沒有 unique constraint，ON CONFLICT 沒有可判斷的衝突目標。"
+      },
+      {
+        match: /manifest/i,
+        simple: "Manifest 是一批輸出的清單與版本紀錄。它讓別人知道這次跑了哪些資料、用什麼參數、產出哪些檔案。",
+        steps: "記錄日期、版本、輸入檔、輸出檔、threshold、筆數、錯誤訊息與產生時間。",
+        interview: "你可以說：我會用 manifest 讓資料包可交接，別人不用打開每個檔案也知道這批結果的範圍與版本。",
+        mistake: "不要只交一堆檔案。沒有 manifest，接手的人不知道哪個檔案是正式輸出。"
+      },
+      {
+        match: /endpoint/i,
+        simple: "Endpoint 是 API 的一個功能入口。好的 endpoint 要讓使用者看得出它查什麼、用哪些參數、回傳什麼。",
+        steps: "先定義資源名稱，再定義 query parameters，接著設計 response 欄位，最後補錯誤狀態與文件。",
+        interview: "你可以說：我會把 threshold hotspot 設成清楚的 endpoint，讓前端或 QGIS 可以用日期、bbox、threshold 查資料。",
+        mistake: "不要把所有查詢都塞進一個萬用 endpoint。功能太混會讓參數與回傳很難維護。"
+      },
+      {
+        match: /query parameter/i,
+        simple: "Query parameter 是 URL 後面的篩選條件，例如 date、lead_hours、bbox、limit。它讓同一個 endpoint 支援不同查詢。",
+        steps: "先列出必要參數，再決定可選參數與預設值，最後驗證格式、範圍與錯誤訊息。",
+        interview: "你可以說：我會讓 hotspot API 用 query parameter 篩選日期、lead_hours、bbox 與 threshold，降低 payload。",
+        mistake: "不要讓參數沒有界線。沒有 limit 或 bbox，API 很容易一次回傳太多資料。"
+      },
+      {
+        match: /json|geojson/i,
+        simple: "JSON 是一般結構化資料；GeoJSON 是帶幾何資訊的 JSON，適合地圖工具直接讀取。",
+        steps: "一般表格資料用 JSON；需要畫點、線、面時用 GeoJSON，並確認座標順序與座標系統。",
+        interview: "你可以說：如果前端或 QGIS 要畫 hotspot，我會讓 API 回傳 lon/lat 或 GeoJSON，讓資料能直接視覺化。",
+        mistake: "不要把 lat/lon 順序搞反。GeoJSON 座標通常是 longitude, latitude。"
+      },
+      {
+        match: /pagination|limit/i,
+        simple: "Pagination 和 limit 用來控制一次回傳多少資料，避免 API、網路和前端被大量資料拖慢。",
+        steps: "先設定 limit，再提供 offset 或 cursor，最後回傳 total、next 或 has_more 讓前端知道是否還有資料。",
+        interview: "你可以說：如果 hotspot rows 很多，我會用 bbox、limit 和 pagination 讓 API 回傳可控制。",
+        mistake: "不要一次回傳所有資料。資料量小時看不出問題，上線後很容易慢。"
+      },
+      {
+        match: /bbox/i,
+        simple: "BBox 是地圖上的矩形範圍，通常是 min_lon、min_lat、max_lon、max_lat。它讓 API 只查目前視窗內資料。",
+        steps: "前端送目前地圖範圍，後端用空間條件過濾，再配合索引加速，最後只回傳需要顯示的點。",
+        interview: "你可以說：bbox 能減少 DB 掃描和 API payload，對地圖型資料很重要。",
+        mistake: "不要只做前端篩選。資料已經全回到前端才篩，效能壓力仍然存在。"
+      },
+      {
+        match: /postgis|gist/i,
+        simple: "PostGIS 讓 PostgreSQL 支援空間資料；GIST index 常用來加速空間範圍查詢。",
+        steps: "先把 lon/lat 建成 geometry，再建立 GIST index，查詢時用 ST_Intersects、ST_Within 或 bbox 條件。",
+        interview: "你可以說：PostGIS 不只是存座標，而是讓資料庫能有效處理空間查詢。",
+        mistake: "不要只把座標存在兩個 numeric 欄位就以為完成空間查詢設計。"
+      },
+      {
+        match: /explain/i,
+        simple: "EXPLAIN ANALYZE 會顯示 PostgreSQL 實際查詢計畫與耗時，幫你知道慢在全表掃描、排序、join 還是索引沒用到。",
+        steps: "先跑慢查詢，再看 actual time、rows、scan type，接著調整索引或 SQL，最後重新測量。",
+        interview: "你可以說：我會先用 EXPLAIN ANALYZE 找瓶頸，而不是憑感覺加 index。",
+        mistake: "不要只看 SQL 語法。SQL 寫得出來不代表資料庫執行得有效率。"
+      },
+      {
+        match: /cache/i,
+        simple: "Cache 是把常用結果暫存起來，減少重複查 DB 或重複計算。它適合變動不頻繁、查詢成本高的資料。",
+        steps: "先判斷哪些查詢常被重複使用，再設定 key、TTL 與失效規則，最後確認資料更新時 cache 會被刷新。",
+        interview: "你可以說：固定日期與 lead_hours 的 summary 可能適合 cache，但 hotspot 更新後要處理失效問題。",
+        mistake: "不要只說 cache 會變快。cache 的主要風險是 stale data，也就是資料過期。"
+      },
+      {
+        match: /timeout|error handling/i,
+        simple: "Timeout 防止單一請求卡住整個服務；error handling 讓錯誤可預期、可追蹤、可回報。",
+        steps: "設定 timeout，驗證參數，捕捉 DB 或外部 API 錯誤，回傳清楚的 status code 與 message。",
+        interview: "你可以說：API 查不到日期、參數錯或 DB 慢時，要有明確錯誤回應，而不是讓前端空白。",
+        mistake: "不要把所有錯誤都回 500。參數錯、查無資料、系統錯誤應該分開處理。"
+      },
+      {
+        match: /star/i,
+        simple: "STAR 是 Situation、Task、Action、Result。它讓專案經驗不會散掉，也能清楚說出你的角色與成果。",
+        steps: "先講背景，再講你負責的任務，接著講你做了什麼，最後講結果或可交接成果。",
+        interview: "你可以說：在 S-111 專案中，我負責把海流驗證資料整理成可查詢、可視覺化、可交接的資料流程。",
+        mistake: "不要只列技術名詞。面試官想知道你在什麼情境下解決了什麼問題。"
+      },
+      {
+        match: /trade-off|tradeoff/i,
+        simple: "Trade-off 是取捨。工程設計通常沒有完美答案，面試官想看你是否知道限制與代價。",
+        steps: "先說選項 A 和 B，再說限制條件，接著說你選哪個，最後補上風險與未來可改進方向。",
+        interview: "你可以說：只回 hotspot rows 可以減少 payload 並支援快速展示，但如果要完整格網動畫，就需要另設資料表與 API。",
+        mistake: "不要把自己的選擇講成唯一正解。成熟回答會說明限制與取捨。"
+      },
+      {
+        match: /bottleneck|profiling/i,
+        simple: "Bottleneck 是真正拖慢系統的部分；profiling 是用量測找出它，而不是靠猜。",
+        steps: "先分段量測 DB query、資料處理、serialize、network，再針對最慢段落優化，最後比較前後數字。",
+        interview: "你可以說：API 慢時我會先量測，不會直接猜是 server 慢；可能是 query、payload 或缺少 bbox。",
+        mistake: "不要一慢就重寫全部。先找最大瓶頸，通常一兩個點就能改善很多。"
+      },
+      {
+        match: /regression/i,
+        simple: "Regression 是修改後把原本正常的功能弄壞。資料與 API 專案尤其要檢查舊流程是否仍然能跑。",
+        steps: "先列出原本應該正常的案例，再改 code，最後重跑查詢、API response、前端或 QGIS 流程。",
+        interview: "你可以說：修 bug 後我會補 regression check，確認舊的 API 欄位、threshold 分級與視覺化流程沒有被破壞。",
+        mistake: "不要只確認新功能可用。面試官會更在意你有沒有保護既有功能。"
+      }
+    ];
+
+    function teachingDetailFor(lesson) {
+      return teachingDetails.find(item => item.match.test(lesson.title)) || {
+        simple: lesson.concept,
+        steps: `先定義 ${lesson.terms[0]}，再說它在資料流程中的位置，最後補上你會如何驗證結果。`,
+        interview: `你可以把它連回 S-111：${lesson.s111}`,
+        mistake: "不要只背術語。請用一個資料流程或專案例子說明它實際解決什麼問題。"
+      };
+    }
+
+    function renderTeachingCards(lesson) {
+      const detail = teachingDetailFor(lesson);
+      const cards = [
+        ["白話理解", detail.simple],
+        ["你實作時要做什麼", detail.steps],
+        ["面試可以怎麼說", detail.interview],
+        ["常見錯誤", detail.mistake]
+      ];
+      return `
+        <h4 class="lesson-teaching-title">文字教學：先讀懂，再看影片</h4>
+        <div class="teaching-grid">
+          ${cards.map(([title, body]) => `
+            <div class="teaching-card">
+              <strong>${title}</strong>
+              <p>${body}</p>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
     function todayRecommendationIndexes(dayIndex) {
       const plan = dailyPlans[dayIndex];
       const plannedIndexes = plan.indexes !== "weakest"
@@ -2799,6 +3073,7 @@
       els.learningLessonConcept.textContent = lesson.concept;
       els.learningLessonTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
       els.learningLessonS111.textContent = lesson.s111;
+      els.learningTeaching.innerHTML = renderTeachingCards(lesson);
       setResourceLink(els.learningYoutubeLink, "YouTube", videoResource("youtube", lesson));
       setResourceLink(els.learningBilibiliLink, "Bilibili", videoResource("bilibili", lesson));
       setResourceLink(els.learningReferenceLink, "文件", referenceResource(lesson));
