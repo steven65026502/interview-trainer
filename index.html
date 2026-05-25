@@ -547,6 +547,63 @@
       background: #f4faf5;
     }
 
+    .daily-knowledge {
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin: 14px 0;
+      padding: 0 0 14px;
+    }
+
+    .knowledge-title {
+      display: grid;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .knowledge-title span {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .knowledge-title strong {
+      font-size: 16px;
+      line-height: 1.35;
+    }
+
+    .daily-knowledge p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .knowledge-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin: 10px 0;
+    }
+
+    .knowledge-tags span {
+      border: 1px solid rgba(15, 118, 110, 0.16);
+      border-radius: 999px;
+      background: #f3fbfa;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 8px;
+    }
+
+    .knowledge-s111 {
+      border-left: 3px solid var(--accent);
+      padding-left: 10px;
+    }
+
+    .knowledge-start {
+      margin-top: 12px;
+    }
+
     .time-bars {
       display: grid;
       gap: 8px;
@@ -1000,6 +1057,21 @@
           <div class="side-body">
             <p class="today-topic">今日主題：<strong id="todayPlanTopic">載入中</strong></p>
 
+            <div class="daily-knowledge" id="dailyKnowledgeBox">
+              <div class="plan-label">今日新知</div>
+              <div class="knowledge-title">
+                <span id="dailyKnowledgeDay">第 1 天</span>
+                <strong id="dailyKnowledgeTitle">載入中</strong>
+              </div>
+              <p id="dailyKnowledgeConcept"></p>
+              <div class="knowledge-tags" id="dailyKnowledgeTags"></div>
+              <p class="knowledge-s111" id="dailyKnowledgeS111"></p>
+              <button class="plan-question knowledge-start" id="dailyKnowledgeBtn" type="button">
+                <span id="dailyKnowledgeBtnIcon">▶</span>
+                <span id="dailyKnowledgeBtnText">開始今日新知挑戰</span>
+              </button>
+            </div>
+
             <div class="plan-label">推薦練習</div>
             <div class="plan-questions" id="todayPlanQuestions"></div>
 
@@ -1399,6 +1471,233 @@
 
     const weekdayLabels = ["日", "一", "二", "三", "四", "五", "六"];
 
+    const dailyLessons = [
+      {
+        domain: "pipeline",
+        title: "ETL：把資料流程講成三段",
+        concept: "ETL 是 Extract、Transform、Load。面試時不要只說我有處理資料，要說資料從哪裡來、怎麼轉、最後載入哪裡。",
+        s111: "對應 S-111：讀 NetCDF，轉成驗證統計與 hotspot rows，再載入 PostgreSQL/PostGIS 給 API 查。",
+        terms: ["ETL", "Extract", "Transform", "Load"],
+        challenge: "請用 S-111 專案，把一條 ETL 管線用 60 秒講清楚。"
+      },
+      {
+        domain: "sql",
+        title: "Primary key / Foreign key",
+        concept: "Primary key 用來唯一識別一列，foreign key 用來連到另一張表。JOIN 前要先確認 key 是否真的唯一。",
+        s111: "對應 S-111：summary、hotspot、時間欄位與查詢條件都要先確認唯一性，否則 join 或 upsert 都會出問題。",
+        terms: ["primary key", "foreign key", "JOIN key"],
+        challenge: "看到兩張表時，你會如何確認 JOIN key 是否可靠？"
+      },
+      {
+        domain: "sql",
+        title: "Granularity：資料粒度",
+        concept: "Granularity 是一列資料代表的層級，例如一個使用者、一天、一小時或一個 hotspot。粒度不同的表直接 join 很容易重複計算。",
+        s111: "對應 S-111：target_date 是日層級，target_timestamp 是小時層級，hotspot_points 是空間點層級。",
+        terms: ["granularity", "one-to-many", "many-to-many"],
+        challenge: "請解釋為什麼 JOIN 前要先確認資料粒度。"
+      },
+      {
+        domain: "sql",
+        title: "Window Function",
+        concept: "Window Function 可以保留每筆明細，同時計算組內排名、前後筆或最新一筆；GROUP BY 則會把資料壓成每組一列。",
+        s111: "對應 S-111：若要在同一個 lead_hours 或日期內找最高誤差點，又想保留原始欄位，就適合用 window 思維。",
+        terms: ["Window Function", "PARTITION BY", "ROW_NUMBER"],
+        challenge: "什麼情況你會用 Window Function，而不是只用 GROUP BY？"
+      },
+      {
+        domain: "sql",
+        title: "CTE vs Subquery",
+        concept: "CTE 用 WITH 把查詢拆段，適合讓複雜邏輯可讀；subquery 適合較小的中間查詢。",
+        s111: "對應 S-111：API 查詢如果同時要過濾日期、bbox、threshold，可以用 CTE 拆成幾個階段講清楚。",
+        terms: ["CTE", "WITH", "subquery"],
+        challenge: "如果 SQL 查詢變很長，你會怎麼拆，讓面試官看得懂？"
+      },
+      {
+        domain: "python",
+        title: "dtype：欄位型別",
+        concept: "dtype 是資料欄位的型別。數字被當字串、時間無法排序，常常都是 dtype 沒處理好。",
+        s111: "對應 S-111：target_timestamp、lead_hours、lon/lat、value 都必須是正確型別，API 查詢和排序才可信。",
+        terms: ["dtype", "type conversion", "timestamp"],
+        challenge: "拿到一份髒資料時，你會如何先檢查欄位型別？"
+      },
+      {
+        domain: "python",
+        title: "Null / Outlier",
+        concept: "Null 是沒有資料，不等於 0；outlier 是異常值，不一定能直接刪，要先看業務規則與資料來源。",
+        s111: "對應 S-111：缺座標、缺時間或異常誤差值都會影響 hotspot 判定，需要記錄處理規則。",
+        terms: ["null", "outlier", "missing value"],
+        challenge: "你會如何決定缺值或異常值要刪除、補值還是標記？"
+      },
+      {
+        domain: "python",
+        title: "Assert / Validation",
+        concept: "assert 或 validation 是把你對資料的假設寫成檢查，例如欄位必須存在、筆數不能為 0、時間範圍要合理。",
+        s111: "對應 S-111：pipeline 跑完要檢查日期、lead_hours、hotspot 筆數、severity 分級與 API 回傳。",
+        terms: ["assert", "validation", "data quality"],
+        challenge: "你會替一個資料清洗流程設計哪些 validation？"
+      },
+      {
+        domain: "python",
+        title: "Time complexity",
+        concept: "Time complexity 是資料量變大時，程式耗時如何成長。面試不一定要競賽級，但要能指出主要迴圈與瓶頸。",
+        s111: "對應 S-111：大量 hotspot 或格點資料不能用不必要的巢狀迴圈一筆一筆硬比。",
+        terms: ["time complexity", "O(n)", "loop"],
+        challenge: "請說明一段資料處理程式的時間複雜度，你會怎麼講？"
+      },
+      {
+        domain: "python",
+        title: "Hash map：用 dict 降低查找成本",
+        concept: "Hash map 在 Python 常用 dict 實作，可以用 key 快速查值，避免每次都掃完整份資料。",
+        s111: "對應 S-111：用日期、時間、座標或 id 當 key，可以快速對應統計結果或 hotspot rows。",
+        terms: ["hash map", "dict", "lookup"],
+        challenge: "如果兩層迴圈很慢，你會如何用 hash map 改寫？"
+      },
+      {
+        domain: "pipeline",
+        title: "Schema：先定義欄位契約",
+        concept: "Schema 是資料表的欄位、型別與規則。沒有 schema，資料流進資料庫後會很難驗證與交接。",
+        s111: "對應 S-111：summary_stats 與 hotspot_points 要清楚定義 target_date、lead_hours、lon、lat、value、severity。",
+        terms: ["schema", "column", "data contract"],
+        challenge: "你會如何向面試官說明 schema 在資料工程裡的重要性？"
+      },
+      {
+        domain: "pipeline",
+        title: "Idempotent：重跑結果要一致",
+        concept: "Idempotent 是同一批資料重跑多次，結果仍然一致，不會越跑越多或覆蓋錯誤。",
+        s111: "對應 S-111：同一天、同一 lead_hours 的 hotspot 重跑時，不能因 append 造成重複列。",
+        terms: ["idempotent", "rerun", "duplicate"],
+        challenge: "如果批次資料需要重跑，你會如何確保結果安全？"
+      },
+      {
+        domain: "pipeline",
+        title: "Upsert",
+        concept: "Upsert 是有資料就更新，沒有就新增。它通常需要搭配唯一鍵，否則不知道哪一列該更新。",
+        s111: "對應 S-111：hotspot_points 重跑時可用 target_date、target_timestamp、lead_hours 與空間/metric 欄位控制唯一性。",
+        terms: ["upsert", "unique key", "update"],
+        challenge: "你會如何設計 upsert key，避免重跑資料重複？"
+      },
+      {
+        domain: "pipeline",
+        title: "ON CONFLICT",
+        concept: "ON CONFLICT 是 PostgreSQL 實作 upsert 的常見語法，遇到唯一鍵衝突時改成更新。",
+        s111: "對應 S-111：若重跑同一批 hotspot rows，可以用 ON CONFLICT DO UPDATE 保持資料一致。",
+        terms: ["ON CONFLICT", "DO UPDATE", "PostgreSQL"],
+        challenge: "請用白話說明 ON CONFLICT 解決了什麼問題。"
+      },
+      {
+        domain: "pipeline",
+        title: "Manifest：輸出清單與版本紀錄",
+        concept: "Manifest 是一批輸出的清單，記錄產生了哪些檔案、日期、版本或處理參數。",
+        s111: "對應 S-111：result package 可以用 manifest 記錄本次輸出的 hotspot、summary、GeoJSON 與參數版本。",
+        terms: ["manifest", "version", "result package"],
+        challenge: "你會在 manifest 裡記錄哪些資訊，讓別人能交接？"
+      },
+      {
+        domain: "api",
+        title: "Endpoint",
+        concept: "Endpoint 是 API 的一個網址功能。好的 endpoint 要讓使用者知道它查什麼、參數是什麼、回傳什麼。",
+        s111: "對應 S-111：/api/threshold-hotspots 查可畫圖的熱點，/api/hotspot-series 查 hotspot rows 的序列。",
+        terms: ["endpoint", "API", "route"],
+        challenge: "請設計一個查 threshold hotspot 的 endpoint。"
+      },
+      {
+        domain: "api",
+        title: "Query parameter",
+        concept: "Query parameter 是 URL 後面的篩選條件，例如 date、lead_hours、bbox、limit。",
+        s111: "對應 S-111：前端可以用 date、lead_hours、error_type、threshold、bbox 篩選 hotspot。",
+        terms: ["query parameter", "date", "limit"],
+        challenge: "你會讓 hotspot API 支援哪些 query parameters？"
+      },
+      {
+        domain: "api",
+        title: "JSON / GeoJSON",
+        concept: "JSON 是一般結構化資料格式；GeoJSON 是帶有地理座標與幾何資訊的 JSON，適合地圖工具使用。",
+        s111: "對應 S-111：hotspot 點位若要給 QGIS 或前端地圖畫，就可以回傳 lon/lat 或 GeoJSON。",
+        terms: ["JSON", "GeoJSON", "lon/lat"],
+        challenge: "如果前端要畫地圖，你會如何設計 API response？"
+      },
+      {
+        domain: "api",
+        title: "Pagination / Limit",
+        concept: "Pagination 與 limit 用來避免一次回傳太多資料，造成 API 慢、網路 payload 過大或前端卡住。",
+        s111: "對應 S-111：hotspot rows 可能很多，API 需要 limit、bbox 或分頁保護查詢。",
+        terms: ["pagination", "limit", "payload"],
+        challenge: "如果 API 一次回傳 50,000 筆，你會怎麼改善？"
+      },
+      {
+        domain: "api",
+        title: "BBox",
+        concept: "BBox 是地圖矩形範圍，通常用 min_lon、min_lat、max_lon、max_lat 表示。",
+        s111: "對應 S-111：前端地圖只需要目前視窗內的 hotspot，就可以用 bbox 篩選。",
+        terms: ["bbox", "spatial filter", "map viewport"],
+        challenge: "請說明 bbox 為什麼能改善地圖 API 效能。"
+      },
+      {
+        domain: "api",
+        title: "PostGIS / GIST index",
+        concept: "PostGIS 讓 PostgreSQL 支援空間資料；GIST index 常用來加速空間查詢。",
+        s111: "對應 S-111：hotspot 有 lon/lat，若要做範圍查詢，可用 PostGIS 與空間索引提升速度。",
+        terms: ["PostGIS", "GIST index", "spatial query"],
+        challenge: "PostGIS 在你的專案裡不只是存座標，它解決了什麼問題？"
+      },
+      {
+        domain: "api",
+        title: "EXPLAIN ANALYZE",
+        concept: "EXPLAIN ANALYZE 可以看到 PostgreSQL 實際怎麼執行查詢、花多久、是否使用索引。",
+        s111: "對應 S-111：如果 /api/threshold-hotspots 變慢，可以用它判斷是否全表掃描或索引沒用到。",
+        terms: ["EXPLAIN ANALYZE", "query plan", "full table scan"],
+        challenge: "API 查詢變慢時，你會如何用 query plan 排查？"
+      },
+      {
+        domain: "api",
+        title: "Cache",
+        concept: "Cache 是把常用查詢結果暫存起來，減少重複計算或重複打資料庫。",
+        s111: "對應 S-111：固定日期、固定 lead_hours 的 hotspot summary 可以考慮快取，但要注意資料更新時失效。",
+        terms: ["cache", "TTL", "stale data"],
+        challenge: "哪些 API 查詢適合 cache？cache 的風險是什麼？"
+      },
+      {
+        domain: "api",
+        title: "Timeout / Error handling",
+        concept: "Timeout 避免單一慢查詢卡住服務；error handling 讓錯誤回應清楚、可預期。",
+        s111: "對應 S-111：查不到日期、參數錯誤、DB 太慢時，API 要回清楚訊息，而不是無聲失敗。",
+        terms: ["timeout", "error handling", "fallback"],
+        challenge: "如果 API 查詢失敗，你會怎麼設計錯誤處理？"
+      },
+      {
+        domain: "story",
+        title: "STAR",
+        concept: "STAR 是 Situation、Task、Action、Result。它讓專案回答不會散掉，尤其適合講自己的角色與成果。",
+        s111: "對應 S-111：背景是海流驗證，任務是建立可查詢熱點資料，行動是 pipeline/API/DB，結果是可交接工具。",
+        terms: ["STAR", "Situation", "Result"],
+        challenge: "請用 STAR 講 90 秒 S-111 專案。"
+      },
+      {
+        domain: "story",
+        title: "Trade-off",
+        concept: "Trade-off 是取捨。工程面試常問你為什麼這樣設計，而不是只問你做了什麼。",
+        s111: "對應 S-111：API 回 hotspot rows 比回完整格網輕量，但若要完整動畫就需要新增資料表與 endpoint。",
+        terms: ["trade-off", "constraint", "decision"],
+        challenge: "請說明 S-111 API 只回 hotspot、不回完整格網的取捨。"
+      },
+      {
+        domain: "story",
+        title: "Bottleneck / Profiling",
+        concept: "Bottleneck 是真正拖慢系統的地方；profiling 是量測哪一段最慢。不要憑感覺優化。",
+        s111: "對應 S-111：API 慢可能是 DB query、JSON serialize、payload 太大或缺 bbox，不一定是 server 不夠快。",
+        terms: ["bottleneck", "profiling", "payload"],
+        challenge: "如果 API 變慢，你會如何找出真正瓶頸？"
+      },
+      {
+        domain: "story",
+        title: "Regression",
+        concept: "Regression 是修改後把原本正常的功能弄壞。工程回答要說修完後如何防止回歸。",
+        s111: "對應 S-111：改 hotspot 分級、API 欄位或 SQL 查詢後，要確認舊的 QGIS/前端流程仍能使用。",
+        terms: ["regression", "regression check", "test case"],
+        challenge: "修完 bug 後，你會如何確認沒有造成新的 regression？"
+      }
+    ];
+
     const questionContexts = [
       {
         title: "兩張表的 JOIN 情境",
@@ -1586,6 +1885,61 @@
       }
     ];
 
+    function escapeRegExp(value) {
+      return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function buildDailyQuestion(lesson, index) {
+      const termsPattern = lesson.terms.map(escapeRegExp).join("|");
+      return {
+        domain: lesson.domain,
+        title: `今日新知挑戰 D${index + 1}：${lesson.title}`,
+        hint: `今天先學「${lesson.title}」，再回答：${lesson.challenge}`,
+        guide: [
+          ["先定義", `用白話說明 ${lesson.terms[0]} 是什麼。`],
+          ["連專案", "把概念連回 S-111、PostgreSQL/PostGIS、API 或 QGIS。"],
+          ["答題目", "針對今日挑戰題直接回答，不要只背名詞。"],
+          ["補驗證", "最後說你會如何檢查、取捨或避免風險。"]
+        ],
+        expected: [
+          ["今日術語", new RegExp(termsPattern, "i")],
+          ["白話定義", /意思|代表|用來|可以|概念|白話|是|指|解決/i],
+          ["S-111 連結", /S-111|PostgreSQL|PostGIS|API|QGIS|NetCDF|hotspot|lead_hours|bbox|pipeline|資料庫|資料/i],
+          ["驗證或取捨", /驗證|檢查|取捨|風險|限制|測試|log|確認|比對|避免|改善/i]
+        ],
+        skeleton: `我會先用白話定義 ${lesson.title}：${lesson.concept} 接著我會連到自己的 S-111 經驗：${lesson.s111} 如果面試官問「${lesson.challenge}」，我會先講使用情境，再講我會怎麼做，最後補上驗證方式或取捨，避免只是背名詞。`,
+        followups: [
+          `請不用術語，向非工程背景的人解釋「${lesson.title}」。`,
+          "這個知識點在你的 S-111 專案裡最像哪一段工作？",
+          "如果面試官追問風險或限制，你會補哪一句？"
+        ]
+      };
+    }
+
+    function buildDailyContext(lesson, index) {
+      return {
+        title: `今日新知 D${index + 1}：${lesson.title}`,
+        note: "先讀概念，再用下面的挑戰題作答。",
+        html: `
+          <table class="data-table">
+            <tr><th>欄位</th><th>內容</th></tr>
+            <tr><td>核心概念</td><td>${lesson.concept}</td></tr>
+            <tr><td>S-111 對應</td><td>${lesson.s111}</td></tr>
+            <tr><td>今日挑戰</td><td>${lesson.challenge}</td></tr>
+          </table>
+          <div class="context-note">今天作答時至少自然用到：${lesson.terms.map(term => `<strong>${term}</strong>`).join("、")}。</div>
+        `
+      };
+    }
+
+    const baseQuestionCount = questions.length;
+    const dailyLessonStartIndex = questions.length;
+
+    dailyLessons.forEach((lesson, index) => {
+      questions.push(buildDailyQuestion(lesson, index));
+      questionContexts.push(buildDailyContext(lesson, index));
+    });
+
     const state = {
       current: 0,
       answers: Array(questions.length).fill(""),
@@ -1627,6 +1981,14 @@
       todayPlanQuestions: document.getElementById("todayPlanQuestions"),
       todayPlanTime: document.getElementById("todayPlanTime"),
       todayPlanGoal: document.getElementById("todayPlanGoal"),
+      dailyKnowledgeDay: document.getElementById("dailyKnowledgeDay"),
+      dailyKnowledgeTitle: document.getElementById("dailyKnowledgeTitle"),
+      dailyKnowledgeConcept: document.getElementById("dailyKnowledgeConcept"),
+      dailyKnowledgeTags: document.getElementById("dailyKnowledgeTags"),
+      dailyKnowledgeS111: document.getElementById("dailyKnowledgeS111"),
+      dailyKnowledgeBtn: document.getElementById("dailyKnowledgeBtn"),
+      dailyKnowledgeBtnIcon: document.getElementById("dailyKnowledgeBtnIcon"),
+      dailyKnowledgeBtnText: document.getElementById("dailyKnowledgeBtnText"),
       bars: document.getElementById("bars"),
       taskList: document.getElementById("taskList"),
       taskMeta: document.getElementById("taskMeta"),
@@ -1641,23 +2003,29 @@
       answerModeSelect: document.getElementById("answerModeSelect")
     };
 
+    function mergeSavedArray(savedArray, fallbackValue) {
+      return Array.from({ length: questions.length }, (_, index) => {
+        if (Array.isArray(savedArray) && index < savedArray.length) return savedArray[index];
+        return typeof fallbackValue === "function" ? fallbackValue(index) : fallbackValue;
+      });
+    }
+
     function load() {
       try {
         const saved = JSON.parse(localStorage.getItem("rongDataMockInterview"));
         if (!saved) return;
-        state.current = Number.isInteger(saved.current) ? saved.current : 0;
-        state.answers = Array.isArray(saved.answers) && saved.answers.length === questions.length ? saved.answers : state.answers;
-        state.feedback = Array.isArray(saved.feedback) && saved.feedback.length === questions.length ? saved.feedback : state.feedback;
-        state.hintsOpen = Array.isArray(saved.hintsOpen) && saved.hintsOpen.length === questions.length ? saved.hintsOpen : state.hintsOpen;
-        state.selfChecks = Array.isArray(saved.selfChecks) && saved.selfChecks.length === questions.length ? saved.selfChecks : state.selfChecks;
-        state.followupQuestions = Array.isArray(saved.followupQuestions) && saved.followupQuestions.length === questions.length ? saved.followupQuestions : state.followupQuestions;
-        state.followupAnswers = Array.isArray(saved.followupAnswers) && saved.followupAnswers.length === questions.length ? saved.followupAnswers : state.followupAnswers;
-        state.followupFeedback = Array.isArray(saved.followupFeedback) && saved.followupFeedback.length === questions.length ? saved.followupFeedback : state.followupFeedback;
+        state.current = Number.isInteger(saved.current) ? Math.min(Math.max(saved.current, 0), questions.length - 1) : 0;
+        state.answers = mergeSavedArray(saved.answers, "");
+        state.feedback = mergeSavedArray(saved.feedback, null);
+        state.hintsOpen = mergeSavedArray(saved.hintsOpen, false);
+        state.followupQuestions = mergeSavedArray(saved.followupQuestions, "");
+        state.followupAnswers = mergeSavedArray(saved.followupAnswers, "");
+        state.followupFeedback = mergeSavedArray(saved.followupFeedback, null);
         ["roleSelect", "timeSelect", "modeSelect", "answerModeSelect"].forEach(id => {
           if (saved[id]) els[id].value = saved[id];
         });
         state.selfChecks = questions.map((question, index) => {
-          const savedChecks = state.selfChecks[index];
+          const savedChecks = Array.isArray(saved.selfChecks) ? saved.selfChecks[index] : null;
           return Array.isArray(savedChecks) && savedChecks.length === question.expected.length
             ? savedChecks
             : Array(question.expected.length).fill(false);
@@ -1857,24 +2225,38 @@
     }
 
     function currentWeekNumber() {
+      const diffDays = daysSinceInterviewStart();
+      return Math.min(4, Math.ceil(diffDays / 7) + 1);
+    }
+
+    function daysSinceInterviewStart() {
       const startDate = getInterviewStartDate();
       const start = new Date(`${startDate}T00:00:00`);
       const today = new Date();
       today.setHours(0, 0, 0, 0);
-      const diffDays = Math.max(0, Math.floor((today - start) / 86400000));
-      return Math.min(4, Math.ceil(diffDays / 7) + 1);
+      return Math.max(0, Math.floor((today - start) / 86400000));
+    }
+
+    function todayLearningOffset() {
+      return daysSinceInterviewStart() % dailyLessons.length;
+    }
+
+    function todayLearningIndex() {
+      return dailyLessonStartIndex + todayLearningOffset();
     }
 
     function todayRecommendationIndexes(dayIndex) {
       const plan = dailyPlans[dayIndex];
-      if (plan.indexes !== "weakest") return plan.indexes;
-      const scored = state.feedback
-        .map((feedback, index) => feedback ? { index, score: feedback.score } : null)
-        .filter(Boolean)
-        .sort((a, b) => a.score - b.score)
-        .slice(0, 2)
-        .map(item => item.index);
-      return scored.length ? scored : [0, 8];
+      const plannedIndexes = plan.indexes !== "weakest"
+        ? plan.indexes
+        : state.feedback
+          .map((feedback, index) => feedback && index < baseQuestionCount ? { index, score: feedback.score } : null)
+          .filter(Boolean)
+          .sort((a, b) => a.score - b.score)
+          .slice(0, 2)
+          .map(item => item.index);
+      const fallbackIndexes = plannedIndexes.length ? plannedIndexes : [0, 8];
+      return [todayLearningIndex(), ...fallbackIndexes].filter((index, position, list) => list.indexOf(index) === position);
     }
 
     function truncateTitle(title) {
@@ -1891,6 +2273,7 @@
       els.todayPlanMeta.textContent = `週${weekdayLabels[dayIndex]}・第 ${week} 週`;
       els.todayPlanTopic.textContent = plan.topic;
       els.todayPlanGoal.textContent = `第 ${week} 週目標：${weekGoals[week - 1]}`;
+      renderDailyKnowledge();
       els.todayPlanQuestions.innerHTML = indexes.map(index => {
         const done = Boolean(state.feedback[index]);
         const prefix = done ? "✓" : "▶";
@@ -1908,6 +2291,21 @@
           <span>${minutes}min</span>
         </div>
       `).join("");
+    }
+
+    function renderDailyKnowledge() {
+      const offset = todayLearningOffset();
+      const lesson = dailyLessons[offset];
+      const questionIndex = todayLearningIndex();
+      const done = Boolean(state.feedback[questionIndex]);
+      els.dailyKnowledgeDay.textContent = `第 ${offset + 1} 天 / 28 天循環`;
+      els.dailyKnowledgeTitle.textContent = lesson.title;
+      els.dailyKnowledgeConcept.textContent = lesson.concept;
+      els.dailyKnowledgeTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
+      els.dailyKnowledgeS111.textContent = lesson.s111;
+      els.dailyKnowledgeBtn.classList.toggle("done", done);
+      els.dailyKnowledgeBtnIcon.textContent = done ? "✓" : "▶";
+      els.dailyKnowledgeBtnText.textContent = done ? "今日新知已完成" : "用今日新知考我";
     }
 
     function renderQuestion() {
@@ -2185,6 +2583,12 @@
       const button = event.target.closest("[data-plan-question]");
       if (!button) return;
       state.current = Number(button.dataset.planQuestion);
+      renderAll();
+      window.scrollTo({ top: 0 });
+    });
+
+    els.dailyKnowledgeBtn.addEventListener("click", () => {
+      state.current = todayLearningIndex();
       renderAll();
       window.scrollTo({ top: 0 });
     });
