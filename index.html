@@ -232,7 +232,7 @@
     .lesson-teaching {
       border-top: 1px solid var(--line);
       display: grid;
-      gap: 10px;
+      gap: 12px;
       padding-top: 14px;
     }
 
@@ -269,6 +269,108 @@
       font-size: 13px;
       line-height: 1.65;
       margin: 0;
+    }
+
+    .lesson-deep {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      display: grid;
+      overflow: hidden;
+    }
+
+    .lesson-deep-section,
+    .lesson-term-list {
+      border-top: 1px solid var(--line);
+      padding: 14px;
+    }
+
+    .lesson-deep-section:first-child {
+      border-top: 0;
+    }
+
+    .lesson-deep-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .lesson-deep-grid .lesson-deep-section:nth-child(2) {
+      border-left: 1px solid var(--line);
+    }
+
+    .lesson-deep-section strong,
+    .lesson-term-list strong {
+      color: var(--ink);
+      display: block;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .lesson-deep-section p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    .lesson-deep-section p + p {
+      margin-top: 8px;
+    }
+
+    .lesson-s111-bridge {
+      background: #f8fbfb;
+    }
+
+    .lesson-answer-frame {
+      border-left: 3px solid var(--accent);
+      color: var(--ink) !important;
+      padding-left: 10px;
+    }
+
+    .lesson-term-list {
+      background: #fbfcfc;
+      display: grid;
+      gap: 10px;
+    }
+
+    .term-rows {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .term-row {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .term-row b {
+      color: var(--accent);
+      font-size: 13px;
+      overflow-wrap: anywhere;
+    }
+
+    .term-row span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .lesson-checklist {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    .lesson-checklist li {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+      margin: 4px 0;
+    }
+
+    .lesson-warning {
+      background: #fff8ed;
     }
 
     .lesson-actions {
@@ -1131,9 +1233,18 @@
       .checklist-grid,
       .context-grid,
       .teaching-grid,
+      .term-rows,
       .learning-steps,
       .learning-time {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .lesson-deep-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-deep-grid .lesson-deep-section:nth-child(2) {
+        border-left: 0;
       }
 
       .side {
@@ -2949,6 +3060,150 @@
       }
     ];
 
+    const termPlainExplanations = {
+      "ETL": "把資料從來源取出、整理轉換、放到可使用的位置。",
+      "Extract": "取資料，像讀 NetCDF、CSV、API 或資料庫。",
+      "Transform": "轉資料，像清欄位、改型別、算指標、分級。",
+      "Load": "載入結果，像寫入 PostgreSQL/PostGIS 或輸出 GeoJSON。",
+      "primary key": "能唯一代表一列資料的欄位或欄位組合。",
+      "foreign key": "用來連到另一張表主鍵的關係欄位。",
+      "JOIN key": "兩張表用來對接的欄位，必須先確認語意與唯一性。",
+      "granularity": "一列資料代表的層級，例如一天、一小時、一個點。",
+      "one-to-many": "左邊一列對右邊多列，join 後筆數可能放大。",
+      "many-to-many": "兩邊都可能多列對多列，最容易讓統計重複。",
+      "Window Function": "保留明細列，同時算組內排名、最新一筆或累積值。",
+      "PARTITION BY": "把資料分組後，在每組內做 window 計算。",
+      "ROW_NUMBER": "在每組內依排序給 1、2、3，用來取最新或最高一筆。",
+      "CTE": "用 WITH 把複雜 SQL 拆成可讀的階段。",
+      "WITH": "宣告 CTE 的 SQL 關鍵字。",
+      "subquery": "放在查詢裡面的中間查詢。",
+      "dtype": "欄位型別，例如文字、數字、時間。",
+      "type conversion": "把欄位轉成正確型別，例如字串轉 timestamp。",
+      "timestamp": "含日期與時間的欄位，用來排序、篩選或對齊資料。",
+      "null": "缺資料，不等於 0。",
+      "outlier": "異常值，可能是錯誤，也可能是真實少見事件。",
+      "missing value": "缺值，需要決定刪除、補值、標記或保留。",
+      "assert": "把假設寫成檢查，不符合就讓流程停下來。",
+      "validation": "系統性檢查資料是否符合規則。",
+      "data quality": "資料是否完整、正確、一致、可追溯。",
+      "time complexity": "資料量變大時，程式耗時如何成長。",
+      "O(n)": "資料筆數增加一倍，主要工作量大約也增加一倍。",
+      "loop": "重複處理資料的迴圈，常是效能瓶頸來源。",
+      "hash map": "用 key 快速找 value 的資料結構。",
+      "dict": "Python 裡常用的 hash map 實作。",
+      "lookup": "用 key 查資料的動作。",
+      "schema": "欄位、型別、約束與資料規格。",
+      "column": "資料表的一個欄位。",
+      "data contract": "資料生產者與使用者都遵守的欄位契約。",
+      "idempotent": "同一批資料重跑多次，結果仍一致。",
+      "rerun": "重新執行同一批處理流程。",
+      "duplicate": "重複資料，常由 append 或 join 錯誤造成。",
+      "upsert": "有資料就更新，沒有就新增。",
+      "unique key": "用來判斷資料是否同一筆的唯一條件。",
+      "update": "更新既有資料列。",
+      "ON CONFLICT": "PostgreSQL 處理唯一鍵衝突的 upsert 語法。",
+      "DO UPDATE": "衝突時改成更新欄位。",
+      "PostgreSQL": "常見關聯式資料庫，你的專案用它承接查詢。",
+      "manifest": "輸出清單與版本紀錄。",
+      "version": "資料、程式或參數的版本，用來追溯結果。",
+      "result package": "一批可交接的輸出成果與說明。",
+      "endpoint": "API 的一個功能網址。",
+      "API": "讓前端、QGIS 或其他程式查資料的介面。",
+      "route": "後端把某個網址對到某段處理邏輯。",
+      "query parameter": "URL 後面的篩選條件。",
+      "date": "日期篩選條件，常用來指定資料批次。",
+      "limit": "限制一次回傳幾筆資料。",
+      "JSON": "常見結構化資料格式。",
+      "GeoJSON": "帶地理幾何資訊的 JSON，適合地圖工具。",
+      "lon/lat": "經度與緯度，GeoJSON 通常是 longitude, latitude。",
+      "pagination": "分頁回傳，避免一次塞太多資料。",
+      "payload": "API 回傳或傳輸的資料量。",
+      "bbox": "地圖矩形範圍，用 min/max lon/lat 表示。",
+      "spatial filter": "用空間條件篩選資料。",
+      "map viewport": "使用者目前在地圖上看到的範圍。",
+      "PostGIS": "讓 PostgreSQL 支援空間資料與空間查詢。",
+      "GIST index": "常用來加速 PostGIS 空間查詢的索引。",
+      "spatial query": "依位置、範圍或幾何關係查資料。",
+      "EXPLAIN ANALYZE": "看 PostgreSQL 實際查詢計畫與耗時。",
+      "query plan": "資料庫執行 SQL 的步驟規劃。",
+      "full table scan": "整張表掃過，資料大時常會慢。",
+      "cache": "暫存常用結果，減少重複查詢或計算。",
+      "TTL": "快取多久後過期。",
+      "stale data": "快取過期或沒更新，導致看到舊資料。",
+      "timeout": "超過等待時間就中止請求。",
+      "error handling": "讓錯誤可預期、可回報、可追蹤。",
+      "fallback": "主要方法失敗時的替代做法。",
+      "STAR": "Situation、Task、Action、Result 的專案回答結構。",
+      "Situation": "背景情境，為什麼需要做這件事。",
+      "Result": "結果與影響，最好能具體到可交接或可量測。",
+      "trade-off": "取捨，說明為什麼選 A 不選 B。",
+      "constraint": "限制條件，例如時間、資料量、維護成本。",
+      "decision": "在限制下做出的設計選擇。",
+      "bottleneck": "真正拖慢系統的地方。",
+      "profiling": "用量測找出哪一段最慢。",
+      "regression": "修改後把原本正常的功能弄壞。",
+      "regression check": "確認舊功能沒有被新修改破壞的檢查。",
+      "test case": "用來驗證行為是否正確的測試情境。"
+    };
+
+    const domainInterviewReasons = {
+      sql: "SQL 題看起來是在考語法，其實是在看你能不能先判斷資料層級、關聯與結果是否合理。會寫查詢只是第一步，能解釋為什麼這樣查才是面試加分點。",
+      python: "Python 題不只是寫出會跑的程式。面試官會看你如何處理髒資料、型別、邊界條件與效能，因為資料流程最怕的是安靜地產生錯結果。",
+      pipeline: "Pipeline 題在看你有沒有工程思維：資料從哪裡來、怎麼轉換、如何重跑、如何驗證、如何交接。這比單次寫 script 更接近正式資料工程工作。",
+      api: "API / DB 題在看你能不能把資料變成別人可查、可用、可維護的服務。好的回答要同時講參數、資料量、錯誤、效能與使用者情境。",
+      story: "專案表達題在看你能不能把做過的事翻譯成面試官聽得懂的問題、行動與結果。不是把技術名詞排出來，而是說清楚你解決了什麼。"
+    };
+
+    const domainProjectBridges = {
+      sql: "在你的 S-111 專案裡，SQL 不只是撈資料，而是把日期、lead_hours、空間點、hotspot 分級等條件對齊。只要粒度或 key 錯，API 回傳看起來正常，實際統計就可能偏掉。",
+      python: "在你的 S-111 專案裡，Python 是從原始資料走到可查詢資料的前半段。它要把時間、座標、流速或誤差欄位整理成穩定格式，後面的資料庫與 API 才站得住。",
+      pipeline: "你的 S-111 經驗很適合講 pipeline，因為它不是單點任務：原始資料、清洗轉換、hotspot 計算、PostGIS 入庫、API 查詢與交接文件都串在一起。",
+      api: "你的 S-111 API 重點是 threshold hotspot workflow。面試時可以強調你讓資料能依日期、lead_hours、threshold、bbox 等條件被查詢，而不是只把檔案存在本機。",
+      story: "你的專案故事主軸可以固定成：把複雜海流資料整理成可查詢、可視覺化、可交接的資料應用。這句話能讓非海洋領域的面試官先聽懂價值。"
+    };
+
+    const lessonProjectDetails = [
+      { match: /etl/i, text: "你可以把 S-111 說成很完整的 ETL：Extract 是讀 NetCDF 原始資料；Transform 是整理時間、座標、誤差與 hotspot 分級；Load 是寫進 PostgreSQL/PostGIS，讓 API 和 QGIS 可以查。" },
+      { match: /primary|foreign/i, text: "你可以用 hotspot_points 舉例：如果 target_date、target_timestamp、lead_hours、位置與 metric 無法共同識別一筆結果，重跑或 join 時就可能重複或對錯資料。" },
+      { match: /granularity/i, text: "S-111 很適合練 granularity，因為 target_date 是日層級、target_timestamp 是小時層級、hotspot_points 是空間點層級。你要先說清楚一列代表什麼，才談得上正確 join 或聚合。" },
+      { match: /window/i, text: "如果你想在每個 lead_hours 裡找最大誤差 hotspot，同時保留 lon、lat、target_timestamp 等明細欄位，這就是 window function 很好解釋的場景。" },
+      { match: /cte|subquery/i, text: "你可以把 threshold hotspot 查詢拆成幾段：先篩日期與 lead_hours，再套 bbox，再套 threshold，最後排序或限制筆數。這樣面試官比較容易跟上你的 SQL 思路。" },
+      { match: /dtype/i, text: "S-111 的時間、lead_hours、lon/lat、value 都不能只是看起來像數字或時間。型別錯會讓排序、篩選、API response 與視覺化都變得不可靠。" },
+      { match: /null|outlier/i, text: "缺座標、缺時間或異常值不能只用刪除處理。你可以說明會先標記，再依欄位用途決定刪除、保留或排除於 hotspot 計算之外。" },
+      { match: /assert|validation/i, text: "S-111 的 validation 可以檢查欄位存在、日期範圍、lead_hours、座標範圍、筆數，以及固定分級規則：0.5-1.0 kn 是 warning hotspot，>= 1.0 kn 是 critical hotspot。" },
+      { match: /time complexity/i, text: "如果 hotspot 或格點資料變大，Python 裡不必要的巢狀迴圈會很快拖慢流程。你可以說會先找主要迴圈，再用 dict、向量化或資料庫查詢降低成本。" },
+      { match: /hash map|dict/i, text: "你可以把日期、時間、座標或 station id 組成 key，用 dict 快速對應統計值或 hotspot rows，避免每筆資料都去掃另一份資料。" },
+      { match: /schema/i, text: "S-111 的 schema 不是只列欄位，而是交接契約。target_date、lead_hours、lon、lat、value、severity 的型別與意義固定後，API、QGIS 與文件才會一致。" },
+      { match: /idempotent/i, text: "你的重跑情境很適合講冪等：同一天、同一 lead_hours 的 hotspot rows 重跑後，資料庫結果應該一致，不應該因 append 而越跑越多。" },
+      { match: /upsert/i, text: "Upsert 可以用來處理 S-111 批次重跑。重點不是只說會用 upsert，而是說唯一鍵怎麼設、衝突時哪些欄位更新、如何驗證筆數沒有膨脹。" },
+      { match: /on conflict/i, text: "在 PostgreSQL 裡，你可以用 ON CONFLICT DO UPDATE 表達重跑策略：遇到同一筆 hotspot 結果就更新，而不是新增另一列。" },
+      { match: /manifest/i, text: "S-111 result package 可以用 manifest 記錄輸入檔、產出檔、日期、lead_hours、threshold、筆數與版本。這會讓交接比只丟一包檔案可靠很多。" },
+      { match: /endpoint/i, text: "你的 API 可以講成幾個明確 endpoint，例如 /api/threshold-hotspots 查可畫圖的 hotspot，/api/hotspot-series 查 hotspot-row series。每個 endpoint 都要說清楚用途。" },
+      { match: /query parameter/i, text: "S-111 API 的 query parameter 可以直接連到使用者需求：date 指定日期、lead_hours 指定預報時效、bbox 限制地圖範圍、threshold 控制 hotspot 條件。" },
+      { match: /json|geojson/i, text: "如果使用者要在地圖上看 hotspot，你可以回 lon/lat 或 GeoJSON。重點是 API response 要讓前端或 QGIS 直接使用，而不是再靠人工整理。" },
+      { match: /pagination|limit/i, text: "當 hotspot rows 變多時，你可以用 limit、bbox 或 pagination 控制 payload。這樣比較像正式服務，而不是把所有資料一次丟給前端。" },
+      { match: /bbox/i, text: "BBox 很適合你的地圖場景：使用者只看目前視窗範圍，後端就只查這個範圍內的 hotspot，減少 DB 掃描與網路 payload。" },
+      { match: /postgis|gist/i, text: "PostGIS 在你的專案裡不只是存 lon/lat，而是讓資料庫能做空間範圍查詢。GIST index 則是讓 bbox 或空間查詢更快的關鍵。" },
+      { match: /explain/i, text: "如果 threshold hotspot API 變慢，你可以用 EXPLAIN ANALYZE 看是不是 full table scan、排序太重、索引沒用到，然後再決定要不要加索引或改 SQL。" },
+      { match: /cache/i, text: "固定日期與固定 lead_hours 的 summary 或 hotspot 查詢可能適合 cache，但你要同時講 TTL 與資料更新後如何失效，避免 stale data。" },
+      { match: /timeout|error handling/i, text: "S-111 API 可能遇到參數錯、查無資料、DB 查詢慢。你可以說會區分 400、404、500 類錯誤，並回傳清楚 message，讓前端不會只顯示空白。" },
+      { match: /star/i, text: "你的 STAR 可以固定成：海流驗證資料需要被查詢與展示；你負責整理資料流與 API；你做了 PostGIS、threshold hotspot 與文件；結果是可交接、可查詢的工具。" },
+      { match: /trade-off|tradeoff/i, text: "你可以說只回 hotspot rows 的優點是 payload 小、API 快、容易展示；代價是不能直接播放完整格網動畫。這就是清楚的工程取捨。" },
+      { match: /bottleneck|profiling/i, text: "S-111 API 慢時，瓶頸可能在 DB query、JSON serialize、payload、bbox 缺失或前端繪圖。面試時請先講量測，再講優化。" },
+      { match: /regression/i, text: "如果你改了 hotspot 分級、API 欄位或 SQL 條件，regression check 要確認舊的 QGIS/前端流程仍可使用，warning/critical 分級也沒有跑掉。" }
+    ];
+
+    const lessonChecklists = [
+      { match: /etl/i, items: ["能把流程拆成 Extract、Transform、Load 三段。", "能說出每段的輸入與輸出。", "能補一句如何驗證筆數、欄位或結果。"] },
+      { match: /primary|foreign|granularity/i, items: ["先問一列資料代表什麼。", "確認 key 是否唯一，以及 join 後筆數是否合理。", "回答時主動提到 one-to-many 或 many-to-many 的風險。"] },
+      { match: /window|cte|subquery/i, items: ["能說出這個 SQL 工具解決哪種查詢問題。", "能用小資料說明輸入與目標輸出。", "能講出不用它時可能發生什麼限制。"] },
+      { match: /dtype|null|outlier|assert|validation/i, items: ["先檢查欄位、型別、空值與異常值。", "把處理規則寫成可重跑、可追溯的流程。", "最後補一個 validation 或 log，證明結果可靠。"] },
+      { match: /time complexity|hash map|dict/i, items: ["先定義 n 代表什麼資料量。", "指出主要迴圈、查找或巢狀結構。", "提出一個具體改善方式，例如 dict、索引或批次處理。"] },
+      { match: /schema|idempotent|upsert|on conflict|manifest/i, items: ["說清楚資料契約、唯一鍵或版本紀錄。", "說明重跑時如何避免重複或覆蓋錯誤。", "用筆數、摘要統計或 manifest 驗證交接結果。"] },
+      { match: /endpoint|query parameter|json|geojson|pagination|bbox|postgis|gist|explain|cache|timeout|error handling/i, items: ["先講使用者要查什麼，再講 endpoint 或參數。", "說明資料量、效能、錯誤處理或索引。", "把 response 設計連到前端、QGIS 或地圖使用情境。"] },
+      { match: /star|trade-off|bottleneck|profiling|regression/i, items: ["先講問題，不要先堆技術名詞。", "用 S-111 的具體情境補證據。", "最後講結果、取捨、驗證或下一步。"] }
+    ];
+
     function teachingDetailFor(lesson) {
       return teachingDetails.find(item => item.match.test(lesson.title)) || {
         simple: lesson.concept,
@@ -2958,23 +3213,71 @@
       };
     }
 
+    function termExplanation(term) {
+      return termPlainExplanations[term] || "用你自己的專案例子解釋它，不要只背英文。";
+    }
+
+    function matchedText(list, lesson, fallback) {
+      const match = list.find(item => item.match.test(lesson.title));
+      return match ? match.text : fallback;
+    }
+
+    function lessonChecklist(lesson) {
+      const match = lessonChecklists.find(item => item.match.test(lesson.title));
+      return match ? match.items : [
+        `能白話說出 ${lesson.terms[0]} 的用途。`,
+        "能連到自己的 S-111 專案，而不是只講課本定義。",
+        "能補一句驗證、風險或取捨。"
+      ];
+    }
+
     function renderTeachingCards(lesson) {
       const detail = teachingDetailFor(lesson);
-      const cards = [
-        ["白話理解", detail.simple],
-        ["你實作時要做什麼", detail.steps],
-        ["面試可以怎麼說", detail.interview],
-        ["常見錯誤", detail.mistake]
-      ];
+      const terms = lesson.terms.map(term => `
+        <div class="term-row">
+          <b>${term}</b>
+          <span>${termExplanation(term)}</span>
+        </div>
+      `).join("");
+      const checklist = lessonChecklist(lesson).map(item => `<li>${item}</li>`).join("");
+      const projectBridge = matchedText(lessonProjectDetails, lesson, domainProjectBridges[lesson.domain]);
       return `
         <h4 class="lesson-teaching-title">文字教學：先讀懂，再看影片</h4>
-        <div class="teaching-grid">
-          ${cards.map(([title, body]) => `
-            <div class="teaching-card">
-              <strong>${title}</strong>
-              <p>${body}</p>
-            </div>
-          `).join("")}
+        <div class="lesson-deep">
+          <section class="lesson-deep-section">
+            <strong>1. 先抓大意</strong>
+            <p>${detail.simple}</p>
+            <p>${domainInterviewReasons[lesson.domain]}</p>
+          </section>
+          <div class="lesson-deep-grid">
+            <section class="lesson-deep-section">
+              <strong>2. 你實作時要做什麼</strong>
+              <p>${detail.steps}</p>
+            </section>
+            <section class="lesson-deep-section lesson-s111-bridge">
+              <strong>3. 連到你的 S-111 專案</strong>
+              <p>${projectBridge}</p>
+            </section>
+          </div>
+          <section class="lesson-term-list">
+            <strong>4. 今天先記這些詞</strong>
+            <div class="term-rows">${terms}</div>
+          </section>
+          <div class="lesson-deep-grid">
+            <section class="lesson-deep-section">
+              <strong>5. 面試可以怎麼說</strong>
+              <p>${detail.interview}</p>
+              <p class="lesson-answer-frame">回答順序：先白話定義，再講使用情境，接著連到 S-111，最後補驗證、風險或取捨。</p>
+            </section>
+            <section class="lesson-deep-section">
+              <strong>6. 讀完後檢查自己</strong>
+              <ul class="lesson-checklist">${checklist}</ul>
+            </section>
+          </div>
+          <section class="lesson-deep-section lesson-warning">
+            <strong>常見錯誤</strong>
+            <p>${detail.mistake}</p>
+          </section>
         </div>
       `;
     }
