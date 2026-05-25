@@ -380,6 +380,72 @@
       background: #fff;
     }
 
+    .lesson-readiness {
+      border: 1px solid #dfe7e8;
+      border-radius: 6px;
+      background: #fff;
+      display: grid;
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .readiness-head {
+      display: grid;
+      gap: 5px;
+    }
+
+    .readiness-head strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .readiness-head span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .lesson-readiness textarea {
+      width: 100%;
+      min-height: 112px;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+      line-height: 1.65;
+      padding: 10px 12px;
+      resize: vertical;
+    }
+
+    .readiness-result {
+      border-top: 1px solid #e7ecec;
+      color: var(--muted);
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.65;
+      padding-top: 12px;
+    }
+
+    .readiness-result strong {
+      color: var(--ink);
+    }
+
+    .readiness-result.ok strong {
+      color: var(--ok);
+    }
+
+    .readiness-result.error strong {
+      color: var(--danger);
+    }
+
+    .readiness-result ul {
+      margin: 0;
+      padding-left: 20px;
+    }
+
     .lesson-actions {
       display: flex;
       flex-wrap: wrap;
@@ -1424,8 +1490,19 @@
               <strong>今日驗收</strong>
               <ul id="learningOutcomes"></ul>
             </div>
+            <div class="lesson-readiness">
+              <div class="readiness-head">
+                <strong>學習檢核：60 分以上解鎖下一天</strong>
+                <span>請用自己的話寫 3-5 句：這個概念是什麼、會用在哪裡、怎麼連到 S-111、你會怎麼驗證。不要照抄上面的文字。</span>
+              </div>
+              <textarea id="lessonReflectionInput" spellcheck="false" placeholder="例如：我理解 ETL 不是只有轉檔，而是... 在 S-111 裡... 我會檢查..."></textarea>
+              <div class="readiness-result" id="lessonReadinessResult">
+                <strong>尚未檢核</strong>
+                <span>寫完後按「分析學習程度」。達到 60 分就會自動解鎖下一天。</span>
+              </div>
+            </div>
             <div class="lesson-actions">
-              <button class="btn primary" id="startLessonChallengeBtn" type="button">學完，開始這題</button>
+              <button class="btn primary" id="startLessonChallengeBtn" type="button">分析學習程度</button>
               <button class="btn" id="openTodayLessonBtn" type="button">回到今日新知</button>
             </div>
           </section>
@@ -2506,6 +2583,8 @@
       view: "learn",
       lessonOffset: 0,
       learnedLessons: Array(dailyLessons.length).fill(false),
+      lessonReflections: Array(dailyLessons.length).fill(""),
+      lessonReadiness: Array(dailyLessons.length).fill(null),
       answers: Array(questions.length).fill(""),
       feedback: Array(questions.length).fill(null),
       hintsOpen: Array(questions.length).fill(false),
@@ -2557,6 +2636,8 @@
       learningReferenceLink: document.getElementById("learningReferenceLink"),
       learningPracticeLink: document.getElementById("learningPracticeLink"),
       learningOutcomes: document.getElementById("learningOutcomes"),
+      lessonReflectionInput: document.getElementById("lessonReflectionInput"),
+      lessonReadinessResult: document.getElementById("lessonReadinessResult"),
       learningPlanTopic: document.getElementById("learningPlanTopic"),
       learningPlanTime: document.getElementById("learningPlanTime"),
       learningWeekGoal: document.getElementById("learningWeekGoal"),
@@ -2623,6 +2704,28 @@
       });
     }
 
+    function normalizeLessonReadiness(savedReadiness) {
+      return Array.from({ length: dailyLessons.length }, (_, index) => {
+        const item = Array.isArray(savedReadiness) ? savedReadiness[index] : null;
+        return item && Number.isFinite(item.score) ? item : null;
+      });
+    }
+
+    function backfillReadinessForLearned() {
+      state.learnedLessons.forEach((learned, index) => {
+        if (learned && !state.lessonReadiness[index]) {
+          state.lessonReadiness[index] = {
+            score: 60,
+            passed: true,
+            title: "已解鎖",
+            summary: "這一課已有舊版完成紀錄。之後的新課會用 60 分學習檢核解鎖。",
+            strengths: ["已保留原本完成進度。"],
+            issues: ["想更穩的話，可以補寫學習檢核再重新分析。"]
+          };
+        }
+      });
+    }
+
     function load() {
       try {
         const saved = JSON.parse(localStorage.getItem("rongDataMockInterview"));
@@ -2632,6 +2735,9 @@
         state.answers = mergeSavedArray(saved.answers, "");
         state.feedback = mergeSavedArray(saved.feedback, null);
         state.learnedLessons = normalizeLearnedLessons(saved.learnedLessons, state.feedback);
+        state.lessonReflections = mergeSavedArray(saved.lessonReflections, "");
+        state.lessonReadiness = normalizeLessonReadiness(saved.lessonReadiness);
+        backfillReadinessForLearned();
         const maxOffset = highestUnlockedLessonOffset();
         state.lessonOffset = Number.isInteger(saved.lessonOffset)
           ? Math.min(Math.max(saved.lessonOffset, 0), maxOffset)
@@ -2657,6 +2763,8 @@
         view: state.view,
         lessonOffset: state.lessonOffset,
         learnedLessons: state.learnedLessons,
+        lessonReflections: state.lessonReflections,
+        lessonReadiness: state.lessonReadiness,
         answers: state.answers,
         feedback: state.feedback,
         hintsOpen: state.hintsOpen,
@@ -2707,6 +2815,8 @@
           view: state.view,
           lessonOffset: state.lessonOffset,
           learnedLessons: state.learnedLessons,
+          lessonReflections: state.lessonReflections,
+          lessonReadiness: state.lessonReadiness,
           answers: state.answers,
           feedback: state.feedback,
           hintsOpen: state.hintsOpen,
@@ -2727,6 +2837,9 @@
       state.answers = mergeSavedArray(incoming.answers, "");
       state.feedback = mergeSavedArray(incoming.feedback, null);
       state.learnedLessons = normalizeLearnedLessons(incoming.learnedLessons, state.feedback);
+      state.lessonReflections = mergeSavedArray(incoming.lessonReflections, "");
+      state.lessonReadiness = normalizeLessonReadiness(incoming.lessonReadiness);
+      backfillReadinessForLearned();
       const maxOffset = highestUnlockedLessonOffset();
       state.lessonOffset = Number.isInteger(incoming.lessonOffset)
         ? Math.min(Math.max(incoming.lessonOffset, 0), maxOffset)
@@ -2984,14 +3097,98 @@
       return index <= highestUnlockedLessonOffset();
     }
 
-    function markLessonLearned(index) {
+    function analyzeLessonReadiness(lesson, text) {
+      const answer = normalize(text);
+      const lower = answer.toLowerCase();
+      const strengths = [];
+      const issues = [];
+      let score = 0;
+
+      if (answer.length >= 180) {
+        score += 22;
+        strengths.push("你有用完整段落說明，不只是寫關鍵字。");
+      } else if (answer.length >= 100) {
+        score += 16;
+        strengths.push("文字量夠做基本判斷。");
+      } else if (answer.length >= 55) {
+        score += 8;
+        issues.push("說明還偏短，建議再補一個例子或驗證方式。");
+      } else {
+        issues.push("文字太短，我還無法判斷你是否真的理解。請至少寫 3-5 句。");
+      }
+
+      const termHits = lesson.terms.filter(term => lower.includes(term.toLowerCase()));
+      if (termHits.length >= 2) {
+        score += 18;
+        strengths.push(`有自然用到本課術語：${termHits.join("、")}。`);
+      } else if (termHits.length === 1) {
+        score += 10;
+        issues.push("有提到一個術語，但還可以把其他關鍵詞一起說清楚。");
+      } else {
+        issues.push(`請至少自然用到本課術語，例如：${lesson.terms.slice(0, 2).join("、")}。`);
+      }
+
+      if (/意思|代表|用來|解決|概念|白話|也就是|我理解|可以/.test(answer)) {
+        score += 14;
+        strengths.push("有嘗試用自己的話定義概念。");
+      } else {
+        issues.push("請先用白話說這個概念是在解決什麼問題。");
+      }
+
+      if (/S-111|PostgreSQL|PostGIS|QGIS|API|NetCDF|hotspot|lead_hours|bbox|target_date|資料庫|pipeline/i.test(answer)) {
+        score += 16;
+        strengths.push("有連到你的 S-111 或資料專案。");
+      } else {
+        issues.push("請把這課連到 S-111、PostgreSQL/PostGIS、API、QGIS 或 NetCDF 其中一段。");
+      }
+
+      if (/我會|先|接著|然後|最後|步驟|流程|檢查|確認|驗證|比對|筆數|測試|log/i.test(answer)) {
+        score += 16;
+        strengths.push("有描述實作或驗證動作。");
+      } else {
+        issues.push("請補一句你實作時會怎麼做，或怎麼確認結果是對的。");
+      }
+
+      if (/風險|限制|取捨|避免|如果|錯|慢|重複|遺漏|失敗|異常|效能|資料量/i.test(answer)) {
+        score += 10;
+        strengths.push("有提到風險、限制或失敗情境。");
+      } else {
+        issues.push("可以再補一句風險，例如資料量變大、重跑、缺值、join 錯或 API 變慢時怎麼辦。");
+      }
+
+      const conceptWords = lesson.concept
+        .replace(/[，。、：；/()]/g, " ")
+        .split(/\s+/)
+        .filter(word => word.length >= 4);
+      const copiedSignals = conceptWords.filter(word => answer.includes(word)).length;
+      if (answer.includes(lesson.concept.slice(0, 18)) || copiedSignals >= 5) {
+        score -= 8;
+        issues.push("看起來有點像照抄教材。請換成你自己的語氣，再加一個 S-111 例子。");
+      }
+
+      if (/大概|可能就是|之類|等等|反正|應該可以/.test(answer)) {
+        score -= 6;
+        issues.push("語氣還有點模糊，請改成明確判斷或具體步驟。");
+      }
+
+      score = Math.max(0, Math.min(100, Math.round(score)));
+      const passed = score >= 60;
+      const title = passed ? "可以前進" : "先補強再前進";
+      const summary = passed
+        ? "理解度已達 60% 門檻，可以解鎖下一天。之後再用挑戰題把口說練熟。"
+        : "目前還沒到 60% 門檻。先依照下面缺口補 2-3 句，再重新分析。";
+      return { score, passed, title, summary, strengths, issues };
+    }
+
+    function markLessonLearned(index, readiness = null) {
       if (!isLessonUnlocked(index)) return;
       state.learnedLessons[index] = true;
+      if (readiness) state.lessonReadiness[index] = readiness;
       const next = Math.min(index + 1, dailyLessons.length - 1);
       state.lessonOffset = index;
       state.view = "learn";
       renderAll();
-      setSyncStatus(index < dailyLessons.length - 1 ? `已解鎖 D${next + 1}。` : "28 天課程已全部解鎖。", "ok");
+      setSyncStatus(index < dailyLessons.length - 1 ? `學習檢核達標，已解鎖 D${next + 1}。` : "28 天課程已全部解鎖。", "ok");
       maybeAutoUploadProgress();
     }
 
@@ -3723,6 +3920,38 @@
       return dailyLessonStartIndex + offset;
     }
 
+    function renderLessonReadiness(offset) {
+      const readiness = state.lessonReadiness[offset];
+      els.lessonReflectionInput.value = state.lessonReflections[offset] || "";
+      els.lessonReadinessResult.classList.remove("ok", "error");
+      if (!readiness) {
+        els.lessonReadinessResult.innerHTML = `
+          <strong>尚未檢核</strong>
+          <span>寫完後按「分析學習程度」。達到 60 分就會自動解鎖下一天。</span>
+        `;
+        return;
+      }
+      els.lessonReadinessResult.classList.add(readiness.passed ? "ok" : "error");
+      const strengths = readiness.strengths && readiness.strengths.length
+        ? `<li>${readiness.strengths.slice(0, 2).join("</li><li>")}</li>`
+        : "<li>先補完整說明，我再幫你判斷。</li>";
+      const issues = readiness.issues && readiness.issues.length
+        ? `<li>${readiness.issues.slice(0, 3).join("</li><li>")}</li>`
+        : "<li>目前沒有明顯缺口，可以進入下一課。</li>";
+      els.lessonReadinessResult.innerHTML = `
+        <strong>${readiness.title}｜${readiness.score} 分</strong>
+        <span>${readiness.summary}</span>
+        <div>
+          <span>已做到：</span>
+          <ul>${strengths}</ul>
+        </div>
+        <div>
+          <span>建議補強：</span>
+          <ul>${issues}</ul>
+        </div>
+      `;
+    }
+
     function renderLearningPage() {
       const dayIndex = new Date().getDay();
       const plan = dailyPlans[dayIndex];
@@ -3745,12 +3974,14 @@
       setResourceLink(els.learningReferenceLink, "文件", referenceResource(lesson));
       setResourceLink(els.learningPracticeLink, "練習", practiceResource(lesson));
       els.learningOutcomes.innerHTML = learningOutcomes(lesson).map(outcome => `<li>${outcome}</li>`).join("");
+      els.lessonReflectionInput.placeholder = `例如：我理解 ${lesson.title} 是... 它會用在... 在 S-111 裡我可以連到... 我會用...確認結果。`;
+      renderLessonReadiness(offset);
       els.startLessonChallengeBtn.disabled = false;
       els.startLessonChallengeBtn.textContent = learned
         ? offset < dailyLessons.length - 1 ? "前往下一天" : "已完成全部課程"
-        : offset < dailyLessons.length - 1 ? "我確定學完了，解鎖下一天" : "我確定學完了，完成 28 天";
+        : state.lessonReadiness[offset] ? "重新分析學習程度" : "分析學習程度";
       els.openTodayLessonBtn.disabled = !learned;
-      els.openTodayLessonBtn.textContent = learned ? "用本課考我" : "先確認學完再考我";
+      els.openTodayLessonBtn.textContent = learned ? "用本課考我" : "達到 60 分後再考我";
       els.learningPlanTopic.textContent = plan.topic;
       els.learningPlanTime.innerHTML = plan.time.map(([label, minutes]) => `
         <div class="time-row">
@@ -4013,6 +4244,21 @@
       save();
     }
 
+    function submitLessonReadiness() {
+      const offset = activeLearningOffset();
+      const lesson = dailyLessons[offset];
+      state.lessonReflections[offset] = els.lessonReflectionInput.value;
+      const readiness = analyzeLessonReadiness(lesson, els.lessonReflectionInput.value);
+      state.lessonReadiness[offset] = readiness;
+      if (readiness.passed) {
+        markLessonLearned(offset, readiness);
+      } else {
+        renderLessonReadiness(offset);
+        save();
+        setSyncStatus(`D${offset + 1} 目前 ${readiness.score} 分，補到 60 分就能解鎖下一天。`, "error");
+      }
+    }
+
     function showFollowup() {
       const question = questions[state.current];
       const list = question.followups;
@@ -4129,6 +4375,16 @@
       save();
     });
 
+    els.lessonReflectionInput.addEventListener("input", () => {
+      const offset = activeLearningOffset();
+      state.lessonReflections[offset] = els.lessonReflectionInput.value;
+      if (!isLessonLearned(offset)) {
+        state.lessonReadiness[offset] = null;
+        renderLessonReadiness(offset);
+      }
+      save();
+    });
+
     els.todayPlanQuestions.addEventListener("click", event => {
       const button = event.target.closest("[data-plan-question]");
       if (!button) return;
@@ -4161,7 +4417,7 @@
       if (isLessonLearned(offset)) {
         openLearning(Math.min(offset + 1, dailyLessons.length - 1));
       } else {
-        markLessonLearned(offset);
+        submitLessonReadiness();
       }
     });
 
@@ -4212,6 +4468,8 @@
       state.view = "learn";
       state.lessonOffset = 0;
       state.learnedLessons = Array(dailyLessons.length).fill(false);
+      state.lessonReflections = Array(dailyLessons.length).fill("");
+      state.lessonReadiness = Array(dailyLessons.length).fill(null);
       state.answers = Array(questions.length).fill("");
       state.feedback = Array(questions.length).fill(null);
       state.hintsOpen = Array(questions.length).fill(false);
