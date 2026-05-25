@@ -1882,20 +1882,20 @@
       {
         domain: "pipeline",
         title: "請把 S-111 資料從原始檔到 API 的流程講成一條 ETL 管線。",
-        hint: "請包含資料來源、解析、轉換、入庫、API 輸出與驗證。",
+        hint: "請包含 NC/H5/S-111 來源、verification pipeline、成果包、資料庫、API/QGIS 與驗證。",
         guide: [
-          ["Extract", "原始資料來源與格式。"],
-          ["Transform", "欄位、單位、hotspot 閾值。"],
-          ["Load", "PostgreSQL/PostGIS 入庫。"],
-          ["Validate", "筆數、範圍、API 回傳。"]
+          ["Extract", "NC / H5 / S-111 來源與日期、lead_hours。"],
+          ["Transform", "summary、official hotspot、metric hotspot、spatial stats。"],
+          ["Load", "daily_results 成果包與 PostgreSQL 表格。"],
+          ["Validate", "manifest、筆數、門檻、API / QGIS 回傳。"]
         ],
         expected: [
-          ["資料來源", /原始|來源|NetCDF|nc|S-111|檔案|資料/i],
-          ["轉換流程", /轉換|清洗|欄位|單位|threshold|hotspot|0\.48/i],
-          ["資料庫", /PostgreSQL|PostGIS|入庫|資料庫|table|索引/i],
-          ["API 與驗證", /API|endpoint|驗證|檢查|回傳|GeoJSON|QGIS/i]
+          ["資料來源", /原始|來源|NetCDF|NC|H5|S-111|檔案|資料/i],
+          ["轉換流程", /verification|pipeline|summary_stats|hotspot_points|spatial_stats|threshold|hotspot|0\.48|official|metric/i],
+          ["成果包與資料庫", /daily_results|成果包|manifest|PostgreSQL|PostGIS|入庫|資料庫|summary_stats|hotspot_points/i],
+          ["API/QGIS 與驗證", /API|Flask|endpoint|驗證|檢查|回傳|GeoJSON|QGIS|筆數|門檻/i]
         ],
-        skeleton: "我會把 S-111 流程拆成 Extract、Transform、Load、Validate。Extract 是讀取原始 S-111/NetCDF 類型資料；Transform 會把時間、座標、誤差欄位與 hotspot 閾值轉成 API 可用的資料列；Load 會寫入 PostgreSQL/PostGIS，讓查詢可以依日期、lead_hours、bbox 篩選；最後用筆數、欄位範圍與 API 回傳結果驗證資料是可信的。",
+        skeleton: "我會把 S-111 流程拆成 Extract、Transform、Load、Validate。Extract 是掃描 NC / H5 / S-111 類資料，並確認 target_date、target_timestamp 與 lead_hours。Transform 是用 verification_pipeline 計算流速與流向誤差，產生 summary_stats、official hotspot、metric hotspot 與 spatial stats，其中流速 hotspot 用 0.5/1.0 kn，流向 official hotspot 先通過 0.48 kn 真值流速門檻，再用 30/45 deg 分級。Load 不只是入庫，也包含輸出 daily_results 成果包與 manifest；需要交接或前端查詢時再寫入 PostgreSQL/PostGIS，讓 Flask API 依 date、lead_hours、error_type、metric、bbox、threshold 查 hotspot_points。最後用 manifest、筆數、門檻分級、API 回傳與 QGIS 圖層驗證結果可信。",
         followups: [
           "如果同一天資料要重跑，你怎麼確保結果不會重複寫入？",
           "你會把哪些檢查放在 pipeline 最後？",
@@ -1907,18 +1907,18 @@
         title: "如果批次資料重跑，你會怎麼避免重複寫入或覆蓋錯誤？",
         hint: "請說明 upsert key、idempotency、log、驗證與 rollback 思維。",
         guide: [
-          ["定義唯一鍵", "日期、時間、lead_hours、座標或指標。"],
+          ["定義唯一鍵", "日期、時間、lead_hours、error_type、座標與 metric。"],
           ["重跑安全", "同樣輸入產出同樣結果。"],
           ["記錄流程", "log、批次版本、錯誤紀錄。"],
           ["驗證回復", "比對筆數與可 rollback。"]
         ],
         expected: [
-          ["唯一鍵", /key|唯一|upsert|constraint|date|lead_hours|timestamp/i],
+          ["唯一鍵", /key|唯一|upsert|constraint|date|lead_hours|timestamp|error_type|metric|座標/i],
           ["重跑安全", /idempotent|重跑|覆蓋|重複|同樣結果|安全/i],
           ["log 或版本", /log|版本|batch|紀錄|manifest|錯誤/i],
           ["驗證或回復", /驗證|rollback|restore|比對|檢查|備份/i]
         ],
-        skeleton: "我會先定義資料列的唯一鍵，例如 target_date、target_timestamp、lead_hours 與必要的空間或 metric 欄位。重跑時用 upsert，而不是盲目 append，讓同一批輸入重跑後結果一致。每次批次會留下 log、版本或 manifest，最後比對筆數與抽樣結果；如果結果異常，能用備份或 dump 回復。",
+        skeleton: "我會先定義資料列的唯一鍵。以 hotspot_points 來說，至少要考慮 target_date、target_timestamp、lead_hours、error_type、位置，以及 metric；official hotspot 對應 metric IS NULL，metric hotspot 則要保留 metric 名稱。重跑時用 upsert 或先刪後寫，而不是盲目 append，讓同一批輸入重跑後結果一致。每次批次會留下 log、版本或 manifest，最後比對筆數、分級與抽樣結果；如果結果異常，能用備份或 dump 回復。",
         followups: [
           "如果 upsert key 設錯，可能會造成什麼後果？",
           "你會怎麼設計批次 log 讓交接者看得懂？",
@@ -1931,17 +1931,17 @@
         hint: "請用 /api/threshold-hotspots 這類情境回答，包含前端需要什麼資料。",
         guide: [
           ["定義用途", "查可繪圖的 hotspot rows。"],
-          ["列參數", "date、lead_hours、threshold、bbox。"],
-          ["列回傳", "lon、lat、value、severity、color。"],
+          ["列參數", "date、lead_hours、error_type、metric、threshold、bbox。"],
+          ["列回傳", "lon、lat、value、unit、severity、color、layer。"],
           ["補限制", "limit、分頁、錯誤訊息。"]
         ],
         expected: [
-          ["查詢參數", /date|lead_hours|threshold|bbox|limit|error_type|參數/i],
-          ["回傳欄位", /lon|lat|value|severity|color|unit|欄位|JSON|GeoJSON/i],
+          ["查詢參數", /date|lead_hours|threshold|bbox|limit|error_type|metric|critical_threshold|參數/i],
+          ["回傳欄位", /lon|lat|value|severity|color|unit|layer|layer_id|statistic|欄位|JSON|GeoJSON/i],
           ["前端用途", /前端|繪圖|地圖|QGIS|圖層|顏色/i],
           ["限制或錯誤", /limit|分頁|錯誤|空結果|timeout|防止|保護/i]
         ],
-        skeleton: "我會把這個 API 定義成查詢可繪圖的 threshold hotspot rows。參數會包含 date、lead_hours、error_type、threshold、bbox 與 limit。回傳欄位至少要有 lon、lat、value、unit、severity、color、target_timestamp，讓前端或 QGIS 可以直接畫點與分級。為了避免一次查太多資料，我會加 limit、bbox 與清楚的空結果或錯誤訊息。",
+        skeleton: "我會把 /api/threshold-hotspots 定義成查詢可繪圖的 hotspot rows，而不是查完整格網。參數會包含 date、lead_hours、error_type、metric、threshold、critical_threshold、bbox 與 limit；metric 不填或 official 對應資料庫的 metric IS NULL。回傳欄位至少要有 lon、lat、value、unit、severity、color、target_timestamp，以及 layer_id、layer_name_zh、layer_role、statistic，讓前端或 QGIS 可以直接畫點與分圖層。為了避免一次查太多資料，我會加 limit、bbox 與清楚的空結果或錯誤訊息。",
         followups: [
           "如果前端說地圖載入很慢，你會怎麼調 API？",
           "threshold 應該由前端傳，還是後端固定？你怎麼取捨？",
@@ -1954,17 +1954,17 @@
         hint: "請不要只說『存資料』，要說查詢、空間條件、效能與交接價值。",
         guide: [
           ["資料集中", "把批次結果結構化管理。"],
-          ["查詢條件", "日期、lead_hours、bbox、error_type。"],
+          ["查詢條件", "日期、時間、lead_hours、error_type、metric、bbox。"],
           ["效能思考", "索引、limit、空間篩選。"],
           ["交接價值", "API 和文件可重複使用。"]
         ],
         expected: [
           ["結構化資料", /資料庫|table|結構化|集中|管理/i],
-          ["查詢條件", /date|lead_hours|bbox|error_type|threshold|查詢/i],
+          ["查詢條件", /date|timestamp|lead_hours|bbox|error_type|metric|threshold|查詢/i],
           ["效能或索引", /索引|index|效能|limit|空間|PostGIS|bbox/i],
           ["API 或交接", /API|交接|文件|部署|前端|QGIS/i]
         ],
-        skeleton: "PostgreSQL/PostGIS 不只是存資料，而是讓批次驗證結果變成可查詢、可交接的資料服務。我的查詢會依 date、lead_hours、error_type、threshold 或 bbox 篩選 hotspot。PostGIS 能處理空間條件，搭配索引與 limit 可以避免 API 一次回傳過多資料。這也讓前端、QGIS 或文件使用者能用固定 API 重複取得結果。",
+        skeleton: "PostgreSQL/PostGIS 不只是存資料，而是讓批次驗證結果變成可查詢、可交接的資料服務。我的資料庫主線會看 summary_stats 與 hotspot_points；hotspot_points 同一張表裡同時放 official hotspot 與 metric hotspot，靠 error_type、metric、severity 分層。查詢會依 date、target_timestamp、lead_hours、error_type、metric、threshold 或 bbox 篩選 hotspot。PostGIS 能處理空間條件，搭配索引與 limit 可以避免 API 一次回傳過多資料。這也讓前端、QGIS 或文件使用者能用固定 API 重複取得結果。",
         followups: [
           "如果資料表越來越大，你會先加什麼索引？",
           "bbox 查詢和全表查詢的差異，你會怎麼說明？",
@@ -1987,7 +1987,7 @@
           ["具體行動", /API|PostgreSQL|PostGIS|QGIS|資料|pipeline|視覺化/i],
           ["結果", /結果|產出|交接|部署|文件|改善|完成|驗證/i]
         ],
-        skeleton: "這個專案的背景是需要把 S-111 海流驗證資料從研究輸出變成可以查詢與展示的系統。我負責把原始資料處理成結構化資料，建立 PostgreSQL/PostGIS 資料庫與 API，並讓 QGIS 或前端可以依日期、lead_hours、threshold 查詢 hotspot。最後的成果是可交接的 API、資料庫文件與視覺化流程，讓非開發者也能重複查看警示與關鍵案例。",
+        skeleton: "這個專案的背景是需要把 S-111 海流驗證資料從研究輸出變成可以查詢與展示的系統。我把 NC/H5/S-111 類資料透過 verification_pipeline 轉成 summary_stats、official hotspot、metric hotspot 與 spatial stats，輸出 daily_results 成果包，也能寫入 PostgreSQL/PostGIS。公開交接主線是 threshold hotspot workflow，讓 QGIS 或前端可以依日期、lead_hours、error_type、metric、threshold 與 bbox 查詢可繪圖的 hotspot。最後成果是可交接的 API、資料庫文件與視覺化流程，讓非開發者也能重複查看警示與關鍵案例。",
         followups: [
           "如果面試官問『這跟一般資料專案差在哪』，你怎麼回答？",
           "你在這個專案裡最能證明工程能力的是哪一段？",
@@ -2145,7 +2145,7 @@
         domain: "pipeline",
         title: "ETL：把資料流程講成三段",
         concept: "ETL 是 Extract、Transform、Load。面試時不要只說我有處理資料，要說資料從哪裡來、怎麼轉、最後載入哪裡。",
-        s111: "對應 S-111：讀 NetCDF，轉成驗證統計與 hotspot rows，再載入 PostgreSQL/PostGIS 給 API 查。",
+        s111: "對應 S-111：verification_pipeline 讀 NC/H5/S-111 類資料，算出 summary_stats、official hotspot、metric hotspot 與 spatial stats；結果會輸出 daily_results 成果包，並可寫入 PostgreSQL/PostGIS 供 Flask API 與 QGIS DB 模式查詢。",
         terms: ["ETL", "Extract", "Transform", "Load"],
         challenge: "請用 S-111 專案，把一條 ETL 管線用 60 秒講清楚。"
       },
@@ -2153,7 +2153,7 @@
         domain: "sql",
         title: "Primary key / Foreign key",
         concept: "Primary key 用來唯一識別一列，foreign key 用來連到另一張表。JOIN 前要先確認 key 是否真的唯一。",
-        s111: "對應 S-111：summary、hotspot、時間欄位與查詢條件都要先確認唯一性，否則 join 或 upsert 都會出問題。",
+        s111: "對應 S-111：summary_stats 的唯一性是 target_date、target_timestamp、lead_hours；hotspot_points 還要看 error_type、位置與 metric，否則 join 或 upsert 都會出問題。",
         terms: ["primary key", "foreign key", "JOIN key"],
         challenge: "看到兩張表時，你會如何確認 JOIN key 是否可靠？"
       },
@@ -2161,7 +2161,7 @@
         domain: "sql",
         title: "Granularity：資料粒度",
         concept: "Granularity 是一列資料代表的層級，例如一個使用者、一天、一小時或一個 hotspot。粒度不同的表直接 join 很容易重複計算。",
-        s111: "對應 S-111：target_date 是日層級，target_timestamp 是小時層級，hotspot_points 是空間點層級。",
+        s111: "對應 S-111：target_date 是日層級，summary_stats 是每小時每個 lead_hours 的摘要，hotspot_points 是已超標的空間點，spatial_stats 則是完整有效格點的統計分布。",
         terms: ["granularity", "one-to-many", "many-to-many"],
         challenge: "請解釋為什麼 JOIN 前要先確認資料粒度。"
       },
@@ -2169,7 +2169,7 @@
         domain: "sql",
         title: "Window Function",
         concept: "Window Function 可以保留每筆明細，同時計算組內排名、前後筆或最新一筆；GROUP BY 則會把資料壓成每組一列。",
-        s111: "對應 S-111：若要在同一個 lead_hours 或日期內找最高誤差點，又想保留原始欄位，就適合用 window 思維。",
+        s111: "對應 S-111：若要在同一個 date、target_timestamp、lead_hours 或 error_type 裡找最高誤差點，又想保留 lon、lat、metric 等明細欄位，就適合用 window 思維。",
         terms: ["Window Function", "PARTITION BY", "ROW_NUMBER"],
         challenge: "什麼情況你會用 Window Function，而不是只用 GROUP BY？"
       },
@@ -2177,7 +2177,7 @@
         domain: "sql",
         title: "CTE vs Subquery",
         concept: "CTE 用 WITH 把查詢拆段，適合讓複雜邏輯可讀；subquery 適合較小的中間查詢。",
-        s111: "對應 S-111：API 查詢如果同時要過濾日期、bbox、threshold，可以用 CTE 拆成幾個階段講清楚。",
+        s111: "對應 S-111：API 查詢如果同時要過濾 date、lead_hours、error_type、metric、bbox、threshold，可以用 CTE 拆成幾個階段講清楚。",
         terms: ["CTE", "WITH", "subquery"],
         challenge: "如果 SQL 查詢變很長，你會怎麼拆，讓面試官看得懂？"
       },
@@ -2201,7 +2201,7 @@
         domain: "python",
         title: "Assert / Validation",
         concept: "assert 或 validation 是把你對資料的假設寫成檢查，例如欄位必須存在、筆數不能為 0、時間範圍要合理。",
-        s111: "對應 S-111：pipeline 跑完要檢查日期、lead_hours、hotspot 筆數、severity 分級與 API 回傳。",
+        s111: "對應 S-111：pipeline 跑完要檢查日期、lead_hours、hotspot 筆數、severity 分級與 API 回傳；流速用 0.5/1.0 kn，流向 official 先通過 0.48 kn 真值流速門檻，再看 30/45 deg。",
         terms: ["assert", "validation", "data quality"],
         challenge: "你會替一個資料清洗流程設計哪些 validation？"
       },
@@ -2225,7 +2225,7 @@
         domain: "pipeline",
         title: "Schema：先定義欄位契約",
         concept: "Schema 是資料表的欄位、型別與規則。沒有 schema，資料流進資料庫後會很難驗證與交接。",
-        s111: "對應 S-111：summary_stats 與 hotspot_points 要清楚定義 target_date、lead_hours、lon、lat、value、severity。",
+        s111: "對應 S-111：summary_stats 要定義 target_date、target_timestamp、lead_hours；hotspot_points 要定義 lon、lat、value、unit、error_type、severity、metric 與圖層語意。",
         terms: ["schema", "column", "data contract"],
         challenge: "你會如何向面試官說明 schema 在資料工程裡的重要性？"
       },
@@ -2233,7 +2233,7 @@
         domain: "pipeline",
         title: "Idempotent：重跑結果要一致",
         concept: "Idempotent 是同一批資料重跑多次，結果仍然一致，不會越跑越多或覆蓋錯誤。",
-        s111: "對應 S-111：同一天、同一 lead_hours 的 hotspot 重跑時，不能因 append 造成重複列。",
+        s111: "對應 S-111：同一 date、target_timestamp、lead_hours、error_type、位置與 metric 的 hotspot 重跑時，不能因 append 造成重複列。",
         terms: ["idempotent", "rerun", "duplicate"],
         challenge: "如果批次資料需要重跑，你會如何確保結果安全？"
       },
@@ -2241,7 +2241,7 @@
         domain: "pipeline",
         title: "Upsert",
         concept: "Upsert 是有資料就更新，沒有就新增。它通常需要搭配唯一鍵，否則不知道哪一列該更新。",
-        s111: "對應 S-111：hotspot_points 重跑時可用 target_date、target_timestamp、lead_hours 與空間/metric 欄位控制唯一性。",
+        s111: "對應 S-111：hotspot_points 重跑時要用 target_date、target_timestamp、lead_hours、error_type、位置與 metric 控制唯一性；official hotspot 對應 metric IS NULL。",
         terms: ["upsert", "unique key", "update"],
         challenge: "你會如何設計 upsert key，避免重跑資料重複？"
       },
@@ -2249,7 +2249,7 @@
         domain: "pipeline",
         title: "ON CONFLICT",
         concept: "ON CONFLICT 是 PostgreSQL 實作 upsert 的常見語法，遇到唯一鍵衝突時改成更新。",
-        s111: "對應 S-111：若重跑同一批 hotspot rows，可以用 ON CONFLICT DO UPDATE 保持資料一致。",
+        s111: "對應 S-111：若重跑同一批 hotspot rows，可以用唯一鍵搭配 ON CONFLICT DO UPDATE；也要避免 official rows 和 metric rows 被同一個 key 混在一起。",
         terms: ["ON CONFLICT", "DO UPDATE", "PostgreSQL"],
         challenge: "請用白話說明 ON CONFLICT 解決了什麼問題。"
       },
@@ -2257,7 +2257,7 @@
         domain: "pipeline",
         title: "Manifest：輸出清單與版本紀錄",
         concept: "Manifest 是一批輸出的清單，記錄產生了哪些檔案、日期、版本或處理參數。",
-        s111: "對應 S-111：result package 可以用 manifest 記錄本次輸出的 hotspot、summary、GeoJSON 與參數版本。",
+        s111: "對應 S-111：daily_results/YYYYMMDD 裡的 manifest 是成果包入口，應記錄 summary_stats、hotspots、spatial_stats、metric_hotspots、GeoJSON/QML 與參數版本。",
         terms: ["manifest", "version", "result package"],
         challenge: "你會在 manifest 裡記錄哪些資訊，讓別人能交接？"
       },
@@ -2265,7 +2265,7 @@
         domain: "api",
         title: "Endpoint",
         concept: "Endpoint 是 API 的一個網址功能。好的 endpoint 要讓使用者知道它查什麼、參數是什麼、回傳什麼。",
-        s111: "對應 S-111：/api/threshold-hotspots 查可畫圖的熱點，/api/hotspot-series 查 hotspot rows 的序列。",
+        s111: "對應 S-111：/api/threshold-hotspots 查可畫圖的 hotspot rows，/api/hotspot-series 只查 hotspot-row series，不是完整格網時間序列。",
         terms: ["endpoint", "API", "route"],
         challenge: "請設計一個查 threshold hotspot 的 endpoint。"
       },
@@ -2273,7 +2273,7 @@
         domain: "api",
         title: "Query parameter",
         concept: "Query parameter 是 URL 後面的篩選條件，例如 date、lead_hours、bbox、limit。",
-        s111: "對應 S-111：前端可以用 date、lead_hours、error_type、threshold、bbox 篩選 hotspot。",
+        s111: "對應 S-111：前端可以用 date、lead_hours、error_type、metric、threshold、critical_threshold、bbox、limit 篩選 hotspot。",
         terms: ["query parameter", "date", "limit"],
         challenge: "你會讓 hotspot API 支援哪些 query parameters？"
       },
@@ -2281,7 +2281,7 @@
         domain: "api",
         title: "JSON / GeoJSON",
         concept: "JSON 是一般結構化資料格式；GeoJSON 是帶有地理座標與幾何資訊的 JSON，適合地圖工具使用。",
-        s111: "對應 S-111：hotspot 點位若要給 QGIS 或前端地圖畫，就可以回傳 lon/lat 或 GeoJSON。",
+        s111: "對應 S-111：hotspot 點位給 QGIS 或前端地圖畫時可回 lon/lat 或 GeoJSON；spatial_stats 則代表完整有效格點統計，不要和 hotspot GeoJSON 混在一起。",
         terms: ["JSON", "GeoJSON", "lon/lat"],
         challenge: "如果前端要畫地圖，你會如何設計 API response？"
       },
@@ -2321,7 +2321,7 @@
         domain: "api",
         title: "Cache",
         concept: "Cache 是把常用查詢結果暫存起來，減少重複計算或重複打資料庫。",
-        s111: "對應 S-111：固定日期、固定 lead_hours 的 hotspot summary 可以考慮快取，但要注意資料更新時失效。",
+        s111: "對應 S-111：固定 date、lead_hours、error_type、metric、threshold 的 hotspot 查詢可以考慮快取，但資料重建或 metric rows 更新後要失效。",
         terms: ["cache", "TTL", "stale data"],
         challenge: "哪些 API 查詢適合 cache？cache 的風險是什麼？"
       },
@@ -2337,7 +2337,7 @@
         domain: "story",
         title: "STAR",
         concept: "STAR 是 Situation、Task、Action、Result。它讓專案回答不會散掉，尤其適合講自己的角色與成果。",
-        s111: "對應 S-111：背景是海流驗證，任務是建立可查詢熱點資料，行動是 pipeline/API/DB，結果是可交接工具。",
+        s111: "對應 S-111：背景是海流驗證，任務是建立 threshold hotspot workflow，行動是 verification_pipeline、daily_results、PostgreSQL/PostGIS、Flask API 與 QGIS/前端交接，結果是可查詢、可展示、可交接的工具。",
         terms: ["STAR", "Situation", "Result"],
         challenge: "請用 STAR 講 90 秒 S-111 專案。"
       },
@@ -2361,7 +2361,7 @@
         domain: "story",
         title: "Regression",
         concept: "Regression 是修改後把原本正常的功能弄壞。工程回答要說修完後如何防止回歸。",
-        s111: "對應 S-111：改 hotspot 分級、API 欄位或 SQL 查詢後，要確認舊的 QGIS/前端流程仍能使用。",
+        s111: "對應 S-111：改 hotspot 分級、0.48 kn 流向門檻、API 欄位或 SQL 查詢後，要確認舊的 QGIS/前端流程仍能使用。",
         terms: ["regression", "regression check", "test case"],
         challenge: "修完 bug 後，你會如何確認沒有造成新的 regression？"
       }
@@ -2450,13 +2450,13 @@
         note: "請把流程講成 Extract、Transform、Load、Validate。",
         html: `
           <div class="mini-flow">
-            <span>S-111 / NetCDF 原始檔</span>→<span>解析時間與格點</span>→<span>計算誤差與 hotspot</span>→<span>PostGIS 入庫</span>→<span>API / QGIS 顯示</span>
+            <span>NC / H5 / S-111</span>→<span>verification_pipeline</span>→<span>summary_stats + official/metric hotspot + spatial_stats</span>→<span>daily_results / PostgreSQL</span>→<span>QGIS / Flask API</span>
           </div>
           <table class="data-table">
             <tr><th>欄位</th><th>用途</th></tr>
-            <tr><td>target_date, lead_hours</td><td>篩選預報批次</td></tr>
+            <tr><td>target_date, target_timestamp, lead_hours</td><td>篩選日期、小時與預報時效</td></tr>
             <tr><td>lon, lat</td><td>空間位置</td></tr>
-            <tr><td>error_type, value, severity</td><td>hotspot 分級與繪圖</td></tr>
+            <tr><td>error_type, value, unit, severity, metric</td><td>區分 speed/direction、數值單位、warning/critical、official/metric 圖層</td></tr>
           </table>
         `
       },
@@ -2466,9 +2466,9 @@
         html: `
           <table class="data-table">
             <caption>hotspot_points 重跑樣本</caption>
-            <tr><th>run_id</th><th>target_date</th><th>target_timestamp</th><th>lead_hours</th><th>lon</th><th>lat</th><th>metric</th></tr>
-            <tr><td>R1</td><td>2026-04-10</td><td>00:00</td><td>24</td><td>120.30</td><td>26.34</td><td>speed</td></tr>
-            <tr><td>R2</td><td>2026-04-10</td><td>00:00</td><td>24</td><td>120.30</td><td>26.34</td><td>speed</td></tr>
+            <tr><th>run_id</th><th>target_date</th><th>target_timestamp</th><th>lead_hours</th><th>error_type</th><th>lon</th><th>lat</th><th>metric</th></tr>
+            <tr><td>R1</td><td>2026-04-10</td><td>00:00</td><td>24</td><td>direction</td><td>120.30</td><td>26.34</td><td>official(NULL)</td></tr>
+            <tr><td>R2</td><td>2026-04-10</td><td>00:00</td><td>24</td><td>direction</td><td>120.30</td><td>26.34</td><td>official(NULL)</td></tr>
           </table>
         `
       },
@@ -2480,15 +2480,21 @@
             <tr><th>Query param</th><th>範例</th><th>用途</th></tr>
             <tr><td>date</td><td>2026-04-10</td><td>指定資料日期</td></tr>
             <tr><td>lead_hours</td><td>24</td><td>指定預報時效</td></tr>
+            <tr><td>error_type</td><td>direction</td><td>speed 或 direction</td></tr>
+            <tr><td>metric</td><td>official</td><td>不填或 official 對應 metric IS NULL</td></tr>
             <tr><td>bbox</td><td>120,25,122,27</td><td>限制地圖範圍</td></tr>
-            <tr><td>threshold</td><td>0.5</td><td>hotspot 閾值</td></tr>
+            <tr><td>threshold</td><td>30</td><td>direction warning 閾值；speed 可用 0.5 kn</td></tr>
+            <tr><td>critical_threshold</td><td>45</td><td>direction critical 閾值；speed 預設 1.0 kn</td></tr>
           </table>
           <pre class="code-sample">{
   "lon": 120.30,
   "lat": 26.34,
-  "value": 0.72,
+  "value": 38.2,
+  "unit": "deg",
   "severity": "warning",
-  "color": "#f59e0b"
+  "color": "#f59e0b",
+  "metric": "official",
+  "layer_id": "official_direction_median_hotspots"
 }</pre>
         `
       },
@@ -2498,7 +2504,8 @@
         html: `
           <table class="data-table">
             <tr><th>table</th><th>常用條件</th><th>可能索引</th></tr>
-            <tr><td>hotspot_points</td><td>target_date, lead_hours, error_type</td><td>(target_date, lead_hours, error_type)</td></tr>
+            <tr><td>summary_stats</td><td>target_date, target_timestamp, lead_hours</td><td>(target_date, target_timestamp, lead_hours)</td></tr>
+            <tr><td>hotspot_points</td><td>target_date, target_timestamp, lead_hours, error_type, metric</td><td>(target_date, lead_hours, error_type, metric) + 空間條件</td></tr>
             <tr><td>geometry</td><td>bbox / map extent</td><td>GIST geometry index</td></tr>
           </table>
         `
@@ -3557,9 +3564,9 @@
       {
         match: /etl/i,
         simple: "ETL 不是單純把檔案轉格式，而是把資料來源、轉換規則、載入位置串成可重跑的流程。面試時要講清楚輸入、處理、輸出。",
-        steps: "先說 Extract：資料從 NetCDF 或 API 來；再說 Transform：轉欄位、型別、單位、時間與 hotspot 規則；最後說 Load：寫入 PostgreSQL/PostGIS 或輸出 GeoJSON。",
+        steps: "先說 Extract：資料來自 NC / H5 / S-111 類檔案；再說 Transform：verification_pipeline 會對 24h/48h/72h 計算流速與流向誤差，產生 summary_stats、official hotspot、metric hotspot、spatial stats 與 GeoJSON/QML；最後說 Load：輸出 daily_results 成果包與 manifest，必要時寫入 PostgreSQL/PostGIS 的 summary_stats / hotspot_points，給 Flask API 或 QGIS DB 模式使用。",
         interview: "你可以說：我做的是一條可驗證的資料管線，不只是寫 script。每一步都有欄位檢查、筆數確認與重跑策略。",
-        mistake: "不要只說「我有清資料」。要說清楚資料從哪裡來、轉了什麼、存到哪裡，以及怎麼知道結果是對的。"
+        mistake: "不要把所有輸出都叫 hotspot。official hotspot 是正式超標點；metric hotspot 是 mean/median/std 等指標超標點；spatial stats 是完整有效格點統計分布，不是只保留超標點。"
       },
       {
         match: /primary|foreign/i,
@@ -3606,7 +3613,7 @@
       {
         match: /assert|validation/i,
         simple: "Validation 是把你對資料的假設寫成檢查。它讓 pipeline 失敗得早、失敗得清楚，而不是默默產生錯結果。",
-        steps: "檢查欄位存在、型別正確、筆數不是 0、時間範圍合理、severity 分級符合固定規則，最後記錄 log。",
+        steps: "檢查欄位存在、型別正確、筆數不是 0、時間範圍合理、severity 分級符合固定規則，最後記錄 log。S-111 裡要特別確認 speed 0.5/1.0 kn、direction 0.48 kn 真值流速門檻與 30/45 deg 分級沒有混用。",
         interview: "你可以說：我會把資料品質檢查放進流程，讓每次重跑都能確認輸入與輸出沒有偏掉。",
         mistake: "不要只靠肉眼看幾列資料。面試官會想知道你如何自動化驗證。"
       },
@@ -3642,7 +3649,7 @@
         match: /upsert/i,
         simple: "Upsert 是有資料就更新、沒有就新增。它通常需要搭配唯一鍵，否則資料庫不知道哪一列該更新。",
         steps: "先定義唯一鍵，再決定衝突時更新哪些欄位，最後驗證重跑前後筆數不會增加。",
-        interview: "你可以說：我會用 upsert 讓同一天同一 lead_hours 的結果可重跑，避免重複寫入 hotspot rows。",
+        interview: "你可以說：我會用 upsert 或先刪後寫讓同一 date、target_timestamp、lead_hours、error_type、位置與 metric 的結果可重跑，避免重複寫入 hotspot rows。",
         mistake: "不要只說『避免重複』。要說唯一鍵怎麼設，衝突時更新什麼。"
       },
       {
@@ -3663,14 +3670,14 @@
         match: /endpoint/i,
         simple: "Endpoint 是 API 的一個功能入口。好的 endpoint 要讓使用者看得出它查什麼、用哪些參數、回傳什麼。",
         steps: "先定義資源名稱，再定義 query parameters，接著設計 response 欄位，最後補錯誤狀態與文件。",
-        interview: "你可以說：我會把 threshold hotspot 設成清楚的 endpoint，讓前端或 QGIS 可以用日期、bbox、threshold 查資料。",
+        interview: "你可以說：我會把 threshold hotspot 設成清楚的 endpoint，讓前端或 QGIS 可以用 date、lead_hours、error_type、metric、bbox、threshold 查資料。",
         mistake: "不要把所有查詢都塞進一個萬用 endpoint。功能太混會讓參數與回傳很難維護。"
       },
       {
         match: /query parameter/i,
         simple: "Query parameter 是 URL 後面的篩選條件，例如 date、lead_hours、bbox、limit。它讓同一個 endpoint 支援不同查詢。",
         steps: "先列出必要參數，再決定可選參數與預設值，最後驗證格式、範圍與錯誤訊息。",
-        interview: "你可以說：我會讓 hotspot API 用 query parameter 篩選日期、lead_hours、bbox 與 threshold，降低 payload。",
+        interview: "你可以說：我會讓 hotspot API 用 query parameter 篩選 date、lead_hours、error_type、metric、bbox、threshold 與 limit，降低 payload。",
         mistake: "不要讓參數沒有界線。沒有 limit 或 bbox，API 很容易一次回傳太多資料。"
       },
       {
@@ -3712,7 +3719,7 @@
         match: /cache/i,
         simple: "Cache 是把常用結果暫存起來，減少重複查 DB 或重複計算。它適合變動不頻繁、查詢成本高的資料。",
         steps: "先判斷哪些查詢常被重複使用，再設定 key、TTL 與失效規則，最後確認資料更新時 cache 會被刷新。",
-        interview: "你可以說：固定日期與 lead_hours 的 summary 可能適合 cache，但 hotspot 更新後要處理失效問題。",
+        interview: "你可以說：固定 date、lead_hours、error_type、metric、threshold 的 hotspot 查詢可能適合 cache，但資料重建或 metric rows 更新後要處理失效問題。",
         mistake: "不要只說 cache 會變快。cache 的主要風險是 stale data，也就是資料過期。"
       },
       {
@@ -3726,14 +3733,14 @@
         match: /star/i,
         simple: "STAR 是 Situation、Task、Action、Result。它讓專案經驗不會散掉，也能清楚說出你的角色與成果。",
         steps: "先講背景，再講你負責的任務，接著講你做了什麼，最後講結果或可交接成果。",
-        interview: "你可以說：在 S-111 專案中，我負責把海流驗證資料整理成可查詢、可視覺化、可交接的資料流程。",
+        interview: "你可以說：在 S-111 專案中，我負責把海流驗證資料整理成 threshold hotspot workflow，串起 daily_results、PostgreSQL/PostGIS、Flask API 與 QGIS/前端使用流程。",
         mistake: "不要只列技術名詞。面試官想知道你在什麼情境下解決了什麼問題。"
       },
       {
         match: /trade-off|tradeoff/i,
         simple: "Trade-off 是取捨。工程設計通常沒有完美答案，面試官想看你是否知道限制與代價。",
         steps: "先說選項 A 和 B，再說限制條件，接著說你選哪個，最後補上風險與未來可改進方向。",
-        interview: "你可以說：只回 hotspot rows 可以減少 payload 並支援快速展示，但如果要完整格網動畫，就需要另設資料表與 API。",
+        interview: "你可以說：只回 hotspot rows 可以減少 payload 並支援快速展示；/api/hotspot-series 也只回 hotspot-row series。如果要完整格網動畫或完整 24 小時格點曲線，就需要另設資料表與 API。",
         mistake: "不要把自己的選擇講成唯一正解。成熟回答會說明限制與取捨。"
       },
       {
@@ -3747,7 +3754,7 @@
         match: /regression/i,
         simple: "Regression 是修改後把原本正常的功能弄壞。資料與 API 專案尤其要檢查舊流程是否仍然能跑。",
         steps: "先列出原本應該正常的案例，再改 code，最後重跑查詢、API response、前端或 QGIS 流程。",
-        interview: "你可以說：修 bug 後我會補 regression check，確認舊的 API 欄位、threshold 分級與視覺化流程沒有被破壞。",
+        interview: "你可以說：修 bug 後我會補 regression check，確認舊的 API 欄位、0.48 kn 流向門檻、warning/critical 分級與 QGIS/前端流程沒有被破壞。",
         mistake: "不要只確認新功能可用。面試官會更在意你有沒有保護既有功能。"
       }
     ];
@@ -3847,42 +3854,42 @@
     };
 
     const domainProjectBridges = {
-      sql: "在你的 S-111 專案裡，SQL 不只是撈資料，而是把日期、lead_hours、空間點、hotspot 分級等條件對齊。只要粒度或 key 錯，API 回傳看起來正常，實際統計就可能偏掉。",
-      python: "在你的 S-111 專案裡，Python 是從原始資料走到可查詢資料的前半段。它要把時間、座標、流速或誤差欄位整理成穩定格式，後面的資料庫與 API 才站得住。",
-      pipeline: "你的 S-111 經驗很適合講 pipeline，因為它不是單點任務：原始資料、清洗轉換、hotspot 計算、PostGIS 入庫、API 查詢與交接文件都串在一起。",
-      api: "你的 S-111 API 重點是 threshold hotspot workflow。面試時可以強調你讓資料能依日期、lead_hours、threshold、bbox 等條件被查詢，而不是只把檔案存在本機。",
+      sql: "在你的 S-111 專案裡，SQL 不只是撈資料，而是把日期、target_timestamp、lead_hours、error_type、metric、空間點與 hotspot 分級等條件對齊。只要粒度或 key 錯，API 回傳看起來正常，實際統計就可能偏掉。",
+      python: "在你的 S-111 專案裡，Python 是從 NC/H5/S-111 到成果包與資料庫的主流程。它要整理時間、座標、lead_hours、流速/流向誤差與圖層輸出，後面的 QGIS、PostgreSQL 與 API 才站得住。",
+      pipeline: "你的 S-111 經驗很適合講 pipeline，因為它不是單點任務：原始 NC/H5/S-111、驗證統計、official/metric hotspot、spatial stats、daily_results 成果包、PostgreSQL、Flask API 與 QGIS 都串在一起。",
+      api: "你的 S-111 API 重點是 threshold hotspot workflow。面試時可以強調你讓資料能依日期、lead_hours、error_type、metric、threshold、bbox 等條件被查詢；同時要說清楚 /api/hotspot-series 只回 hotspot-row series，不是完整格網曲線。",
       story: "你的專案故事主軸可以固定成：把複雜海流資料整理成可查詢、可視覺化、可交接的資料應用。這句話能讓非海洋領域的面試官先聽懂價值。"
     };
 
     const lessonProjectDetails = [
-      { match: /etl/i, text: "你可以把 S-111 說成很完整的 ETL：Extract 是讀 NetCDF 原始資料；Transform 是整理時間、座標、誤差與 hotspot 分級；Load 是寫進 PostgreSQL/PostGIS，讓 API 和 QGIS 可以查。" },
-      { match: /primary|foreign/i, text: "你可以用 hotspot_points 舉例：如果 target_date、target_timestamp、lead_hours、位置與 metric 無法共同識別一筆結果，重跑或 join 時就可能重複或對錯資料。" },
-      { match: /granularity/i, text: "S-111 很適合練 granularity，因為 target_date 是日層級、target_timestamp 是小時層級、hotspot_points 是空間點層級。你要先說清楚一列代表什麼，才談得上正確 join 或聚合。" },
-      { match: /window/i, text: "如果你想在每個 lead_hours 裡找最大誤差 hotspot，同時保留 lon、lat、target_timestamp 等明細欄位，這就是 window function 很好解釋的場景。" },
-      { match: /cte|subquery/i, text: "你可以把 threshold hotspot 查詢拆成幾段：先篩日期與 lead_hours，再套 bbox，再套 threshold，最後排序或限制筆數。這樣面試官比較容易跟上你的 SQL 思路。" },
+      { match: /etl/i, text: "你可以把 S-111 說成很完整的 ETL：Extract 是掃描 NC/H5/S-111 類資料；Transform 是計算 24h/48h/72h 的流速與流向誤差，產生 summary_stats、official hotspot、metric hotspot 與 spatial stats；Load 是輸出 daily_results 成果包與 manifest，並可寫入 PostgreSQL/PostGIS，讓 QGIS 或 Flask API 依情境查詢。" },
+      { match: /primary|foreign/i, text: "你可以用 hotspot_points 舉例：如果 target_date、target_timestamp、lead_hours、error_type、位置與 metric 無法共同識別一筆結果，重跑或 join 時就可能重複或對錯資料。official hotspot 則要記得是 metric IS NULL。" },
+      { match: /granularity/i, text: "S-111 很適合練 granularity，因為 target_date 是日層級，summary_stats 是每小時每個 lead_hours 的摘要，hotspot_points 是已超標的空間點，spatial_stats 是完整有效格點統計。你要先說清楚一列代表什麼，才談得上正確 join 或聚合。" },
+      { match: /window/i, text: "如果你想在每個 date、target_timestamp、lead_hours 或 error_type 裡找最大誤差 hotspot，同時保留 lon、lat、metric 等明細欄位，這就是 window function 很好解釋的場景。" },
+      { match: /cte|subquery/i, text: "你可以把 threshold hotspot 查詢拆成幾段：先篩 date、lead_hours、error_type 與 metric，再套 bbox，再套 threshold，最後排序或限制筆數。這樣面試官比較容易跟上你的 SQL 思路。" },
       { match: /dtype/i, text: "S-111 的時間、lead_hours、lon/lat、value 都不能只是看起來像數字或時間。型別錯會讓排序、篩選、API response 與視覺化都變得不可靠。" },
       { match: /null|outlier/i, text: "缺座標、缺時間或異常值不能只用刪除處理。你可以說明會先標記，再依欄位用途決定刪除、保留或排除於 hotspot 計算之外。" },
-      { match: /assert|validation/i, text: "S-111 的 validation 可以檢查欄位存在、日期範圍、lead_hours、座標範圍、筆數，以及固定分級規則：0.5-1.0 kn 是 warning hotspot，>= 1.0 kn 是 critical hotspot。" },
+      { match: /assert|validation/i, text: "S-111 的 validation 可以檢查欄位存在、日期範圍、lead_hours、座標範圍、筆數，以及固定分級規則：speed 0.5-1.0 kn 是 warning、>= 1.0 kn 是 critical；direction official 先通過 0.48 kn 真值流速門檻，再用 30/45 deg 分級。" },
       { match: /time complexity/i, text: "如果 hotspot 或格點資料變大，Python 裡不必要的巢狀迴圈會很快拖慢流程。你可以說會先找主要迴圈，再用 dict、向量化或資料庫查詢降低成本。" },
       { match: /hash map|dict/i, text: "你可以把日期、時間、座標或 station id 組成 key，用 dict 快速對應統計值或 hotspot rows，避免每筆資料都去掃另一份資料。" },
-      { match: /schema/i, text: "S-111 的 schema 不是只列欄位，而是交接契約。target_date、lead_hours、lon、lat、value、severity 的型別與意義固定後，API、QGIS 與文件才會一致。" },
-      { match: /idempotent/i, text: "你的重跑情境很適合講冪等：同一天、同一 lead_hours 的 hotspot rows 重跑後，資料庫結果應該一致，不應該因 append 而越跑越多。" },
-      { match: /upsert/i, text: "Upsert 可以用來處理 S-111 批次重跑。重點不是只說會用 upsert，而是說唯一鍵怎麼設、衝突時哪些欄位更新、如何驗證筆數沒有膨脹。" },
-      { match: /on conflict/i, text: "在 PostgreSQL 裡，你可以用 ON CONFLICT DO UPDATE 表達重跑策略：遇到同一筆 hotspot 結果就更新，而不是新增另一列。" },
-      { match: /manifest/i, text: "S-111 result package 可以用 manifest 記錄輸入檔、產出檔、日期、lead_hours、threshold、筆數與版本。這會讓交接比只丟一包檔案可靠很多。" },
-      { match: /endpoint/i, text: "你的 API 可以講成幾個明確 endpoint，例如 /api/threshold-hotspots 查可畫圖的 hotspot，/api/hotspot-series 查 hotspot-row series。每個 endpoint 都要說清楚用途。" },
-      { match: /query parameter/i, text: "S-111 API 的 query parameter 可以直接連到使用者需求：date 指定日期、lead_hours 指定預報時效、bbox 限制地圖範圍、threshold 控制 hotspot 條件。" },
-      { match: /json|geojson/i, text: "如果使用者要在地圖上看 hotspot，你可以回 lon/lat 或 GeoJSON。重點是 API response 要讓前端或 QGIS 直接使用，而不是再靠人工整理。" },
+      { match: /schema/i, text: "S-111 的 schema 不是只列欄位，而是交接契約。summary_stats 的 target_date、target_timestamp、lead_hours，以及 hotspot_points 的 lon、lat、value、unit、error_type、severity、metric 固定後，API、QGIS 與文件才會一致。" },
+      { match: /idempotent/i, text: "你的重跑情境很適合講冪等：同一 date、target_timestamp、lead_hours、error_type、位置與 metric 的 hotspot rows 重跑後，資料庫結果應該一致，不應該因 append 而越跑越多。" },
+      { match: /upsert/i, text: "Upsert 可以用來處理 S-111 批次重跑。重點不是只說會用 upsert，而是說唯一鍵怎麼設、official 的 metric IS NULL 怎麼處理、衝突時哪些欄位更新、如何驗證筆數沒有膨脹。" },
+      { match: /on conflict/i, text: "在 PostgreSQL 裡，你可以用 ON CONFLICT DO UPDATE 表達重跑策略：遇到同一筆 hotspot 結果就更新，而不是新增另一列；但前提是 unique key 要能區分 error_type、位置與 metric。" },
+      { match: /manifest/i, text: "S-111 result package 可以用 manifest 記錄輸入檔、summary_stats、hotspots、spatial_stats、metric_hotspots、GeoJSON/QML、日期、lead_hours、threshold、筆數與版本。這會讓交接比只丟一包檔案可靠很多。" },
+      { match: /endpoint/i, text: "你的 API 可以講成幾個明確 endpoint，例如 /api/threshold-hotspots 查可畫圖的 hotspot，/api/hotspot-series 查 hotspot-row series。要主動說明 hotspot-series 不是完整格網時間序列。" },
+      { match: /query parameter/i, text: "S-111 API 的 query parameter 可以直接連到使用者需求：date 指定日期、lead_hours 指定預報時效、error_type 分 speed/direction、metric 分 official/std_dir 等圖層、bbox 限制地圖範圍、threshold 控制 hotspot 條件。" },
+      { match: /json|geojson/i, text: "如果使用者要在地圖上看 hotspot，你可以回 lon/lat 或 GeoJSON。重點是要分清 hotspots.geojson 是超標點，spatial_stats_XXh.geojson 是完整有效格點統計，metric_hotspots.geojson 是輔助指標圖層。" },
       { match: /pagination|limit/i, text: "當 hotspot rows 變多時，你可以用 limit、bbox 或 pagination 控制 payload。這樣比較像正式服務，而不是把所有資料一次丟給前端。" },
       { match: /bbox/i, text: "BBox 很適合你的地圖場景：使用者只看目前視窗範圍，後端就只查這個範圍內的 hotspot，減少 DB 掃描與網路 payload。" },
       { match: /postgis|gist/i, text: "PostGIS 在你的專案裡不只是存 lon/lat，而是讓資料庫能做空間範圍查詢。GIST index 則是讓 bbox 或空間查詢更快的關鍵。" },
       { match: /explain/i, text: "如果 threshold hotspot API 變慢，你可以用 EXPLAIN ANALYZE 看是不是 full table scan、排序太重、索引沒用到，然後再決定要不要加索引或改 SQL。" },
-      { match: /cache/i, text: "固定日期與固定 lead_hours 的 summary 或 hotspot 查詢可能適合 cache，但你要同時講 TTL 與資料更新後如何失效，避免 stale data。" },
+      { match: /cache/i, text: "固定 date、lead_hours、error_type、metric、threshold 的 hotspot 查詢可能適合 cache，但你要同時講 TTL 與資料重建後如何失效，避免 stale data。" },
       { match: /timeout|error handling/i, text: "S-111 API 可能遇到參數錯、查無資料、DB 查詢慢。你可以說會區分 400、404、500 類錯誤，並回傳清楚 message，讓前端不會只顯示空白。" },
-      { match: /star/i, text: "你的 STAR 可以固定成：海流驗證資料需要被查詢與展示；你負責整理資料流與 API；你做了 PostGIS、threshold hotspot 與文件；結果是可交接、可查詢的工具。" },
-      { match: /trade-off|tradeoff/i, text: "你可以說只回 hotspot rows 的優點是 payload 小、API 快、容易展示；代價是不能直接播放完整格網動畫。這就是清楚的工程取捨。" },
+      { match: /star/i, text: "你的 STAR 可以固定成：海流驗證資料需要被查詢與展示；你負責整理 threshold hotspot workflow；你做了 verification_pipeline、daily_results、PostGIS、Flask API 與文件；結果是可交接、可查詢的工具。" },
+      { match: /trade-off|tradeoff/i, text: "你可以說只回 hotspot rows 的優點是 payload 小、API 快、容易展示；代價是不能直接播放完整格網動畫，/api/hotspot-series 也只看 hotspot row 的時間資料。這就是清楚的工程取捨。" },
       { match: /bottleneck|profiling/i, text: "S-111 API 慢時，瓶頸可能在 DB query、JSON serialize、payload、bbox 缺失或前端繪圖。面試時請先講量測，再講優化。" },
-      { match: /regression/i, text: "如果你改了 hotspot 分級、API 欄位或 SQL 條件，regression check 要確認舊的 QGIS/前端流程仍可使用，warning/critical 分級也沒有跑掉。" }
+      { match: /regression/i, text: "如果你改了 hotspot 分級、0.48 kn 流向門檻、API 欄位或 SQL 條件，regression check 要確認舊的 QGIS/前端流程仍可使用，warning/critical 分級也沒有跑掉。" }
     ];
 
     const lessonChecklists = [
