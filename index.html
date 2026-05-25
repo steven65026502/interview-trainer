@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Rong Data Mock Interview Console</title>
+  <title>Rong Data Interview Learning Console</title>
   <style>
     :root {
       --bg: #f5f7f8;
@@ -120,9 +120,13 @@
 
     .layout {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 390px;
+      grid-template-columns: 300px minmax(0, 1fr);
       gap: 14px;
       align-items: start;
+    }
+
+    .is-hidden {
+      display: none !important;
     }
 
     .panel {
@@ -158,6 +162,108 @@
       padding: 18px;
       display: grid;
       gap: 18px;
+    }
+
+    .learning-page {
+      display: grid;
+      gap: 20px;
+      padding: 22px;
+    }
+
+    .learning-head {
+      border-bottom: 1px solid var(--line);
+      display: grid;
+      gap: 8px;
+      padding-bottom: 18px;
+    }
+
+    .learning-head span,
+    .lesson-meta {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .learning-head h2 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .learning-head p {
+      max-width: 780px;
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .learning-steps {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .learning-step {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fbfcfc;
+      padding: 12px;
+      min-height: 78px;
+    }
+
+    .learning-step strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 13px;
+    }
+
+    .learning-step span {
+      color: var(--muted);
+      display: block;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .lesson-article {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--accent);
+      border-radius: 6px;
+      background: #fbfefe;
+      padding: 18px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .lesson-title {
+      display: grid;
+      gap: 6px;
+    }
+
+    .lesson-title h3 {
+      margin: 0;
+      font-size: 22px;
+      line-height: 1.35;
+    }
+
+    .lesson-copy {
+      color: var(--muted);
+      line-height: 1.75;
+      margin: 0;
+    }
+
+    .lesson-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .learning-time {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 240px;
+      gap: 14px;
+      align-items: start;
     }
 
     .progress-row {
@@ -492,10 +598,76 @@
     .side {
       display: grid;
       gap: 14px;
+      order: -1;
+      position: sticky;
+      top: 16px;
+      max-height: calc(100vh - 32px);
+      overflow: auto;
     }
 
     .side-body {
       padding: 16px 18px 18px;
+    }
+
+    .support-panel {
+      display: none;
+    }
+
+    .course-nav {
+      display: grid;
+      gap: 14px;
+    }
+
+    .nav-group {
+      display: grid;
+      gap: 8px;
+    }
+
+    .nav-group-title {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+      margin-top: 4px;
+    }
+
+    .nav-list {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav-item {
+      width: 100%;
+      min-height: 36px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--ink);
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: center;
+      padding: 7px 8px;
+      text-align: left;
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      border-color: rgba(8, 117, 111, 0.22);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .nav-item small {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .nav-item.done small {
+      color: var(--ok);
+      font-weight: 800;
     }
 
     .today-topic {
@@ -939,8 +1111,16 @@
       .toolbar,
       .guide,
       .checklist-grid,
-      .context-grid {
+      .context-grid,
+      .learning-steps,
+      .learning-time {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .side {
+        position: static;
+        max-height: none;
+        overflow: visible;
       }
     }
   </style>
@@ -949,8 +1129,8 @@
   <div class="shell">
     <header>
       <div class="title">
-        <h1>Rong Data Mock Interview Console</h1>
-        <p>用文字回答模擬面試題，取得針對 SQL、Python、Pipeline、API/DB 與 S-111 專案表達的回饋。</p>
+        <h1>Rong Data Interview Learning Console</h1>
+        <p>先按每日知識點學習，再進入今日挑戰；模擬面試題庫放在後段用來加練。</p>
       </div>
       <div class="actions">
         <button class="btn danger" id="resetBtn" type="button">清空練習</button>
@@ -994,9 +1174,84 @@
     </section>
 
     <main class="layout">
-      <section class="panel">
+      <section class="panel interview-panel">
+        <section class="learning-page" id="learningPage">
+          <div class="learning-head">
+            <span id="learningMeta">第 1 天 / 28 天循環</span>
+            <h2>今日學習</h2>
+            <p id="learningIntro">先把一個知識點學清楚，再用同一個知識點回答挑戰題。模擬面試題庫放在左側後段，等今天的新知過關後再加練。</p>
+          </div>
+
+          <div class="learning-steps" aria-label="每日學習流程">
+            <div class="learning-step">
+              <strong>1. 讀概念</strong>
+              <span>先知道今天的詞在資料工作裡解決什麼問題。</span>
+            </div>
+            <div class="learning-step">
+              <strong>2. 看資源</strong>
+              <span>用精選影片、文件或練習題補齊背景。</span>
+            </div>
+            <div class="learning-step">
+              <strong>3. 連專案</strong>
+              <span>把概念對到 S-111、PostgreSQL、API 或 QGIS。</span>
+            </div>
+            <div class="learning-step">
+              <strong>4. 自我驗收</strong>
+              <span>確認自己能白話講出定義、例子與風險。</span>
+            </div>
+            <div class="learning-step">
+              <strong>5. 再被考</strong>
+              <span>最後才進入今日挑戰或模擬面試題。</span>
+            </div>
+          </div>
+
+          <section class="lesson-article">
+            <div class="lesson-title">
+              <span class="lesson-meta" id="learningLessonDay">第 1 天</span>
+              <h3 id="learningLessonTitle">載入中</h3>
+            </div>
+            <p class="lesson-copy" id="learningLessonConcept"></p>
+            <div class="knowledge-tags" id="learningLessonTags"></div>
+            <p class="knowledge-s111 lesson-copy" id="learningLessonS111"></p>
+            <div class="video-links" aria-label="本課學習資源">
+              <span>學習資源</span>
+              <a id="learningYoutubeLink" href="#" target="_blank" rel="noreferrer">YouTube</a>
+              <a id="learningBilibiliLink" href="#" target="_blank" rel="noreferrer">Bilibili</a>
+              <a id="learningReferenceLink" href="#" target="_blank" rel="noreferrer">文件</a>
+              <a id="learningPracticeLink" href="#" target="_blank" rel="noreferrer">練習</a>
+            </div>
+            <div class="knowledge-outcomes">
+              <strong>今日驗收</strong>
+              <ul id="learningOutcomes"></ul>
+            </div>
+            <div class="lesson-actions">
+              <button class="btn primary" id="startLessonChallengeBtn" type="button">學完，開始這題</button>
+              <button class="btn" id="openTodayLessonBtn" type="button">回到今日新知</button>
+            </div>
+          </section>
+
+          <div class="learning-time">
+            <section class="lesson-article">
+              <div class="lesson-title">
+                <span class="lesson-meta">今日主線</span>
+                <h3 id="learningPlanTopic">載入中</h3>
+              </div>
+              <div class="time-bars" id="learningPlanTime"></div>
+              <p class="lesson-copy" id="learningWeekGoal"></p>
+            </section>
+            <section class="lesson-article">
+              <div class="lesson-title">
+                <span class="lesson-meta">目前進度</span>
+                <h3 id="learningProgressTitle">尚未開始</h3>
+              </div>
+              <p class="lesson-copy" id="learningProgressText">完成今日挑戰後，這裡會顯示你目前的平均分與最弱主題。</p>
+            </section>
+          </div>
+        </section>
+
+        <div class="interview-question-page is-hidden" id="interviewQuestionPage">
         <div class="panel-head">
-          <h2>模擬面試題</h2>
+          <h2 id="questionPanelTitle">模擬面試題</h2>
           <span id="questionCount">第 1 題 / 12</span>
         </div>
 
@@ -1104,10 +1359,19 @@
             <strong id="averageMetric">0</strong>
           </div>
         </div>
+        </div>
       </section>
 
       <aside class="side">
-        <section class="panel" id="todayPlanPanel">
+        <section class="panel course-nav-panel">
+          <div class="panel-head">
+            <h3>學習目錄</h3>
+            <span id="courseNavMeta">今日</span>
+          </div>
+          <div class="side-body course-nav" id="courseNav"></div>
+        </section>
+
+        <section class="panel support-panel" id="todayPlanPanel">
           <div class="panel-head">
             <h3>今日計畫</h3>
             <span id="todayPlanMeta">週日・第 1 週</span>
@@ -1151,7 +1415,7 @@
           </div>
         </section>
 
-        <section class="panel">
+        <section class="panel support-panel">
           <div class="panel-head">
             <h3>能力分布</h3>
             <span>依已送出回答</span>
@@ -1161,7 +1425,7 @@
           </div>
         </section>
 
-        <section class="panel">
+        <section class="panel support-panel">
           <div class="panel-head">
             <h3>今日任務</h3>
             <span id="taskMeta">120 分鐘</span>
@@ -2011,6 +2275,8 @@
 
     const state = {
       current: 0,
+      view: "learn",
+      lessonOffset: todayLearningOffset(),
       answers: Array(questions.length).fill(""),
       feedback: Array(questions.length).fill(null),
       hintsOpen: Array(questions.length).fill(false),
@@ -2022,6 +2288,7 @@
 
     const els = {
       questionCount: document.getElementById("questionCount"),
+      questionPanelTitle: document.getElementById("questionPanelTitle"),
       domainTag: document.getElementById("domainTag"),
       questionTitle: document.getElementById("questionTitle"),
       questionHint: document.getElementById("questionHint"),
@@ -2045,6 +2312,29 @@
       issueList: document.getElementById("issueList"),
       modelAnswerBlock: document.getElementById("modelAnswerBlock"),
       modelAnswer: document.getElementById("modelAnswer"),
+      learningPage: document.getElementById("learningPage"),
+      interviewQuestionPage: document.getElementById("interviewQuestionPage"),
+      courseNav: document.getElementById("courseNav"),
+      courseNavMeta: document.getElementById("courseNavMeta"),
+      learningMeta: document.getElementById("learningMeta"),
+      learningLessonDay: document.getElementById("learningLessonDay"),
+      learningLessonTitle: document.getElementById("learningLessonTitle"),
+      learningLessonConcept: document.getElementById("learningLessonConcept"),
+      learningLessonTags: document.getElementById("learningLessonTags"),
+      learningLessonS111: document.getElementById("learningLessonS111"),
+      learningYoutubeLink: document.getElementById("learningYoutubeLink"),
+      learningBilibiliLink: document.getElementById("learningBilibiliLink"),
+      learningReferenceLink: document.getElementById("learningReferenceLink"),
+      learningPracticeLink: document.getElementById("learningPracticeLink"),
+      learningOutcomes: document.getElementById("learningOutcomes"),
+      learningPlanTopic: document.getElementById("learningPlanTopic"),
+      learningPlanTime: document.getElementById("learningPlanTime"),
+      learningWeekGoal: document.getElementById("learningWeekGoal"),
+      learningProgressTitle: document.getElementById("learningProgressTitle"),
+      learningProgressText: document.getElementById("learningProgressText"),
+      startLessonChallengeBtn: document.getElementById("startLessonChallengeBtn"),
+      openTodayLessonBtn: document.getElementById("openTodayLessonBtn"),
+      feedbackBtnTop: document.getElementById("feedbackBtnTop"),
       todayPlanMeta: document.getElementById("todayPlanMeta"),
       todayPlanTopic: document.getElementById("todayPlanTopic"),
       todayPlanQuestions: document.getElementById("todayPlanQuestions"),
@@ -2089,6 +2379,10 @@
         const saved = JSON.parse(localStorage.getItem("rongDataMockInterview"));
         if (!saved) return;
         state.current = Number.isInteger(saved.current) ? Math.min(Math.max(saved.current, 0), questions.length - 1) : 0;
+        state.view = saved.view === "interview" ? "interview" : "learn";
+        state.lessonOffset = Number.isInteger(saved.lessonOffset)
+          ? Math.min(Math.max(saved.lessonOffset, 0), dailyLessons.length - 1)
+          : todayLearningOffset();
         state.answers = mergeSavedArray(saved.answers, "");
         state.feedback = mergeSavedArray(saved.feedback, null);
         state.hintsOpen = mergeSavedArray(saved.hintsOpen, false);
@@ -2112,6 +2406,8 @@
     function save() {
       localStorage.setItem("rongDataMockInterview", JSON.stringify({
         current: state.current,
+        view: state.view,
+        lessonOffset: state.lessonOffset,
         answers: state.answers,
         feedback: state.feedback,
         hintsOpen: state.hintsOpen,
@@ -2535,6 +2831,9 @@
           <span>${minutes}min</span>
         </div>
       `).join("");
+      renderLearningPage();
+      renderCourseNav();
+      applyView();
     }
 
     function renderDailyKnowledge() {
@@ -2557,8 +2856,128 @@
       els.dailyKnowledgeBtnText.textContent = done ? "今日新知已完成" : "用今日新知考我";
     }
 
+    function activeLearningOffset() {
+      return Math.min(Math.max(state.lessonOffset, 0), dailyLessons.length - 1);
+    }
+
+    function learningQuestionIndex(offset = activeLearningOffset()) {
+      return dailyLessonStartIndex + offset;
+    }
+
+    function renderLearningPage() {
+      const dayIndex = new Date().getDay();
+      const plan = dailyPlans[dayIndex];
+      const week = currentWeekNumber();
+      const offset = activeLearningOffset();
+      const lesson = dailyLessons[offset];
+      const questionIndex = learningQuestionIndex(offset);
+      const done = Boolean(state.feedback[questionIndex]);
+      const maxMinutes = Math.max(...plan.time.map(item => item[1]));
+
+      els.learningMeta.textContent = `第 ${offset + 1} 天 / 28 天循環`;
+      els.learningLessonDay.textContent = offset === todayLearningOffset() ? `今日新知・第 ${offset + 1} 天` : `第 ${offset + 1} 天`;
+      els.learningLessonTitle.textContent = lesson.title;
+      els.learningLessonConcept.textContent = lesson.concept;
+      els.learningLessonTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
+      els.learningLessonS111.textContent = lesson.s111;
+      setResourceLink(els.learningYoutubeLink, "YouTube", videoResource("youtube", lesson));
+      setResourceLink(els.learningBilibiliLink, "Bilibili", videoResource("bilibili", lesson));
+      setResourceLink(els.learningReferenceLink, "文件", referenceResource(lesson));
+      setResourceLink(els.learningPracticeLink, "練習", practiceResource(lesson));
+      els.learningOutcomes.innerHTML = learningOutcomes(lesson).map(outcome => `<li>${outcome}</li>`).join("");
+      els.startLessonChallengeBtn.textContent = done ? "已完成，查看這題" : "學完，開始這題";
+      els.learningPlanTopic.textContent = plan.topic;
+      els.learningPlanTime.innerHTML = plan.time.map(([label, minutes]) => `
+        <div class="time-row">
+          <span>${label}</span>
+          <div class="time-track"><span style="width:${Math.max(12, Math.round(minutes / maxMinutes * 100))}%"></span></div>
+          <span>${minutes}min</span>
+        </div>
+      `).join("");
+      els.learningWeekGoal.textContent = `第 ${week} 週目標：${weekGoals[week - 1]}`;
+      els.learningProgressTitle.textContent = `完成 ${completedCount()} / ${questions.length} 題`;
+      els.learningProgressText.textContent = `目前平均 ${averageScore()} 分，最需要補強的是 ${domains[weakestDomain()]}。先把今日知識點答順，再往左側下方的模擬面試題庫加練。`;
+    }
+
+    function renderCourseNav() {
+      const todayOffset = todayLearningOffset();
+      const selectedOffset = activeLearningOffset();
+      els.courseNavMeta.textContent = state.view === "learn" ? "學習" : "答題";
+      const quickItems = [
+        `<button class="nav-item ${state.view === "learn" && selectedOffset === todayOffset ? "active" : ""}" type="button" data-nav-home="today">
+          <span>1</span><span>今日學習</span><small>D${todayOffset + 1}</small>
+        </button>`,
+        `<button class="nav-item ${state.view === "interview" && state.current === todayLearningIndex() ? "active" : ""} ${state.feedback[todayLearningIndex()] ? "done" : ""}" type="button" data-question="${todayLearningIndex()}">
+          <span>2</span><span>今日挑戰</span><small>${state.feedback[todayLearningIndex()] ? "✓" : "考"}</small>
+        </button>`
+      ].join("");
+      const lessonItems = dailyLessons.map((lesson, index) => {
+        const questionIndex = dailyLessonStartIndex + index;
+        const active = state.view === "learn" && selectedOffset === index;
+        const done = Boolean(state.feedback[questionIndex]);
+        const today = index === todayOffset;
+        return `
+          <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""}" type="button" data-lesson="${index}">
+            <span>D${index + 1}</span>
+            <span>${lesson.title}</span>
+            <small>${done ? "✓" : today ? "今日" : domains[lesson.domain]}</small>
+          </button>
+        `;
+      }).join("");
+      const mockItems = questions.slice(0, baseQuestionCount).map((question, index) => {
+        const active = state.view === "interview" && state.current === index;
+        const done = Boolean(state.feedback[index]);
+        return `
+          <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""}" type="button" data-question="${index}">
+            <span>Q${index + 1}</span>
+            <span>${question.title}</span>
+            <small>${done ? "✓" : domains[question.domain]}</small>
+          </button>
+        `;
+      }).join("");
+      els.courseNav.innerHTML = `
+        <div class="nav-group">
+          <div class="nav-group-title">今日流程</div>
+          <div class="nav-list">${quickItems}</div>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">28 天知識路線</div>
+          <div class="nav-list">${lessonItems}</div>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-title">模擬面試題庫</div>
+          <div class="nav-list">${mockItems}</div>
+        </div>
+      `;
+    }
+
+    function applyView() {
+      const isLearning = state.view !== "interview";
+      els.learningPage.classList.toggle("is-hidden", !isLearning);
+      els.interviewQuestionPage.classList.toggle("is-hidden", isLearning);
+      els.feedbackBtnTop.classList.toggle("is-hidden", isLearning);
+    }
+
+    function openLearning(offset = todayLearningOffset()) {
+      state.lessonOffset = Math.min(Math.max(offset, 0), dailyLessons.length - 1);
+      state.view = "learn";
+      renderAll();
+      window.scrollTo({ top: 0 });
+    }
+
+    function openQuestion(index) {
+      state.current = Math.min(Math.max(index, 0), questions.length - 1);
+      if (state.current >= dailyLessonStartIndex) {
+        state.lessonOffset = state.current - dailyLessonStartIndex;
+      }
+      state.view = "interview";
+      renderAll();
+      window.scrollTo({ top: 0 });
+    }
+
     function renderQuestion() {
       const question = questions[state.current];
+      els.questionPanelTitle.textContent = state.current >= dailyLessonStartIndex ? "今日新知挑戰" : "模擬面試題";
       els.questionCount.textContent = `第 ${state.current + 1} 題 / ${questions.length}`;
       els.domainTag.textContent = domains[question.domain];
       els.questionTitle.textContent = question.title;
@@ -2831,35 +3250,52 @@
     els.todayPlanQuestions.addEventListener("click", event => {
       const button = event.target.closest("[data-plan-question]");
       if (!button) return;
-      state.current = Number(button.dataset.planQuestion);
-      renderAll();
-      window.scrollTo({ top: 0 });
+      openQuestion(Number(button.dataset.planQuestion));
     });
 
     els.dailyKnowledgeBtn.addEventListener("click", () => {
-      state.current = todayLearningIndex();
-      renderAll();
-      window.scrollTo({ top: 0 });
+      openQuestion(todayLearningIndex());
+    });
+
+    els.courseNav.addEventListener("click", event => {
+      const lessonButton = event.target.closest("[data-lesson]");
+      const questionButton = event.target.closest("[data-question]");
+      const homeButton = event.target.closest("[data-nav-home]");
+      if (lessonButton) {
+        openLearning(Number(lessonButton.dataset.lesson));
+      } else if (questionButton) {
+        openQuestion(Number(questionButton.dataset.question));
+      } else if (homeButton) {
+        openLearning(todayLearningOffset());
+      }
+    });
+
+    els.startLessonChallengeBtn.addEventListener("click", () => {
+      openQuestion(learningQuestionIndex());
+    });
+
+    els.openTodayLessonBtn.addEventListener("click", () => {
+      openLearning(todayLearningOffset());
     });
 
     document.getElementById("feedbackBtn").addEventListener("click", submitFeedback);
-    document.getElementById("feedbackBtnTop").addEventListener("click", submitFeedback);
+    els.feedbackBtnTop.addEventListener("click", submitFeedback);
     document.getElementById("followupBtn").addEventListener("click", showFollowup);
     document.getElementById("followupFeedbackBtn").addEventListener("click", submitFollowupFeedback);
     document.getElementById("templateBtn").addEventListener("click", insertTemplate);
 
     document.getElementById("prevBtn").addEventListener("click", () => {
-      state.current = Math.max(0, state.current - 1);
-      renderAll();
+      openQuestion(Math.max(0, state.current - 1));
     });
 
     document.getElementById("nextBtn").addEventListener("click", () => {
-      state.current = Math.min(questions.length - 1, state.current + 1);
-      renderAll();
+      openQuestion(Math.min(questions.length - 1, state.current + 1));
     });
 
     document.getElementById("resetBtn").addEventListener("click", () => {
       state.current = 0;
+      state.view = "learn";
+      state.lessonOffset = todayLearningOffset();
       state.answers = Array(questions.length).fill("");
       state.feedback = Array(questions.length).fill(null);
       state.hintsOpen = Array(questions.length).fill(false);
