@@ -2885,22 +2885,66 @@
       };
     }
 
-    function applyProgressPayload(payload) {
+    function mergeLessonResources(localResources, incomingResources, learnedLessons = []) {
+      return Array.from({ length: dailyLessons.length }, (_, lessonIndex) => {
+        const localItems = Array.isArray(localResources) ? localResources[lessonIndex] : null;
+        const incomingItems = Array.isArray(incomingResources) ? incomingResources[lessonIndex] : null;
+        return Array.from({ length: 4 }, (_, stepIndex) => {
+          return Boolean(learnedLessons[lessonIndex])
+            || Boolean(Array.isArray(localItems) && localItems[stepIndex])
+            || Boolean(Array.isArray(incomingItems) && incomingItems[stepIndex]);
+        });
+      });
+    }
+
+    function mergeReadiness(localReadiness, incomingReadiness) {
+      return Array.from({ length: dailyLessons.length }, (_, index) => {
+        const localItem = Array.isArray(localReadiness) ? localReadiness[index] : null;
+        const incomingItem = Array.isArray(incomingReadiness) ? incomingReadiness[index] : null;
+        if (!localItem) return incomingItem || null;
+        if (!incomingItem) return localItem;
+        return Number(incomingItem.score || 0) >= Number(localItem.score || 0) ? incomingItem : localItem;
+      });
+    }
+
+    function mergeProgressArray(localArray, incomingArray, fallbackValue) {
+      return Array.from({ length: questions.length }, (_, index) => {
+        const incoming = Array.isArray(incomingArray) ? incomingArray[index] : undefined;
+        const local = Array.isArray(localArray) ? localArray[index] : undefined;
+        if (incoming !== undefined && incoming !== null && incoming !== "") return incoming;
+        if (local !== undefined && local !== null) return local;
+        return typeof fallbackValue === "function" ? fallbackValue(index) : fallbackValue;
+      });
+    }
+
+    function applyProgressPayload(payload, options = {}) {
       const incoming = payload && payload.state ? payload.state : payload;
       if (!incoming || typeof incoming !== "object") {
         throw new Error("進度格式不正確");
       }
-      state.current = Number.isInteger(incoming.current) ? Math.min(Math.max(incoming.current, 0), questions.length - 1) : 0;
-      state.answers = mergeSavedArray(incoming.answers, "");
-      state.feedback = mergeSavedArray(incoming.feedback, null);
-      state.learnedLessons = normalizeLearnedLessons(incoming.learnedLessons, state.feedback);
-      state.lessonReflections = mergeSavedArray(incoming.lessonReflections, "");
-      state.lessonReadiness = normalizeLessonReadiness(incoming.lessonReadiness);
-      state.lessonResources = normalizeLessonResources(incoming.lessonResources, state.learnedLessons);
+      const shouldMerge = options.merge === true;
+      const incomingFeedback = mergeSavedArray(incoming.feedback, null);
+      state.current = Number.isInteger(incoming.current) ? Math.min(Math.max(incoming.current, 0), questions.length - 1) : state.current;
+      state.answers = shouldMerge ? mergeProgressArray(state.answers, incoming.answers, "") : mergeSavedArray(incoming.answers, "");
+      state.feedback = shouldMerge ? mergeProgressArray(state.feedback, incomingFeedback, null) : incomingFeedback;
+      const incomingLearned = normalizeLearnedLessons(incoming.learnedLessons, state.feedback);
+      state.learnedLessons = shouldMerge
+        ? Array.from({ length: dailyLessons.length }, (_, index) => Boolean(state.learnedLessons[index] || incomingLearned[index]))
+        : incomingLearned;
+      const incomingReflections = mergeSavedArray(incoming.lessonReflections, "");
+      state.lessonReflections = shouldMerge
+        ? Array.from({ length: dailyLessons.length }, (_, index) => incomingReflections[index] || state.lessonReflections[index] || "")
+        : incomingReflections;
+      const incomingReadiness = normalizeLessonReadiness(incoming.lessonReadiness);
+      state.lessonReadiness = shouldMerge ? mergeReadiness(state.lessonReadiness, incomingReadiness) : incomingReadiness;
+      const incomingResources = normalizeLessonResources(incoming.lessonResources, incomingLearned);
+      state.lessonResources = shouldMerge
+        ? mergeLessonResources(state.lessonResources, incomingResources, state.learnedLessons)
+        : normalizeLessonResources(incoming.lessonResources, state.learnedLessons);
       backfillReadinessForLearned();
       const maxOffset = highestUnlockedLessonOffset();
       state.lessonOffset = Number.isInteger(incoming.lessonOffset)
-        ? Math.min(Math.max(incoming.lessonOffset, 0), maxOffset)
+        ? Math.min(Math.max(shouldMerge ? Math.max(state.lessonOffset, incoming.lessonOffset) : incoming.lessonOffset, 0), maxOffset)
         : maxOffset;
       state.view = incoming.view === "interview" ? "interview" : "learn";
       if (state.current >= dailyLessonStartIndex && !isLessonLearned(state.current - dailyLessonStartIndex)) {
@@ -2933,7 +2977,7 @@
         return;
       }
       try {
-        applyProgressPayload(JSON.parse(raw));
+        applyProgressPayload(JSON.parse(raw), { merge: true });
         setSyncStatus("已套用匯入進度。", "ok");
       } catch (error) {
         setSyncStatus(`匯入失敗：${error.message}`, "error");
@@ -2941,6 +2985,30 @@
     }
 
     const progressGistFile = "rong-data-interview-progress.json";
+
+    function persistSyncSettings() {
+      localStorage.setItem("rongDataMockInterviewSync", JSON.stringify(syncSettings));
+      els.syncGistInput.value = syncSettings.gistId;
+      renderCourseProgress();
+    }
+
+    async function findProgressGistId() {
+      if (syncSettings.gistId) return syncSettings.gistId;
+      if (!syncSettings.token) return "";
+      const response = await fetch("https://api.github.com/gists?per_page=100", {
+        headers: {
+          "Accept": "application/vnd.github+json",
+          "Authorization": `Bearer ${syncSettings.token}`
+        }
+      });
+      if (!response.ok) throw new Error(`GitHub 回應 ${response.status}`);
+      const gists = await response.json();
+      const found = gists.find(gist => gist.files && gist.files[progressGistFile]);
+      if (!found) return "";
+      syncSettings.gistId = found.id;
+      persistSyncSettings();
+      return found.id;
+    }
 
     async function uploadProgressToGist(isAuto = false) {
       saveSyncSettings();
@@ -2975,20 +3043,23 @@
       }
       const gist = await response.json();
       syncSettings.gistId = gist.id;
-      els.syncGistInput.value = gist.id;
-      localStorage.setItem("rongDataMockInterviewSync", JSON.stringify(syncSettings));
-      renderCourseProgress();
+      persistSyncSettings();
       setSyncStatus(`已上傳進度到 Gist：${gist.id}`, "ok");
     }
 
-    async function downloadProgressFromGist() {
-      saveSyncSettings();
-      if (!syncSettings.token || !syncSettings.gistId) {
-        setSyncStatus("請先輸入 token 和 Gist ID。", "error");
+    async function downloadProgressFromGist(isAuto = false) {
+      if (!isAuto) saveSyncSettings();
+      if (!syncSettings.token) {
+        setSyncStatus("請先輸入 GitHub Gist token。", "error");
         return;
       }
-      setSyncStatus("正在下載雲端進度...");
-      const response = await fetch(`https://api.github.com/gists/${syncSettings.gistId}`, {
+      const gistId = await findProgressGistId();
+      if (!gistId) {
+        setSyncStatus("找不到雲端進度。請先在有進度的那台按一次上傳進度，或讓它點任一學習資源自動建立 Gist。", "error");
+        return;
+      }
+      setSyncStatus(isAuto ? "正在自動同步雲端進度..." : "正在下載雲端進度...");
+      const response = await fetch(`https://api.github.com/gists/${gistId}`, {
         headers: {
           "Accept": "application/vnd.github+json",
           "Authorization": `Bearer ${syncSettings.token}`
@@ -3002,14 +3073,21 @@
       if (!file || !file.content) {
         throw new Error("Gist 裡找不到進度檔");
       }
-      applyProgressPayload(JSON.parse(file.content));
-      setSyncStatus("已下載並套用雲端進度。", "ok");
+      applyProgressPayload(JSON.parse(file.content), { merge: true });
+      setSyncStatus("已下載並合併雲端進度。", "ok");
     }
 
     function maybeAutoUploadProgress() {
-      if (!syncSettings.token || !syncSettings.gistId) return;
+      if (!syncSettings.token) return;
       uploadProgressToGist(true).catch(error => {
         setSyncStatus(`自動上傳失敗：${error.message}`, "error");
+      });
+    }
+
+    function maybeAutoDownloadProgress() {
+      if (!syncSettings.token) return;
+      downloadProgressFromGist(true).catch(error => {
+        setSyncStatus(`自動下載失敗：${error.message}`, "error");
       });
     }
 
@@ -4415,6 +4493,7 @@
       } else {
         renderLessonReadiness(offset);
         save();
+        maybeAutoUploadProgress();
         setSyncStatus(`D${offset + 1} 目前 ${readiness.score} 分，補到 60 分就能解鎖下一天。`, "error");
       }
     }
@@ -4609,7 +4688,8 @@
     document.getElementById("templateBtn").addEventListener("click", insertTemplate);
     document.getElementById("syncSaveSettingsBtn").addEventListener("click", () => {
       saveSyncSettings();
-      setSyncStatus(syncSettings.gistId ? `已儲存 Gist：${syncSettings.gistId}` : "已儲存同步設定。", "ok");
+      setSyncStatus(syncSettings.gistId ? `已儲存 Gist：${syncSettings.gistId}，正在同步進度...` : "已儲存同步設定，正在尋找雲端進度...", "ok");
+      maybeAutoDownloadProgress();
     });
     document.getElementById("syncExportBtn").addEventListener("click", exportProgressCode);
     document.getElementById("syncImportBtn").addEventListener("click", importProgressCode);
@@ -4661,6 +4741,7 @@
     loadSyncSettings();
     load();
     renderAll();
+    maybeAutoDownloadProgress();
   </script>
 </body>
 </html>
