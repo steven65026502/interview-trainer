@@ -966,6 +966,49 @@
       gap: 8px;
     }
 
+    .email-sync-box,
+    .advanced-sync {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .sync-section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .sync-section-head small {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 600;
+      text-align: right;
+    }
+
+    .email-code-row {
+      margin-top: 8px;
+    }
+
+    .advanced-sync summary {
+      cursor: pointer;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+      list-style-position: inside;
+    }
+
+    .advanced-sync .sync-grid,
+    .advanced-sync .sync-actions {
+      margin-top: 8px;
+    }
+
     .sync-grid input,
     .sync-grid textarea {
       width: 100%;
@@ -993,6 +1036,10 @@
       min-height: 34px;
       padding: 0 10px;
       font-size: 12px;
+    }
+
+    #syncEmailLogoutBtn {
+      grid-column: 1 / -1;
     }
 
     .sync-status {
@@ -1690,19 +1737,41 @@
               <p id="courseProgressNote">完成目前課程後才會解鎖下一天。</p>
             </div>
             <div class="sync-grid">
-              <input id="syncWorkerInput" type="url" autocomplete="off" placeholder="OAuth Worker URL（選填）">
-              <input id="syncTokenInput" type="password" autocomplete="off" placeholder="GitHub Gist token">
-              <input id="syncGistInput" type="text" autocomplete="off" placeholder="Gist ID">
-              <textarea id="syncPayloadBox" spellcheck="false" placeholder="匯出碼 / 匯入碼"></textarea>
+              <input id="syncWorkerInput" type="url" autocomplete="off" placeholder="同步服務 URL（Cloudflare Worker）">
+              <div class="email-sync-box">
+                <div class="sync-section-head">
+                  <span>Email 登入</span>
+                  <small id="syncEmailState">尚未登入</small>
+                </div>
+                <input id="syncEmailInput" type="email" autocomplete="email" placeholder="輸入 Email">
+                <div class="email-code-row">
+                  <input id="syncEmailCodeInput" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="輸入 6 位驗證碼">
+                </div>
+                <div class="sync-actions email-actions">
+                  <button class="btn primary" id="syncEmailSendBtn" type="button">寄送驗證信</button>
+                  <button class="btn" id="syncEmailVerifyBtn" type="button">驗證碼登入</button>
+                  <button class="btn" id="syncEmailLogoutBtn" type="button">登出 Email</button>
+                </div>
+              </div>
+              <details class="advanced-sync">
+                <summary>進階：GitHub / 匯出碼</summary>
+                <div class="sync-grid">
+                  <input id="syncTokenInput" type="password" autocomplete="off" placeholder="GitHub Gist token">
+                  <input id="syncGistInput" type="text" autocomplete="off" placeholder="Gist ID">
+                  <textarea id="syncPayloadBox" spellcheck="false" placeholder="匯出碼 / 匯入碼"></textarea>
+                </div>
+                <div class="sync-actions">
+                  <button class="btn" id="syncOAuthLoginBtn" type="button">用 GitHub 登入</button>
+                  <button class="btn" id="syncOAuthLogoutBtn" type="button">登出 GitHub</button>
+                  <button class="btn" id="syncExportBtn" type="button">產生匯出碼</button>
+                  <button class="btn" id="syncImportBtn" type="button">套用匯入碼</button>
+                </div>
+              </details>
             </div>
             <div class="sync-actions">
               <button class="btn" id="syncSaveSettingsBtn" type="button">儲存設定</button>
-              <button class="btn primary" id="syncOAuthLoginBtn" type="button">用 GitHub 登入</button>
-              <button class="btn" id="syncOAuthLogoutBtn" type="button">登出 GitHub</button>
               <button class="btn primary" id="syncUploadBtn" type="button">上傳進度</button>
               <button class="btn" id="syncDownloadBtn" type="button">下載進度</button>
-              <button class="btn" id="syncExportBtn" type="button">產生匯出碼</button>
-              <button class="btn" id="syncImportBtn" type="button">套用匯入碼</button>
               <button class="btn" id="syncClearBtn" type="button">清除同步設定</button>
             </div>
             <div class="sync-status" id="syncStatus">未設定雲端同步。</div>
@@ -2710,6 +2779,9 @@
       dailyKnowledgeBtnText: document.getElementById("dailyKnowledgeBtnText"),
       syncMeta: document.getElementById("syncMeta"),
       syncWorkerInput: document.getElementById("syncWorkerInput"),
+      syncEmailInput: document.getElementById("syncEmailInput"),
+      syncEmailCodeInput: document.getElementById("syncEmailCodeInput"),
+      syncEmailState: document.getElementById("syncEmailState"),
       syncTokenInput: document.getElementById("syncTokenInput"),
       syncGistInput: document.getElementById("syncGistInput"),
       syncPayloadBox: document.getElementById("syncPayloadBox"),
@@ -2730,6 +2802,9 @@
     const syncSettings = {
       workerUrl: "",
       oauthSession: "",
+      authProvider: "",
+      email: "",
+      emailChallengeId: "",
       token: "",
       gistId: ""
     };
@@ -2844,6 +2919,9 @@
         if (saved) {
           syncSettings.workerUrl = typeof saved.workerUrl === "string" ? saved.workerUrl : "";
           syncSettings.oauthSession = typeof saved.oauthSession === "string" ? saved.oauthSession : "";
+          syncSettings.authProvider = typeof saved.authProvider === "string" ? saved.authProvider : "";
+          syncSettings.email = typeof saved.email === "string" ? saved.email : "";
+          syncSettings.emailChallengeId = typeof saved.emailChallengeId === "string" ? saved.emailChallengeId : "";
           syncSettings.token = typeof saved.token === "string" ? saved.token : "";
           syncSettings.gistId = typeof saved.gistId === "string" ? saved.gistId : "";
         }
@@ -2851,13 +2929,16 @@
         localStorage.removeItem("rongDataMockInterviewSync");
       }
       els.syncWorkerInput.value = syncSettings.workerUrl;
+      els.syncEmailInput.value = syncSettings.email;
       els.syncTokenInput.value = syncSettings.token;
       els.syncGistInput.value = syncSettings.gistId;
-      setSyncStatus(syncSettings.oauthSession ? "已連到 GitHub OAuth 同步。" : syncSettings.gistId ? `已連到 Gist：${syncSettings.gistId}` : "未設定雲端同步。");
+      setSyncStatus(syncSettings.oauthSession ? `已連到 ${authProviderLabel()} 同步。` : syncSettings.gistId ? `已連到 Gist：${syncSettings.gistId}` : "未設定雲端同步。");
+      updateEmailSyncState();
     }
 
     function saveSyncSettings() {
       syncSettings.workerUrl = els.syncWorkerInput.value.trim().replace(/\/+$/, "");
+      if (els.syncEmailInput.value.trim()) syncSettings.email = els.syncEmailInput.value.trim();
       syncSettings.token = els.syncTokenInput.value.trim();
       syncSettings.gistId = els.syncGistInput.value.trim();
       localStorage.setItem("rongDataMockInterviewSync", JSON.stringify(syncSettings));
@@ -2867,7 +2948,9 @@
     function persistSyncSettings() {
       localStorage.setItem("rongDataMockInterviewSync", JSON.stringify(syncSettings));
       els.syncWorkerInput.value = syncSettings.workerUrl;
+      els.syncEmailInput.value = syncSettings.email;
       els.syncGistInput.value = syncSettings.gistId;
+      updateEmailSyncState();
       renderCourseProgress();
     }
 
@@ -2876,6 +2959,23 @@
       els.syncStatus.textContent = message;
       els.syncStatus.classList.remove("ok", "error");
       if (type) els.syncStatus.classList.add(type);
+    }
+
+    function authProviderLabel() {
+      if (syncSettings.authProvider === "email") return "Email";
+      if (syncSettings.authProvider === "github") return "GitHub";
+      return syncSettings.oauthSession ? "雲端" : "本機";
+    }
+
+    function updateEmailSyncState() {
+      if (!els.syncEmailState) return;
+      if (syncSettings.oauthSession && syncSettings.authProvider === "email") {
+        els.syncEmailState.textContent = syncSettings.email ? `已登入 ${syncSettings.email}` : "已登入 Email";
+      } else if (syncSettings.emailChallengeId) {
+        els.syncEmailState.textContent = "已寄出，等驗證";
+      } else {
+        els.syncEmailState.textContent = "尚未登入";
+      }
     }
 
     function progressPayload() {
@@ -3014,12 +3114,46 @@
       const session = params.get("github_sync");
       if (!session) return false;
       syncSettings.oauthSession = session;
+      syncSettings.authProvider = "github";
       persistSyncSettings();
       params.delete("github_sync");
       const nextHash = params.toString();
       history.replaceState(null, "", `${window.location.pathname}${window.location.search}${nextHash ? `#${nextHash}` : ""}`);
       setSyncStatus("GitHub 登入完成，正在合併雲端進度...", "ok");
       return true;
+    }
+
+    function consumeEmailSessionFromHash() {
+      const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      const session = params.get("email_sync");
+      const error = params.get("email_sync_error");
+      if (error) {
+        params.delete("email_sync_error");
+        const nextHash = params.toString();
+        history.replaceState(null, "", `${window.location.pathname}${window.location.search}${nextHash ? `#${nextHash}` : ""}`);
+        setSyncStatus(`Email 登入失敗：${error}`, "error");
+        return false;
+      }
+      if (!session) return false;
+      syncSettings.oauthSession = session;
+      syncSettings.authProvider = "email";
+      syncSettings.email = params.get("email_account") || syncSettings.email;
+      syncSettings.workerUrl = (params.get("sync_worker") || syncSettings.workerUrl).replace(/\/+$/, "");
+      syncSettings.emailChallengeId = "";
+      persistSyncSettings();
+      params.delete("email_sync");
+      params.delete("email_account");
+      params.delete("sync_worker");
+      const nextHash = params.toString();
+      history.replaceState(null, "", `${window.location.pathname}${window.location.search}${nextHash ? `#${nextHash}` : ""}`);
+      setSyncStatus("Email 登入完成，正在合併雲端進度...", "ok");
+      return true;
+    }
+
+    function consumeCloudSessionFromHash() {
+      const consumedGithub = consumeOAuthSessionFromHash();
+      const consumedEmail = consumeEmailSessionFromHash();
+      return consumedGithub || consumedEmail;
     }
 
     function oauthSyncReady() {
@@ -3047,7 +3181,9 @@
       const text = await response.text();
       const data = text ? JSON.parse(text) : null;
       if (!response.ok) {
-        throw new Error((data && data.error) || `OAuth Worker 回應 ${response.status}`);
+        const error = new Error((data && data.error) || `同步服務回應 ${response.status}`);
+        error.status = response.status;
+        throw error;
       }
       return data;
     }
@@ -3061,6 +3197,64 @@
       window.location.href = `${syncSettings.workerUrl}/auth/start?redirect=${encodeURIComponent(oauthRedirectUrl())}`;
     }
 
+    async function sendEmailLoginCode() {
+      saveSyncSettings();
+      const email = els.syncEmailInput.value.trim();
+      if (!syncSettings.workerUrl) {
+        setSyncStatus("請先輸入同步服務 URL。", "error");
+        return;
+      }
+      if (!email) {
+        setSyncStatus("請先輸入 Email。", "error");
+        return;
+      }
+      setSyncStatus("正在寄送 Email 驗證信...");
+      const result = await fetchOAuthWorker("/email/start", {
+        method: "POST",
+        body: JSON.stringify({ email, redirect: oauthRedirectUrl() })
+      });
+      syncSettings.email = result.email || email;
+      syncSettings.emailChallengeId = result.challengeId || "";
+      persistSyncSettings();
+      const debugHint = result.debugCode ? ` 測試碼：${result.debugCode}` : "";
+      setSyncStatus(`驗證信已寄出，請點信裡連結或輸入 6 位碼。${debugHint}`, "ok");
+    }
+
+    async function verifyEmailCode() {
+      saveSyncSettings();
+      const email = els.syncEmailInput.value.trim() || syncSettings.email;
+      const code = els.syncEmailCodeInput.value.trim();
+      if (!syncSettings.workerUrl) {
+        setSyncStatus("請先輸入同步服務 URL。", "error");
+        return;
+      }
+      if (!email || !code) {
+        setSyncStatus("請輸入 Email 與 6 位驗證碼。", "error");
+        return;
+      }
+      if (!syncSettings.emailChallengeId) {
+        setSyncStatus("請先寄送驗證信，再輸入信裡的驗證碼。", "error");
+        return;
+      }
+      setSyncStatus("正在驗證 Email...");
+      const result = await fetchOAuthWorker("/email/verify", {
+        method: "POST",
+        body: JSON.stringify({
+          email,
+          code,
+          challengeId: syncSettings.emailChallengeId
+        })
+      });
+      syncSettings.oauthSession = result.session;
+      syncSettings.authProvider = "email";
+      syncSettings.email = result.email || email;
+      syncSettings.emailChallengeId = "";
+      els.syncEmailCodeInput.value = "";
+      persistSyncSettings();
+      setSyncStatus("Email 登入完成，正在合併雲端進度...", "ok");
+      await downloadProgressWithOAuth(true).catch(error => setSyncStatus(`Email 已登入，但下載進度失敗：${error.message}`, "error"));
+    }
+
     async function uploadProgressWithOAuth(isAuto = false) {
       if (!oauthSyncReady()) return false;
       setSyncStatus(isAuto ? "正在自動上傳 OAuth 進度..." : "正在上傳 OAuth 進度...");
@@ -3068,16 +3262,26 @@
         method: "PUT",
         body: JSON.stringify(progressPayload())
       });
-      setSyncStatus("已透過 GitHub OAuth 上傳進度。", "ok");
+      setSyncStatus(`已透過 ${authProviderLabel()} 上傳進度。`, "ok");
       return true;
     }
 
     async function downloadProgressWithOAuth(isAuto = false) {
       if (!oauthSyncReady()) return false;
-      setSyncStatus(isAuto ? "正在自動合併 OAuth 進度..." : "正在下載 OAuth 進度...");
-      const payload = await fetchOAuthWorker("/progress");
+      setSyncStatus(isAuto ? "正在自動合併雲端進度..." : "正在下載雲端進度...");
+      let payload;
+      try {
+        payload = await fetchOAuthWorker("/progress");
+      } catch (error) {
+        if (isAuto && error.status === 404) {
+          setSyncStatus("雲端還沒有進度，正在建立第一份備份...");
+          await uploadProgressWithOAuth(true);
+          return true;
+        }
+        throw error;
+      }
       applyProgressPayload(payload, { merge: true });
-      setSyncStatus("已透過 GitHub OAuth 合併進度。", "ok");
+      setSyncStatus(`已透過 ${authProviderLabel()} 合併進度。`, "ok");
       return true;
     }
 
@@ -3086,8 +3290,10 @@
         await fetchOAuthWorker("/logout", { method: "POST" }).catch(() => null);
       }
       syncSettings.oauthSession = "";
+      syncSettings.authProvider = "";
+      syncSettings.emailChallengeId = "";
       persistSyncSettings();
-      setSyncStatus("已登出 GitHub OAuth 同步。", "ok");
+      setSyncStatus("已登出雲端同步。", "ok");
     }
 
     async function findProgressGistId() {
@@ -4330,7 +4536,8 @@
       els.courseProgressNote.textContent = learned >= dailyLessons.length
         ? "28 天路線已完成，可以回頭加練模擬面試題。"
         : `目前解鎖 D${currentOffset + 1}：${dailyLessons[currentOffset].title}`;
-      els.syncMeta.textContent = syncSettings.oauthSession ? "GitHub" : syncSettings.gistId ? "Gist" : "本機";
+      els.syncMeta.textContent = syncSettings.oauthSession ? authProviderLabel() : syncSettings.gistId ? "Gist" : "本機";
+      updateEmailSyncState();
     }
 
     function renderCourseNav() {
@@ -4791,6 +4998,15 @@
       setSyncStatus(syncSettings.gistId ? `已儲存 Gist：${syncSettings.gistId}，正在同步進度...` : "已儲存同步設定，正在尋找雲端進度...", "ok");
       maybeAutoDownloadProgress();
     });
+    document.getElementById("syncEmailSendBtn").addEventListener("click", () => {
+      sendEmailLoginCode().catch(error => setSyncStatus(`寄送失敗：${error.message}`, "error"));
+    });
+    document.getElementById("syncEmailVerifyBtn").addEventListener("click", () => {
+      verifyEmailCode().catch(error => setSyncStatus(`驗證失敗：${error.message}`, "error"));
+    });
+    document.getElementById("syncEmailLogoutBtn").addEventListener("click", () => {
+      logoutOAuthSync().catch(error => setSyncStatus(`登出失敗：${error.message}`, "error"));
+    });
     document.getElementById("syncOAuthLoginBtn").addEventListener("click", startOAuthLogin);
     document.getElementById("syncOAuthLogoutBtn").addEventListener("click", () => {
       logoutOAuthSync().catch(error => setSyncStatus(`登出失敗：${error.message}`, "error"));
@@ -4807,8 +5023,13 @@
       syncSettings.token = "";
       syncSettings.gistId = "";
       syncSettings.oauthSession = "";
+      syncSettings.authProvider = "";
+      syncSettings.email = "";
+      syncSettings.emailChallengeId = "";
       syncSettings.workerUrl = "";
       els.syncWorkerInput.value = "";
+      els.syncEmailInput.value = "";
+      els.syncEmailCodeInput.value = "";
       els.syncTokenInput.value = "";
       els.syncGistInput.value = "";
       localStorage.removeItem("rongDataMockInterviewSync");
@@ -4848,7 +5069,7 @@
     loadSyncSettings();
     load();
     renderAll();
-    consumeOAuthSessionFromHash();
+    consumeCloudSessionFromHash();
     maybeAutoDownloadProgress();
   </script>
 </body>

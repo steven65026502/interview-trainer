@@ -5,7 +5,22 @@ compatibility_date = "2026-05-26"
 [vars]
 APP_ORIGIN = "https://steven65026502.github.io"
 GITHUB_CLIENT_ID = "replace_with_github_oauth_client_id"
+EMAIL_FROM = "Data Interview Trainer <onboarding@resend.dev>"
+# EMAIL_DEBUG = "true"
 
 # Set these as Cloudflare Worker secrets, not plain vars:
 # wrangler secret put GITHUB_CLIENT_SECRET
 # wrangler secret put SESSION_SECRET
+# wrangler secret put RESEND_API_KEY
+
+# Required for Email login and Email progress sync.
+# Create it with:
+# npx wrangler kv namespace create interview_trainer_progress
+# npx wrangler kv namespace create interview_trainer_progress --preview
+#
+# Then replace the ids below and uncomment this block.
+#
+# [[kv_namespaces]]
+# binding = "PROGRESS_KV"
+# id = "replace_with_cloudflare_kv_namespace_id"
+# preview_id = "replace_with_cloudflare_kv_preview_id"
