@@ -1690,12 +1690,15 @@
               <p id="courseProgressNote">完成目前課程後才會解鎖下一天。</p>
             </div>
             <div class="sync-grid">
+              <input id="syncWorkerInput" type="url" autocomplete="off" placeholder="OAuth Worker URL（選填）">
               <input id="syncTokenInput" type="password" autocomplete="off" placeholder="GitHub Gist token">
               <input id="syncGistInput" type="text" autocomplete="off" placeholder="Gist ID">
               <textarea id="syncPayloadBox" spellcheck="false" placeholder="匯出碼 / 匯入碼"></textarea>
             </div>
             <div class="sync-actions">
               <button class="btn" id="syncSaveSettingsBtn" type="button">儲存設定</button>
+              <button class="btn primary" id="syncOAuthLoginBtn" type="button">用 GitHub 登入</button>
+              <button class="btn" id="syncOAuthLogoutBtn" type="button">登出 GitHub</button>
               <button class="btn primary" id="syncUploadBtn" type="button">上傳進度</button>
               <button class="btn" id="syncDownloadBtn" type="button">下載進度</button>
               <button class="btn" id="syncExportBtn" type="button">產生匯出碼</button>
@@ -2706,6 +2709,7 @@
       dailyKnowledgeBtnIcon: document.getElementById("dailyKnowledgeBtnIcon"),
       dailyKnowledgeBtnText: document.getElementById("dailyKnowledgeBtnText"),
       syncMeta: document.getElementById("syncMeta"),
+      syncWorkerInput: document.getElementById("syncWorkerInput"),
       syncTokenInput: document.getElementById("syncTokenInput"),
       syncGistInput: document.getElementById("syncGistInput"),
       syncPayloadBox: document.getElementById("syncPayloadBox"),
@@ -2724,6 +2728,8 @@
     };
 
     const syncSettings = {
+      workerUrl: "",
+      oauthSession: "",
       token: "",
       gistId: ""
     };
@@ -2836,21 +2842,32 @@
       try {
         const saved = JSON.parse(localStorage.getItem("rongDataMockInterviewSync"));
         if (saved) {
+          syncSettings.workerUrl = typeof saved.workerUrl === "string" ? saved.workerUrl : "";
+          syncSettings.oauthSession = typeof saved.oauthSession === "string" ? saved.oauthSession : "";
           syncSettings.token = typeof saved.token === "string" ? saved.token : "";
           syncSettings.gistId = typeof saved.gistId === "string" ? saved.gistId : "";
         }
       } catch {
         localStorage.removeItem("rongDataMockInterviewSync");
       }
+      els.syncWorkerInput.value = syncSettings.workerUrl;
       els.syncTokenInput.value = syncSettings.token;
       els.syncGistInput.value = syncSettings.gistId;
-      setSyncStatus(syncSettings.gistId ? `已連到 Gist：${syncSettings.gistId}` : "未設定雲端同步。");
+      setSyncStatus(syncSettings.oauthSession ? "已連到 GitHub OAuth 同步。" : syncSettings.gistId ? `已連到 Gist：${syncSettings.gistId}` : "未設定雲端同步。");
     }
 
     function saveSyncSettings() {
+      syncSettings.workerUrl = els.syncWorkerInput.value.trim().replace(/\/+$/, "");
       syncSettings.token = els.syncTokenInput.value.trim();
       syncSettings.gistId = els.syncGistInput.value.trim();
       localStorage.setItem("rongDataMockInterviewSync", JSON.stringify(syncSettings));
+      renderCourseProgress();
+    }
+
+    function persistSyncSettings() {
+      localStorage.setItem("rongDataMockInterviewSync", JSON.stringify(syncSettings));
+      els.syncWorkerInput.value = syncSettings.workerUrl;
+      els.syncGistInput.value = syncSettings.gistId;
       renderCourseProgress();
     }
 
@@ -2986,10 +3003,91 @@
 
     const progressGistFile = "rong-data-interview-progress.json";
 
-    function persistSyncSettings() {
-      localStorage.setItem("rongDataMockInterviewSync", JSON.stringify(syncSettings));
-      els.syncGistInput.value = syncSettings.gistId;
-      renderCourseProgress();
+    function oauthRedirectUrl() {
+      const url = new URL(window.location.href);
+      url.searchParams.delete("sync");
+      return url.toString().split("#")[0];
+    }
+
+    function consumeOAuthSessionFromHash() {
+      const params = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+      const session = params.get("github_sync");
+      if (!session) return false;
+      syncSettings.oauthSession = session;
+      persistSyncSettings();
+      params.delete("github_sync");
+      const nextHash = params.toString();
+      history.replaceState(null, "", `${window.location.pathname}${window.location.search}${nextHash ? `#${nextHash}` : ""}`);
+      setSyncStatus("GitHub 登入完成，正在合併雲端進度...", "ok");
+      return true;
+    }
+
+    function oauthSyncReady() {
+      return Boolean(syncSettings.workerUrl && syncSettings.oauthSession);
+    }
+
+    async function fetchOAuthWorker(path, options = {}) {
+      if (!syncSettings.workerUrl) {
+        throw new Error("請先輸入 OAuth Worker URL。");
+      }
+      const headers = Object.assign({
+        "Accept": "application/json"
+      }, options.headers || {});
+      if (syncSettings.oauthSession) {
+        headers.Authorization = `Bearer ${syncSettings.oauthSession}`;
+      }
+      if (options.body && !headers["Content-Type"]) {
+        headers["Content-Type"] = "application/json";
+      }
+      const response = await fetch(`${syncSettings.workerUrl}${path}`, {
+        ...options,
+        headers,
+        credentials: "include"
+      });
+      const text = await response.text();
+      const data = text ? JSON.parse(text) : null;
+      if (!response.ok) {
+        throw new Error((data && data.error) || `OAuth Worker 回應 ${response.status}`);
+      }
+      return data;
+    }
+
+    function startOAuthLogin() {
+      saveSyncSettings();
+      if (!syncSettings.workerUrl) {
+        setSyncStatus("請先輸入 OAuth Worker URL。", "error");
+        return;
+      }
+      window.location.href = `${syncSettings.workerUrl}/auth/start?redirect=${encodeURIComponent(oauthRedirectUrl())}`;
+    }
+
+    async function uploadProgressWithOAuth(isAuto = false) {
+      if (!oauthSyncReady()) return false;
+      setSyncStatus(isAuto ? "正在自動上傳 OAuth 進度..." : "正在上傳 OAuth 進度...");
+      await fetchOAuthWorker("/progress", {
+        method: "PUT",
+        body: JSON.stringify(progressPayload())
+      });
+      setSyncStatus("已透過 GitHub OAuth 上傳進度。", "ok");
+      return true;
+    }
+
+    async function downloadProgressWithOAuth(isAuto = false) {
+      if (!oauthSyncReady()) return false;
+      setSyncStatus(isAuto ? "正在自動合併 OAuth 進度..." : "正在下載 OAuth 進度...");
+      const payload = await fetchOAuthWorker("/progress");
+      applyProgressPayload(payload, { merge: true });
+      setSyncStatus("已透過 GitHub OAuth 合併進度。", "ok");
+      return true;
+    }
+
+    async function logoutOAuthSync() {
+      if (syncSettings.workerUrl && syncSettings.oauthSession) {
+        await fetchOAuthWorker("/logout", { method: "POST" }).catch(() => null);
+      }
+      syncSettings.oauthSession = "";
+      persistSyncSettings();
+      setSyncStatus("已登出 GitHub OAuth 同步。", "ok");
     }
 
     async function findProgressGistId() {
@@ -3012,6 +3110,7 @@
 
     async function uploadProgressToGist(isAuto = false) {
       saveSyncSettings();
+      if (await uploadProgressWithOAuth(isAuto)) return;
       if (!syncSettings.token) {
         setSyncStatus("請先輸入 GitHub Gist token。", "error");
         return;
@@ -3049,6 +3148,7 @@
 
     async function downloadProgressFromGist(isAuto = false) {
       if (!isAuto) saveSyncSettings();
+      if (await downloadProgressWithOAuth(isAuto)) return;
       if (!syncSettings.token) {
         setSyncStatus("請先輸入 GitHub Gist token。", "error");
         return;
@@ -3078,14 +3178,14 @@
     }
 
     function maybeAutoUploadProgress() {
-      if (!syncSettings.token) return;
+      if (!oauthSyncReady() && !syncSettings.token) return;
       uploadProgressToGist(true).catch(error => {
         setSyncStatus(`自動上傳失敗：${error.message}`, "error");
       });
     }
 
     function maybeAutoDownloadProgress() {
-      if (!syncSettings.token) return;
+      if (!oauthSyncReady() && !syncSettings.token) return;
       downloadProgressFromGist(true).catch(error => {
         setSyncStatus(`自動下載失敗：${error.message}`, "error");
       });
@@ -4230,7 +4330,7 @@
       els.courseProgressNote.textContent = learned >= dailyLessons.length
         ? "28 天路線已完成，可以回頭加練模擬面試題。"
         : `目前解鎖 D${currentOffset + 1}：${dailyLessons[currentOffset].title}`;
-      els.syncMeta.textContent = syncSettings.gistId ? "Gist" : "本機";
+      els.syncMeta.textContent = syncSettings.oauthSession ? "GitHub" : syncSettings.gistId ? "Gist" : "本機";
     }
 
     function renderCourseNav() {
@@ -4691,6 +4791,10 @@
       setSyncStatus(syncSettings.gistId ? `已儲存 Gist：${syncSettings.gistId}，正在同步進度...` : "已儲存同步設定，正在尋找雲端進度...", "ok");
       maybeAutoDownloadProgress();
     });
+    document.getElementById("syncOAuthLoginBtn").addEventListener("click", startOAuthLogin);
+    document.getElementById("syncOAuthLogoutBtn").addEventListener("click", () => {
+      logoutOAuthSync().catch(error => setSyncStatus(`登出失敗：${error.message}`, "error"));
+    });
     document.getElementById("syncExportBtn").addEventListener("click", exportProgressCode);
     document.getElementById("syncImportBtn").addEventListener("click", importProgressCode);
     document.getElementById("syncUploadBtn").addEventListener("click", () => {
@@ -4702,6 +4806,9 @@
     document.getElementById("syncClearBtn").addEventListener("click", () => {
       syncSettings.token = "";
       syncSettings.gistId = "";
+      syncSettings.oauthSession = "";
+      syncSettings.workerUrl = "";
+      els.syncWorkerInput.value = "";
       els.syncTokenInput.value = "";
       els.syncGistInput.value = "";
       localStorage.removeItem("rongDataMockInterviewSync");
@@ -4741,6 +4848,7 @@
     loadSyncSettings();
     load();
     renderAll();
+    consumeOAuthSessionFromHash();
     maybeAutoDownloadProgress();
   </script>
 </body>

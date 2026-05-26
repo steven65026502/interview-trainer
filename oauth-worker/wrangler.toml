@@ -1,0 +1,11 @@
+name = "interview-trainer-oauth"
+main = "src/index.js"
+compatibility_date = "2026-05-26"
+
+[vars]
+APP_ORIGIN = "https://steven65026502.github.io"
+GITHUB_CLIENT_ID = "replace_with_github_oauth_client_id"
+
+# Set these as Cloudflare Worker secrets, not plain vars:
+# wrangler secret put GITHUB_CLIENT_SECRET
+# wrangler secret put SESSION_SECRET
