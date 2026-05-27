@@ -627,6 +627,69 @@
       padding: 9px 10px;
     }
 
+    .interviewer-lens {
+      border: 1px solid var(--line);
+      border-left: 4px solid var(--accent);
+      border-radius: 6px;
+      background: #fbfcfc;
+      padding: 12px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .interviewer-lens-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .interviewer-lens-head strong {
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .interviewer-lens-head span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+      text-align: right;
+      max-width: 360px;
+    }
+
+    .lens-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .lens-item {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 9px 10px;
+      min-height: 74px;
+    }
+
+    .lens-item strong {
+      display: block;
+      color: var(--accent);
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .lens-item span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .lens-source {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
     .guide {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -1478,6 +1541,7 @@
       .guide,
       .checklist-grid,
       .context-grid,
+      .lens-grid,
       .teaching-grid,
       .term-rows,
       .learning-steps,
@@ -1621,6 +1685,8 @@
           </div>
 
           <div class="context-block" id="questionContext"></div>
+
+          <div class="interviewer-lens" id="interviewerLens"></div>
 
           <div class="hint-row">
             <span>提示預設收起，先自己回答；真的卡住再打開。</span>
@@ -1856,6 +1922,54 @@
       pipeline: "Pipeline",
       api: "API/DB",
       story: "專案表達"
+    };
+
+    const interviewerLens = {
+      common: [
+        ["先釐清", "先說你會確認輸入、輸出、限制與面試官真正要看的重點。"],
+        ["邊想邊講", "不要安靜作答；卡住時說明目前想法、卡點與下一步。"],
+        ["主動驗證", "回答最後補正常案例、邊界案例、筆數或結果檢查。"]
+      ],
+      sql: {
+        focus: "面試官不是只看你會不會寫 SQL，而是看你有沒有先避免資料被 join 或聚合弄錯。",
+        items: [
+          ["題目前先問", "這個指標的分母分子、時間範圍、主鍵與粒度是什麼？"],
+          ["作答時說", "我先確認 key 與 one-to-many，再決定 JOIN 與 GROUP BY。"],
+          ["驗收時補", "JOIN 前後筆數、抽樣列、對帳查詢與重複列檢查。"]
+        ]
+      },
+      python: {
+        focus: "面試官會看你是否先定義資料規格，再處理錯誤與邊界，而不是直接寫一段會跑的 script。",
+        items: [
+          ["題目前先問", "資料欄位、型別、缺值規則、異常值要刪除還是保留？"],
+          ["作答時說", "我會拆成讀取、清洗、驗證、輸出，不讓錯誤安靜發生。"],
+          ["驗收時補", "正常資料、空值、錯誤格式與極端值的測試案例。"]
+        ]
+      },
+      pipeline: {
+        focus: "面試官想知道你是不是能把資料流程做成可重跑、可交接、可驗證的系統。",
+        items: [
+          ["題目前先問", "重跑規則、資料版本、唯一鍵、失敗時要不要 rollback？"],
+          ["作答時說", "我會把流程拆成 Extract、Transform、Load、Validate。"],
+          ["驗收時補", "manifest、log、筆數、門檻分級與抽樣結果比對。"]
+        ]
+      },
+      api: {
+        focus: "面試官會把前端、使用者與資料庫都放進來看，重點是 API 是否可控、可查、可交接。",
+        items: [
+          ["題目前先問", "誰會用這個 API、需要哪些篩選條件、資料量多大？"],
+          ["作答時說", "我會先定義 endpoint、query parameters、response schema。"],
+          ["驗收時補", "limit、bbox、空結果、錯誤訊息、timeout 與文件範例。"]
+        ]
+      },
+      story: {
+        focus: "面試官想聽的是你能帶來什麼價值，不是公司或專案本身有多厲害。",
+        items: [
+          ["題目前先想", "這題背後在看哪種能力：主動性、溝通、除錯、取捨或交付？"],
+          ["作答時說", "用「我負責、我判斷、我交付」講清楚個人貢獻。"],
+          ["驗收時補", "用結果、數據、可交接文件或可重複流程證明價值。"]
+        ]
+      }
     };
 
     const questions = [
@@ -2712,6 +2826,7 @@
       questionTitle: document.getElementById("questionTitle"),
       questionHint: document.getElementById("questionHint"),
       questionContext: document.getElementById("questionContext"),
+      interviewerLens: document.getElementById("interviewerLens"),
       guideGrid: document.getElementById("guideGrid"),
       hintToggleBtn: document.getElementById("hintToggleBtn"),
       checklistGrid: document.getElementById("checklistGrid"),
@@ -3433,6 +3548,20 @@
         issues.push("缺少回答結構。建議用「我會先...接著...最後...」讓邏輯更穩。");
       }
 
+      if (/釐清|澄清|確認題意|先確認|先問|假設|限制|需求|輸入|輸出|目標|評分標準|面試官想/i.test(text)) {
+        score += 8;
+        strengths.push("有先釐清題目或假設，這能避免一開始就答偏。");
+      } else {
+        issues.push("少了面試前半步：先釐清題目。可以補一句「我會先確認輸入、輸出、限制與面試官要看的指標」。");
+      }
+
+      if (/思路|我現在|卡住|如果卡|討論|我會跟面試官|讓我整理|邊講|溝通|追問|提示/i.test(text)) {
+        score += 6;
+        strengths.push("有表現出溝通與 think out loud 的意識，面試官比較看得到你的推理過程。");
+      } else {
+        issues.push("可以再補一點「邊想邊講」的語言：例如卡住時會說目前想法、卡在哪、下一步要驗證什麼。");
+      }
+
       if (/S-111|PostgreSQL|PostGIS|QGIS|API|NetCDF|Flask|FastAPI|SQL|Python|hotspot|0\.48|lead_hours|bbox/i.test(text)) {
         score += 10;
         strengths.push("有連到具體技術或 S-111 專案，這會讓回答更有辨識度。");
@@ -3452,6 +3581,26 @@
         strengths.push("有提到風險、限制或取捨，回答不像只會照本宣科。");
       } else {
         issues.push("缺少風險或取捨。可以補一句：如果資料量變大、API 變慢、或資料重跑時你會怎麼處理。");
+      }
+
+      if (/邊界|edge|測試案例|正常案例|錯誤輸入|空值|極端|範例|sample|case|主動跑|跑 test/i.test(text)) {
+        score += 6;
+        strengths.push("有主動測試案例的意識，這比只說『我會測試』更像工程面試回答。");
+      } else if (question.domain !== "story") {
+        issues.push("可以補主動測試案例：正常資料、空值/錯誤輸入、邊界條件各一個。");
+      }
+
+      if (question.domain === "story") {
+        if (/我負責|我做|我設計|我判斷|我的角色|我可以|我能提供|我能帶來|價值|貢獻|符合.*需求/i.test(text)) {
+          score += 8;
+          strengths.push("有把故事講成自己的貢獻與價值，而不是只介紹專案本身。");
+        } else {
+          issues.push("專案故事要更像面試答案：請用「我負責、我判斷、我交付、我能帶來什麼價值」來回答。");
+        }
+        if (/我們/.test(text) && !/我負責|我做|我設計|我的角色/.test(text)) {
+          score -= 4;
+          issues.push("故事題盡量少用只有「我們」的敘述，面試官需要知道你的個人貢獻。");
+        }
       }
 
       const missingExpected = [];
@@ -3732,6 +3881,7 @@
         { match: /bbox|postgis|gist/i, label: "PostGIS intro", url: "https://www.youtube.com/watch?v=ruTP-4yRl1A" },
         { match: /explain/i, label: "Postgres EXPLAIN", url: "https://www.youtube.com/watch?v=P7EUFtjeAmI" },
         { match: /cache/i, label: "HTTP caching", url: "https://www.youtube.com/watch?v=HiBDZgTNpXY" },
+        { match: /star/i, label: "Kelly Tsai 面試技巧", url: "https://www.youtube.com/watch?v=zMwDYz0b_7g" },
         { match: /star/i, label: "STAR method", url: "https://www.youtube.com/watch?v=uQEuo7woEEk" },
         { match: /trade-off|tradeoff/i, label: "System trade-offs", url: "https://www.youtube.com/watch?v=1nENigGr-a0" },
         { match: /bottleneck|profiling/i, label: "Profiling", url: "https://www.youtube.com/watch?v=i24jvJ-PN84" },
@@ -3794,6 +3944,7 @@
       { match: /explain/i, label: "PostgreSQL EXPLAIN", url: "https://www.postgresql.org/docs/current/using-explain.html" },
       { match: /cache/i, label: "MDN HTTP caching", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" },
       { match: /timeout|error handling/i, label: "Microsoft REST errors", url: "https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#errors" },
+      { match: /star/i, label: "Amazon 面試官視角", url: "https://techorange.com/2022/03/22/amazon-interview/" },
       { match: /star/i, label: "MIT STAR method", url: "https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews/" },
       { match: /trade-off|tradeoff/i, label: "Google SRE risk", url: "https://sre.google/sre-book/embracing-risk/" },
       { match: /bottleneck|profiling/i, label: "Python profiling", url: "https://docs.python.org/3/library/profile.html" },
@@ -4642,6 +4793,7 @@
       els.questionTitle.textContent = question.title;
       els.questionHint.textContent = question.hint;
       renderQuestionContext();
+      renderInterviewerLens(question);
       els.guideGrid.innerHTML = question.guide.map(item => `
         <div class="guide-item">
           <strong>${item[0]}</strong>
@@ -4669,6 +4821,26 @@
           <span>${context.note}</span>
         </div>
         <div class="context-body">${context.html}</div>
+      `;
+    }
+
+    function renderInterviewerLens(question) {
+      const lens = interviewerLens[question.domain] || interviewerLens.story;
+      const items = [...interviewerLens.common, ...lens.items].slice(0, 6);
+      els.interviewerLens.innerHTML = `
+        <div class="interviewer-lens-head">
+          <strong>面試官視角</strong>
+          <span>${lens.focus}</span>
+        </div>
+        <div class="lens-grid">
+          ${items.map(([label, text]) => `
+            <div class="lens-item">
+              <strong>${label}</strong>
+              <span>${text}</span>
+            </div>
+          `).join("")}
+        </div>
+        <div class="lens-source">整合自 Amazon 面試官文章與 Kelly Tsai 面試影片重點：先釐清、邊想邊講、主動驗證、把回答對準面試官想評估的能力。</div>
       `;
     }
 
@@ -4873,7 +5045,7 @@
     }
 
     function insertTemplate() {
-      const writtenTemplate = `我的結論是：\n\n我會先：\n\n接著我會：\n\n如果連到我的 S-111 / 資料專案經驗：\n\n我會怎麼驗證結果：\n\n可能的風險或取捨：`;
+      const writtenTemplate = `我會先釐清：輸入、輸出、限制，以及面試官想看的指標是什麼。\n\n我的結論是：\n\n我的思路會這樣展開：\n\n如果連到我的 S-111 / 資料專案經驗：\n\n我會主動驗證：正常案例、邊界案例、錯誤輸入或筆數比對。\n\n如果過程卡住，我會跟面試官說：目前我的想法是... 卡在... 下一步我會...\n\n可能的風險或取捨：`;
       const template = writtenTemplate;
       if (!normalize(els.answerInput.value)) {
         els.answerInput.value = template;
@@ -4886,7 +5058,7 @@
     }
 
     function updateAnswerModeText() {
-      els.answerInput.placeholder = "請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。";
+      els.answerInput.placeholder = "請像面試現場一樣回答。先釐清題目與假設，再講結論、步驟、S-111 專案連結、主動測試方式，以及風險或取捨。";
     }
 
     function renderAll() {
