@@ -1,0 +1,1658 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Rong 的 8 週 Python、SQL、FastAPI、pytest、Docker、LeetCode 與 AI 應用求職學習表。">
+  <link rel="icon" href="data:,">
+  <title>Rong 8 週工程求職學習表</title>
+  <style>
+    :root {
+      --paper: #f3f1eb;
+      --surface: #fffefa;
+      --surface-quiet: #ebece7;
+      --ink: #182428;
+      --muted: #667174;
+      --line: #d4d8d3;
+      --line-strong: #b9c1bc;
+      --accent: #0a6d64;
+      --accent-soft: #dcebe7;
+      --accent-ink: #07554f;
+      --danger: #a1444c;
+      --shadow: 0 18px 50px rgba(24, 36, 40, 0.08);
+      --radius: 14px;
+      font-family: Inter, "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif;
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    :focus-visible {
+      outline: 3px solid rgba(10, 109, 100, 0.24);
+      outline-offset: 3px;
+    }
+
+    .app-shell {
+      min-height: 100svh;
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+    }
+
+    .rail {
+      position: sticky;
+      top: 0;
+      height: 100svh;
+      padding: 30px 24px 24px;
+      border-right: 1px solid var(--line);
+      background: #ecebe5;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      z-index: 5;
+    }
+
+    .brand {
+      display: inline-grid;
+      gap: 4px;
+      text-decoration: none;
+    }
+
+    .brand-mark {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+    }
+
+    .brand-name {
+      font-size: 21px;
+      line-height: 1.1;
+      font-weight: 850;
+      letter-spacing: -0.035em;
+    }
+
+    .rail-nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .rail-link {
+      width: 100%;
+      min-height: 44px;
+      padding: 0 12px;
+      border: 0;
+      border-left: 2px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      font-weight: 750;
+      transition: color 160ms ease, border-color 160ms ease, transform 160ms ease;
+    }
+
+    .rail-link:hover {
+      color: var(--ink);
+      transform: translateX(3px);
+    }
+
+    .rail-link.active {
+      color: var(--accent-ink);
+      border-left-color: var(--accent);
+    }
+
+    .rail-progress {
+      margin-top: auto;
+      display: grid;
+      gap: 10px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .rail-progress-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .rail-progress strong {
+      font-size: 30px;
+      letter-spacing: -0.05em;
+    }
+
+    .rail-progress span,
+    .rail-progress small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .progress-track {
+      height: 7px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: #d1d5d0;
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      border-radius: inherit;
+      background: var(--accent);
+      transition: width 420ms cubic-bezier(.2,.8,.2,1);
+    }
+
+    .workspace {
+      min-width: 0;
+      padding: 0 42px 64px;
+    }
+
+    .toolbar {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .toolbar-status {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px var(--accent-soft);
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .button,
+    .text-link {
+      min-height: 38px;
+      border-radius: 8px;
+      border: 1px solid var(--line-strong);
+      background: var(--surface);
+      color: var(--ink);
+      padding: 0 13px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 750;
+      transition: transform 150ms ease, border-color 150ms ease, background 150ms ease;
+    }
+
+    .button:hover,
+    .text-link:hover {
+      transform: translateY(-1px);
+      border-color: var(--accent);
+    }
+
+    .button.primary {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: white;
+    }
+
+    .button.danger {
+      color: var(--danger);
+    }
+
+    .date-control {
+      min-height: 38px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      padding: 0 10px;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+      animation: view-enter 280ms ease both;
+    }
+
+    @keyframes view-enter {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .page-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 30px;
+      padding: 62px 0 34px;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 780px;
+      margin-bottom: 14px;
+      font-size: clamp(38px, 5.6vw, 74px);
+      line-height: 0.98;
+      letter-spacing: -0.06em;
+    }
+
+    .page-head-copy {
+      max-width: 720px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.75;
+    }
+
+    .head-metric {
+      min-width: 170px;
+      padding-left: 24px;
+      border-left: 1px solid var(--line-strong);
+    }
+
+    .head-metric span,
+    .head-metric small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .head-metric strong {
+      display: block;
+      margin: 5px 0;
+      font-size: 44px;
+      letter-spacing: -0.055em;
+    }
+
+    .cadence {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .cadence-item {
+      min-height: 100px;
+      padding: 20px 20px 18px 0;
+      display: grid;
+      align-content: center;
+      gap: 5px;
+    }
+
+    .cadence-item + .cadence-item {
+      padding-left: 20px;
+      border-left: 1px solid var(--line);
+    }
+
+    .cadence-item span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .cadence-item strong {
+      font-size: 15px;
+    }
+
+    .section-block {
+      padding-top: 42px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+
+    .section-title h2 {
+      margin-bottom: 0;
+      font-size: 25px;
+      letter-spacing: -0.035em;
+    }
+
+    .section-title p {
+      max-width: 590px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+      text-align: right;
+    }
+
+    .week-strip {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(84px, 1fr));
+      overflow-x: auto;
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .week-tab {
+      min-height: 78px;
+      padding: 13px 12px;
+      border: 0;
+      border-right: 1px solid var(--line);
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+      transition: background 160ms ease, color 160ms ease;
+    }
+
+    .week-tab:last-child {
+      border-right: 0;
+    }
+
+    .week-tab span,
+    .week-tab small {
+      display: block;
+    }
+
+    .week-tab span {
+      margin-bottom: 8px;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+    }
+
+    .week-tab small {
+      line-height: 1.35;
+    }
+
+    .week-tab:hover {
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .week-tab.active {
+      color: var(--accent-ink);
+      background: var(--accent-soft);
+    }
+
+    .week-overview {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(260px, 0.75fr);
+      gap: 34px;
+      padding: 36px 0 28px;
+    }
+
+    .week-code {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 11px;
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .week-code::before {
+      content: "";
+      width: 30px;
+      height: 2px;
+      background: var(--accent);
+    }
+
+    .week-overview h2 {
+      margin-bottom: 12px;
+      font-size: clamp(28px, 3.5vw, 46px);
+      line-height: 1.08;
+      letter-spacing: -0.045em;
+    }
+
+    .week-goal {
+      max-width: 750px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .week-output {
+      padding-left: 24px;
+      border-left: 1px solid var(--line-strong);
+      display: grid;
+      align-content: center;
+      gap: 8px;
+    }
+
+    .week-output span {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .week-output strong {
+      font-size: 17px;
+      line-height: 1.5;
+    }
+
+    .week-output small {
+      color: var(--accent-ink);
+      line-height: 1.5;
+    }
+
+    .plan-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 30px;
+      align-items: start;
+    }
+
+    .task-table {
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .task-row {
+      display: grid;
+      grid-template-columns: 42px 86px minmax(0, 1fr) 78px;
+      align-items: start;
+      min-height: 116px;
+      border-bottom: 1px solid var(--line);
+      transition: background 160ms ease, transform 160ms ease;
+    }
+
+    .task-row:hover {
+      background: rgba(255, 255, 255, 0.54);
+      transform: translateX(3px);
+    }
+
+    .task-row.done .task-name {
+      text-decoration: line-through;
+      text-decoration-color: rgba(10, 109, 100, 0.45);
+    }
+
+    .task-check {
+      display: grid;
+      place-items: start center;
+      padding-top: 25px;
+    }
+
+    .task-check input,
+    .gate-row input {
+      width: 19px;
+      height: 19px;
+      accent-color: var(--accent);
+    }
+
+    .task-day {
+      padding-top: 22px;
+    }
+
+    .task-day strong,
+    .task-day span {
+      display: block;
+    }
+
+    .task-day strong {
+      font-size: 13px;
+    }
+
+    .task-day span {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .task-main {
+      padding: 20px 18px 18px 0;
+    }
+
+    .task-name {
+      margin-bottom: 7px;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .task-proof {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .task-mode {
+      justify-self: end;
+      margin-top: 22px;
+      padding: 5px 8px;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .task-mode.no-ai {
+      border-color: var(--accent);
+      color: var(--accent-ink);
+      background: var(--accent-soft);
+    }
+
+    .week-panel {
+      position: sticky;
+      top: 94px;
+      padding: 24px;
+      border: 1px solid var(--line-strong);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .week-panel h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+      letter-spacing: -0.025em;
+    }
+
+    .week-panel > p {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .gate-list {
+      display: grid;
+      margin: 20px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .gate-row {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 10px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--line);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .week-note {
+      width: 100%;
+      min-height: 122px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #faf9f5;
+      color: var(--ink);
+      padding: 11px;
+      line-height: 1.55;
+    }
+
+    .note-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .library-tools {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 20px 0;
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .filter-button {
+      min-height: 34px;
+      padding: 0 11px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .filter-button.active {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent-ink);
+    }
+
+    .video-list {
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .video-row {
+      display: grid;
+      grid-template-columns: 76px 120px minmax(0, 1fr) 110px;
+      gap: 18px;
+      align-items: center;
+      min-height: 116px;
+      border-bottom: 1px solid var(--line);
+      transition: background 160ms ease, padding 160ms ease;
+    }
+
+    .video-row:hover {
+      padding-left: 8px;
+      background: rgba(255, 255, 255, 0.48);
+    }
+
+    .video-week {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+    }
+
+    .platform-label {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .video-copy h3 {
+      margin-bottom: 6px;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .video-copy p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .video-open {
+      justify-self: end;
+    }
+
+    .empty-state {
+      padding: 50px 0;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .assessment-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .assessment-list {
+      counter-reset: assessment;
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .assessment-row {
+      counter-increment: assessment;
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr) 90px;
+      gap: 16px;
+      align-items: center;
+      min-height: 132px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .assessment-row::before {
+      content: "0" counter(assessment);
+      color: var(--accent);
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+    }
+
+    .assessment-row h3 {
+      margin-bottom: 5px;
+      font-size: 16px;
+    }
+
+    .assessment-row p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .score-input {
+      width: 76px;
+      height: 44px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      text-align: center;
+      font-weight: 850;
+    }
+
+    .score-panel {
+      position: sticky;
+      top: 94px;
+      padding: 28px;
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: white;
+    }
+
+    .score-panel span {
+      color: #aeb9bb;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .score-total {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin: 14px 0 18px;
+    }
+
+    .score-total strong {
+      font-size: 74px;
+      line-height: 0.9;
+      letter-spacing: -0.07em;
+    }
+
+    .score-total small {
+      color: #aeb9bb;
+    }
+
+    .score-panel h3 {
+      margin-bottom: 8px;
+      font-size: 20px;
+    }
+
+    .score-panel p {
+      margin-bottom: 0;
+      color: #c3cdcf;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .interview-table {
+      width: 100%;
+      border-collapse: collapse;
+      border-top: 1px solid var(--line-strong);
+    }
+
+    .interview-table th,
+    .interview-table td {
+      padding: 15px 12px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .interview-table th {
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .footer-note {
+      margin: 54px 0 0;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1060px) {
+      .app-shell {
+        grid-template-columns: 210px minmax(0, 1fr);
+      }
+
+      .workspace {
+        padding-left: 28px;
+        padding-right: 28px;
+      }
+
+      .plan-grid,
+      .assessment-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .week-panel,
+      .score-panel {
+        position: static;
+      }
+
+      .cadence {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .cadence-item:nth-child(3) {
+        border-left: 0;
+      }
+
+      .video-row {
+        grid-template-columns: 60px 100px minmax(0, 1fr) 90px;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .app-shell {
+        display: block;
+      }
+
+      .rail {
+        position: sticky;
+        height: auto;
+        padding: 14px 18px;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        flex-direction: row;
+        align-items: center;
+        gap: 16px;
+        overflow-x: auto;
+      }
+
+      .brand-name,
+      .rail-progress {
+        display: none;
+      }
+
+      .rail-nav {
+        display: flex;
+        gap: 2px;
+      }
+
+      .rail-link {
+        width: auto;
+        min-width: max-content;
+        border-left: 0;
+        border-bottom: 2px solid transparent;
+      }
+
+      .rail-link.active {
+        border-left-color: transparent;
+        border-bottom-color: var(--accent);
+      }
+
+      .workspace {
+        padding: 0 18px 44px;
+      }
+
+      .toolbar {
+        align-items: flex-start;
+        padding: 13px 0;
+      }
+
+      .toolbar-status {
+        display: none;
+      }
+
+      .toolbar-actions {
+        width: 100%;
+        justify-content: flex-start;
+      }
+
+      .page-head {
+        grid-template-columns: 1fr;
+        padding-top: 42px;
+      }
+
+      .head-metric {
+        padding: 16px 0 0;
+        border-left: 0;
+        border-top: 1px solid var(--line-strong);
+      }
+
+      .cadence {
+        grid-template-columns: 1fr;
+      }
+
+      .cadence-item,
+      .cadence-item + .cadence-item {
+        min-height: 74px;
+        padding: 13px 0;
+        border-left: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .section-title {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .section-title p {
+        text-align: left;
+      }
+
+      .week-overview {
+        grid-template-columns: 1fr;
+        gap: 22px;
+      }
+
+      .week-output {
+        padding: 18px 0 0;
+        border-left: 0;
+        border-top: 1px solid var(--line-strong);
+      }
+
+      .task-row {
+        grid-template-columns: 38px 58px minmax(0, 1fr);
+      }
+
+      .task-mode {
+        grid-column: 3;
+        justify-self: start;
+        margin: 0 0 16px;
+      }
+
+      .video-row {
+        grid-template-columns: 58px 1fr;
+        gap: 8px 14px;
+        padding: 18px 0;
+      }
+
+      .video-copy {
+        grid-column: 1 / -1;
+      }
+
+      .video-open {
+        grid-column: 1 / -1;
+        justify-self: start;
+      }
+
+      .assessment-row {
+        grid-template-columns: 42px minmax(0, 1fr);
+        padding: 18px 0;
+      }
+
+      .score-input {
+        grid-column: 2;
+      }
+
+      .interview-table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="rail" aria-label="主要導覽">
+      <a class="brand" href="roadmap.html" aria-label="回到學習表首頁">
+        <span class="brand-mark">READY / 08</span>
+        <span class="brand-name">工程求職<br>學習工作台</span>
+      </a>
+
+      <nav class="rail-nav">
+        <button class="rail-link active" type="button" data-view="plan">8 週學習表</button>
+        <button class="rail-link" type="button" data-view="videos">影片資源庫</button>
+        <button class="rail-link" type="button" data-view="verify">面試驗收</button>
+      </nav>
+
+      <div class="rail-progress" aria-live="polite">
+        <div class="rail-progress-row">
+          <span>總進度</span>
+          <strong id="railProgressText">0%</strong>
+        </div>
+        <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="railProgressFill"></div></div>
+        <small id="railProgressNote">0 / 72 個驗收項目</small>
+      </div>
+    </aside>
+
+    <main class="workspace">
+      <header class="toolbar">
+        <div class="toolbar-status"><span class="status-dot"></span><span>進度只儲存在這台裝置，可隨時匯出備份</span></div>
+        <div class="toolbar-actions">
+          <label for="startDate" class="eyebrow" style="margin:0;letter-spacing:.08em">開始日</label>
+          <input class="date-control" id="startDate" type="date">
+          <button class="button" id="exportBtn" type="button">匯出進度</button>
+          <button class="button" id="importBtn" type="button">匯入進度</button>
+          <input id="importInput" type="file" accept="application/json,.json" hidden>
+          <button class="button danger" id="resetBtn" type="button">重設</button>
+          <a class="text-link" href="index.html">進入模擬面試 →</a>
+        </div>
+      </header>
+
+      <section class="view active" id="planView">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow">Career engineering sprint</p>
+            <h1>把「我看過」變成「我做得到」。</h1>
+            <p class="page-head-copy">八週內完成 Python、SQL、FastAPI、pytest、Docker、演算法與 AI 應用的可驗證成果。每天保留一段不用 AI 的練習，面試時才能真正說得出來。</p>
+          </div>
+          <div class="head-metric">
+            <span>目前週次</span>
+            <strong id="headWeekMetric">W01</strong>
+            <small id="headDateMetric">尚未設定日期</small>
+          </div>
+        </div>
+
+        <div class="cadence" aria-label="每日固定節奏">
+          <div class="cadence-item"><span>每天固定</span><strong>20 分鐘演算法</strong></div>
+          <div class="cadence-item"><span>核心學習</span><strong>45 分鐘主題實作</strong></div>
+          <div class="cadence-item"><span>作品累積</span><strong>20 分鐘專案整合</strong></div>
+          <div class="cadence-item"><span>輸出檢核</span><strong>5 分鐘口頭解釋</strong></div>
+        </div>
+
+        <section class="section-block">
+          <div class="section-title">
+            <h2>選擇週次</h2>
+            <p>每週六個主要任務加三個能力閘門。先完成可交付成果，再勾選「我真的會」。</p>
+          </div>
+          <div class="week-strip" id="weekStrip" aria-label="八週學習路線"></div>
+        </section>
+
+        <section id="weekDetail" aria-live="polite"></section>
+      </section>
+
+      <section class="view" id="videosView">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow">Curated learning library</p>
+            <h1>先看一套，再動手做。</h1>
+            <p class="page-head-copy">這裡只放能直接跟練的免費資源。影片負責建立概念，真正的完成條件仍是把內容做進自己的 Marine Data API。</p>
+          </div>
+          <div class="head-metric">
+            <span>資源狀態</span>
+            <strong id="videoCountMetric">0</strong>
+            <small>個已整理連結</small>
+          </div>
+        </div>
+
+        <div class="library-tools" id="libraryTools" aria-label="影片篩選"></div>
+        <section class="section-block">
+          <div class="section-title">
+            <h2>影片與播放清單</h2>
+            <p>標示週次是建議觀看時機，不必全部看完；同主題選一個主要資源即可。</p>
+          </div>
+          <div class="video-list" id="videoList"></div>
+        </section>
+      </section>
+
+      <section class="view" id="verifyView">
+        <div class="page-head">
+          <div>
+            <p class="eyebrow">No-AI readiness check</p>
+            <h1>用一小時，確認自己能不能上場。</h1>
+            <p class="page-head-copy">每兩週做一次。這不是考記憶，而是檢查你能否獨立拆題、寫出核心邏輯、驗證結果並說清楚取捨。</p>
+          </div>
+          <div class="head-metric">
+            <span>建議及格</span>
+            <strong>70</strong>
+            <small>核心項目不可為 0</small>
+          </div>
+        </div>
+
+        <div class="assessment-layout">
+          <div class="assessment-list" id="assessmentList"></div>
+          <aside class="score-panel" aria-live="polite">
+            <span>本次總分</span>
+            <div class="score-total"><strong id="scoreTotal">0</strong><small>/ 100</small></div>
+            <h3 id="scoreTitle">尚未驗收</h3>
+            <p id="scoreNote">完成四個區塊並輸入分數。若未達 70，回到最低分的那一週補強即可，不代表你不適合。</p>
+          </aside>
+        </div>
+
+        <section class="section-block">
+          <div class="section-title">
+            <h2>不同職缺通常怎麼考</h2>
+            <p>實際流程依公司而異；這張表用來決定你的準備比例。</p>
+          </div>
+          <table class="interview-table">
+            <thead><tr><th>職涯方向</th><th>高機率考點</th><th>你要拿出的證據</th></tr></thead>
+            <tbody>
+              <tr><td>Python 後端</td><td>Python coding、REST、SQL、錯誤處理、簡易系統設計</td><td>可啟動的 FastAPI + PostgreSQL 專案與測試</td></tr>
+              <tr><td>資料工程</td><td>SQL、ETL、資料品質、重跑安全、索引與 pipeline 設計</td><td>可重跑資料流、對帳查詢、log 與資料契約</td></tr>
+              <tr><td>SDET / QA Automation</td><td>測試案例、pytest、API/UI automation、mock、CI 與 flaky test</td><td>單元／整合／E2E 測試與可重現 bug report</td></tr>
+              <tr><td>AI 應用</td><td>LLM API、RAG、structured output、tool calling、品質評估</td><td>有引用、評估集、錯誤 fallback 的小型 RAG API</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </section>
+
+      <p class="footer-note">建議：投履歷與學習同步進行。每週至少投遞 3–5 個符合度較高的職缺，並把面試遇到的題目回填到原本的模擬面試工具。</p>
+    </main>
+  </div>
+
+  <script>
+    const weeks = [
+      {
+        number: 1,
+        short: "Python",
+        title: "Python 基礎與資料處理",
+        goal: "先確認你不是只會讀程式：能把檔案處理拆成函式、處理錯誤、補型別提示，並用小樣本驗證輸出。",
+        output: "data_cleaner.py + sample data + 5 個測試",
+        algorithm: "Array / String / Hash Map，共 6 題 Easy",
+        tasks: [
+          ["D1", "基準測驗：不用 AI 讀取 CSV/JSON，清理欄位後輸出摘要", "留下可重跑程式、輸入樣本與輸出結果。", "NO AI"],
+          ["D2", "函式、型別提示與資料結構", "把 D1 程式拆成 3–5 個小函式，參數與回傳值加上 type hints。", "實作"],
+          ["D3", "例外處理、logging 與邊界資料", "處理空檔、欄位缺失、錯誤日期與非數字值，不讓錯誤安靜發生。", "實作"],
+          ["D4", "pandas 清洗與分組統計", "完成 dtype、缺值、merge、groupby；用筆數與抽樣值對帳。", "實作"],
+          ["D5", "API 串接：timeout、重試與 JSON 驗證", "呼叫一個公開 API，處理非 200、timeout 與缺欄位。", "實作"],
+          ["D6", "週驗收：關掉教學重做資料清洗", "限時 60 分鐘完成，再錄 3 分鐘說明資料流與錯誤處理。", "NO AI"]
+        ],
+        gates: ["不看答案能從零寫出檔案讀取、清洗與輸出", "能解釋 list / dict / set 的使用時機與主要複雜度", "能從 traceback 與 log 找到錯誤位置"]
+      },
+      {
+        number: 2,
+        short: "SQL",
+        title: "SQL 與 PostgreSQL",
+        goal: "把 SQL 從『看得懂』提升到『從需求自己寫』，特別練 JOIN 粒度、視窗函數、交易與索引判讀。",
+        output: "schema.sql + 12_queries.sql + EXPLAIN 筆記",
+        algorithm: "Two Pointers / Sliding Window，共 6 題 Easy",
+        tasks: [
+          ["D1", "建立 observations、runs、hotspots 三張練習表", "寫 PK、FK、NOT NULL、CHECK 與合理的唯一鍵。", "實作"],
+          ["D2", "JOIN、GROUP BY 與聚合粒度", "完成 4 個查詢，逐一檢查 JOIN 前後筆數是否膨脹。", "NO AI"],
+          ["D3", "Subquery、CTE 與 Window Function", "用 ROW_NUMBER 找每組最新一筆，並說明為何不是只用 GROUP BY。", "實作"],
+          ["D4", "交易、rollback 與 ON CONFLICT", "模擬批次重跑，證明不會產生重複列。", "實作"],
+          ["D5", "索引與 EXPLAIN ANALYZE", "比較加索引前後的 query plan，記錄 scan、rows 與耗時。", "實作"],
+          ["D6", "週驗收：30 分鐘 SQL + 15 分鐘口頭說明", "不用 AI 寫 JOIN、window、upsert 各一題並講驗證方式。", "NO AI"]
+        ],
+        gates: ["能從中文需求獨立寫出 JOIN / GROUP BY", "能寫每組最新一筆並處理同時間戳記", "知道索引不是越多越好，會先看 query plan"]
+      },
+      {
+        number: 3,
+        short: "FastAPI",
+        title: "FastAPI 與 REST API",
+        goal: "把你的海洋資料經驗包成可展示的 API：輸入可驗證、錯誤可預期、查詢可限制、文件可直接使用。",
+        output: "Marine Data API：至少 4 個 endpoint",
+        algorithm: "Stack / Queue / Binary Search，共 6 題 Easy",
+        tasks: [
+          ["D1", "建立 FastAPI 專案與 Pydantic schema", "可啟動服務，Swagger 能看到 request / response schema。", "實作"],
+          ["D2", "GET /observations：篩選與分頁", "支援 date、lead_hours、limit、offset，錯誤參數有清楚訊息。", "實作"],
+          ["D3", "POST /observations：驗證與狀態碼", "正確使用 201、400/422、409；重複資料不會無聲覆蓋。", "NO AI"],
+          ["D4", "PostgreSQL 連線與資料存取層", "把 route、service、repository 分開，避免所有邏輯塞進 endpoint。", "實作"],
+          ["D5", "logging、設定與錯誤處理", "密碼由環境變數載入；500 不洩漏內部錯誤，log 足以追查。", "實作"],
+          ["D6", "週驗收：臨時新增 GET /summary", "限時 60 分鐘完成 endpoint、SQL、驗證與一個測試。", "NO AI"]
+        ],
+        gates: ["能說明 200 / 201 / 404 / 409 / 422 / 500 的差異", "能獨立增加一支含驗證的 endpoint", "能說明分頁、timeout 與 payload 限制的理由"]
+      },
+      {
+        number: 4,
+        short: "pytest",
+        title: "pytest、API 與自動化測試",
+        goal: "學會證明程式正確，而不是只確認它剛好能跑；同時建立 SDET 面試需要的測試設計語言。",
+        output: "20+ tests：unit / integration / API / E2E",
+        algorithm: "Linked List / Tree 基礎，共 5 題 Easy",
+        tasks: [
+          ["D1", "測試金字塔與測試案例設計", "為 Marine Data API 列出正常、邊界、錯誤與重複四類案例。", "設計"],
+          ["D2", "pytest fixture 與 parametrize", "用 fixture 準備資料；同一驗證規則至少跑 5 組輸入。", "實作"],
+          ["D3", "mock 外部 API 與失敗情境", "不連外網也能測 timeout、500、壞 JSON 與 retry。", "實作"],
+          ["D4", "FastAPI TestClient + 測試資料庫", "測 200、404、409、422，且測試之間資料互不污染。", "實作"],
+          ["D5", "Playwright / Postman API 流程", "完成一條建立→查詢→錯誤輸入的 E2E 流程並保留結果。", "實作"],
+          ["D6", "週驗收：取得一個失敗測試並定位 bug", "從錯誤、log、最小重現到修正與 regression test 全程記錄。", "NO AI"]
+        ],
+        gates: ["能說明 unit、integration、E2E 各自測什麼", "能使用 fixture、parametrize 與 mock", "修 bug 後會先補一個能重現問題的測試"]
+      },
+      {
+        number: 5,
+        short: "DevOps",
+        title: "Linux、Docker、Git 與 CI",
+        goal: "讓作品在另一台機器也能可靠啟動，並能從 port、環境變數、container log 與 CI 失敗快速定位問題。",
+        output: "Docker Compose + GitHub Actions 綠燈",
+        algorithm: "BFS / DFS，共 5 題 Easy",
+        tasks: [
+          ["D1", "Linux 基本操作與 log 排查", "練習 pwd、ls、cd、grep/rg、tail、ps、curl、環境變數與權限。", "實作"],
+          ["D2", "Git branch、commit、merge 與衝突", "用 feature branch 完成一個改動，刻意製造並解決一次衝突。", "NO AI"],
+          ["D3", "為 FastAPI 寫 Dockerfile", "理解 WORKDIR、COPY、RUN、CMD；映像檔不含密碼與無關檔案。", "實作"],
+          ["D4", "Docker Compose 串起 API + PostgreSQL", "加入 volume、env、port 與 healthcheck，一個指令即可啟動。", "實作"],
+          ["D5", "GitHub Actions 執行 pytest", "push / PR 時自動安裝依賴並跑測試；失敗能從 log 定位。", "實作"],
+          ["D6", "週驗收：在乾淨環境重建", "刪除本地暫存後依 README 從零啟動並跑完測試。", "NO AI"]
+        ],
+        gates: ["能從 container log、port 與 env 排查啟動失敗", "能解決基本 merge conflict 並說明 PR 流程", "別人只看 README 就能啟動專案與測試"]
+      },
+      {
+        number: 6,
+        short: "LeetCode",
+        title: "演算法模式與限時表達",
+        goal: "不追求競賽難題；練到看得出常見模式、能先講暴力解、再優化並清楚說明 Big-O 與邊界案例。",
+        output: "累積 30–40 Easy + 8–10 基礎 Medium",
+        algorithm: "本週 8 Easy + 4 Medium，全部限時",
+        tasks: [
+          ["D1", "Array / Hash Map：Two Sum 類型", "25 分鐘內完成，口頭說明 hash map 如何換取空間。", "NO AI"],
+          ["D2", "Two Pointers / Sliding Window", "先寫 O(n²)，再說明如何移動指標降到 O(n)。", "NO AI"],
+          ["D3", "Stack / Queue / Binary Search", "每題先講 invariant 或 stack 裡保存什麼。", "NO AI"],
+          ["D4", "Tree：BFS / DFS", "各寫一題，說清楚遞迴終止條件與 queue 使用方式。", "NO AI"],
+          ["D5", "Heap 與 Top K", "能解釋為何 heap 適合維持前 K 個元素。", "NO AI"],
+          ["D6", "60 分鐘模擬 coding round", "2 題 Easy 或 1 Easy + 1 Medium；全程邊想邊講並自行測試。", "NO AI"]
+        ],
+        gates: ["25 分鐘內能完成大部分熟悉模式的 Easy", "每題都能說時間／空間複雜度與邊界案例", "看過提示後隔天可以關掉答案重寫"]
+      },
+      {
+        number: 7,
+        short: "AI / RAG",
+        title: "LLM API、RAG 與品質評估",
+        goal: "以應用工程為主：把模型接進 API，讓輸出有 schema、有來源、有評估集，也能面對 timeout、幻覺與工具失敗。",
+        output: "可引用來源的 Mini RAG API + 10 題評估集",
+        algorithm: "混合複習，共 5 題 Easy + 2 題 Medium",
+        tasks: [
+          ["D1", "LLM API 與 structured output", "輸出使用固定 schema；處理 timeout、rate limit 與解析失敗。", "實作"],
+          ["D2", "Embedding、chunking 與 vector search", "用小文件集比較 chunk 大小與 top-k 對檢索結果的影響。", "實作"],
+          ["D3", "建立最小 RAG 流程", "回答必須附來源；檢索不到時明確說不知道。", "實作"],
+          ["D4", "Tool calling / Agent 邊界", "建立一個只讀查詢工具，驗證參數並限制可執行操作。", "實作"],
+          ["D5", "品質評估與幻覺處理", "準備 10 題 golden set，記錄命中、引用、正確性與失敗原因。", "NO AI"],
+          ["D6", "週驗收：講清楚一條 RAG 資料流", "白板說明 ingest→chunk→embed→retrieve→generate→evaluate 與取捨。", "NO AI"]
+        ],
+        gates: ["能說明 embedding、vector DB、RAG 各自做什麼", "能用評估集而不是感覺判斷回答品質", "能處理無答案、錯誤工具參數與模型回傳格式失敗"]
+      },
+      {
+        number: 8,
+        short: "Interview",
+        title: "作品整理、模擬面試與投遞",
+        goal: "把前七週產出變成可被面試官理解的證據：README、架構圖、三種長度的專案故事、現場 coding 與角色別模擬面試。",
+        output: "GitHub 作品頁 + 3 次 mock + 投遞紀錄",
+        algorithm: "錯題重練，共 6 題",
+        tasks: [
+          ["D1", "整理 GitHub 與 README", "包含問題、架構、啟動、測試、設計取捨、截圖與限制。", "作品"],
+          ["D2", "準備 30 秒／2 分鐘／5 分鐘專案介紹", "都講清楚個人角色、資料流、困難、驗證證據與結果。", "NO AI"],
+          ["D3", "Python + SQL 模擬面試", "限時寫題、邊想邊講；結束後只修最低分的兩項。", "NO AI"],
+          ["D4", "後端／SDET／資料工程擇一模擬", "依目標 JD 問 API、測試或 pipeline，記錄所有追問。", "NO AI"],
+          ["D5", "90 分鐘 take-home 模擬", "收到陌生需求後完成最小功能、測試與 README，不追求過度設計。", "NO AI"],
+          ["D6", "投遞與復盤", "投 3–5 個高符合職缺；把實際題目加入模擬面試工具。", "行動"]
+        ],
+        gates: ["五分鐘內能從輸入一路講到 DB、API、QGIS 與驗證", "能說一個真實 bug 的現象、定位、修正與 regression test", "能在限時與不使用 AI 的情況完成核心題目"]
+      }
+    ];
+
+    const videos = [
+      { week: 1, topic: "Python", platform: "YouTube", title: "Learn Python — Full Course for Beginners", author: "freeCodeCamp.org", note: "4:26:52｜函式、例外、檔案、模組與類別都有。你已有基礎，請依時間軸跳章補洞，不必從頭看完。", url: "https://www.youtube.com/watch?v=rfscVS0vtbw" },
+      { week: 1, topic: "Python", platform: "YouTube", title: "Python Pandas 資料分析－基礎教學", author: "彭彭的課程", note: "25:12｜繁中快速複習 Series、DataFrame 與基本操作，看完立刻拿自己的 CSV 跟做。", url: "https://www.youtube.com/watch?v=5QZqzKCDCQ4" },
+      { week: 1, topic: "Python", platform: "Bilibili", title: "Pandas 中文教程《Joyful-Pandas》視頻講解", author: "二次元的Datawhale", note: "43 集・7:36:58｜搭配開源教材與練習。當題庫使用，只挑你不熟的章節。", url: "https://www.bilibili.com/video/BV1tK4y177AF/" },
+      { week: 2, topic: "SQL", platform: "YouTube", title: "Learn PostgreSQL Tutorial — Full Course for Beginners", author: "freeCodeCamp.org", note: "4:19:34｜涵蓋建庫、約束、CRUD、聚合與 JOIN；適合補完整 PostgreSQL 基礎。", url: "https://www.youtube.com/watch?v=qw--VYLpxG4" },
+      { week: 2, topic: "SQL", platform: "Bilibili", title: "PostgreSQL 入門實戰教程", author: "明文传输不", note: "86 集・6:13:30｜中文語音；優先挑子查詢、CTE、索引、視窗函數、ROW_NUMBER 與 LEAD/LAG。", url: "https://www.bilibili.com/video/BV1aGyhBDEp9/" },
+      { week: 3, topic: "FastAPI", platform: "Bilibili", title: "黑馬程序員 PythonWeb：FastAPI 從入門到實戰", author: "黑馬程序員", note: "68 集・14:55:29｜先看 1–29 集的路由、Pydantic 與錯誤處理，再依專案需求挑 ORM、分頁與 Token。", url: "https://www.bilibili.com/video/BV1zV2QBtE39/" },
+      { week: 3, topic: "FastAPI", platform: "YouTube", title: "Python API Development — Comprehensive Course", author: "freeCodeCamp.org", note: "19:00:27｜串起 FastAPI、PostgreSQL、SQLAlchemy、JWT、Alembic、Docker、pytest 與 CI。只當章節參考；舊版套件與 Heroku 段落可能過時。", url: "https://www.youtube.com/watch?v=0sOvCWFmrtA" },
+      { week: 4, topic: "pytest", platform: "YouTube", title: "Pytest Tutorial — How to Test Python Code", author: "freeCodeCamp.org", note: "1:28:38｜基本測試、class、fixture、mark、parametrize 與 mocking，適合一週內跟完。", url: "https://www.youtube.com/watch?v=cHYq1MRoyI0" },
+      { week: 5, topic: "DevOps", platform: "Bilibili", title: "30 分鐘 Linux 入門教程", author: "GeekHour", note: "36:26｜快速補終端、vi 與常用命令，程度正好對應後端／測試職缺的基本要求。", url: "https://www.bilibili.com/video/BV1cq421w72c/" },
+      { week: 5, topic: "DevOps", platform: "Bilibili", title: "30 分鐘 Docker 入門教程", author: "GeekHour", note: "9 集・26:08｜包含容器概念、Dockerfile、Docker Desktop 與 Compose；看完直接替 API 實作。", url: "https://www.bilibili.com/video/BV14s4y1i7Vf/" },
+      { week: 5, topic: "DevOps", platform: "YouTube", title: "Git and GitHub for Beginners — Crash Course", author: "freeCodeCamp.org", note: "1:08:30｜clone、add、commit、push、pull 與 branch；請直接在這個 GitHub 專案裡操作。", url: "https://www.youtube.com/watch?v=RGOj5yH7evk" },
+      { week: 6, topic: "LeetCode", platform: "Bilibili", title: "《代碼隨想錄》算法公開課", author: "代碼隨想錄", note: "170 集・50:02:17｜按 Array、Hash、Stack/Queue、Tree、BFS/DFS 編排。每週只選 5–7 題，先自己寫再看講解。", url: "https://space.bilibili.com/525438321/lists/180037?type=season" },
+      { week: 7, topic: "AI / RAG", platform: "YouTube", title: "Learn RAG From Scratch — Python AI Tutorial", author: "freeCodeCamp.org / Lance Martin", note: "2:33:11｜從 indexing、retrieval、generation 到 routing 與 CRAG，技術脈絡完整。", url: "https://www.youtube.com/watch?v=sVcwVQRHIc8" },
+      { week: 7, topic: "AI / RAG", platform: "Bilibili", title: "3 小時從零構建專屬 AI 智能助理", author: "賽博門外憨", note: "32 集・2:50:08｜含工具呼叫、RAG、向量儲存、MCP、記憶與 guardrails；商用 API 實作可能產生費用。", url: "https://www.bilibili.com/video/BV1DSsdzXE5h/" }
+    ];
+
+    const assessments = [
+      { id: "python", title: "Python 資料處理｜20 分鐘", detail: "不用 AI：讀取一份髒 CSV，完成型別轉換、缺值處理、摘要輸出與一個邊界案例。", max: 25 },
+      { id: "sql", title: "SQL 查詢｜15 分鐘", detail: "不用 AI：寫出 JOIN + GROUP BY，以及 ROW_NUMBER 找每組最新一筆；口頭說明如何驗證。", max: 25 },
+      { id: "api", title: "API 與測試｜15 分鐘", detail: "為既有 FastAPI 新增一支 endpoint，處理驗證與錯誤，至少補一個 pytest。", max: 30 },
+      { id: "explain", title: "專案說明｜10 分鐘", detail: "用五分鐘講資料流，再回答：最大 bug、索引取捨、如何證明 AI 產生的結果可信。", max: 20 }
+    ];
+
+    const storageKey = "rongCareerRoadmapV1";
+    const state = {
+      view: "plan",
+      week: 1,
+      startDate: "",
+      tasks: {},
+      gates: {},
+      notes: {},
+      scores: {},
+      videoFilter: "全部"
+    };
+
+    function todayIso() {
+      const now = new Date();
+      now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+      return now.toISOString().slice(0, 10);
+    }
+
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey));
+        if (saved && typeof saved === "object") Object.assign(state, saved);
+      } catch (error) {
+        console.warn("Progress could not be loaded", error);
+      }
+      if (!state.startDate) state.startDate = todayIso();
+      state.week = Math.min(8, Math.max(1, Number(state.week) || 1));
+    }
+
+    function saveState() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
+    }
+
+    function addDays(iso, days) {
+      const date = new Date(`${iso}T12:00:00`);
+      date.setDate(date.getDate() + days);
+      return date;
+    }
+
+    function shortDate(date) {
+      return new Intl.DateTimeFormat("zh-TW", { month: "numeric", day: "numeric" }).format(date);
+    }
+
+    function weekDates(weekNumber) {
+      const start = addDays(state.startDate, (weekNumber - 1) * 7);
+      const end = addDays(state.startDate, (weekNumber - 1) * 7 + 6);
+      return `${shortDate(start)}–${shortDate(end)}`;
+    }
+
+    function taskId(weekNumber, index) {
+      return `w${weekNumber}-t${index}`;
+    }
+
+    function gateId(weekNumber, index) {
+      return `w${weekNumber}-g${index}`;
+    }
+
+    function allProgressIds() {
+      const ids = [];
+      weeks.forEach(week => {
+        week.tasks.forEach((_, index) => ids.push(["tasks", taskId(week.number, index)]));
+        week.gates.forEach((_, index) => ids.push(["gates", gateId(week.number, index)]));
+      });
+      return ids;
+    }
+
+    function completedCount() {
+      return allProgressIds().filter(([group, id]) => Boolean(state[group][id])).length;
+    }
+
+    function updateProgress() {
+      const total = allProgressIds().length;
+      const done = completedCount();
+      const percent = total ? Math.round(done / total * 100) : 0;
+      document.getElementById("railProgressText").textContent = `${percent}%`;
+      document.getElementById("railProgressFill").style.width = `${percent}%`;
+      document.getElementById("railProgressNote").textContent = `${done} / ${total} 個驗收項目`;
+    }
+
+    function renderWeekStrip() {
+      document.getElementById("weekStrip").innerHTML = weeks.map(week => `
+        <button class="week-tab ${state.week === week.number ? "active" : ""}" type="button" data-week="${week.number}">
+          <span>W${String(week.number).padStart(2, "0")}</span>
+          <small>${week.short}</small>
+        </button>
+      `).join("");
+    }
+
+    function renderWeekDetail() {
+      const week = weeks[state.week - 1];
+      const taskRows = week.tasks.map((task, index) => {
+        const id = taskId(week.number, index);
+        const checked = Boolean(state.tasks[id]);
+        const date = shortDate(addDays(state.startDate, (week.number - 1) * 7 + index));
+        const modeClass = task[3] === "NO AI" ? "no-ai" : "";
+        return `
+          <label class="task-row ${checked ? "done" : ""}">
+            <span class="task-check"><input type="checkbox" data-task-id="${id}" ${checked ? "checked" : ""} aria-label="完成 ${task[1]}"></span>
+            <span class="task-day"><strong>${task[0]}</strong><span>${date}</span></span>
+            <span class="task-main"><strong class="task-name">${task[1]}</strong><p class="task-proof">驗收：${task[2]}</p></span>
+            <span class="task-mode ${modeClass}">${task[3]}</span>
+          </label>
+        `;
+      }).join("");
+
+      const gateRows = week.gates.map((gate, index) => {
+        const id = gateId(week.number, index);
+        return `<label class="gate-row"><input type="checkbox" data-gate-id="${id}" ${state.gates[id] ? "checked" : ""}><span>${gate}</span></label>`;
+      }).join("");
+
+      document.getElementById("weekDetail").innerHTML = `
+        <div class="week-overview">
+          <div>
+            <span class="week-code">Week ${String(week.number).padStart(2, "0")} · ${weekDates(week.number)}</span>
+            <h2>${week.title}</h2>
+            <p class="week-goal">${week.goal}</p>
+          </div>
+          <div class="week-output">
+            <span>本週可交付成果</span>
+            <strong>${week.output}</strong>
+            <small>演算法：${week.algorithm}</small>
+          </div>
+        </div>
+        <div class="plan-grid">
+          <div class="task-table">${taskRows}</div>
+          <aside class="week-panel">
+            <h3>能力閘門</h3>
+            <p>完成任務不等於學會。只有你能獨立重做、解釋與驗證時再勾選。</p>
+            <div class="gate-list">${gateRows}</div>
+            <label class="note-label" for="weekNote">本週卡點與面試題</label>
+            <textarea class="week-note" id="weekNote" placeholder="例：Window Function 在同時間戳記時需要第二排序欄位。">${state.notes[`w${week.number}`] || ""}</textarea>
+          </aside>
+        </div>
+      `;
+
+      document.getElementById("headWeekMetric").textContent = `W${String(week.number).padStart(2, "0")}`;
+      document.getElementById("headDateMetric").textContent = weekDates(week.number);
+    }
+
+    function renderVideos() {
+      const filters = ["全部", "YouTube", "Bilibili", ...new Set(videos.map(video => video.topic))];
+      document.getElementById("libraryTools").innerHTML = filters.map(filter => `
+        <button class="filter-button ${state.videoFilter === filter ? "active" : ""}" type="button" data-video-filter="${filter}">${filter}</button>
+      `).join("");
+
+      const visible = videos.filter(video => state.videoFilter === "全部" || video.platform === state.videoFilter || video.topic === state.videoFilter);
+      document.getElementById("videoCountMetric").textContent = videos.length;
+      document.getElementById("videoList").innerHTML = visible.length ? visible.map(video => `
+        <article class="video-row">
+          <span class="video-week">W${String(video.week).padStart(2, "0")}</span>
+          <span class="platform-label">${video.platform}<br>${video.author}</span>
+          <div class="video-copy"><h3>${video.title}</h3><p>${video.note}</p></div>
+          <a class="button video-open" href="${video.url}" target="_blank" rel="noreferrer">開啟影片 ↗</a>
+        </article>
+      `).join("") : `<div class="empty-state">這個分類目前沒有影片。</div>`;
+    }
+
+    function renderAssessments() {
+      document.getElementById("assessmentList").innerHTML = assessments.map(item => `
+        <div class="assessment-row">
+          <div><h3>${item.title}</h3><p>${item.detail}</p></div>
+          <input class="score-input" type="number" min="0" max="${item.max}" value="${state.scores[item.id] ?? ""}" data-score-id="${item.id}" aria-label="${item.title}分數，最高 ${item.max} 分" placeholder="/${item.max}">
+        </div>
+      `).join("");
+      updateScore();
+    }
+
+    function updateScore() {
+      const total = assessments.reduce((sum, item) => sum + Math.min(item.max, Math.max(0, Number(state.scores[item.id]) || 0)), 0);
+      const hasCoreZero = assessments.some(item => (Number(state.scores[item.id]) || 0) === 0);
+      const totalEl = document.getElementById("scoreTotal");
+      const titleEl = document.getElementById("scoreTitle");
+      const noteEl = document.getElementById("scoreNote");
+      totalEl.textContent = total;
+      if (!Object.keys(state.scores).length) {
+        titleEl.textContent = "尚未驗收";
+        noteEl.textContent = "完成四個區塊並輸入分數。若未達 70，回到最低分的那一週補強即可，不代表你不適合。";
+      } else if (total >= 70 && !hasCoreZero) {
+        titleEl.textContent = "可以開始密集面試";
+        noteEl.textContent = "保留每週一次無 AI 驗收，同時繼續投遞。面試後把真題與卡點補回學習表。";
+      } else {
+        titleEl.textContent = "找最低分項補強";
+        noteEl.textContent = "不用重學全部。挑最低分的核心項目練 2–3 次，再重新做同一份一小時驗收。";
+      }
+    }
+
+    function switchView(view) {
+      state.view = ["plan", "videos", "verify"].includes(view) ? view : "plan";
+      document.querySelectorAll(".view").forEach(element => element.classList.toggle("active", element.id === `${state.view}View`));
+      document.querySelectorAll(".rail-link").forEach(button => button.classList.toggle("active", button.dataset.view === state.view));
+      saveState();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function exportProgress() {
+      const payload = { app: "rong-career-roadmap", version: 1, exportedAt: new Date().toISOString(), state };
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `rong-career-roadmap-${todayIso()}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+    }
+
+    function renderAll() {
+      document.getElementById("startDate").value = state.startDate;
+      renderWeekStrip();
+      renderWeekDetail();
+      renderVideos();
+      renderAssessments();
+      updateProgress();
+      switchView(state.view);
+    }
+
+    document.addEventListener("click", event => {
+      const viewButton = event.target.closest("[data-view]");
+      if (viewButton) switchView(viewButton.dataset.view);
+
+      const weekButton = event.target.closest("[data-week]");
+      if (weekButton) {
+        state.week = Number(weekButton.dataset.week);
+        saveState();
+        renderWeekStrip();
+        renderWeekDetail();
+      }
+
+      const filterButton = event.target.closest("[data-video-filter]");
+      if (filterButton) {
+        state.videoFilter = filterButton.dataset.videoFilter;
+        saveState();
+        renderVideos();
+      }
+    });
+
+    document.addEventListener("change", event => {
+      if (event.target.matches("[data-task-id]")) {
+        state.tasks[event.target.dataset.taskId] = event.target.checked;
+        event.target.closest(".task-row").classList.toggle("done", event.target.checked);
+        saveState();
+        updateProgress();
+      }
+
+      if (event.target.matches("[data-gate-id]")) {
+        state.gates[event.target.dataset.gateId] = event.target.checked;
+        saveState();
+        updateProgress();
+      }
+
+      if (event.target.matches("[data-score-id]")) {
+        const item = assessments.find(entry => entry.id === event.target.dataset.scoreId);
+        state.scores[item.id] = Math.min(item.max, Math.max(0, Number(event.target.value) || 0));
+        event.target.value = state.scores[item.id];
+        saveState();
+        updateScore();
+      }
+
+      if (event.target.id === "startDate") {
+        state.startDate = event.target.value || todayIso();
+        saveState();
+        renderWeekDetail();
+      }
+    });
+
+    document.addEventListener("input", event => {
+      if (event.target.id === "weekNote") {
+        state.notes[`w${state.week}`] = event.target.value;
+        saveState();
+      }
+
+      if (event.target.matches("[data-score-id]")) {
+        const item = assessments.find(entry => entry.id === event.target.dataset.scoreId);
+        state.scores[item.id] = Math.min(item.max, Math.max(0, Number(event.target.value) || 0));
+        saveState();
+        updateScore();
+      }
+    });
+
+    document.getElementById("exportBtn").addEventListener("click", exportProgress);
+    document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importInput").click());
+    document.getElementById("importInput").addEventListener("change", async event => {
+      const file = event.target.files && event.target.files[0];
+      if (!file) return;
+      try {
+        const payload = JSON.parse(await file.text());
+        if (!payload || payload.app !== "rong-career-roadmap" || !payload.state) throw new Error("不是這個學習表的進度檔");
+        if (!window.confirm("匯入會覆蓋目前這台裝置上的學習表進度，確定繼續嗎？")) return;
+        Object.assign(state, payload.state);
+        saveState();
+        window.location.reload();
+      } catch (error) {
+        window.alert(`無法匯入：${error.message}`);
+      } finally {
+        event.target.value = "";
+      }
+    });
+    document.getElementById("resetBtn").addEventListener("click", () => {
+      if (!window.confirm("確定要清除 8 週學習表的所有進度、筆記與驗收分數嗎？")) return;
+      localStorage.removeItem(storageKey);
+      window.location.reload();
+    });
+
+    loadState();
+    renderAll();
+  </script>
+</body>
+</html>
