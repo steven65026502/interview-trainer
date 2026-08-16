@@ -1,8 +1,9 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Rong 的 28 天資料工程學習與模擬面試工作台，包含每日課程、作答回饋、進度保存與雲端同步。">
   <link rel="icon" href="data:,">
   <title>Rong Data Interview Learning Console</title>
   <style>
@@ -10,12 +11,12 @@
       --bg: #f5f7f8;
       --panel: #ffffff;
       --ink: #1d2528;
-      --muted: #687478;
+      --muted: #59666a;
       --line: #dce3e5;
-      --line-strong: #c5d0d3;
+      --line-strong: #7b898d;
       --accent: #08756f;
       --accent-soft: #e8f3f2;
-      --warn: #b97022;
+      --warn: #92520f;
       --danger: #aa4b57;
       --ok: #3f7a46;
       --radius: 8px;
@@ -33,6 +34,7 @@
     }
 
     button,
+    input,
     select,
     textarea {
       font: inherit;
@@ -40,6 +42,11 @@
 
     button {
       cursor: pointer;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
     }
 
     .shell {
@@ -78,7 +85,7 @@
     }
 
     .btn {
-      min-height: 38px;
+      min-height: 44px;
       border-radius: 6px;
       border: 1px solid var(--line-strong);
       background: var(--panel);
@@ -195,6 +202,9 @@
       display: grid;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
     }
 
     .learning-step {
@@ -773,7 +783,8 @@
     }
 
     textarea:focus {
-      outline: 2px solid rgba(8, 117, 111, 0.16);
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
       border-color: var(--accent);
     }
 
@@ -903,7 +914,7 @@
 
     .nav-item {
       width: 100%;
-      min-height: 36px;
+      min-height: 44px;
       border: 1px solid transparent;
       border-radius: 6px;
       background: transparent;
@@ -971,7 +982,7 @@
 
     .plan-question {
       width: 100%;
-      min-height: 38px;
+      min-height: 44px;
       display: grid;
       grid-template-columns: auto 1fr;
       gap: 8px;
@@ -1088,7 +1099,7 @@
       background: #fff;
       color: var(--ink);
       font: inherit;
-      font-size: 12px;
+      font-size: 14px;
       padding: 9px 10px;
     }
 
@@ -1104,7 +1115,7 @@
     }
 
     .sync-actions .btn {
-      min-height: 34px;
+      min-height: 44px;
       padding: 0 10px;
       font-size: 12px;
     }
@@ -1196,7 +1207,7 @@
     }
 
     .video-links a {
-      min-height: 34px;
+      min-height: 44px;
       display: grid;
       place-items: center;
       padding: 6px 8px;
@@ -1533,6 +1544,30 @@
       line-height: 1.6;
     }
 
+    .field-label {
+      display: block;
+      margin: 8px 0 5px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 30;
+      padding: 10px 14px;
+      border-radius: 6px;
+      background: var(--ink);
+      color: white;
+      transform: translateY(-150%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
     @media (max-width: 1180px) {
       body {
         min-width: 0;
@@ -1566,14 +1601,68 @@
       }
 
       .side {
+        order: 0;
         position: static;
         max-height: none;
         overflow: visible;
       }
     }
+
+    @media (max-width: 760px) {
+      .shell {
+        width: calc(100vw - 24px);
+        padding-top: 18px;
+      }
+
+      header {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .actions .btn {
+        min-width: 0;
+        word-break: keep-all;
+      }
+
+      #feedbackBtnTop {
+        display: none;
+      }
+
+      .guide,
+      .checklist-grid,
+      .context-grid,
+      .lens-grid,
+      .teaching-grid,
+      .term-rows,
+      .learning-steps,
+      .learning-time {
+        grid-template-columns: 1fr;
+      }
+
+      .sync-grid input,
+      .sync-grid textarea {
+        min-height: 44px;
+        font-size: 16px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
+  <a class="skip-link" href="#main-content">跳到主要內容</a>
   <div class="shell">
     <header>
       <div class="title">
@@ -1583,11 +1672,12 @@
       <div class="actions">
         <a class="btn" href="roadmap.html">8 週學習表</a>
         <button class="btn danger" id="resetBtn" type="button">清空練習</button>
+        <button class="btn" id="undoResetBtn" type="button" hidden>復原清空</button>
         <button class="btn primary" id="feedbackBtnTop" type="button">取得回饋</button>
       </div>
     </header>
 
-    <main class="layout">
+    <main class="layout" id="main-content">
       <section class="panel interview-panel">
         <section class="learning-page" id="learningPage">
           <div class="learning-head">
@@ -1596,28 +1686,28 @@
             <p id="learningIntro">先把目前知識點學清楚，按下確認後才會解鎖下一天。每一課都可以回頭複習，也可以用同一個知識點回答挑戰題。</p>
           </div>
 
-          <div class="learning-steps" aria-label="每日學習流程">
-            <div class="learning-step">
+          <ol class="learning-steps">
+            <li class="learning-step">
               <strong>1. 讀概念</strong>
               <span>先知道今天的詞在資料工作裡解決什麼問題。</span>
-            </div>
-            <div class="learning-step">
+            </li>
+            <li class="learning-step">
               <strong>2. 看資源</strong>
               <span>用精選影片、文件或練習題補齊背景。</span>
-            </div>
-            <div class="learning-step">
+            </li>
+            <li class="learning-step">
               <strong>3. 連專案</strong>
               <span>把概念對到 S-111、PostgreSQL、API 或 QGIS。</span>
-            </div>
-            <div class="learning-step">
+            </li>
+            <li class="learning-step">
               <strong>4. 自我驗收</strong>
               <span>確認自己能白話講出定義、例子與風險後，再解鎖下一課。</span>
-            </div>
-            <div class="learning-step">
+            </li>
+            <li class="learning-step">
               <strong>5. 再被考</strong>
               <span>學完後用本課挑戰題檢查自己是否真的會講。</span>
-            </div>
-          </div>
+            </li>
+          </ol>
 
           <section class="lesson-article">
             <div class="lesson-title">
@@ -1628,25 +1718,25 @@
             <div class="knowledge-tags" id="learningLessonTags"></div>
             <p class="knowledge-s111 lesson-copy" id="learningLessonS111"></p>
             <div class="lesson-teaching" id="learningTeaching"></div>
-            <div class="video-links" aria-label="本課學習資源">
+            <div class="video-links" role="group" aria-label="本課學習資源">
               <span>延伸資源</span>
-              <a id="learningYoutubeLink" href="#" target="_blank" rel="noreferrer">YouTube</a>
-              <a id="learningBilibiliLink" href="#" target="_blank" rel="noreferrer">Bilibili</a>
-              <a id="learningReferenceLink" href="#" target="_blank" rel="noreferrer">文件</a>
-              <a id="learningPracticeLink" href="#" target="_blank" rel="noreferrer">練習</a>
+              <a id="learningYoutubeLink" href="#" target="_blank" rel="noopener noreferrer">YouTube</a>
+              <a id="learningBilibiliLink" href="#" target="_blank" rel="noopener noreferrer">Bilibili</a>
+              <a id="learningReferenceLink" href="#" target="_blank" rel="noopener noreferrer">文件</a>
+              <a id="learningPracticeLink" href="#" target="_blank" rel="noopener noreferrer">練習</a>
             </div>
-            <div class="resource-status" id="learningResourceStatus">請依序點開學習資源。</div>
+            <div class="resource-status" id="learningResourceStatus">請選一個主資源學習；其他資源為選修。</div>
             <div class="knowledge-outcomes">
               <strong>今日驗收</strong>
               <ul id="learningOutcomes"></ul>
             </div>
             <div class="lesson-readiness">
               <div class="readiness-head">
-                <strong>學習檢核：60 分以上解鎖下一天</strong>
+                <label for="lessonReflectionInput"><strong>學習檢核：60 分以上解鎖下一天</strong></label>
                 <span>請用自己的話寫 3-5 句：這個概念是什麼、會用在哪裡、怎麼連到 S-111、你會怎麼驗證。不要照抄上面的文字。</span>
               </div>
               <textarea id="lessonReflectionInput" spellcheck="false" placeholder="例如：我理解 ETL 不是只有轉檔，而是... 在 S-111 裡... 我會檢查..."></textarea>
-              <div class="readiness-result" id="lessonReadinessResult">
+              <div class="readiness-result" id="lessonReadinessResult" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
                 <strong>尚未檢核</strong>
                 <span>寫完後按「分析學習程度」。達到 60 分就會自動解鎖下一天。</span>
               </div>
@@ -1689,20 +1779,11 @@
           </div>
 
           <div class="question">
-            <h2 id="questionTitle"></h2>
+            <h2 id="questionTitle">題目載入中</h2>
             <p id="questionHint"></p>
           </div>
 
           <div class="context-block" id="questionContext"></div>
-
-          <div class="interviewer-lens" id="interviewerLens"></div>
-
-          <div class="hint-row">
-            <span>提示預設收起，先自己回答；真的卡住再打開。</span>
-            <button class="btn" id="hintToggleBtn" type="button">▾ 顯示答題提示</button>
-          </div>
-
-          <div class="guide is-hidden" id="guideGrid"></div>
 
           <div class="response-main">
             <div class="answer-box">
@@ -1729,7 +1810,16 @@
             </div>
           </div>
 
-          <div class="inline-feedback is-hidden" id="feedbackPanel">
+          <div class="interviewer-lens" id="interviewerLens"></div>
+
+          <div class="hint-row">
+            <span>提示預設收起，先自己回答；真的卡住再打開。</span>
+            <button class="btn" id="hintToggleBtn" type="button" aria-controls="guideGrid" aria-expanded="false">▾ 顯示答題提示</button>
+          </div>
+
+          <div class="guide is-hidden" id="guideGrid"></div>
+
+          <div class="inline-feedback is-hidden" id="feedbackPanel" role="status" aria-live="polite" tabindex="-1">
             <div class="feedback-score">
               <div class="score-circle" id="scoreCircle">0</div>
               <div>
@@ -1812,14 +1902,17 @@
               <p id="courseProgressNote">完成目前課程後才會解鎖下一天。</p>
             </div>
             <div class="sync-grid">
-              <input id="syncWorkerInput" type="url" autocomplete="off" placeholder="同步服務 URL（Cloudflare Worker）">
+              <label class="field-label" for="syncWorkerInput">同步服務 URL</label>
+              <input id="syncWorkerInput" type="url" autocomplete="url" placeholder="https://your-worker.example.workers.dev">
               <div class="email-sync-box">
                 <div class="sync-section-head">
                   <span>Email 登入</span>
                   <small id="syncEmailState">尚未登入</small>
                 </div>
-                <input id="syncEmailInput" type="email" autocomplete="email" placeholder="輸入 Email">
+                <label class="field-label" for="syncEmailInput">Email</label>
+                <input id="syncEmailInput" type="email" autocomplete="email" placeholder="name@example.com">
                 <div class="email-code-row">
+                  <label class="field-label" for="syncEmailCodeInput">6 位驗證碼</label>
                   <input id="syncEmailCodeInput" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="輸入 6 位驗證碼">
                 </div>
                 <div class="sync-actions email-actions">
@@ -1831,9 +1924,12 @@
               <details class="advanced-sync">
                 <summary>進階：GitHub / 匯出碼</summary>
                 <div class="sync-grid">
-                  <input id="syncTokenInput" type="password" autocomplete="off" placeholder="GitHub Gist token">
+                  <label class="field-label" for="syncTokenInput">GitHub Gist token（只保留到關閉分頁）</label>
+                  <input id="syncTokenInput" type="password" autocomplete="new-password" placeholder="GitHub Gist token">
+                  <label class="field-label" for="syncGistInput">Gist ID</label>
                   <input id="syncGistInput" type="text" autocomplete="off" placeholder="Gist ID">
-                  <textarea id="syncPayloadBox" spellcheck="false" placeholder="匯出碼 / 匯入碼"></textarea>
+                  <label class="field-label" for="syncPayloadBox">進度匯出碼／匯入碼</label>
+                  <textarea id="syncPayloadBox" spellcheck="false" placeholder="貼上進度 JSON"></textarea>
                 </div>
                 <div class="sync-actions">
                   <button class="btn" id="syncOAuthLoginBtn" type="button">用 GitHub 登入</button>
@@ -1849,7 +1945,7 @@
               <button class="btn" id="syncDownloadBtn" type="button">下載進度</button>
               <button class="btn" id="syncClearBtn" type="button">清除同步設定</button>
             </div>
-            <div class="sync-status" id="syncStatus">未設定雲端同步。</div>
+            <div class="sync-status" id="syncStatus" role="status" aria-live="polite" aria-atomic="true">未設定雲端同步。</div>
           </div>
         </section>
 
@@ -1870,14 +1966,14 @@
               <p id="dailyKnowledgeConcept"></p>
               <div class="knowledge-tags" id="dailyKnowledgeTags"></div>
               <p class="knowledge-s111" id="dailyKnowledgeS111"></p>
-              <div class="video-links" aria-label="今日新知學習資源">
+              <div class="video-links" role="group" aria-label="今日新知學習資源">
                 <span>學習資源</span>
-                <a id="dailyYoutubeLink" href="#" target="_blank" rel="noreferrer">影片：YouTube</a>
-                <a id="dailyBilibiliLink" href="#" target="_blank" rel="noreferrer">影片：Bilibili</a>
-                <a id="dailyReferenceLink" href="#" target="_blank" rel="noreferrer">官方 / 文章</a>
-                <a id="dailyPracticeLink" href="#" target="_blank" rel="noreferrer">練習題</a>
+                <a id="dailyYoutubeLink" href="#" target="_blank" rel="noopener noreferrer">影片：YouTube</a>
+                <a id="dailyBilibiliLink" href="#" target="_blank" rel="noopener noreferrer">影片：Bilibili</a>
+                <a id="dailyReferenceLink" href="#" target="_blank" rel="noopener noreferrer">官方 / 文章</a>
+                <a id="dailyPracticeLink" href="#" target="_blank" rel="noopener noreferrer">練習題</a>
               </div>
-              <div class="resource-status" id="dailyResourceStatus">請依序點開學習資源。</div>
+              <div class="resource-status" id="dailyResourceStatus">請選一個主資源學習；其他資源為選修。</div>
               <div class="knowledge-outcomes">
                 <strong>今日驗收</strong>
                 <ul id="dailyKnowledgeOutcomes"></ul>
@@ -2932,12 +3028,63 @@
       token: "",
       gistId: ""
     };
+    const syncSettingsKey = "rongDataMockInterviewSync";
+    const syncSecretsKey = "rongDataMockInterviewSyncSession";
+    const resetBackupKey = "rongDataMockInterviewLastReset";
+
+    function persistSyncStorage() {
+      const publicSettings = {
+        workerUrl: syncSettings.workerUrl,
+        authProvider: syncSettings.authProvider,
+        email: syncSettings.email,
+        gistId: syncSettings.gistId
+      };
+      const sessionSecrets = {
+        oauthSession: syncSettings.oauthSession,
+        emailChallengeId: syncSettings.emailChallengeId,
+        token: syncSettings.token
+      };
+      localStorage.setItem(syncSettingsKey, JSON.stringify(publicSettings));
+      try {
+        sessionStorage.setItem(syncSecretsKey, JSON.stringify(sessionSecrets));
+      } catch {
+        // Secrets remain only in memory when session storage is unavailable.
+      }
+    }
 
     function mergeSavedArray(savedArray, fallbackValue) {
       return Array.from({ length: questions.length }, (_, index) => {
         if (Array.isArray(savedArray) && index < savedArray.length) return savedArray[index];
         return typeof fallbackValue === "function" ? fallbackValue(index) : fallbackValue;
       });
+    }
+
+    function safeText(value, maxLength = 8000) {
+      return typeof value === "string" ? value.slice(0, maxLength) : "";
+    }
+
+    function normalizeTextArray(savedArray, length = questions.length) {
+      return Array.from({ length }, (_, index) => safeText(Array.isArray(savedArray) ? savedArray[index] : ""));
+    }
+
+    function normalizeTextList(value, maxItems = 8) {
+      return Array.isArray(value) ? value.slice(0, maxItems).map(item => safeText(item, 800)).filter(Boolean) : [];
+    }
+
+    function normalizeFeedbackItem(item) {
+      if (!item || typeof item !== "object" || !Number.isFinite(Number(item.score))) return null;
+      return {
+        score: Math.min(100, Math.max(0, Math.round(Number(item.score)))),
+        title: safeText(item.title, 200),
+        summary: safeText(item.summary, 1200),
+        strengths: normalizeTextList(item.strengths),
+        issues: normalizeTextList(item.issues)
+      };
+    }
+
+    function normalizeReadinessItem(item) {
+      const normalized = normalizeFeedbackItem(item);
+      return normalized ? { ...normalized, passed: item.passed === true && normalized.score >= 60 } : null;
     }
 
     function normalizeLearnedLessons(savedLessons, savedFeedback) {
@@ -2953,7 +3100,7 @@
     function normalizeLessonReadiness(savedReadiness) {
       return Array.from({ length: dailyLessons.length }, (_, index) => {
         const item = Array.isArray(savedReadiness) ? savedReadiness[index] : null;
-        return item && Number.isFinite(item.score) ? item : null;
+        return normalizeReadinessItem(item);
       });
     }
 
@@ -2961,7 +3108,7 @@
       return Array.from({ length: dailyLessons.length }, (_, lessonIndex) => {
         const savedItems = Array.isArray(savedResources) ? savedResources[lessonIndex] : null;
         if (Array.isArray(savedItems)) {
-          return Array.from({ length: 4 }, (_, stepIndex) => Boolean(savedItems[stepIndex]));
+          return Array.from({ length: 4 }, (_, stepIndex) => savedItems[stepIndex] === true);
         }
         return Array(4).fill(Boolean(learnedLessons[lessonIndex]));
       });
@@ -2991,10 +3138,10 @@
         if (!saved) return;
         state.current = Number.isInteger(saved.current) ? Math.min(Math.max(saved.current, 0), questions.length - 1) : 0;
         state.view = saved.view === "interview" ? "interview" : "learn";
-        state.answers = mergeSavedArray(saved.answers, "");
-        state.feedback = mergeSavedArray(saved.feedback, null);
+        state.answers = normalizeTextArray(saved.answers);
+        state.feedback = mergeSavedArray(saved.feedback, null).map(normalizeFeedbackItem);
         state.learnedLessons = normalizeLearnedLessons(saved.learnedLessons, state.feedback);
-        state.lessonReflections = mergeSavedArray(saved.lessonReflections, "");
+        state.lessonReflections = normalizeTextArray(saved.lessonReflections, dailyLessons.length);
         state.lessonReadiness = normalizeLessonReadiness(saved.lessonReadiness);
         state.lessonResources = normalizeLessonResources(saved.lessonResources, state.learnedLessons);
         backfillReadinessForLearned();
@@ -3002,14 +3149,14 @@
         state.lessonOffset = Number.isInteger(saved.lessonOffset)
           ? Math.min(Math.max(saved.lessonOffset, 0), maxOffset)
           : maxOffset;
-        state.hintsOpen = mergeSavedArray(saved.hintsOpen, false);
-        state.followupQuestions = mergeSavedArray(saved.followupQuestions, "");
-        state.followupAnswers = mergeSavedArray(saved.followupAnswers, "");
-        state.followupFeedback = mergeSavedArray(saved.followupFeedback, null);
+        state.hintsOpen = mergeSavedArray(saved.hintsOpen, false).map(value => value === true);
+        state.followupQuestions = normalizeTextArray(saved.followupQuestions);
+        state.followupAnswers = normalizeTextArray(saved.followupAnswers);
+        state.followupFeedback = mergeSavedArray(saved.followupFeedback, null).map(normalizeFeedbackItem);
         state.selfChecks = questions.map((question, index) => {
           const savedChecks = Array.isArray(saved.selfChecks) ? saved.selfChecks[index] : null;
           return Array.isArray(savedChecks) && savedChecks.length === question.expected.length
-            ? savedChecks
+            ? savedChecks.map(value => value === true)
             : Array(question.expected.length).fill(false);
         });
       } catch {
@@ -3039,18 +3186,25 @@
 
     function loadSyncSettings() {
       try {
-        const saved = JSON.parse(localStorage.getItem("rongDataMockInterviewSync"));
+        const saved = JSON.parse(localStorage.getItem(syncSettingsKey));
+        let secrets = {};
+        try {
+          secrets = JSON.parse(sessionStorage.getItem(syncSecretsKey)) || {};
+        } catch {
+          sessionStorage.removeItem(syncSecretsKey);
+        }
         if (saved) {
           syncSettings.workerUrl = typeof saved.workerUrl === "string" ? saved.workerUrl : "";
-          syncSettings.oauthSession = typeof saved.oauthSession === "string" ? saved.oauthSession : "";
           syncSettings.authProvider = typeof saved.authProvider === "string" ? saved.authProvider : "";
           syncSettings.email = typeof saved.email === "string" ? saved.email : "";
-          syncSettings.emailChallengeId = typeof saved.emailChallengeId === "string" ? saved.emailChallengeId : "";
-          syncSettings.token = typeof saved.token === "string" ? saved.token : "";
           syncSettings.gistId = typeof saved.gistId === "string" ? saved.gistId : "";
+          syncSettings.oauthSession = typeof secrets.oauthSession === "string" ? secrets.oauthSession : typeof saved.oauthSession === "string" ? saved.oauthSession : "";
+          syncSettings.emailChallengeId = typeof secrets.emailChallengeId === "string" ? secrets.emailChallengeId : typeof saved.emailChallengeId === "string" ? saved.emailChallengeId : "";
+          syncSettings.token = typeof secrets.token === "string" ? secrets.token : typeof saved.token === "string" ? saved.token : "";
+          persistSyncStorage();
         }
       } catch {
-        localStorage.removeItem("rongDataMockInterviewSync");
+        localStorage.removeItem(syncSettingsKey);
       }
       els.syncWorkerInput.value = syncSettings.workerUrl;
       els.syncEmailInput.value = syncSettings.email;
@@ -3065,12 +3219,12 @@
       if (els.syncEmailInput.value.trim()) syncSettings.email = els.syncEmailInput.value.trim();
       syncSettings.token = els.syncTokenInput.value.trim();
       syncSettings.gistId = els.syncGistInput.value.trim();
-      localStorage.setItem("rongDataMockInterviewSync", JSON.stringify(syncSettings));
+      persistSyncStorage();
       renderCourseProgress();
     }
 
     function persistSyncSettings() {
-      localStorage.setItem("rongDataMockInterviewSync", JSON.stringify(syncSettings));
+      persistSyncStorage();
       els.syncWorkerInput.value = syncSettings.workerUrl;
       els.syncEmailInput.value = syncSettings.email;
       els.syncGistInput.value = syncSettings.gistId;
@@ -3083,6 +3237,24 @@
       els.syncStatus.textContent = message;
       els.syncStatus.classList.remove("ok", "error");
       if (type) els.syncStatus.classList.add(type);
+      els.syncStatus.setAttribute("role", type === "error" ? "alert" : "status");
+    }
+
+    async function runBusy(button, pendingText, errorPrefix, operation) {
+      if (button.disabled) return;
+      const originalText = button.textContent;
+      button.disabled = true;
+      button.setAttribute("aria-busy", "true");
+      button.textContent = pendingText;
+      try {
+        await operation();
+      } catch (error) {
+        setSyncStatus(`${errorPrefix}：${error.message}`, "error");
+      } finally {
+        button.disabled = false;
+        button.removeAttribute("aria-busy");
+        button.textContent = originalText;
+      }
     }
 
     function authProviderLabel() {
@@ -3164,15 +3336,16 @@
         throw new Error("進度格式不正確");
       }
       const shouldMerge = options.merge === true;
-      const incomingFeedback = mergeSavedArray(incoming.feedback, null);
+      const incomingFeedback = mergeSavedArray(incoming.feedback, null).map(normalizeFeedbackItem);
       state.current = Number.isInteger(incoming.current) ? Math.min(Math.max(incoming.current, 0), questions.length - 1) : state.current;
-      state.answers = shouldMerge ? mergeProgressArray(state.answers, incoming.answers, "") : mergeSavedArray(incoming.answers, "");
+      const incomingAnswers = normalizeTextArray(incoming.answers);
+      state.answers = shouldMerge ? mergeProgressArray(state.answers, incomingAnswers, "") : incomingAnswers;
       state.feedback = shouldMerge ? mergeProgressArray(state.feedback, incomingFeedback, null) : incomingFeedback;
       const incomingLearned = normalizeLearnedLessons(incoming.learnedLessons, state.feedback);
       state.learnedLessons = shouldMerge
         ? Array.from({ length: dailyLessons.length }, (_, index) => Boolean(state.learnedLessons[index] || incomingLearned[index]))
         : incomingLearned;
-      const incomingReflections = mergeSavedArray(incoming.lessonReflections, "");
+      const incomingReflections = normalizeTextArray(incoming.lessonReflections, dailyLessons.length);
       state.lessonReflections = shouldMerge
         ? Array.from({ length: dailyLessons.length }, (_, index) => incomingReflections[index] || state.lessonReflections[index] || "")
         : incomingReflections;
@@ -3192,14 +3365,14 @@
         state.current = learningQuestionIndex(maxOffset);
         state.view = "learn";
       }
-      state.hintsOpen = mergeSavedArray(incoming.hintsOpen, false);
-      state.followupQuestions = mergeSavedArray(incoming.followupQuestions, "");
-      state.followupAnswers = mergeSavedArray(incoming.followupAnswers, "");
-      state.followupFeedback = mergeSavedArray(incoming.followupFeedback, null);
+      state.hintsOpen = mergeSavedArray(incoming.hintsOpen, false).map(value => value === true);
+      state.followupQuestions = normalizeTextArray(incoming.followupQuestions);
+      state.followupAnswers = normalizeTextArray(incoming.followupAnswers);
+      state.followupFeedback = mergeSavedArray(incoming.followupFeedback, null).map(normalizeFeedbackItem);
       state.selfChecks = questions.map((question, index) => {
         const savedChecks = Array.isArray(incoming.selfChecks) ? incoming.selfChecks[index] : null;
         return Array.isArray(savedChecks) && savedChecks.length === question.expected.length
-          ? savedChecks
+          ? savedChecks.map(value => value === true)
           : Array(question.expected.length).fill(false);
       });
       renderAll();
@@ -3215,6 +3388,10 @@
       const raw = els.syncPayloadBox.value.trim();
       if (!raw) {
         setSyncStatus("請先貼上匯入碼。", "error");
+        return;
+      }
+      if (raw.length > 1024 * 1024) {
+        setSyncStatus("匯入失敗：進度碼超過 1 MB，請確認內容是否正確。", "error");
         return;
       }
       try {
@@ -4020,11 +4197,11 @@
     }
 
     function areLessonResourcesDone(offset) {
-      return completedResourceCount(offset) >= 4;
+      return completedResourceCount(offset) >= 1;
     }
 
     function isResourceStepUnlocked(offset, step) {
-      return isLessonUnlocked(offset) && (isLessonLearned(offset) || step <= nextResourceStep(offset));
+      return isLessonUnlocked(offset);
     }
 
     function setResourceLink(element, prefix, resource, options = {}) {
@@ -4033,7 +4210,8 @@
       const done = tracked ? Boolean(state.lessonResources[offset] && state.lessonResources[offset][step]) : false;
       const unlocked = tracked ? isResourceStepUnlocked(offset, step) : true;
       const status = done ? "✓" : unlocked ? "開啟" : "鎖";
-      const label = tracked ? `${step + 1}. ${prefix}：${resource.label} ${status}` : `${prefix}：${resource.label}`;
+      const resourceType = tracked ? (step === 0 ? "建議主資源" : "替代／選修") : "";
+      const label = tracked ? `${resourceType}・${prefix}：${resource.label} ${status}` : `${prefix}：${resource.label}`;
 
       element.textContent = label;
       element.title = resource.url;
@@ -4054,7 +4232,7 @@
       if (unlocked) {
         element.href = resource.url;
         element.setAttribute("target", "_blank");
-        element.setAttribute("rel", "noreferrer");
+        element.setAttribute("rel", "noopener noreferrer");
         element.removeAttribute("aria-disabled");
       } else {
         element.href = "#";
@@ -4066,13 +4244,13 @@
     function resourceStatusText(offset) {
       const done = completedResourceCount(offset);
       if (isLessonLearned(offset)) return "本課資源與檢核已完成，可以進入挑戰或下一天。";
-      if (done >= 4) return "4 / 4 個資源已點開。現在可以寫學習檢核，達到 60 分後解鎖下一天。";
-      return `${done} / 4 個資源已點開。請依序開啟下一個資源，全部完成後才開放檢核與練習。`;
+      if (done >= 1) return `主資源已完成，另開啟 ${Math.max(0, done - 1)} 個選修。現在可以寫學習檢核。`;
+      return "請先選一個主資源學習；其餘影片、文件與練習為選修。";
     }
 
     function markLessonResourceVisited(offset, step) {
       if (!isResourceStepUnlocked(offset, step)) {
-        setSyncStatus(`請先完成 D${offset + 1} 的前一個學習資源。`, "error");
+        setSyncStatus(`D${offset + 1} 尚未解鎖。`, "error");
         return false;
       }
       if (!Array.isArray(state.lessonResources[offset])) {
@@ -4081,7 +4259,7 @@
       const changed = !state.lessonResources[offset][step];
       state.lessonResources[offset][step] = true;
       if (changed) {
-        setSyncStatus(`D${offset + 1} 資源進度 ${completedResourceCount(offset)} / 4。`, "ok");
+        setSyncStatus(`D${offset + 1} 已完成主資源，另有 ${Math.max(0, completedResourceCount(offset) - 1)} 個選修。`, "ok");
         save();
         renderAll();
         maybeAutoUploadProgress();
@@ -4608,6 +4786,26 @@
       return dailyLessonStartIndex + offset;
     }
 
+    function textElement(tagName, text) {
+      const element = document.createElement(tagName);
+      element.textContent = safeText(text, 2000);
+      return element;
+    }
+
+    function replaceTextList(element, items, fallback) {
+      const values = normalizeTextList(items);
+      element.replaceChildren(...(values.length ? values : [fallback]).map(item => textElement("li", item)));
+    }
+
+    function readinessList(label, items, fallback) {
+      const wrapper = document.createElement("div");
+      wrapper.append(textElement("span", label));
+      const list = document.createElement("ul");
+      replaceTextList(list, items, fallback);
+      wrapper.append(list);
+      return wrapper;
+    }
+
     function renderLessonReadiness(offset) {
       const readiness = state.lessonReadiness[offset];
       els.lessonReflectionInput.value = state.lessonReflections[offset] || "";
@@ -4615,31 +4813,19 @@
       if (!readiness) {
         const resourcesDone = areLessonResourcesDone(offset);
         els.lessonReadinessResult.classList.toggle("error", !resourcesDone);
-        els.lessonReadinessResult.innerHTML = `
-          <strong>${resourcesDone ? "尚未檢核" : "先完成學習資源"}</strong>
-          <span>${resourcesDone ? "寫完後按「分析學習程度」。達到 60 分就會自動解鎖下一天。" : "請先依序點開 4 個學習資源，再寫學習檢核。這樣才不會只靠猜題進入練習。"}</span>
-        `;
+        els.lessonReadinessResult.replaceChildren(
+          textElement("strong", resourcesDone ? "尚未檢核" : "先完成學習資源"),
+          textElement("span", resourcesDone ? "寫完後按「分析學習程度」。達到 60 分就會自動解鎖下一天。" : "請先選一個主資源學習；其他資源可依卡點選修，再用自己的話完成檢核。")
+        );
         return;
       }
       els.lessonReadinessResult.classList.add(readiness.passed ? "ok" : "error");
-      const strengths = readiness.strengths && readiness.strengths.length
-        ? `<li>${readiness.strengths.slice(0, 2).join("</li><li>")}</li>`
-        : "<li>先補完整說明，我再幫你判斷。</li>";
-      const issues = readiness.issues && readiness.issues.length
-        ? `<li>${readiness.issues.slice(0, 3).join("</li><li>")}</li>`
-        : "<li>目前沒有明顯缺口，可以進入下一課。</li>";
-      els.lessonReadinessResult.innerHTML = `
-        <strong>${readiness.title}｜${readiness.score} 分</strong>
-        <span>${readiness.summary}</span>
-        <div>
-          <span>已做到：</span>
-          <ul>${strengths}</ul>
-        </div>
-        <div>
-          <span>建議補強：</span>
-          <ul>${issues}</ul>
-        </div>
-      `;
+      els.lessonReadinessResult.replaceChildren(
+        textElement("strong", `${readiness.title}｜${readiness.score} 分`),
+        textElement("span", readiness.summary),
+        readinessList("已做到：", readiness.strengths && readiness.strengths.slice(0, 2), "先補完整說明，我再幫你判斷。"),
+        readinessList("建議補強：", readiness.issues && readiness.issues.slice(0, 3), "目前沒有明顯缺口，可以進入下一課。")
+      );
     }
 
     function renderLearningPage() {
@@ -4672,7 +4858,7 @@
       els.startLessonChallengeBtn.disabled = !learned && !resourcesDone;
       els.startLessonChallengeBtn.textContent = learned
         ? offset < dailyLessons.length - 1 ? "前往下一天" : "已完成全部課程"
-        : !resourcesDone ? "先完成 4 個學習資源" : state.lessonReadiness[offset] ? "重新分析學習程度" : "分析學習程度";
+        : !resourcesDone ? "先完成一個主資源" : state.lessonReadiness[offset] ? "重新分析學習程度" : "分析學習程度";
       els.openTodayLessonBtn.disabled = !learned;
       els.openTodayLessonBtn.textContent = learned ? "用本課考我" : "達到 60 分後再考我";
       els.learningPlanTopic.textContent = plan.topic;
@@ -4708,10 +4894,10 @@
       const challengeUnlocked = isLessonLearned(todayOffset);
       const practiceUnlocked = areLessonResourcesDone(todayOffset);
       const quickItems = [
-        `<button class="nav-item ${state.view === "learn" && selectedOffset === todayOffset ? "active" : ""}" type="button" data-nav-home="today">
+        `<button class="nav-item ${state.view === "learn" && selectedOffset === todayOffset ? "active" : ""}" type="button" data-nav-home="today" ${state.view === "learn" && selectedOffset === todayOffset ? "aria-current=\"step\"" : ""}>
           <span>1</span><span>目前學習</span><small>D${todayOffset + 1}</small>
         </button>`,
-        `<button class="nav-item ${state.view === "interview" && state.current === todayLearningIndex() ? "active" : ""} ${state.feedback[todayLearningIndex()] ? "done" : ""} ${challengeUnlocked ? "" : "locked"}" type="button" ${challengeUnlocked ? `data-question="${todayLearningIndex()}"` : "disabled"}>
+        `<button class="nav-item ${state.view === "interview" && state.current === todayLearningIndex() ? "active" : ""} ${state.feedback[todayLearningIndex()] ? "done" : ""} ${challengeUnlocked ? "" : "locked"}" type="button" ${state.view === "interview" && state.current === todayLearningIndex() ? "aria-current=\"step\"" : ""} ${challengeUnlocked ? `data-question="${todayLearningIndex()}"` : "disabled"}>
           <span>2</span><span>本課挑戰</span><small>${state.feedback[todayLearningIndex()] ? "✓" : challengeUnlocked ? "考" : "鎖"}</small>
         </button>`
       ].join("");
@@ -4721,7 +4907,7 @@
         const done = isLessonLearned(index);
         const unlocked = isLessonUnlocked(index);
         return `
-          <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""} ${unlocked ? "" : "locked"}" type="button" ${unlocked ? `data-lesson="${index}"` : "disabled"}>
+          <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""} ${unlocked ? "" : "locked"}" type="button" ${active ? "aria-current=\"step\"" : ""} ${unlocked ? `data-lesson="${index}"` : "disabled"}>
             <span>D${index + 1}</span>
             <span>${lesson.title}</span>
             <small>${done ? "✓" : unlocked ? "進行中" : "鎖定"}</small>
@@ -4732,7 +4918,7 @@
         const active = state.view === "interview" && state.current === index;
         const done = Boolean(state.feedback[index]);
         return `
-          <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""} ${practiceUnlocked ? "" : "locked"}" type="button" ${practiceUnlocked ? `data-question="${index}"` : "disabled"}>
+          <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""} ${practiceUnlocked ? "" : "locked"}" type="button" ${active ? "aria-current=\"step\"" : ""} ${practiceUnlocked ? `data-question="${index}"` : "disabled"}>
             <span>Q${index + 1}</span>
             <span>${question.title}</span>
             <small>${done ? "✓" : practiceUnlocked ? domains[question.domain] : "鎖定"}</small>
@@ -4774,7 +4960,7 @@
       const target = Math.min(Math.max(index, 0), questions.length - 1);
       if (target < baseQuestionCount && !areLessonResourcesDone(todayLearningOffset())) {
         openLearning(todayLearningOffset());
-        setSyncStatus("請先依序點完本課 4 個學習資源，再進入練習題。", "error");
+        setSyncStatus("請先完成本課一個主資源，再進入練習題。", "error");
         return;
       }
       if (target >= dailyLessonStartIndex) {
@@ -4811,6 +4997,7 @@
       `).join("");
       els.guideGrid.classList.toggle("is-hidden", !state.hintsOpen[state.current]);
       els.hintToggleBtn.textContent = state.hintsOpen[state.current] ? "▴ 收起提示" : "▾ 顯示答題提示";
+      els.hintToggleBtn.setAttribute("aria-expanded", String(Boolean(state.hintsOpen[state.current])));
       renderChecklist(question);
       els.answerInput.value = state.answers[state.current] || "";
       updateAnswerModeText();
@@ -4871,8 +5058,8 @@
         setScoreClass(null);
         els.feedbackTitle.textContent = "先寫一段回答";
         els.feedbackSummary.textContent = "按下「取得回饋」後，會依照具體性、結構、專案連結、驗證與領域關鍵點評分。";
-        els.strengthList.innerHTML = "<li>尚未分析。</li>";
-        els.issueList.innerHTML = "<li>先回答這題，再取得回饋。</li>";
+        replaceTextList(els.strengthList, [], "尚未分析。");
+        replaceTextList(els.issueList, [], "先回答這題，再取得回饋。");
         els.modelAnswerBlock.style.display = "none";
         els.modelAnswer.textContent = "";
       } else {
@@ -4881,8 +5068,8 @@
         setScoreClass(current.score);
         els.feedbackTitle.textContent = current.title;
         els.feedbackSummary.textContent = current.summary;
-        els.strengthList.innerHTML = current.strengths.map(item => `<li>${item}</li>`).join("");
-        els.issueList.innerHTML = current.issues.map(item => `<li>${item}</li>`).join("");
+        replaceTextList(els.strengthList, current.strengths, "尚未分析。");
+        replaceTextList(els.issueList, current.issues, "目前沒有明顯缺口。");
         els.modelAnswerBlock.style.display = "block";
         els.modelAnswer.textContent = questions[state.current].skeleton;
       }
@@ -4963,13 +5150,15 @@
       state.feedback[state.current] = analyzeAnswer(questions[state.current], els.answerInput.value, state.selfChecks[state.current]);
       renderFeedback();
       save();
+      els.feedbackPanel.focus({ preventScroll: true });
+      els.feedbackPanel.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
     }
 
     function submitLessonReadiness() {
       const offset = activeLearningOffset();
       if (!areLessonResourcesDone(offset)) {
         renderLessonReadiness(offset);
-        setSyncStatus(`D${offset + 1} 請先依序點完 4 個學習資源，再做 60 分檢核。`, "error");
+        setSyncStatus(`D${offset + 1} 請先完成一個主資源，再做 60 分檢核。`, "error");
         return;
       }
       const lesson = dailyLessons[offset];
@@ -4995,7 +5184,7 @@
       renderFollowup();
       els.followupSection.classList.remove("is-hidden");
       window.requestAnimationFrame(() => {
-        els.followupSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        els.followupSection.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
       });
       save();
     }
@@ -5011,7 +5200,13 @@
       } else if (!feedback) {
         els.followupFeedbackResult.textContent = "寫完追問回答後，按「取得追問回饋」。";
       } else {
-        els.followupFeedbackResult.innerHTML = `<strong>${feedback.title}｜${feedback.score} 分</strong><br>${feedback.summary}<br>${feedback.issues.slice(0, 2).join(" ")}`;
+        els.followupFeedbackResult.replaceChildren(
+          textElement("strong", `${feedback.title}｜${feedback.score} 分`),
+          document.createElement("br"),
+          document.createTextNode(safeText(feedback.summary, 1200)),
+          document.createElement("br"),
+          document.createTextNode(normalizeTextList(feedback.issues, 2).join(" "))
+        );
       }
     }
 
@@ -5094,6 +5289,7 @@
       state.hintsOpen[state.current] = !state.hintsOpen[state.current];
       els.guideGrid.classList.toggle("is-hidden", !state.hintsOpen[state.current]);
       els.hintToggleBtn.textContent = state.hintsOpen[state.current] ? "▴ 收起提示" : "▾ 顯示答題提示";
+      els.hintToggleBtn.setAttribute("aria-expanded", String(Boolean(state.hintsOpen[state.current])));
       save();
     });
 
@@ -5120,7 +5316,7 @@
       if (!Number.isInteger(offset) || !Number.isInteger(step)) return;
       if (!isResourceStepUnlocked(offset, step)) {
         event.preventDefault();
-        setSyncStatus(`D${offset + 1} 請先完成前一個學習資源。`, "error");
+        setSyncStatus(`D${offset + 1} 尚未解鎖。`, "error");
         return;
       }
       markLessonResourceVisited(offset, step);
@@ -5179,28 +5375,17 @@
       setSyncStatus(syncSettings.gistId ? `已儲存 Gist：${syncSettings.gistId}，正在同步進度...` : "已儲存同步設定，正在尋找雲端進度...", "ok");
       maybeAutoDownloadProgress();
     });
-    document.getElementById("syncEmailSendBtn").addEventListener("click", () => {
-      sendEmailLoginCode().catch(error => setSyncStatus(`寄送失敗：${error.message}`, "error"));
-    });
-    document.getElementById("syncEmailVerifyBtn").addEventListener("click", () => {
-      verifyEmailCode().catch(error => setSyncStatus(`驗證失敗：${error.message}`, "error"));
-    });
-    document.getElementById("syncEmailLogoutBtn").addEventListener("click", () => {
-      logoutOAuthSync().catch(error => setSyncStatus(`登出失敗：${error.message}`, "error"));
-    });
+    document.getElementById("syncEmailSendBtn").addEventListener("click", event => runBusy(event.currentTarget, "寄送中…", "寄送失敗", sendEmailLoginCode));
+    document.getElementById("syncEmailVerifyBtn").addEventListener("click", event => runBusy(event.currentTarget, "驗證中…", "驗證失敗", verifyEmailCode));
+    document.getElementById("syncEmailLogoutBtn").addEventListener("click", event => runBusy(event.currentTarget, "登出中…", "登出失敗", logoutOAuthSync));
     document.getElementById("syncOAuthLoginBtn").addEventListener("click", startOAuthLogin);
-    document.getElementById("syncOAuthLogoutBtn").addEventListener("click", () => {
-      logoutOAuthSync().catch(error => setSyncStatus(`登出失敗：${error.message}`, "error"));
-    });
+    document.getElementById("syncOAuthLogoutBtn").addEventListener("click", event => runBusy(event.currentTarget, "登出中…", "登出失敗", logoutOAuthSync));
     document.getElementById("syncExportBtn").addEventListener("click", exportProgressCode);
     document.getElementById("syncImportBtn").addEventListener("click", importProgressCode);
-    document.getElementById("syncUploadBtn").addEventListener("click", () => {
-      uploadProgressToGist().catch(error => setSyncStatus(`上傳失敗：${error.message}`, "error"));
-    });
-    document.getElementById("syncDownloadBtn").addEventListener("click", () => {
-      downloadProgressFromGist().catch(error => setSyncStatus(`下載失敗：${error.message}`, "error"));
-    });
+    document.getElementById("syncUploadBtn").addEventListener("click", event => runBusy(event.currentTarget, "上傳中…", "上傳失敗", uploadProgressToGist));
+    document.getElementById("syncDownloadBtn").addEventListener("click", event => runBusy(event.currentTarget, "下載中…", "下載失敗", downloadProgressFromGist));
     document.getElementById("syncClearBtn").addEventListener("click", () => {
+      if (!window.confirm("確定清除這台裝置的同步 URL、登入階段、Gist token 與 Gist ID 嗎？學習進度不會被刪除。")) return;
       syncSettings.token = "";
       syncSettings.gistId = "";
       syncSettings.oauthSession = "";
@@ -5213,7 +5398,8 @@
       els.syncEmailCodeInput.value = "";
       els.syncTokenInput.value = "";
       els.syncGistInput.value = "";
-      localStorage.removeItem("rongDataMockInterviewSync");
+      localStorage.removeItem(syncSettingsKey);
+      sessionStorage.removeItem(syncSecretsKey);
       renderCourseProgress();
       setSyncStatus("已清除本機同步設定。", "ok");
     });
@@ -5227,6 +5413,10 @@
     });
 
     document.getElementById("resetBtn").addEventListener("click", () => {
+      if (!window.confirm("確定清空 28 天課程進度、所有答案、分數、提示與追問嗎？同步設定不會刪除，並會保留一次本機復原。")) return;
+      save();
+      const currentSave = localStorage.getItem("rongDataMockInterview");
+      if (currentSave) localStorage.setItem(resetBackupKey, currentSave);
       state.current = 0;
       state.view = "learn";
       state.lessonOffset = 0;
@@ -5245,10 +5435,26 @@
       els.followupOutput.textContent = "按「面試官追問」取得下一個問題。";
       els.followupSection.classList.add("is-hidden");
       renderAll();
+      document.getElementById("undoResetBtn").hidden = false;
+    });
+
+    document.getElementById("undoResetBtn").addEventListener("click", () => {
+      const backup = localStorage.getItem(resetBackupKey);
+      if (!backup) {
+        window.alert("找不到可復原的清空前進度。");
+        return;
+      }
+      localStorage.setItem("rongDataMockInterview", backup);
+      localStorage.removeItem(resetBackupKey);
+      load();
+      renderAll();
+      document.getElementById("undoResetBtn").hidden = true;
+      setSyncStatus("已復原清空前的本機進度。", "ok");
     });
 
     loadSyncSettings();
     load();
+    document.getElementById("undoResetBtn").hidden = !localStorage.getItem(resetBackupKey);
     renderAll();
     consumeCloudSessionFromHash();
     maybeAutoDownloadProgress();
