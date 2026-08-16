@@ -1,0 +1,27 @@
+name: Quality checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+      - name: Validate HTML
+        run: npx --yes html-validate@11.6.2 index.html roadmap.html
+      - name: Parse inline JavaScript
+        run: node scripts/check-inline-js.mjs index.html roadmap.html
+      - name: Test Worker
+        run: npm test --prefix oauth-worker
+      - name: Verify Worker bundle
+        run: npx --yes wrangler@4.123.0 deploy --dry-run --config oauth-worker/wrangler.toml

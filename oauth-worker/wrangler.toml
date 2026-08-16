@@ -5,16 +5,24 @@ compatibility_date = "2026-05-26"
 [vars]
 APP_ORIGIN = "https://steven65026502.github.io"
 GITHUB_CLIENT_ID = "replace_with_github_oauth_client_id"
-EMAIL_FROM = "Data Interview Trainer <onboarding@resend.dev>"
-# EMAIL_DEBUG = "true"
+EMAIL_FROM = "Rong 工程求職學習與面試工作台 <onboarding@resend.dev>"
+
+[[durable_objects.bindings]]
+name = "AUTH_COORDINATOR"
+class_name = "AuthCoordinator"
+
+[[migrations]]
+tag = "v1-auth-coordinator"
+new_sqlite_classes = ["AuthCoordinator"]
 
 # Set these as Cloudflare Worker secrets, not plain vars:
 # wrangler secret put GITHUB_CLIENT_SECRET
 # wrangler secret put SESSION_SECRET
 # wrangler secret put RESEND_API_KEY
 
-# Required for Email login and Email progress sync.
-# Create it with:
+# Optional legacy binding: keep only while migrating Email progress from the
+# previous KV-backed release. New progress is stored in Durable Objects.
+# To create a legacy-compatible namespace:
 # npx wrangler kv namespace create interview_trainer_progress
 # npx wrangler kv namespace create interview_trainer_progress --preview
 #

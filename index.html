@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Rong 的 28 天資料工程學習與模擬面試工作台，包含每日課程、作答回饋、進度保存與雲端同步。">
+  <meta name="description" content="Rong 的工程求職學習與模擬面試工作台，包含資料工程專項、四條職涯主線、作答回饋與進度同步。">
   <link rel="icon" href="data:,">
-  <title>Rong Data Interview Learning Console</title>
+  <title>Rong 工程求職學習與面試工作台</title>
   <style>
     :root {
       --bg: #f5f7f8;
@@ -158,6 +158,32 @@
       white-space: nowrap;
     }
 
+    .question-head-tools {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .track-control {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .track-control select {
+      min-height: 44px;
+      max-width: 180px;
+      padding: 8px 30px 8px 10px;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      background: var(--panel);
+      color: var(--ink);
+    }
+
     .interview {
       padding: 18px;
       display: grid;
@@ -168,6 +194,12 @@
       display: grid;
       gap: 20px;
       padding: 22px;
+    }
+
+    #currentLesson,
+    #courseNavPanel,
+    #syncPanelCard {
+      scroll-margin-top: 16px;
     }
 
     .learning-head {
@@ -205,6 +237,28 @@
       margin: 0;
       padding: 0;
       list-style: none;
+    }
+
+    .learning-guide {
+      border-block: 1px solid var(--line);
+    }
+
+    .learning-guide > summary {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .learning-guide[open] > summary {
+      margin-bottom: 10px;
+    }
+
+    .learning-guide .learning-steps {
+      padding-bottom: 12px;
     }
 
     .learning-step {
@@ -878,7 +932,9 @@
       position: sticky;
       top: 16px;
       max-height: calc(100vh - 32px);
+      max-height: calc(100dvh - 32px);
       overflow: auto;
+      scrollbar-gutter: stable;
     }
 
     .side-body {
@@ -1079,11 +1135,14 @@
     }
 
     .advanced-sync summary {
+      min-height: 44px;
       cursor: pointer;
       color: var(--ink);
       font-size: 12px;
       font-weight: 700;
       list-style-position: inside;
+      display: flex;
+      align-items: center;
     }
 
     .advanced-sync .sync-grid,
@@ -1544,6 +1603,13 @@
       line-height: 1.6;
     }
 
+    .feedback-disclaimer {
+      margin: -2px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
     .field-label {
       display: block;
       margin: 8px 0 5px;
@@ -1566,6 +1632,10 @@
 
     .skip-link:focus {
       transform: translateY(0);
+    }
+
+    .mobile-dock {
+      display: none;
     }
 
     @media (max-width: 1180px) {
@@ -1606,6 +1676,44 @@
         max-height: none;
         overflow: visible;
       }
+
+      body {
+        padding-bottom: calc(68px + env(safe-area-inset-bottom));
+      }
+
+      .mobile-dock {
+        position: fixed;
+        right: 12px;
+        bottom: calc(10px + env(safe-area-inset-bottom));
+        left: 12px;
+        z-index: 40;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 4px;
+        padding: 5px;
+        border: 1px solid var(--line-strong);
+        border-radius: 9px;
+        background: rgba(255, 255, 255, 0.96);
+        box-shadow: 0 10px 30px rgba(29, 37, 40, 0.18);
+        backdrop-filter: blur(10px);
+      }
+
+      .mobile-dock a {
+        min-height: 44px;
+        display: grid;
+        place-items: center;
+        border-radius: 6px;
+        color: var(--ink);
+        font-size: 13px;
+        font-weight: 750;
+        text-decoration: none;
+      }
+
+      .mobile-dock a:focus-visible,
+      .mobile-dock a:hover {
+        background: var(--accent-soft);
+        color: var(--accent);
+      }
     }
 
     @media (max-width: 760px) {
@@ -1632,6 +1740,27 @@
 
       #feedbackBtnTop {
         display: none;
+      }
+
+      .interview-question-page > .panel-head {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .question-head-tools,
+      .track-control {
+        align-items: stretch;
+        width: 100%;
+      }
+
+      .track-control {
+        flex-direction: column;
+      }
+
+      .track-control select {
+        max-width: none;
+        width: 100%;
+        font-size: 16px;
       }
 
       .guide,
@@ -1666,13 +1795,13 @@
   <div class="shell">
     <header>
       <div class="title">
-        <h1>Rong Data Interview Learning Console</h1>
-        <p>從簡單到難逐步解鎖；確認學完一課後，再進入挑戰與下一個知識點。</p>
+        <h1>Rong 工程求職學習與面試工作台</h1>
+        <p>以資料工程專項打底，再依後端、資料、SDET 或 AI 應用主線練角色題。</p>
       </div>
       <div class="actions">
         <a class="btn" href="roadmap.html">8 週學習表</a>
         <button class="btn danger" id="resetBtn" type="button">清空練習</button>
-        <button class="btn" id="undoResetBtn" type="button" hidden>復原清空</button>
+        <button class="btn" id="undoResetBtn" type="button" hidden>復原上次變更</button>
         <button class="btn primary" id="feedbackBtnTop" type="button">取得回饋</button>
       </div>
     </header>
@@ -1683,10 +1812,13 @@
           <div class="learning-head">
             <span id="learningMeta">第 1 天 / 28 天循環</span>
             <h2>今日學習</h2>
-            <p id="learningIntro">先把目前知識點學清楚，按下確認後才會解鎖下一天。每一課都可以回頭複習，也可以用同一個知識點回答挑戰題。</p>
+            <p id="learningIntro">先完成一個主資源與文字檢核，再用實戰挑戰證明技術要點；兩關都通過才解鎖下一天。</p>
+            <div><a class="btn primary" href="#currentLesson">直接開始今天</a></div>
           </div>
 
-          <ol class="learning-steps">
+          <details class="learning-guide">
+            <summary>第一次使用？查看 5 步學習流程</summary>
+            <ol class="learning-steps">
             <li class="learning-step">
               <strong>1. 讀概念</strong>
               <span>先知道今天的詞在資料工作裡解決什麼問題。</span>
@@ -1701,18 +1833,19 @@
             </li>
             <li class="learning-step">
               <strong>4. 自我驗收</strong>
-              <span>確認自己能白話講出定義、例子與風險後，再解鎖下一課。</span>
+              <span>確認自己能白話講出定義、例子與風險後，再進入本課挑戰。</span>
             </li>
             <li class="learning-step">
               <strong>5. 再被考</strong>
               <span>學完後用本課挑戰題檢查自己是否真的會講。</span>
             </li>
-          </ol>
+            </ol>
+          </details>
 
-          <section class="lesson-article">
+          <section class="lesson-article" id="currentLesson">
             <div class="lesson-title">
               <span class="lesson-meta" id="learningLessonDay">第 1 天</span>
-              <h3 id="learningLessonTitle">載入中</h3>
+              <h3 id="learningLessonTitle" tabindex="-1">載入中</h3>
             </div>
             <p class="lesson-copy" id="learningLessonConcept"></p>
             <div class="knowledge-tags" id="learningLessonTags"></div>
@@ -1732,13 +1865,13 @@
             </div>
             <div class="lesson-readiness">
               <div class="readiness-head">
-                <label for="lessonReflectionInput"><strong>學習檢核：60 分以上解鎖下一天</strong></label>
-                <span>請用自己的話寫 3-5 句：這個概念是什麼、會用在哪裡、怎麼連到 S-111、你會怎麼驗證。不要照抄上面的文字。</span>
+                <label for="lessonReflectionInput"><strong>學習檢核：60 分以上進入實戰挑戰</strong></label>
+                <span>先用自己的話寫 3-5 句，再完成本課挑戰；只有技術要點通過，才會解鎖下一天。</span>
               </div>
-              <textarea id="lessonReflectionInput" spellcheck="false" placeholder="例如：我理解 ETL 不是只有轉檔，而是... 在 S-111 裡... 我會檢查..."></textarea>
+              <textarea id="lessonReflectionInput" maxlength="8000" spellcheck="false" placeholder="例如：我理解 ETL 不是只有轉檔，而是... 在 S-111 裡... 我會檢查..."></textarea>
               <div class="readiness-result" id="lessonReadinessResult" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
                 <strong>尚未檢核</strong>
-                <span>寫完後按「分析學習程度」。達到 60 分就會自動解鎖下一天。</span>
+                <span>寫完後先做文字檢核；達到 60 分後還要完成本課挑戰。</span>
               </div>
             </div>
             <div class="lesson-actions">
@@ -1769,7 +1902,17 @@
         <div class="interview-question-page is-hidden" id="interviewQuestionPage">
         <div class="panel-head">
           <h2 id="questionPanelTitle">模擬面試題</h2>
-          <span id="questionCount">第 1 題 / 12</span>
+          <div class="question-head-tools">
+            <label class="track-control">角色主線
+              <select id="interviewTrackSelect">
+                <option value="backend">Python 後端</option>
+                <option value="data" selected>資料工程</option>
+                <option value="sdet">SDET</option>
+                <option value="ai">AI 應用</option>
+              </select>
+            </label>
+            <span id="questionCount">第 1 題</span>
+          </div>
         </div>
 
         <div class="interview">
@@ -1779,7 +1922,7 @@
           </div>
 
           <div class="question">
-            <h2 id="questionTitle">題目載入中</h2>
+            <h2 id="questionTitle" tabindex="-1">題目載入中</h2>
             <p id="questionHint"></p>
           </div>
 
@@ -1788,7 +1931,7 @@
           <div class="response-main">
             <div class="answer-box">
               <label for="answerInput">你的回答</label>
-              <textarea id="answerInput" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。"></textarea>
+              <textarea id="answerInput" maxlength="8000" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。"></textarea>
               <div class="answer-meta">
                 <span id="wordCount">0 字</span>
                 <span id="saveState">自動儲存</span>
@@ -1808,6 +1951,7 @@
               <button class="btn" id="followupBtn" type="button">面試官追問</button>
               <button class="btn" id="templateBtn" type="button">插入回答結構</button>
             </div>
+            <p class="feedback-disclaimer">這是文字覆蓋與表達結構的啟發式初評，不會執行程式或 SQL，也不能判定技術正確；能力仍以 No-AI 實作、測試與口頭追問為準。</p>
           </div>
 
           <div class="interviewer-lens" id="interviewerLens"></div>
@@ -1848,7 +1992,7 @@
             <div class="followup-question" id="followupOutput">按「面試官追問」取得下一個問題。</div>
             <div class="followup-form" id="followupAnswerBox">
               <label for="followupInput">你對追問的回答</label>
-              <textarea id="followupInput" placeholder="回答追問時，請直接補充剛剛答案中最容易被挑戰的地方。"></textarea>
+              <textarea id="followupInput" maxlength="8000" placeholder="回答追問時，請直接補充剛剛答案中最容易被挑戰的地方。"></textarea>
               <button class="btn primary" id="followupFeedbackBtn" type="button">取得追問回饋</button>
               <div class="followup-feedback" id="followupFeedbackResult"></div>
             </div>
@@ -1882,7 +2026,7 @@
       </section>
 
       <aside class="side">
-        <section class="panel course-nav-panel">
+        <section class="panel course-nav-panel" id="courseNavPanel">
           <div class="panel-head">
             <h3>學習目錄</h3>
             <span id="courseNavMeta">今日</span>
@@ -1890,12 +2034,12 @@
           <div class="side-body course-nav" id="courseNav"></div>
         </section>
 
-        <section class="panel sync-panel-card">
+        <section class="panel sync-panel-card" id="syncPanelCard">
           <div class="panel-head">
             <h3>進度同步</h3>
             <span id="syncMeta">本機</span>
           </div>
-          <div class="side-body sync-panel">
+          <form class="side-body sync-panel" id="syncForm">
             <div class="course-status">
               <strong id="courseProgressTitle">課程進度 0 / 28</strong>
               <div class="progress"><span id="courseProgressFill"></span></div>
@@ -1903,17 +2047,17 @@
             </div>
             <div class="sync-grid">
               <label class="field-label" for="syncWorkerInput">同步服務 URL</label>
-              <input id="syncWorkerInput" type="url" autocomplete="url" placeholder="https://your-worker.example.workers.dev">
+              <input id="syncWorkerInput" type="url" maxlength="2048" autocomplete="url" placeholder="https://your-worker.example.workers.dev">
               <div class="email-sync-box">
                 <div class="sync-section-head">
                   <span>Email 登入</span>
                   <small id="syncEmailState">尚未登入</small>
                 </div>
                 <label class="field-label" for="syncEmailInput">Email</label>
-                <input id="syncEmailInput" type="email" autocomplete="email" placeholder="name@example.com">
+                <input id="syncEmailInput" type="email" maxlength="254" autocomplete="email" placeholder="name@example.com">
                 <div class="email-code-row">
                   <label class="field-label" for="syncEmailCodeInput">6 位驗證碼</label>
-                  <input id="syncEmailCodeInput" type="text" inputmode="numeric" autocomplete="one-time-code" placeholder="輸入 6 位驗證碼">
+                  <input id="syncEmailCodeInput" type="text" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" placeholder="輸入 6 位驗證碼">
                 </div>
                 <div class="sync-actions email-actions">
                   <button class="btn primary" id="syncEmailSendBtn" type="button">寄送驗證信</button>
@@ -1925,11 +2069,11 @@
                 <summary>進階：GitHub / 匯出碼</summary>
                 <div class="sync-grid">
                   <label class="field-label" for="syncTokenInput">GitHub Gist token（只保留到關閉分頁）</label>
-                  <input id="syncTokenInput" type="password" autocomplete="new-password" placeholder="GitHub Gist token">
+                  <input id="syncTokenInput" type="password" maxlength="512" autocomplete="new-password" placeholder="GitHub Gist token">
                   <label class="field-label" for="syncGistInput">Gist ID</label>
-                  <input id="syncGistInput" type="text" autocomplete="off" placeholder="Gist ID">
+                  <input id="syncGistInput" type="text" maxlength="128" autocomplete="off" placeholder="Gist ID">
                   <label class="field-label" for="syncPayloadBox">進度匯出碼／匯入碼</label>
-                  <textarea id="syncPayloadBox" spellcheck="false" placeholder="貼上進度 JSON"></textarea>
+                  <textarea id="syncPayloadBox" maxlength="1048576" spellcheck="false" placeholder="貼上進度 JSON"></textarea>
                 </div>
                 <div class="sync-actions">
                   <button class="btn" id="syncOAuthLoginBtn" type="button">用 GitHub 登入</button>
@@ -1940,13 +2084,13 @@
               </details>
             </div>
             <div class="sync-actions">
-              <button class="btn" id="syncSaveSettingsBtn" type="button">儲存設定</button>
+              <button class="btn" id="syncSaveSettingsBtn" type="submit">儲存設定</button>
               <button class="btn primary" id="syncUploadBtn" type="button">上傳進度</button>
               <button class="btn" id="syncDownloadBtn" type="button">下載進度</button>
               <button class="btn" id="syncClearBtn" type="button">清除同步設定</button>
             </div>
             <div class="sync-status" id="syncStatus" role="status" aria-live="polite" aria-atomic="true">未設定雲端同步。</div>
-          </div>
+          </form>
         </section>
 
         <section class="panel support-panel" id="todayPlanPanel">
@@ -2017,6 +2161,12 @@
       </aside>
     </main>
 
+    <nav class="mobile-dock" aria-label="手機快速導覽">
+      <a href="#main-content">今日學習</a>
+      <a href="#courseNavPanel">學習目錄</a>
+      <a href="#syncPanelCard">進度同步</a>
+    </nav>
+
     <p class="footer-note">建議用法：先不看骨架，直接回答；送出回饋後，把「要改進的地方」改寫進答案，再回答一次追問。</p>
   </div>
 
@@ -2026,6 +2176,8 @@
       python: "Python",
       pipeline: "Pipeline",
       api: "API/DB",
+      testing: "SDET／測試",
+      ai: "AI 應用",
       story: "專案表達"
     };
 
@@ -2065,6 +2217,22 @@
           ["題目前先問", "誰會用這個 API、需要哪些篩選條件、資料量多大？"],
           ["作答時說", "我會先定義 endpoint、query parameters、response schema。"],
           ["驗收時補", "limit、bbox、空結果、錯誤訊息、timeout 與文件範例。"]
+        ]
+      },
+      testing: {
+        focus: "面試官會看你能否把風險轉成穩定、可重跑且能定位失敗原因的測試，而不只是會操作自動化工具。",
+        items: [
+          ["題目前先問", "核心使用流程、失敗風險、測試資料與環境邊界是什麼？"],
+          ["作答時說", "我會先分 unit、API integration 與 E2E，再用風險決定自動化層級。"],
+          ["驗收時補", "失敗截圖／trace、可重跑命令、flaky 排查與 regression evidence。"]
+        ]
+      },
+      ai: {
+        focus: "面試官不只看你會串模型，也會追問資料來源、評估方式、失敗邊界、安全限制與成本延遲。",
+        items: [
+          ["題目前先問", "問題是否需要 RAG、允許哪些資料與工具、成功指標是什麼？"],
+          ["作答時說", "我會固定輸出 schema、保留來源，並對無答案與工具錯誤明確降級。"],
+          ["驗收時補", "評估集、引用命中率、拒答、prompt injection、token 與 latency。"]
         ]
       },
       story: {
@@ -2377,6 +2545,16 @@
         ["DB 效能排查", "說明索引、bbox、limit、分頁的用途。"],
         ["API 文件草稿", "把一個 endpoint 寫成可交接說明。"]
       ],
+      testing: [
+        ["寫風險測試矩陣", "列正常、邊界、錯誤與狀態轉移，再標出自動化層級。"],
+        ["排查 flaky test", "從時間、順序、共享資料、網路與 locator 逐項縮小範圍。"],
+        ["保留失敗證據", "讓 CI 報告、trace、log 與最小重現可交接。"]
+      ],
+      ai: [
+        ["建立 10 題評估集", "包含可回答、無答案與惡意提示，保存預期來源。"],
+        ["畫 RAG 資料流", "說明 ingest、chunk、retrieve、generate、evaluate 與失敗降級。"],
+        ["限制 Agent 工具", "列 allowlist、參數 schema、唯讀邊界與人工確認點。"]
+      ],
       story: [
         ["90 秒 STAR", "用 S-111 講情境、任務、行動、結果。"],
         ["最難 bug 故事", "補上定位、修正、驗證證據。"],
@@ -2393,32 +2571,32 @@
       1: {
         topic: "SQL JOIN / GROUP BY",
         indexes: [0, 10],
-        time: [["SQL", 40], ["面試輸出", 10]]
+        time: [["SQL", 40], ["面試輸出", 10], ["演算法 No-AI", 20], ["作品實作", 20]]
       },
       2: {
         topic: "SQL CTE / Window Function",
         indexes: [1, 0],
-        time: [["SQL", 40], ["面試輸出", 10]]
+        time: [["SQL", 40], ["面試輸出", 10], ["演算法 No-AI", 20], ["作品實作", 20]]
       },
       3: {
         topic: "Python 資料清洗 / 複雜度",
         indexes: [2, 3],
-        time: [["Python 清洗", 30], ["面試輸出", 10]]
+        time: [["Python 清洗", 30], ["面試輸出", 10], ["演算法 No-AI", 20], ["作品實作", 30]]
       },
       4: {
         topic: "PostgreSQL / PostGIS / 資料表設計",
         indexes: [7, 6],
-        time: [["DB", 40], ["面試輸出", 10]]
+        time: [["DB", 40], ["面試輸出", 10], ["演算法 No-AI", 20], ["作品實作", 20]]
       },
       5: {
         topic: "API / ETL / 錯誤處理",
         indexes: [4, 5, 11],
-        time: [["工程情境", 40], ["面試輸出", 10]]
+        time: [["工程情境", 40], ["面試輸出", 10], ["演算法 No-AI", 20], ["作品實作", 20]]
       },
       6: {
         topic: "專案故事 STAR 練習",
         indexes: [8, 9],
-        time: [["STAR 寫作", 40], ["口說練習", 20]]
+        time: [["STAR 寫作", 40], ["口說練習", 20], ["錯題重做", 30]]
       }
     };
 
@@ -2852,6 +3030,161 @@
       }
     ];
 
+    const interviewTrackLabels = {
+      backend: "Python 後端",
+      data: "資料工程",
+      sdet: "SDET",
+      ai: "AI 應用"
+    };
+
+    function makeRoleQuestion(config) {
+      return {
+        track: config.track,
+        domain: config.domain,
+        title: config.title,
+        hint: config.hint,
+        guide: [
+          ["先定義成功", config.success],
+          ["拆開流程", config.flow],
+          ["處理失敗", config.failure],
+          ["留下證據", config.evidence]
+        ],
+        expected: config.expected,
+        skeleton: config.skeleton,
+        followups: config.followups,
+        scenario: config.scenario,
+        constraints: config.constraints
+      };
+    }
+
+    const roleQuestions = [
+      makeRoleQuestion({
+        track: "backend", domain: "api",
+        title: "FastAPI 要新增登入後才能使用的寫入 endpoint，你會怎麼設計？",
+        hint: "請區分 authentication 與 authorization，並說明 schema、狀態碼、密碼／token、測試與 log。",
+        success: "誰能呼叫、成功與拒絕時各回什麼。",
+        flow: "dependency → 驗證 → 權限 → service → repository。",
+        failure: "處理未登入、無權限、重複資料與內部錯誤。",
+        evidence: "列 401／403／409／422 測試與不洩密 log。",
+        expected: [["身分驗證", /authentication|登入|token|oauth|jwt|session/i], ["權限控制", /authorization|權限|角色|scope|403/i], ["輸入與狀態碼", /schema|pydantic|401|403|409|422/i], ["安全測試", /hash|secret|環境變數|測試|test|log/i]],
+        skeleton: "我會先定義誰能做這個寫入，再把身分驗證與權限判斷分開。FastAPI dependency 驗證 session/token，service 處理規則與 transaction，repository 只負責資料存取。未登入回 401、已登入但無權限回 403，資料衝突回 409，schema 錯誤回 422；secret 不進程式碼或回應。最後用正常、過期 token、錯角色與重複提交測試，並確認 log 不含敏感值。",
+        followups: ["401 和 403 為什麼不能混用？", "token 被竊取時你怎麼降低影響？", "你會把權限判斷放在哪一層？"],
+        scenario: "POST /observations 目前任何人都能寫入，準備開放給兩種角色使用。",
+        constraints: "viewer 只能讀；editor 可寫；不得在資料庫或 log 保存明文密碼。"
+      }),
+      makeRoleQuestion({
+        track: "backend", domain: "api",
+        title: "兩個請求同時更新同一筆資料時，如何避免部分成功或重複寫入？",
+        hint: "請談 transaction、唯一鍵／locking、idempotency、衝突回應與 concurrency test。",
+        success: "同一業務操作重送或併發時結果仍一致。",
+        flow: "定義唯一鍵與 transaction boundary，再選 optimistic／pessimistic 策略。",
+        failure: "rollback、deadlock retry 與 409 衝突回應。",
+        evidence: "平行送出請求並核對筆數、版本與最終狀態。",
+        expected: [["交易邊界", /transaction|交易|commit|rollback/i], ["併發控制", /lock|locking|version|optimistic|pessimistic|併發/i], ["冪等與唯一性", /idempoten|冪等|唯一鍵|unique|upsert/i], ["平行驗證", /parallel|concurr|同時|race|測試|筆數|409/i]],
+        skeleton: "我會先把一個業務操作包在 transaction，讓任一寫入失敗時完整 rollback。資料庫以業務唯一鍵防重複；需要更新時用 version 欄位做 optimistic locking，衝突回 409，特定高競爭情境才考慮 row lock。對可重送請求加入 idempotency key。驗收時平行送出相同與相異 payload，檢查只有一份結果、版本正確，並測 deadlock／retry 不會重複提交。",
+        followups: ["什麼時候會選 optimistic locking？", "idempotency key 要保存多久？", "deadlock 發生後能直接 retry 嗎？"],
+        scenario: "同一 run_id 的 observation 可能由重試機制同時送達。",
+        constraints: "不能用整張表 lock；失敗時不可留下半套資料。"
+      }),
+      makeRoleQuestion({
+        track: "data", domain: "pipeline",
+        title: "請設計一條可以重跑、backfill 並對帳的排程 ETL。",
+        hint: "請涵蓋 run_id、staging、watermark、Airflow retry/backfill、資料品質與 reconciliation。",
+        success: "同一批重跑不增列，漏日可補跑且結果可追溯。",
+        flow: "extract → staging → validate → merge → reconcile → publish。",
+        failure: "區分可重試與不可重試錯誤，避免部分發布。",
+        evidence: "來源／成功／拒收／重複筆數與 manifest 對帳。",
+        expected: [["可重跑設計", /run_id|idempoten|冪等|upsert|merge|唯一鍵/i], ["排程與補跑", /airflow|dag|schedule|retry|backfill|watermark/i], ["分層載入", /staging|transaction|publish|rollback|分區/i], ["資料對帳", /reconcil|對帳|筆數|reject|quarantine|manifest/i]],
+        skeleton: "我會以資料日期與 run_id 定義一次批次，先寫 staging 並保留來源 metadata，通過 schema 與品質檢查後再 transaction merge 到正式表。Airflow DAG 將 extract、validate、load、reconcile 分成可觀察任務，retry 只處理暫時性錯誤，backfill 明確指定資料區間。相同 run_id 重跑後筆數不變；最後對帳來源、成功、拒收、重複數並保存 manifest，全部通過才發布下游可見狀態。",
+        followups: ["watermark 遲到資料怎麼處理？", "部分 partition 成功時能發布嗎？", "你如何判斷 retry 不會放大錯誤？"],
+        scenario: "每天載入海洋觀測資料，偶爾會晚到兩天或在載入途中失敗。",
+        constraints: "需要支援指定日期 backfill，正式表不能出現半成品。"
+      }),
+      makeRoleQuestion({
+        track: "data", domain: "pipeline",
+        title: "上游突然新增欄位、型別也改變，你會如何避免壞資料污染下游？",
+        hint: "請說明 data contract、schema evolution、quarantine、品質門檻、告警與回復。",
+        success: "變更可被偵測、分類與安全處理，不會默默改壞指標。",
+        flow: "contract check → compatibility decision → quarantine／migration → publish。",
+        failure: "不相容資料隔離，保留原始輸入與可重播路徑。",
+        evidence: "欄位、型別、null、range、freshness 與 reconciliation 報告。",
+        expected: [["資料契約", /contract|schema|欄位|型別|version/i], ["相容策略", /backward|forward|相容|migration|default/i], ["隔離與回復", /quarantine|隔離|reject|raw|rollback|replay|重播/i], ["品質與告警", /quality|品質|null|range|freshness|alert|告警|對帳/i]],
+        skeleton: "我會把欄位、型別、必填與允許範圍做成版本化 data contract。載入前先做 compatibility check：可相容的新增欄位用明確 default，不相容的改型別停止發布並把原始資料送 quarantine，而不是自動強轉。保留 raw input 與 run metadata 供修復後 replay；告警要附影響日期與下游。最後用 null、range、freshness、筆數與指標對帳確認 migration 沒有改變既有語意。",
+        followups: ["新增 nullable 欄位一定相容嗎？", "何時會停整條 pipeline？", "修好 schema 後如何安全重播？"],
+        scenario: "原本整數的 lead_hours 開始出現字串，並新增 source 欄位。",
+        constraints: "既有報表不能默默把錯誤列當成 0，也要能修復後重播。"
+      }),
+      makeRoleQuestion({
+        track: "sdet", domain: "testing",
+        title: "你會如何為一個建立→查詢→錯誤輸入的 API 流程設計測試策略？",
+        hint: "不要只列工具；請用風險分層 unit、integration、contract、E2E 與 CI 證據。",
+        success: "重要風險在最低合理層級被穩定覆蓋。",
+        flow: "需求與風險 → 測試矩陣 → 資料／環境 → 自動化 → 報告。",
+        failure: "正常、邊界、錯誤、權限、重複提交與狀態轉移。",
+        evidence: "Newman／pytest 報告、log、失敗 payload 與可重跑命令。",
+        expected: [["測試分層", /unit|integration|contract|e2e|API/i], ["案例設計", /等價類|邊界|decision table|狀態轉移|錯誤輸入/i], ["隔離資料", /fixture|seed|cleanup|隔離|獨立|test data/i], ["CI 證據", /CI|newman|pytest|report|報告|log|重跑/i]],
+        skeleton: "我會先從建立、查詢、驗證與權限風險做 decision table。純規則放 unit tests，資料庫與 transaction 用 integration tests，request/response schema 做 contract checks，再以 Newman 跑建立→查詢→錯誤輸入的少量 E2E。每個測試有獨立 fixture／資料命名空間與 cleanup，不能依賴執行順序。CI 失敗保留 request、response、log 與報告，讓同一命令可在本機重跑。",
+        followups: ["哪些案例不該放 E2E？", "測試資料如何避免互相污染？", "如果 contract 過但 E2E 失敗，你先查哪裡？"],
+        scenario: "POST /observations 後以 GET 查回；錯誤日期應回 422，重複資料回 409。",
+        constraints: "CI 需在十分鐘內完成，測試不能依賴正式服務。"
+      }),
+      makeRoleQuestion({
+        track: "sdet", domain: "testing",
+        title: "一個 Playwright 測試在 CI 偶爾失敗，本機卻正常，你怎麼定位 flaky test？",
+        hint: "請從可重現、trace、locator、等待、共享狀態與環境差異逐步縮小。",
+        success: "找到可證明的根因並移除不確定性，而不是只加 sleep／retry。",
+        flow: "保存證據 → 提高重現率 → 二分定位 → 修正 → 連跑驗證。",
+        failure: "檢查時間、順序、共享資料、網路、動畫與 selector。",
+        evidence: "trace、video、screenshot、log、失敗率與連跑結果。",
+        expected: [["失敗證據", /trace|video|screenshot|截圖|log/i], ["穩定定位", /role locator|getByRole|locator|wait.*condition|auto.?wait|selector/i], ["隔離與環境", /共享|順序|parallel|資料|timezone|viewport|network|環境/i], ["驗證修正", /重跑|repeat|連跑|失敗率|regression|CI/i]],
+        skeleton: "我會先在 CI 保留 trace、video、screenshot、console 與 network log，記錄失敗率和環境。用 repeat-each／單獨執行／改變順序提高重現率，再檢查 role locator、等待條件、共享資料、時區、viewport 與網路 stub。修正應移除固定 sleep 和脆弱 selector，而不是把 retry 當答案。最後在隔離與平行模式連跑至少十次，並保留原失敗案例作 regression。",
+        followups: ["retry 什麼時候可以保留？", "為何固定 sleep 會讓測試更不穩？", "如何判斷是產品 bug 還是測試 bug？"],
+        scenario: "勾選進度後重載應保留，但 CI 約 5% 看不到勾選狀態。",
+        constraints: "不得以增加五秒 sleep 作為最終修正。"
+      }),
+      makeRoleQuestion({
+        track: "ai", domain: "ai",
+        title: "你如何證明一個 RAG 系統不是只在示範題上看起來能用？",
+        hint: "請定義評估集、retrieval／answer 指標、無答案、引用與失敗分類。",
+        success: "用可重跑資料判斷改動是否真的改善，而不是憑感覺。",
+        flow: "建立題集 → 固定 expected source → 跑檢索與回答 → 分類失敗。",
+        failure: "分開 retrieval miss、generation error、無答案誤答與引用錯誤。",
+        evidence: "保存 query、chunks、回答、來源、版本、latency 與 cost。",
+        expected: [["評估資料", /evaluation|評估集|expected|ground truth|題集/i], ["檢索指標", /retriev|recall|precision|top.?k|chunk|命中/i], ["回答與拒答", /faithful|引用|citation|無答案|拒答|hallucination|幻覺/i], ["可重跑證據", /版本|latency|cost|token|失敗分類|regression|重跑/i]],
+        skeleton: "我會先建立有版本的評估集，包含可回答、文件沒有答案與干擾提示，逐題保存 expected answer／source。每次執行記錄 query、retrieved chunks、top-k、實際回答與引用，分開 retrieval miss、生成錯誤、無答案誤答和 citation mismatch。除了命中與正確率，也追蹤 latency、token 和 cost。任何 chunking、embedding 或 prompt 改動都跑同一份 regression set，才知道是整體改善還是只修好示範題。",
+        followups: ["檢索命中但答案錯，問題在哪一層？", "無答案題要怎麼評分？", "你會先調 chunk 還是 prompt？"],
+        scenario: "Mini RAG 在三題 demo 都成功，但換文件後常引用錯段落。",
+        constraints: "只有小型文件集與有限 API 預算，仍需能比較版本。"
+      }),
+      makeRoleQuestion({
+        track: "ai", domain: "ai",
+        title: "Agent 可以呼叫工具時，你如何限制 prompt injection 與錯誤操作？",
+        hint: "請談 allowlist、schema 驗證、最小權限、確認點、timeout、稽核與降級。",
+        success: "模型只能提出受控請求，真正執行仍由程式碼政策決定。",
+        flow: "模型產生結構化意圖 → policy／schema 驗證 → 執行 → 驗證結果。",
+        failure: "拒絕未知工具、越權參數、惡意內容、timeout 與重複執行。",
+        evidence: "惡意提示測試、tool log、request id、成本與人工確認紀錄。",
+        expected: [["工具白名單", /allowlist|白名單|未知工具|tool/i], ["參數與權限", /schema|驗證|最小權限|read.?only|唯讀|scope/i], ["注入與確認", /prompt injection|注入|human|人工|確認|approval/i], ["失敗與稽核", /timeout|retry|idempoten|audit|稽核|log|cost|latency/i]],
+        skeleton: "我不會讓模型直接執行任意函式。模型只輸出結構化 tool request，程式碼再比對 allowlist、schema、使用者權限與資源範圍；預設工具唯讀，高風險寫入必須人工確認。文件與使用者內容都視為不可信資料，不能改寫系統政策。每次呼叫有 request id、timeout、次數與成本上限，重試需冪等；未知工具、越權參數或驗證失敗直接拒絕並安全降級，稽核 log 不記錄 secret。",
+        followups: ["文件裡寫『忽略規則』時怎麼辦？", "哪些操作一定要人工確認？", "工具成功回傳但內容不合理，下一步呢？"],
+        scenario: "模型可查詢資料庫與產生報告，未來可能新增寫入功能。",
+        constraints: "外部文件可能包含惡意指令；資料庫憑證不可交給模型。"
+      })
+    ];
+
+    const roleQuestionContexts = roleQuestions.map(question => ({
+      title: `${interviewTrackLabels[question.track]}角色情境`,
+      note: "先定義成功、失敗邊界與可驗證證據，再回答技術選擇。",
+      html: `
+        <table class="data-table">
+          <tr><th>欄位</th><th>內容</th></tr>
+          <tr><td>情境</td><td>${question.scenario}</td></tr>
+          <tr><td>限制</td><td>${question.constraints}</td></tr>
+          <tr><td>驗收</td><td>${question.guide[3][1]}</td></tr>
+        </table>
+      `
+    }));
+
     function escapeRegExp(value) {
       return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
     }
@@ -2870,8 +3203,8 @@
         ],
         expected: [
           ["今日術語", new RegExp(termsPattern, "i")],
-          ["白話定義", /意思|代表|用來|可以|概念|白話|是|指|解決/i],
-          ["S-111 連結", /S-111|PostgreSQL|PostGIS|API|QGIS|NetCDF|hotspot|lead_hours|bbox|pipeline|資料庫|資料/i],
+          ["白話定義", /意思|代表|用來|概念|白話|指的是|解決.{0,20}問題/i],
+          ["S-111 連結", /S-111|PostgreSQL|PostGIS|Flask|FastAPI|QGIS|NetCDF|hotspot|lead_hours|bbox|pipeline|資料庫/i],
           ["驗證或取捨", /驗證|檢查|取捨|風險|限制|測試|log|確認|比對|避免|改善/i]
         ],
         skeleton: `我會先用白話定義 ${lesson.title}：${lesson.concept} 接著我會連到自己的 S-111 經驗：${lesson.s111} 如果面試官問「${lesson.challenge}」，我會先講使用情境，再講我會怎麼做，最後補上驗證方式或取捨，避免只是背名詞。`,
@@ -2899,17 +3232,29 @@
       };
     }
 
+    const commonQuestionCount = questions.length;
+    questions.push(...roleQuestions);
+    questionContexts.push(...roleQuestionContexts);
+    const roleQuestionCount = roleQuestions.length;
     const baseQuestionCount = questions.length;
     const dailyLessonStartIndex = questions.length;
+    const legacyQuestionCount = commonQuestionCount + dailyLessons.length;
 
     dailyLessons.forEach((lesson, index) => {
       questions.push(buildDailyQuestion(lesson, index));
       questionContexts.push(buildDailyContext(lesson, index));
     });
 
+    const progressStorageKey = "rongDataMockInterview";
+    const progressBackupKey = "rongDataMockInterviewLastChange";
+    const progressVersion = 4;
+    const maxTextLength = 8000;
+    let saveTimer = 0;
+
     const state = {
       current: 0,
       view: "learn",
+      interviewTrack: "data",
       lessonOffset: 0,
       learnedLessons: Array(dailyLessons.length).fill(false),
       lessonReflections: Array(dailyLessons.length).fill(""),
@@ -2921,12 +3266,15 @@
       selfChecks: questions.map(question => Array(question.expected.length).fill(false)),
       followupQuestions: Array(questions.length).fill(""),
       followupAnswers: Array(questions.length).fill(""),
-      followupFeedback: Array(questions.length).fill(null)
+      followupFeedback: Array(questions.length).fill(null),
+      revision: 0,
+      updatedAt: ""
     };
 
     const els = {
       questionCount: document.getElementById("questionCount"),
       questionPanelTitle: document.getElementById("questionPanelTitle"),
+      interviewTrackSelect: document.getElementById("interviewTrackSelect"),
       domainTag: document.getElementById("domainTag"),
       questionTitle: document.getElementById("questionTitle"),
       questionHint: document.getElementById("questionHint"),
@@ -3026,11 +3374,23 @@
       email: "",
       emailChallengeId: "",
       token: "",
-      gistId: ""
+      gistId: "",
+      oauthBaseRevision: null,
+      oauthBaseExists: null,
+      gistBaseRevision: null,
+      gistBaseVersion: ""
     };
     const syncSettingsKey = "rongDataMockInterviewSync";
     const syncSecretsKey = "rongDataMockInterviewSyncSession";
-    const resetBackupKey = "rongDataMockInterviewLastReset";
+    const syncConflictKey = "rongDataMockInterviewSyncConflict";
+    const legacyResetBackupKey = "rongDataMockInterviewLastReset";
+    let syncQueue = Promise.resolve();
+
+    function enqueueSync(operation) {
+      const queued = syncQueue.catch(() => undefined).then(operation);
+      syncQueue = queued;
+      return queued;
+    }
 
     function persistSyncStorage() {
       const publicSettings = {
@@ -3042,29 +3402,57 @@
       const sessionSecrets = {
         oauthSession: syncSettings.oauthSession,
         emailChallengeId: syncSettings.emailChallengeId,
-        token: syncSettings.token
+        token: syncSettings.token,
+        oauthBaseRevision: Number.isSafeInteger(syncSettings.oauthBaseRevision) ? syncSettings.oauthBaseRevision : null,
+        oauthBaseExists: typeof syncSettings.oauthBaseExists === "boolean" ? syncSettings.oauthBaseExists : null,
+        gistBaseRevision: Number.isSafeInteger(syncSettings.gistBaseRevision) ? syncSettings.gistBaseRevision : null,
+        gistBaseVersion: typeof syncSettings.gistBaseVersion === "string" ? syncSettings.gistBaseVersion.slice(0, 100) : ""
       };
-      localStorage.setItem(syncSettingsKey, JSON.stringify(publicSettings));
       try {
+        localStorage.setItem(syncSettingsKey, JSON.stringify(publicSettings));
         sessionStorage.setItem(syncSecretsKey, JSON.stringify(sessionSecrets));
-      } catch {
-        // Secrets remain only in memory when session storage is unavailable.
+        return true;
+      } catch (error) {
+        console.warn("Sync settings could not be persisted", error);
+        setSyncStatus("同步設定只能暫存在記憶體；關閉分頁後需要重新輸入。", "error");
+        return false;
       }
     }
 
+    function alignSavedQuestionArray(savedArray) {
+      if (!Array.isArray(savedArray)) return [];
+      if (savedArray.length === legacyQuestionCount) {
+        return [
+          ...savedArray.slice(0, commonQuestionCount),
+          ...Array(roleQuestionCount).fill(undefined),
+          ...savedArray.slice(commonQuestionCount)
+        ];
+      }
+      return savedArray;
+    }
+
+    function alignSavedQuestionIndex(value, savedAnswers) {
+      if (!Number.isInteger(value)) return 0;
+      const legacy = Array.isArray(savedAnswers) && savedAnswers.length === legacyQuestionCount;
+      const aligned = legacy && value >= commonQuestionCount ? value + roleQuestionCount : value;
+      return Math.min(Math.max(aligned, 0), questions.length - 1);
+    }
+
     function mergeSavedArray(savedArray, fallbackValue) {
+      const source = alignSavedQuestionArray(savedArray);
       return Array.from({ length: questions.length }, (_, index) => {
-        if (Array.isArray(savedArray) && index < savedArray.length) return savedArray[index];
+        if (index < source.length && source[index] !== undefined) return source[index];
         return typeof fallbackValue === "function" ? fallbackValue(index) : fallbackValue;
       });
     }
 
-    function safeText(value, maxLength = 8000) {
+    function safeText(value, maxLength = maxTextLength) {
       return typeof value === "string" ? value.slice(0, maxLength) : "";
     }
 
     function normalizeTextArray(savedArray, length = questions.length) {
-      return Array.from({ length }, (_, index) => safeText(Array.isArray(savedArray) ? savedArray[index] : ""));
+      const source = length === questions.length ? alignSavedQuestionArray(savedArray) : Array.isArray(savedArray) ? savedArray : [];
+      return Array.from({ length }, (_, index) => safeText(source[index]));
     }
 
     function normalizeTextList(value, maxItems = 8) {
@@ -3078,7 +3466,8 @@
         title: safeText(item.title, 200),
         summary: safeText(item.summary, 1200),
         strengths: normalizeTextList(item.strengths),
-        issues: normalizeTextList(item.issues)
+        issues: normalizeTextList(item.issues),
+        technicalHits: Number.isInteger(item.technicalHits) ? Math.min(4, Math.max(0, item.technicalHits)) : undefined
       };
     }
 
@@ -3121,7 +3510,7 @@
             score: 60,
             passed: true,
             title: "已解鎖",
-            summary: "這一課已有舊版完成紀錄。之後的新課會用 60 分學習檢核解鎖。",
+            summary: "這一課已有舊版完成紀錄。之後的新課會先做 60 分文字檢核，再用本課挑戰驗收技術要點。",
             strengths: ["已保留原本完成進度。"],
             issues: ["想更穩的話，可以補寫學習檢核再重新分析。"]
           };
@@ -3132,42 +3521,17 @@
       });
     }
 
-    function load() {
-      try {
-        const saved = JSON.parse(localStorage.getItem("rongDataMockInterview"));
-        if (!saved) return;
-        state.current = Number.isInteger(saved.current) ? Math.min(Math.max(saved.current, 0), questions.length - 1) : 0;
-        state.view = saved.view === "interview" ? "interview" : "learn";
-        state.answers = normalizeTextArray(saved.answers);
-        state.feedback = mergeSavedArray(saved.feedback, null).map(normalizeFeedbackItem);
-        state.learnedLessons = normalizeLearnedLessons(saved.learnedLessons, state.feedback);
-        state.lessonReflections = normalizeTextArray(saved.lessonReflections, dailyLessons.length);
-        state.lessonReadiness = normalizeLessonReadiness(saved.lessonReadiness);
-        state.lessonResources = normalizeLessonResources(saved.lessonResources, state.learnedLessons);
-        backfillReadinessForLearned();
-        const maxOffset = highestUnlockedLessonOffset();
-        state.lessonOffset = Number.isInteger(saved.lessonOffset)
-          ? Math.min(Math.max(saved.lessonOffset, 0), maxOffset)
-          : maxOffset;
-        state.hintsOpen = mergeSavedArray(saved.hintsOpen, false).map(value => value === true);
-        state.followupQuestions = normalizeTextArray(saved.followupQuestions);
-        state.followupAnswers = normalizeTextArray(saved.followupAnswers);
-        state.followupFeedback = mergeSavedArray(saved.followupFeedback, null).map(normalizeFeedbackItem);
-        state.selfChecks = questions.map((question, index) => {
-          const savedChecks = Array.isArray(saved.selfChecks) ? saved.selfChecks[index] : null;
-          return Array.isArray(savedChecks) && savedChecks.length === question.expected.length
-            ? savedChecks.map(value => value === true)
-            : Array(question.expected.length).fill(false);
-        });
-      } catch {
-        localStorage.removeItem("rongDataMockInterview");
-      }
+    function safeRevision(value) {
+      return Number.isSafeInteger(value) && value >= 0 && value <= 10_000_000 ? value : 0;
     }
 
-    function save() {
-      localStorage.setItem("rongDataMockInterview", JSON.stringify({
+    function progressStateSnapshot() {
+      return {
+        app: "rong-data-interview-learning-console",
+        version: progressVersion,
         current: state.current,
         view: state.view,
+        interviewTrack: state.interviewTrack,
         lessonOffset: state.lessonOffset,
         learnedLessons: state.learnedLessons,
         lessonReflections: state.lessonReflections,
@@ -3179,9 +3543,142 @@
         selfChecks: state.selfChecks,
         followupQuestions: state.followupQuestions,
         followupAnswers: state.followupAnswers,
-        followupFeedback: state.followupFeedback
-      }));
-      els.saveState.textContent = "已自動儲存";
+        followupFeedback: state.followupFeedback,
+        revision: safeRevision(state.revision),
+        updatedAt: state.updatedAt
+      };
+    }
+
+    function applySavedProgress(saved) {
+      if (!saved || typeof saved !== "object" || Array.isArray(saved)) throw new Error("進度格式不正確");
+      state.current = alignSavedQuestionIndex(saved.current, saved.answers);
+      state.view = saved.view === "interview" ? "interview" : "learn";
+      state.interviewTrack = Object.hasOwn(interviewTrackLabels, saved.interviewTrack) ? saved.interviewTrack : "data";
+      state.answers = normalizeTextArray(saved.answers);
+      state.feedback = mergeSavedArray(saved.feedback, null).map(normalizeFeedbackItem);
+      state.learnedLessons = normalizeLearnedLessons(saved.learnedLessons, state.feedback);
+      state.lessonReflections = normalizeTextArray(saved.lessonReflections, dailyLessons.length);
+      state.lessonReadiness = normalizeLessonReadiness(saved.lessonReadiness);
+      state.lessonResources = normalizeLessonResources(saved.lessonResources, state.learnedLessons);
+      backfillReadinessForLearned();
+      const maxOffset = highestUnlockedLessonOffset();
+      state.lessonOffset = Number.isInteger(saved.lessonOffset)
+        ? Math.min(Math.max(saved.lessonOffset, 0), maxOffset)
+        : maxOffset;
+      state.hintsOpen = mergeSavedArray(saved.hintsOpen, false).map(value => value === true);
+      state.followupQuestions = normalizeTextArray(saved.followupQuestions);
+      state.followupAnswers = normalizeTextArray(saved.followupAnswers);
+      state.followupFeedback = mergeSavedArray(saved.followupFeedback, null).map(normalizeFeedbackItem);
+      const savedChecks = alignSavedQuestionArray(saved.selfChecks);
+      state.selfChecks = questions.map((question, index) => {
+        const checks = savedChecks[index];
+        return Array.isArray(checks) && checks.length === question.expected.length
+          ? checks.map(value => value === true)
+          : Array(question.expected.length).fill(false);
+      });
+      state.revision = safeRevision(saved.revision);
+      state.updatedAt = typeof saved.updatedAt === "string" ? saved.updatedAt.slice(0, 40) : "";
+    }
+
+    function load() {
+      let raw = "";
+      try {
+        raw = localStorage.getItem(progressStorageKey) || "";
+        if (!raw) return false;
+        applySavedProgress(JSON.parse(raw));
+        return true;
+      } catch (error) {
+        try {
+          if (raw) localStorage.setItem(`${progressStorageKey}Corrupt-${Date.now()}`, raw);
+          localStorage.removeItem(progressStorageKey);
+        } catch {
+          // Keep the in-memory default when storage is unavailable.
+        }
+        els.saveState.textContent = "舊進度損壞，已保留備份";
+        setSyncStatus("本機進度格式損壞，已保留原始備份並改用空白進度。", "error");
+        console.warn("Local progress could not be loaded", error);
+        return false;
+      }
+    }
+
+    function save(options = {}) {
+      if (saveTimer) {
+        window.clearTimeout(saveTimer);
+        saveTimer = 0;
+      }
+      let storedRevision = 0;
+      try {
+        const stored = JSON.parse(localStorage.getItem(progressStorageKey) || "null");
+        storedRevision = safeRevision(stored && stored.revision);
+        if (options.mergeStored !== false && stored && storedRevision > safeRevision(state.revision)) {
+          const incomingPayload = {
+            app: "rong-data-interview-learning-console",
+            version: Number.isInteger(stored.version) ? stored.version : progressVersion,
+            state: stored
+          };
+          const localPayload = progressPayload();
+          if (hasMeaningfulProgress(localPayload)) preserveSyncConflict("同瀏覽器另一分頁", localPayload, incomingPayload);
+          applyProgressPayload(incomingPayload, { merge: true, preferIncoming: true, persist: false, render: false });
+        }
+      } catch {
+        // A corrupt value will be preserved by load; do not trust its revision.
+      }
+      state.revision = Math.max(safeRevision(state.revision), storedRevision) + 1;
+      state.updatedAt = new Date().toISOString();
+      try {
+        localStorage.setItem(progressStorageKey, JSON.stringify(progressStateSnapshot()));
+        if (!options.silent) els.saveState.textContent = "已自動儲存";
+        return true;
+      } catch (error) {
+        console.warn("Local progress could not be saved", error);
+        els.saveState.textContent = "尚未儲存，請先匯出備份";
+        setSyncStatus("本機儲存空間不可用；請立即產生匯出碼保存進度。", "error");
+        return false;
+      }
+    }
+
+    function scheduleSave() {
+      window.clearTimeout(saveTimer);
+      saveTimer = window.setTimeout(() => {
+        saveTimer = 0;
+        save();
+      }, 350);
+    }
+
+    function flushScheduledSave() {
+      if (!saveTimer) return;
+      window.clearTimeout(saveTimer);
+      saveTimer = 0;
+      save({ silent: true });
+    }
+
+    function backupCurrentProgress(reason) {
+      flushScheduledSave();
+      try {
+        localStorage.setItem(progressBackupKey, JSON.stringify({ reason, createdAt: new Date().toISOString(), state: progressStateSnapshot() }));
+        document.getElementById("undoResetBtn").hidden = false;
+        return true;
+      } catch (error) {
+        console.warn("Progress backup could not be saved", error);
+        setSyncStatus("無法建立復原備份，已取消這次變更。", "error");
+        return false;
+      }
+    }
+
+    function validatedWorkerOrigin(value, options = {}) {
+      const raw = String(value || "").trim();
+      if (!raw && options.allowEmpty) return "";
+      let url;
+      try {
+        url = new URL(raw);
+      } catch {
+        throw new Error("同步服務 URL 格式不正確");
+      }
+      const localHttp = url.protocol === "http:" && ["localhost", "127.0.0.1", "[::1]"].includes(url.hostname);
+      if (url.protocol !== "https:" && !localHttp) throw new Error("同步服務必須使用 HTTPS；本機 localhost 可使用 HTTP");
+      if (url.username || url.password || url.search || url.hash) throw new Error("同步服務 URL 不可包含帳密、query 或 fragment");
+      if (url.pathname !== "/" && url.pathname !== "") throw new Error("請只輸入同步服務 origin，不要附加路徑");
+      return url.origin;
     }
 
     function loadSyncSettings() {
@@ -3194,13 +3691,21 @@
           sessionStorage.removeItem(syncSecretsKey);
         }
         if (saved) {
-          syncSettings.workerUrl = typeof saved.workerUrl === "string" ? saved.workerUrl : "";
+          try {
+            syncSettings.workerUrl = validatedWorkerOrigin(saved.workerUrl, { allowEmpty: true });
+          } catch {
+            syncSettings.workerUrl = "";
+          }
           syncSettings.authProvider = typeof saved.authProvider === "string" ? saved.authProvider : "";
           syncSettings.email = typeof saved.email === "string" ? saved.email : "";
           syncSettings.gistId = typeof saved.gistId === "string" ? saved.gistId : "";
           syncSettings.oauthSession = typeof secrets.oauthSession === "string" ? secrets.oauthSession : typeof saved.oauthSession === "string" ? saved.oauthSession : "";
           syncSettings.emailChallengeId = typeof secrets.emailChallengeId === "string" ? secrets.emailChallengeId : typeof saved.emailChallengeId === "string" ? saved.emailChallengeId : "";
           syncSettings.token = typeof secrets.token === "string" ? secrets.token : typeof saved.token === "string" ? saved.token : "";
+          syncSettings.oauthBaseRevision = Number.isSafeInteger(secrets.oauthBaseRevision) ? safeRevision(secrets.oauthBaseRevision) : null;
+          syncSettings.oauthBaseExists = typeof secrets.oauthBaseExists === "boolean" ? secrets.oauthBaseExists : null;
+          syncSettings.gistBaseRevision = Number.isSafeInteger(secrets.gistBaseRevision) ? safeRevision(secrets.gistBaseRevision) : null;
+          syncSettings.gistBaseVersion = typeof secrets.gistBaseVersion === "string" ? secrets.gistBaseVersion.slice(0, 100) : "";
           persistSyncStorage();
         }
       } catch {
@@ -3210,17 +3715,38 @@
       els.syncEmailInput.value = syncSettings.email;
       els.syncTokenInput.value = syncSettings.token;
       els.syncGistInput.value = syncSettings.gistId;
+      try {
+        const preservedConflict = sessionStorage.getItem(syncConflictKey);
+        if (preservedConflict) els.syncPayloadBox.value = preservedConflict;
+      } catch {
+        // The conflict still remains in the current textarea when session storage is unavailable.
+      }
       setSyncStatus(syncSettings.oauthSession ? `已連到 ${authProviderLabel()} 同步。` : syncSettings.gistId ? `已連到 Gist：${syncSettings.gistId}` : "未設定雲端同步。");
       updateEmailSyncState();
     }
 
     function saveSyncSettings() {
-      syncSettings.workerUrl = els.syncWorkerInput.value.trim().replace(/\/+$/, "");
+      try {
+        syncSettings.workerUrl = validatedWorkerOrigin(els.syncWorkerInput.value, { allowEmpty: true });
+      } catch (error) {
+        setSyncStatus(error.message, "error");
+        els.syncWorkerInput.setAttribute("aria-invalid", "true");
+        els.syncWorkerInput.focus();
+        return false;
+      }
+      els.syncWorkerInput.removeAttribute("aria-invalid");
       if (els.syncEmailInput.value.trim()) syncSettings.email = els.syncEmailInput.value.trim();
-      syncSettings.token = els.syncTokenInput.value.trim();
-      syncSettings.gistId = els.syncGistInput.value.trim();
+      const nextToken = els.syncTokenInput.value.trim();
+      const nextGistId = els.syncGistInput.value.trim();
+      if (nextToken !== syncSettings.token || nextGistId !== syncSettings.gistId) {
+        syncSettings.gistBaseRevision = null;
+        syncSettings.gistBaseVersion = "";
+      }
+      syncSettings.token = nextToken;
+      syncSettings.gistId = nextGistId;
       persistSyncStorage();
       renderCourseProgress();
+      return true;
     }
 
     function persistSyncSettings() {
@@ -3277,25 +3803,36 @@
     function progressPayload() {
       return {
         app: "rong-data-interview-learning-console",
-        version: 3,
+        version: progressVersion,
         exportedAt: new Date().toISOString(),
-        state: {
-          current: state.current,
-          view: state.view,
-          lessonOffset: state.lessonOffset,
-          learnedLessons: state.learnedLessons,
-          lessonReflections: state.lessonReflections,
-          lessonReadiness: state.lessonReadiness,
-          lessonResources: state.lessonResources,
-          answers: state.answers,
-          feedback: state.feedback,
-          hintsOpen: state.hintsOpen,
-          selfChecks: state.selfChecks,
-          followupQuestions: state.followupQuestions,
-          followupAnswers: state.followupAnswers,
-          followupFeedback: state.followupFeedback
-        }
+        state: progressStateSnapshot()
       };
+    }
+
+    function hasMeaningfulProgress(payload) {
+      const candidate = payload && payload.state;
+      if (!candidate || typeof candidate !== "object") return false;
+      const hasText = key => Array.isArray(candidate[key]) && candidate[key].some(value => typeof value === "string" && value.trim());
+      const hasRecord = key => Array.isArray(candidate[key]) && candidate[key].some(Boolean);
+      const hasFlag = key => Array.isArray(candidate[key]) && candidate[key].some(value => Array.isArray(value) ? value.some(Boolean) : value === true);
+      return hasText("answers")
+        || hasText("lessonReflections")
+        || hasText("followupAnswers")
+        || hasRecord("feedback")
+        || hasRecord("lessonReadiness")
+        || hasRecord("followupFeedback")
+        || hasFlag("learnedLessons")
+        || hasFlag("lessonResources")
+        || hasFlag("selfChecks");
+    }
+
+    function validatedProgressState(payload) {
+      if (!payload || typeof payload !== "object" || Array.isArray(payload)) throw new Error("進度格式不正確");
+      if (payload.app !== "rong-data-interview-learning-console" || !payload.state) throw new Error("不是這個面試工作台的進度碼");
+      const version = Number(payload.version);
+      if (!Number.isInteger(version) || version < 1 || version > progressVersion) throw new Error(`不支援的進度版本：${payload.version}`);
+      if (typeof payload.state !== "object" || Array.isArray(payload.state)) throw new Error("進度 state 格式不正確");
+      return payload.state;
     }
 
     function mergeLessonResources(localResources, incomingResources, learnedLessons = []) {
@@ -3310,38 +3847,61 @@
       });
     }
 
-    function mergeReadiness(localReadiness, incomingReadiness) {
+    function mergeReadiness(localReadiness, incomingReadiness, preferIncoming = false) {
       return Array.from({ length: dailyLessons.length }, (_, index) => {
         const localItem = Array.isArray(localReadiness) ? localReadiness[index] : null;
         const incomingItem = Array.isArray(incomingReadiness) ? incomingReadiness[index] : null;
         if (!localItem) return incomingItem || null;
         if (!incomingItem) return localItem;
+        if (preferIncoming) return incomingItem;
         return Number(incomingItem.score || 0) >= Number(localItem.score || 0) ? incomingItem : localItem;
       });
     }
 
-    function mergeProgressArray(localArray, incomingArray, fallbackValue) {
+    function mergeProgressArray(localArray, incomingArray, fallbackValue, choose = (local, incoming) => local ?? incoming) {
+      const localSource = alignSavedQuestionArray(localArray);
+      const incomingSource = alignSavedQuestionArray(incomingArray);
       return Array.from({ length: questions.length }, (_, index) => {
-        const incoming = Array.isArray(incomingArray) ? incomingArray[index] : undefined;
-        const local = Array.isArray(localArray) ? localArray[index] : undefined;
-        if (incoming !== undefined && incoming !== null && incoming !== "") return incoming;
-        if (local !== undefined && local !== null) return local;
+        const incoming = incomingSource[index];
+        const local = localSource[index];
+        const selected = choose(local, incoming, index);
+        if (selected !== undefined && selected !== null && selected !== "") return selected;
         return typeof fallbackValue === "function" ? fallbackValue(index) : fallbackValue;
       });
     }
 
+    function chooseLocalText(local, incoming) {
+      return safeText(local) || safeText(incoming);
+    }
+
+    function chooseIncomingText(local, incoming) {
+      return safeText(incoming) || safeText(local);
+    }
+
+    function chooseHigherFeedback(local, incoming) {
+      const localItem = normalizeFeedbackItem(local);
+      const incomingItem = normalizeFeedbackItem(incoming);
+      if (!localItem) return incomingItem;
+      if (!incomingItem) return localItem;
+      return incomingItem.score > localItem.score ? incomingItem : localItem;
+    }
+
+    function chooseIncomingFeedback(local, incoming) {
+      return normalizeFeedbackItem(incoming) || normalizeFeedbackItem(local);
+    }
+
     function applyProgressPayload(payload, options = {}) {
-      const incoming = payload && payload.state ? payload.state : payload;
-      if (!incoming || typeof incoming !== "object") {
-        throw new Error("進度格式不正確");
-      }
+      const incoming = validatedProgressState(payload);
       const shouldMerge = options.merge === true;
+      const preferIncoming = shouldMerge && options.preferIncoming === true;
+      const textChooser = preferIncoming ? chooseIncomingText : chooseLocalText;
+      const feedbackChooser = preferIncoming ? chooseIncomingFeedback : chooseHigherFeedback;
       const incomingFeedback = mergeSavedArray(incoming.feedback, null).map(normalizeFeedbackItem);
-      state.current = Number.isInteger(incoming.current) ? Math.min(Math.max(incoming.current, 0), questions.length - 1) : state.current;
+      if (!shouldMerge) state.current = alignSavedQuestionIndex(incoming.current, incoming.answers);
       const incomingAnswers = normalizeTextArray(incoming.answers);
-      state.answers = shouldMerge ? mergeProgressArray(state.answers, incomingAnswers, "") : incomingAnswers;
-      state.feedback = shouldMerge ? mergeProgressArray(state.feedback, incomingFeedback, null) : incomingFeedback;
-      const incomingLearned = normalizeLearnedLessons(incoming.learnedLessons, state.feedback);
+      state.answers = shouldMerge ? mergeProgressArray(state.answers, incomingAnswers, "", textChooser) : incomingAnswers;
+      state.feedback = shouldMerge ? mergeProgressArray(state.feedback, incomingFeedback, null, feedbackChooser) : incomingFeedback;
+      const incomingLearned = normalizeLearnedLessons(incoming.learnedLessons, incomingFeedback);
       state.learnedLessons = shouldMerge
         ? Array.from({ length: dailyLessons.length }, (_, index) => Boolean(state.learnedLessons[index] || incomingLearned[index]))
         : incomingLearned;
@@ -3350,7 +3910,7 @@
         ? Array.from({ length: dailyLessons.length }, (_, index) => incomingReflections[index] || state.lessonReflections[index] || "")
         : incomingReflections;
       const incomingReadiness = normalizeLessonReadiness(incoming.lessonReadiness);
-      state.lessonReadiness = shouldMerge ? mergeReadiness(state.lessonReadiness, incomingReadiness) : incomingReadiness;
+      state.lessonReadiness = shouldMerge ? mergeReadiness(state.lessonReadiness, incomingReadiness, preferIncoming) : incomingReadiness;
       const incomingResources = normalizeLessonResources(incoming.lessonResources, incomingLearned);
       state.lessonResources = shouldMerge
         ? mergeLessonResources(state.lessonResources, incomingResources, state.learnedLessons)
@@ -3360,26 +3920,42 @@
       state.lessonOffset = Number.isInteger(incoming.lessonOffset)
         ? Math.min(Math.max(shouldMerge ? Math.max(state.lessonOffset, incoming.lessonOffset) : incoming.lessonOffset, 0), maxOffset)
         : maxOffset;
-      state.view = incoming.view === "interview" ? "interview" : "learn";
-      if (state.current >= dailyLessonStartIndex && !isLessonLearned(state.current - dailyLessonStartIndex)) {
+      if (!shouldMerge) {
+        state.view = incoming.view === "interview" ? "interview" : "learn";
+        state.interviewTrack = Object.hasOwn(interviewTrackLabels, incoming.interviewTrack) ? incoming.interviewTrack : "data";
+      }
+      if (isDailyQuestionIndex(state.current) && !isLessonChallengeUnlocked(state.current - dailyLessonStartIndex)) {
         state.current = learningQuestionIndex(maxOffset);
         state.view = "learn";
       }
-      state.hintsOpen = mergeSavedArray(incoming.hintsOpen, false).map(value => value === true);
-      state.followupQuestions = normalizeTextArray(incoming.followupQuestions);
-      state.followupAnswers = normalizeTextArray(incoming.followupAnswers);
-      state.followupFeedback = mergeSavedArray(incoming.followupFeedback, null).map(normalizeFeedbackItem);
-      state.selfChecks = questions.map((question, index) => {
-        const savedChecks = Array.isArray(incoming.selfChecks) ? incoming.selfChecks[index] : null;
-        return Array.isArray(savedChecks) && savedChecks.length === question.expected.length
-          ? savedChecks.map(value => value === true)
+      const incomingHints = mergeSavedArray(incoming.hintsOpen, false).map(value => value === true);
+      state.hintsOpen = shouldMerge
+        ? state.hintsOpen.map((value, index) => Boolean(value || incomingHints[index]))
+        : incomingHints;
+      const incomingQuestions = normalizeTextArray(incoming.followupQuestions);
+      const incomingAnswersFollowup = normalizeTextArray(incoming.followupAnswers);
+      const incomingFollowupFeedback = mergeSavedArray(incoming.followupFeedback, null).map(normalizeFeedbackItem);
+      state.followupQuestions = shouldMerge ? mergeProgressArray(state.followupQuestions, incomingQuestions, "", textChooser) : incomingQuestions;
+      state.followupAnswers = shouldMerge ? mergeProgressArray(state.followupAnswers, incomingAnswersFollowup, "", textChooser) : incomingAnswersFollowup;
+      state.followupFeedback = shouldMerge ? mergeProgressArray(state.followupFeedback, incomingFollowupFeedback, null, feedbackChooser) : incomingFollowupFeedback;
+      const incomingChecksSource = alignSavedQuestionArray(incoming.selfChecks);
+      const incomingChecks = questions.map((question, index) => {
+        const checks = incomingChecksSource[index];
+        return Array.isArray(checks) && checks.length === question.expected.length
+          ? checks.map(value => value === true)
           : Array(question.expected.length).fill(false);
       });
-      renderAll();
-      save();
+      state.selfChecks = shouldMerge
+        ? questions.map((question, index) => Array.from({ length: question.expected.length }, (_, checkIndex) => Boolean(state.selfChecks[index]?.[checkIndex] || incomingChecks[index][checkIndex])))
+        : incomingChecks;
+      if (options.trustRevision !== false) {
+        state.revision = Math.max(safeRevision(state.revision), safeRevision(incoming.revision));
+      }
+      if (options.render !== false) renderAll({ persist: options.persist !== false });
     }
 
     function exportProgressCode() {
+      flushScheduledSave();
       els.syncPayloadBox.value = JSON.stringify(progressPayload());
       setSyncStatus("已產生匯出碼。", "ok");
     }
@@ -3395,19 +3971,51 @@
         return;
       }
       try {
-        applyProgressPayload(JSON.parse(raw), { merge: true });
-        setSyncStatus("已套用匯入進度。", "ok");
+        const payload = JSON.parse(raw);
+        validatedProgressState(payload);
+        if (!window.confirm("匯入會合併進度；本機非空白答案會優先保留，並先建立可復原備份。確定繼續嗎？")) return;
+        if (!backupCurrentProgress("import")) return;
+        applyProgressPayload(payload, { merge: true, trustRevision: false });
+        setSyncStatus("已安全合併匯入進度；如有需要可復原上次變更。", "ok");
       } catch (error) {
         setSyncStatus(`匯入失敗：${error.message}`, "error");
       }
     }
 
+    function preserveSyncConflict(provider, localPayload, remotePayload) {
+      const conflict = {
+        app: "rong-data-interview-sync-conflict",
+        version: 1,
+        createdAt: new Date().toISOString(),
+        provider,
+        note: "偵測到版本衝突。local 與 remote 都是完整副本；系統不會用較舊的本機同欄位自動覆蓋較新的內容。確認要保留的內容後，再匯入單一 rong-data-interview-learning-console 進度碼。",
+        local: localPayload,
+        remote: remotePayload
+      };
+      const text = JSON.stringify(conflict, null, 2);
+      els.syncPayloadBox.value = text;
+      const advanced = document.querySelector(".advanced-sync");
+      if (advanced) advanced.open = true;
+      try {
+        sessionStorage.setItem(syncConflictKey, text);
+      } catch (error) {
+        console.warn("Sync conflict could not be persisted beyond this page", error);
+      }
+      return conflict;
+    }
+
+    function gistVersion(gist) {
+      const version = gist && Array.isArray(gist.history) && gist.history[0] && gist.history[0].version;
+      return typeof version === "string" && version.length <= 100 ? version : "";
+    }
+
     const progressGistFile = "rong-data-interview-progress.json";
 
     function oauthRedirectUrl() {
-      const url = new URL(window.location.href);
-      url.searchParams.delete("sync");
-      return url.toString().split("#")[0];
+      const url = new URL("./", window.location.href);
+      url.search = "";
+      url.hash = "";
+      return url.toString();
     }
 
     function consumeOAuthSessionFromHash() {
@@ -3416,6 +4024,8 @@
       if (!session) return false;
       syncSettings.oauthSession = session;
       syncSettings.authProvider = "github";
+      syncSettings.oauthBaseRevision = null;
+      syncSettings.oauthBaseExists = null;
       persistSyncSettings();
       params.delete("github_sync");
       const nextHash = params.toString();
@@ -3436,10 +4046,22 @@
         return false;
       }
       if (!session) return false;
+      try {
+        syncSettings.workerUrl = validatedWorkerOrigin(params.get("sync_worker") || syncSettings.workerUrl);
+      } catch (workerError) {
+        params.delete("email_sync");
+        params.delete("email_account");
+        params.delete("sync_worker");
+        const nextHash = params.toString();
+        history.replaceState(null, "", `${window.location.pathname}${window.location.search}${nextHash ? `#${nextHash}` : ""}`);
+        setSyncStatus(`Email 登入回跳無效：${workerError.message}`, "error");
+        return false;
+      }
       syncSettings.oauthSession = session;
       syncSettings.authProvider = "email";
+      syncSettings.oauthBaseRevision = null;
+      syncSettings.oauthBaseExists = null;
       syncSettings.email = params.get("email_account") || syncSettings.email;
-      syncSettings.workerUrl = (params.get("sync_worker") || syncSettings.workerUrl).replace(/\/+$/, "");
       syncSettings.emailChallengeId = "";
       persistSyncSettings();
       params.delete("email_sync");
@@ -3462,9 +4084,7 @@
     }
 
     async function fetchOAuthWorker(path, options = {}) {
-      if (!syncSettings.workerUrl) {
-        throw new Error("請先輸入 OAuth Worker URL。");
-      }
+      const workerOrigin = validatedWorkerOrigin(syncSettings.workerUrl);
       const headers = Object.assign({
         "Accept": "application/json"
       }, options.headers || {});
@@ -3474,13 +4094,18 @@
       if (options.body && !headers["Content-Type"]) {
         headers["Content-Type"] = "application/json";
       }
-      const response = await fetch(`${syncSettings.workerUrl}${path}`, {
+      const response = await fetch(new URL(path, workerOrigin), {
         ...options,
         headers,
         credentials: "include"
       });
       const text = await response.text();
-      const data = text ? JSON.parse(text) : null;
+      let data = null;
+      try {
+        data = text ? JSON.parse(text) : null;
+      } catch {
+        if (response.ok) throw new Error("同步服務回傳的不是有效 JSON");
+      }
       if (!response.ok) {
         const error = new Error((data && data.error) || `同步服務回應 ${response.status}`);
         error.status = response.status;
@@ -3490,16 +4115,18 @@
     }
 
     function startOAuthLogin() {
-      saveSyncSettings();
+      if (!saveSyncSettings()) return;
       if (!syncSettings.workerUrl) {
         setSyncStatus("請先輸入 OAuth Worker URL。", "error");
         return;
       }
-      window.location.href = `${syncSettings.workerUrl}/auth/start?redirect=${encodeURIComponent(oauthRedirectUrl())}`;
+      const loginUrl = new URL("/auth/start", validatedWorkerOrigin(syncSettings.workerUrl));
+      loginUrl.searchParams.set("redirect", oauthRedirectUrl());
+      window.location.assign(loginUrl);
     }
 
     async function sendEmailLoginCode() {
-      saveSyncSettings();
+      if (!saveSyncSettings()) return;
       const email = els.syncEmailInput.value.trim();
       if (!syncSettings.workerUrl) {
         setSyncStatus("請先輸入同步服務 URL。", "error");
@@ -3507,6 +4134,11 @@
       }
       if (!email) {
         setSyncStatus("請先輸入 Email。", "error");
+        return;
+      }
+      if (!els.syncEmailInput.checkValidity()) {
+        setSyncStatus("Email 格式不正確。", "error");
+        els.syncEmailInput.focus();
         return;
       }
       setSyncStatus("正在寄送 Email 驗證信...");
@@ -3522,7 +4154,7 @@
     }
 
     async function verifyEmailCode() {
-      saveSyncSettings();
+      if (!saveSyncSettings()) return;
       const email = els.syncEmailInput.value.trim() || syncSettings.email;
       const code = els.syncEmailCodeInput.value.trim();
       if (!syncSettings.workerUrl) {
@@ -3531,6 +4163,11 @@
       }
       if (!email || !code) {
         setSyncStatus("請輸入 Email 與 6 位驗證碼。", "error");
+        return;
+      }
+      if (!/^\d{6}$/.test(code)) {
+        setSyncStatus("驗證碼必須是 6 位數字。", "error");
+        els.syncEmailCodeInput.focus();
         return;
       }
       if (!syncSettings.emailChallengeId) {
@@ -3548,21 +4185,66 @@
       });
       syncSettings.oauthSession = result.session;
       syncSettings.authProvider = "email";
+      syncSettings.oauthBaseRevision = null;
+      syncSettings.oauthBaseExists = null;
       syncSettings.email = result.email || email;
       syncSettings.emailChallengeId = "";
       els.syncEmailCodeInput.value = "";
       persistSyncSettings();
       setSyncStatus("Email 登入完成，正在合併雲端進度...", "ok");
-      await downloadProgressWithOAuth(true).catch(error => setSyncStatus(`Email 已登入，但下載進度失敗：${error.message}`, "error"));
+      await enqueueSync(() => downloadProgressWithOAuth(true)).catch(error => setSyncStatus(`Email 已登入，但下載進度失敗：${error.message}`, "error"));
     }
 
     async function uploadProgressWithOAuth(isAuto = false) {
       if (!oauthSyncReady()) return false;
+      flushScheduledSave();
       setSyncStatus(isAuto ? "正在自動上傳 OAuth 進度..." : "正在上傳 OAuth 進度...");
-      await fetchOAuthWorker("/progress", {
-        method: "PUT",
-        body: JSON.stringify(progressPayload())
-      });
+      const put = async (baseRevision, baseExists) => {
+        if (safeRevision(state.revision) <= baseRevision) {
+          state.revision = baseRevision;
+          save({ silent: true });
+        }
+        return fetchOAuthWorker("/progress", {
+          method: "PUT",
+          body: JSON.stringify({ ...progressPayload(), baseRevision, baseExists })
+        });
+      };
+      let result;
+      let baseRevision = Number.isSafeInteger(syncSettings.oauthBaseRevision)
+        ? safeRevision(syncSettings.oauthBaseRevision)
+        : 0;
+      let baseExists = syncSettings.oauthBaseExists === true;
+      try {
+        result = await put(baseRevision, baseExists);
+      } catch (error) {
+        if (error.status !== 409) throw error;
+        setSyncStatus("雲端已有較新進度；此次上傳已停止，正在保存兩份衝突副本...");
+        const localPayload = progressPayload();
+        let latest = null;
+        try {
+          latest = await fetchOAuthWorker("/progress");
+          const latestState = validatedProgressState(latest);
+          baseRevision = safeRevision(latestState.revision);
+          baseExists = true;
+          preserveSyncConflict(authProviderLabel(), localPayload, latest);
+          applyProgressPayload(latest, { merge: true, preferIncoming: true });
+        } catch (downloadError) {
+          if (downloadError.status !== 404) throw downloadError;
+          baseRevision = 0;
+          baseExists = false;
+          preserveSyncConflict(authProviderLabel(), localPayload, null);
+        }
+        syncSettings.oauthBaseRevision = baseRevision;
+        syncSettings.oauthBaseExists = baseExists;
+        persistSyncStorage();
+        throw new Error("偵測到同步衝突，未覆寫雲端。衝突前的本機與遠端完整副本已放入「進度匯出碼／匯入碼」；本機顯示採遠端同欄位優先，請檢查後再手動上傳。");
+      }
+      if (!result || !Number.isSafeInteger(result.revision) || safeRevision(result.revision) <= baseRevision) {
+        throw new Error("同步服務未回傳有效的新 revision，已停止更新同步基準。");
+      }
+      syncSettings.oauthBaseRevision = safeRevision(result.revision);
+      syncSettings.oauthBaseExists = true;
+      persistSyncStorage();
       setSyncStatus(`已透過 ${authProviderLabel()} 上傳進度。`, "ok");
       return true;
     }
@@ -3581,8 +4263,26 @@
         }
         throw error;
       }
-      applyProgressPayload(payload, { merge: true });
-      setSyncStatus(`已透過 ${authProviderLabel()} 合併進度。`, "ok");
+      const remoteState = validatedProgressState(payload);
+      const remoteRevision = safeRevision(remoteState.revision);
+      const baselineMatches = syncSettings.oauthBaseExists === true
+        && Number.isSafeInteger(syncSettings.oauthBaseRevision)
+        && safeRevision(syncSettings.oauthBaseRevision) === remoteRevision;
+      let conflictPreserved = false;
+      if (!baselineMatches) {
+        const localPayload = progressPayload();
+        if (hasMeaningfulProgress(localPayload)) {
+          preserveSyncConflict(authProviderLabel(), localPayload, payload);
+          conflictPreserved = true;
+        }
+      }
+      syncSettings.oauthBaseRevision = remoteRevision;
+      syncSettings.oauthBaseExists = true;
+      persistSyncStorage();
+      applyProgressPayload(payload, { merge: true, preferIncoming: !baselineMatches });
+      setSyncStatus(conflictPreserved
+        ? `已透過 ${authProviderLabel()} 下載進度；雲端同欄位優先，兩份副本已保留。`
+        : `已透過 ${authProviderLabel()} 合併進度。`, "ok");
       return true;
     }
 
@@ -3592,6 +4292,8 @@
       }
       syncSettings.oauthSession = "";
       syncSettings.authProvider = "";
+      syncSettings.oauthBaseRevision = null;
+      syncSettings.oauthBaseExists = null;
       syncSettings.emailChallengeId = "";
       persistSyncSettings();
       setSyncStatus("已登出雲端同步。", "ok");
@@ -3616,27 +4318,65 @@
     }
 
     async function uploadProgressToGist(isAuto = false) {
-      saveSyncSettings();
+      if (!saveSyncSettings()) return;
       if (await uploadProgressWithOAuth(isAuto)) return;
       if (!syncSettings.token) {
         setSyncStatus("請先輸入 GitHub Gist token。", "error");
         return;
       }
+      flushScheduledSave();
       setSyncStatus(isAuto ? "正在自動上傳進度..." : "正在上傳進度...");
+      const existingGistId = await findProgressGistId();
+      let currentGist = null;
+      if (existingGistId) {
+        const currentResponse = await fetch(`https://api.github.com/gists/${existingGistId}`, {
+          headers: {
+            "Accept": "application/vnd.github+json",
+            "Authorization": `Bearer ${syncSettings.token}`
+          }
+        });
+        if (!currentResponse.ok) throw new Error(`GitHub 回應 ${currentResponse.status}`);
+        currentGist = await currentResponse.json();
+        const currentFile = currentGist.files && currentGist.files[progressGistFile];
+        if (currentFile && currentFile.content) {
+          if (new TextEncoder().encode(currentFile.content).byteLength > 1024 * 1024) {
+            throw new Error("Gist 進度超過 1 MB，已停止覆寫。");
+          }
+          const remotePayload = JSON.parse(currentFile.content);
+          const remoteState = validatedProgressState(remotePayload);
+          const remoteRevision = safeRevision(remoteState.revision);
+          const remoteVersion = gistVersion(currentGist);
+          const baselineMatches = Boolean(syncSettings.gistBaseVersion)
+            && syncSettings.gistBaseVersion === remoteVersion
+            && Number.isSafeInteger(syncSettings.gistBaseRevision)
+            && safeRevision(syncSettings.gistBaseRevision) === remoteRevision;
+          if (!baselineMatches) {
+            preserveSyncConflict("GitHub token", progressPayload(), remotePayload);
+            applyProgressPayload(remotePayload, { merge: true, preferIncoming: true });
+            syncSettings.gistBaseRevision = remoteRevision;
+            syncSettings.gistBaseVersion = remoteVersion;
+            persistSyncStorage();
+            throw new Error("Gist 已在別處更新，或此分頁尚未建立安全基準；此次 PATCH 已停止。兩份完整副本已放入匯出碼區，請檢查後再手動上傳。");
+          }
+        }
+      } else {
+        save({ silent: true });
+      }
+      const outgoingPayload = progressPayload();
       const body = {
         description: "Rong data interview learning progress",
         public: false,
         files: {
           [progressGistFile]: {
-            content: JSON.stringify(progressPayload(), null, 2)
+            content: JSON.stringify(outgoingPayload, null, 2)
           }
         }
       };
-      const url = syncSettings.gistId
-        ? `https://api.github.com/gists/${syncSettings.gistId}`
+      const url = existingGistId
+        ? `https://api.github.com/gists/${existingGistId}`
         : "https://api.github.com/gists";
       const response = await fetch(url, {
-        method: syncSettings.gistId ? "PATCH" : "POST",
+        method: existingGistId ? "PATCH" : "POST",
         headers: {
           "Accept": "application/vnd.github+json",
           "Content-Type": "application/json",
@@ -3649,12 +4389,15 @@
       }
       const gist = await response.json();
       syncSettings.gistId = gist.id;
+      syncSettings.gistBaseRevision = safeRevision(outgoingPayload.state.revision);
+      syncSettings.gistBaseVersion = gistVersion(gist);
       persistSyncSettings();
       setSyncStatus(`已上傳進度到 Gist：${gist.id}`, "ok");
     }
 
     async function downloadProgressFromGist(isAuto = false) {
-      if (!isAuto) saveSyncSettings();
+      if (!isAuto && !saveSyncSettings()) return;
+      if (!isAuto && !backupCurrentProgress("cloud-download")) return;
       if (await downloadProgressWithOAuth(isAuto)) return;
       if (!syncSettings.token) {
         setSyncStatus("請先輸入 GitHub Gist token。", "error");
@@ -3676,24 +4419,48 @@
         throw new Error(`GitHub 回應 ${response.status}`);
       }
       const gist = await response.json();
-      const file = gist.files[progressGistFile] || Object.values(gist.files).find(item => item.filename.endsWith(".json"));
+      const file = gist.files[progressGistFile];
       if (!file || !file.content) {
-        throw new Error("Gist 裡找不到進度檔");
+        throw new Error(`Gist 裡找不到指定進度檔 ${progressGistFile}`);
       }
-      applyProgressPayload(JSON.parse(file.content), { merge: true });
-      setSyncStatus("已下載並合併雲端進度。", "ok");
+      if (new TextEncoder().encode(file.content).byteLength > 1024 * 1024) {
+        throw new Error("Gist 進度超過 1 MB，已停止匯入。");
+      }
+      const payload = JSON.parse(file.content);
+      const remoteState = validatedProgressState(payload);
+      const remoteRevision = safeRevision(remoteState.revision);
+      const remoteVersion = gistVersion(gist);
+      const baselineMatches = Boolean(syncSettings.gistBaseVersion)
+        && syncSettings.gistBaseVersion === remoteVersion
+        && Number.isSafeInteger(syncSettings.gistBaseRevision)
+        && safeRevision(syncSettings.gistBaseRevision) === remoteRevision;
+      let conflictPreserved = false;
+      if (!baselineMatches) {
+        const localPayload = progressPayload();
+        if (hasMeaningfulProgress(localPayload)) {
+          preserveSyncConflict("GitHub token", localPayload, payload);
+          conflictPreserved = true;
+        }
+      }
+      syncSettings.gistBaseRevision = remoteRevision;
+      syncSettings.gistBaseVersion = remoteVersion;
+      persistSyncStorage();
+      applyProgressPayload(payload, { merge: true, preferIncoming: !baselineMatches });
+      setSyncStatus(conflictPreserved
+        ? "已下載雲端進度；雲端同欄位優先，兩份副本已保留。"
+        : "已下載並合併雲端進度。", "ok");
     }
 
     function maybeAutoUploadProgress() {
       if (!oauthSyncReady() && !syncSettings.token) return;
-      uploadProgressToGist(true).catch(error => {
+      enqueueSync(() => uploadProgressToGist(true)).catch(error => {
         setSyncStatus(`自動上傳失敗：${error.message}`, "error");
       });
     }
 
     function maybeAutoDownloadProgress() {
       if (!oauthSyncReady() && !syncSettings.token) return;
-      downloadProgressFromGist(true).catch(error => {
+      enqueueSync(() => downloadProgressFromGist(true)).catch(error => {
         setSyncStatus(`自動下載失敗：${error.message}`, "error");
       });
     }
@@ -3715,62 +4482,62 @@
       const issues = [];
 
       if (length >= 180) {
-        score += 22;
+        score += 10;
         strengths.push("回答長度足夠，已經有接近面試口答的完整度。");
       } else if (length >= 100) {
-        score += 16;
+        score += 7;
         strengths.push("回答有基本內容，但還可以補更多步驟與例子。");
       } else if (length >= 45) {
-        score += 8;
+        score += 4;
         issues.push("回答偏短，建議至少補到 100-180 字，才像完整面試回答。");
       } else {
         issues.push("回答太短，目前比較像筆記，不像面試現場的完整說明。");
       }
 
       if (/首先|第一|接著|然後|最後|我會先|流程|步驟|再來|其次/.test(text)) {
-        score += 14;
+        score += 8;
         strengths.push("有使用順序或流程語言，面試官比較容易跟上你的思路。");
       } else {
         issues.push("缺少回答結構。建議用「我會先...接著...最後...」讓邏輯更穩。");
       }
 
       if (/釐清|澄清|確認題意|先確認|先問|假設|限制|需求|輸入|輸出|目標|評分標準|面試官想/i.test(text)) {
-        score += 8;
+        score += 4;
         strengths.push("有先釐清題目或假設，這能避免一開始就答偏。");
       } else {
         issues.push("少了面試前半步：先釐清題目。可以補一句「我會先確認輸入、輸出、限制與面試官要看的指標」。");
       }
 
       if (/思路|我現在|卡住|如果卡|討論|我會跟面試官|讓我整理|邊講|溝通|追問|提示/i.test(text)) {
-        score += 6;
+        score += 3;
         strengths.push("有表現出溝通與 think out loud 的意識，面試官比較看得到你的推理過程。");
       } else {
         issues.push("可以再補一點「邊想邊講」的語言：例如卡住時會說目前想法、卡在哪、下一步要驗證什麼。");
       }
 
-      if (/S-111|PostgreSQL|PostGIS|QGIS|API|NetCDF|Flask|FastAPI|SQL|Python|hotspot|0\.48|lead_hours|bbox/i.test(text)) {
-        score += 10;
+      if (/S-111|PostgreSQL|PostGIS|QGIS|API|NetCDF|Flask|FastAPI|SQL|Python|pytest|Playwright|RAG|embedding|Agent|tool calling|hotspot|0\.48|lead_hours|bbox/i.test(text)) {
+        score += 4;
         strengths.push("有連到具體技術或 S-111 專案，這會讓回答更有辨識度。");
       } else {
         issues.push("缺少具體專案或技術名詞。建議連到 S-111、PostgreSQL/PostGIS、API、QGIS 或資料管線。");
       }
 
       if (/驗證|檢查|測試|比對|筆數|log|assert|結果|確認|對帳|抽樣/i.test(text)) {
-        score += 12;
+        score += 6;
         strengths.push("有提到驗證或檢查，這是資料職缺很重要的可信度訊號。");
       } else {
         issues.push("缺少驗證方式。面試回答最好補：你怎麼知道結果是對的。");
       }
 
       if (/取捨|風險|限制|瓶頸|避免|如果|fallback|retry|rollback|idempotent|重跑|效能|索引|分頁|快取/i.test(text)) {
-        score += 12;
+        score += 5;
         strengths.push("有提到風險、限制或取捨，回答不像只會照本宣科。");
       } else {
         issues.push("缺少風險或取捨。可以補一句：如果資料量變大、API 變慢、或資料重跑時你會怎麼處理。");
       }
 
       if (/邊界|edge|測試案例|正常案例|錯誤輸入|空值|極端|範例|sample|case|主動跑|跑 test/i.test(text)) {
-        score += 6;
+        score += 4;
         strengths.push("有主動測試案例的意識，這比只說『我會測試』更像工程面試回答。");
       } else if (question.domain !== "story") {
         issues.push("可以補主動測試案例：正常資料、空值/錯誤輸入、邊界條件各一個。");
@@ -3778,7 +4545,7 @@
 
       if (question.domain === "story") {
         if (/我負責|我做|我設計|我判斷|我的角色|我可以|我能提供|我能帶來|價值|貢獻|符合.*需求/i.test(text)) {
-          score += 8;
+          score += 6;
           strengths.push("有把故事講成自己的貢獻與價值，而不是只介紹專案本身。");
         } else {
           issues.push("專案故事要更像面試答案：請用「我負責、我判斷、我交付、我能帶來什麼價值」來回答。");
@@ -3792,16 +4559,15 @@
       const missingExpected = [];
       const uncheckedButPresent = [];
       const checkedButUnclear = [];
+      let technicalHits = 0;
       question.expected.forEach(([label, regex], index) => {
         const present = contains(lower, regex);
         const checked = Boolean(checks[index]);
-        if (present && checked) {
-          score += 8;
-        } else if (present) {
-          score += 4;
-          uncheckedButPresent.push(label);
+        if (present) {
+          technicalHits += 1;
+          score += 14;
+          if (!checked) uncheckedButPresent.push(label);
         } else if (checked) {
-          score += 2;
           checkedButUnclear.push(label);
         } else {
           missingExpected.push(label);
@@ -3822,7 +4588,7 @@
       }
 
       if (!checks.some(Boolean) && length >= 80) {
-        score -= 8;
+        score -= 4;
         issues.push("你沒有勾自評檢核。面試練習時請先判斷自己答到了哪些點，避免只靠關鍵字得分。");
       }
 
@@ -3831,6 +4597,8 @@
         issues.push("回答出現偏模糊的語氣。把「大概、之類」改成具體步驟或證據。");
       }
 
+      if (technicalHits < 2) score = Math.min(score, 49);
+      else if (technicalHits < 3) score = Math.min(score, 64);
       score = Math.max(0, Math.min(100, Math.round(score)));
 
       let title = "需要補強";
@@ -3846,11 +4614,11 @@
             ? "有回答到一部分，但面試官可能會追問你具體怎麼做。"
             : "目前還不夠像面試答案，先照改寫骨架重寫一次。";
 
-      return { score, title, summary, strengths, issues };
+      return { score, title, summary, strengths, issues, technicalHits };
     }
 
     function completedCount() {
-      return state.feedback.filter(Boolean).length;
+      return relevantQuestionIndexes().filter(index => Boolean(state.feedback[index])).length;
     }
 
     function learnedLessonCount() {
@@ -3868,6 +4636,29 @@
 
     function isLessonLearned(index) {
       return Boolean(state.learnedLessons[index]);
+    }
+
+    function isDailyQuestionIndex(index) {
+      return index >= dailyLessonStartIndex && index < dailyLessonStartIndex + dailyLessons.length;
+    }
+
+    function isRoleQuestionIndex(index) {
+      return index >= commonQuestionCount && index < baseQuestionCount;
+    }
+
+    function visibleMockQuestionIndexes() {
+      return questions.slice(0, baseQuestionCount)
+        .map((question, index) => ({ question, index }))
+        .filter(item => !item.question.track || item.question.track === state.interviewTrack)
+        .map(item => item.index);
+    }
+
+    function relevantQuestionIndexes() {
+      return [...visibleMockQuestionIndexes(), ...Array.from({ length: dailyLessons.length }, (_, index) => dailyLessonStartIndex + index)];
+    }
+
+    function isLessonChallengeUnlocked(index) {
+      return isLessonLearned(index) || Boolean(state.lessonReadiness[index] && state.lessonReadiness[index].passed);
     }
 
     function isLessonUnlocked(index) {
@@ -3950,27 +4741,15 @@
 
       score = Math.max(0, Math.min(100, Math.round(score)));
       const passed = score >= 60;
-      const title = passed ? "可以前進" : "先補強再前進";
+      const title = passed ? "可以進入挑戰" : "先補強再挑戰";
       const summary = passed
-        ? "理解度已達 60% 門檻，可以解鎖下一天。之後再用挑戰題把口說練熟。"
+        ? "文字理解已達 60 分；完成本課挑戰且技術要點至少命中 3 / 4，才會解鎖下一天。"
         : "目前還沒到 60% 門檻。先依照下面缺口補 2-3 句，再重新分析。";
       return { score, passed, title, summary, strengths, issues };
     }
 
-    function markLessonLearned(index, readiness = null) {
-      if (!isLessonUnlocked(index)) return;
-      state.learnedLessons[index] = true;
-      if (readiness) state.lessonReadiness[index] = readiness;
-      const next = Math.min(index + 1, dailyLessons.length - 1);
-      state.lessonOffset = index;
-      state.view = "learn";
-      renderAll();
-      setSyncStatus(index < dailyLessons.length - 1 ? `學習檢核達標，已解鎖 D${next + 1}。` : "28 天課程已全部解鎖。", "ok");
-      maybeAutoUploadProgress();
-    }
-
     function averageScore() {
-      const items = state.feedback.filter(Boolean);
+      const items = relevantQuestionIndexes().map(index => state.feedback[index]).filter(Boolean);
       if (!items.length) return 0;
       return Math.round(items.reduce((sum, item) => sum + item.score, 0) / items.length);
     }
@@ -3978,7 +4757,8 @@
     function domainScores() {
       const totals = {};
       Object.keys(domains).forEach(domain => totals[domain] = { sum: 0, count: 0 });
-      state.feedback.forEach((feedback, index) => {
+      relevantQuestionIndexes().forEach(index => {
+        const feedback = state.feedback[index];
         if (!feedback) return;
         const domain = questions[index].domain;
         totals[domain].sum += feedback.score;
@@ -3992,7 +4772,7 @@
     function weakestDomain() {
       const scores = domainScores();
       const answered = Object.keys(scores).filter(domain => {
-        return state.feedback.some((feedback, index) => feedback && questions[index].domain === domain);
+        return relevantQuestionIndexes().some(index => state.feedback[index] && questions[index].domain === domain);
       });
       if (!answered.length) return "sql";
       return answered.sort((a, b) => scores[a] - scores[b])[0];
@@ -4244,7 +5024,7 @@
     function resourceStatusText(offset) {
       const done = completedResourceCount(offset);
       if (isLessonLearned(offset)) return "本課資源與檢核已完成，可以進入挑戰或下一天。";
-      if (done >= 1) return `主資源已完成，另開啟 ${Math.max(0, done - 1)} 個選修。現在可以寫學習檢核。`;
+      if (done >= 1) return `已開啟一個主資源，另開啟 ${Math.max(0, done - 1)} 個選修。請先實作，再寫學習檢核。`;
       return "請先選一個主資源學習；其餘影片、文件與練習為選修。";
     }
 
@@ -4259,7 +5039,7 @@
       const changed = !state.lessonResources[offset][step];
       state.lessonResources[offset][step] = true;
       if (changed) {
-        setSyncStatus(`D${offset + 1} 已完成主資源，另有 ${Math.max(0, completedResourceCount(offset) - 1)} 個選修。`, "ok");
+        setSyncStatus(`D${offset + 1} 已開啟主資源；請完成實作與兩階段檢核，不能只用點擊當作學會。`, "ok");
         save();
         renderAll();
         maybeAutoUploadProgress();
@@ -4728,7 +5508,6 @@
       const week = currentWeekNumber();
       const indexes = todayRecommendationIndexes(dayIndex);
       const maxMinutes = Math.max(...plan.time.map(item => item[1]));
-      const practiceUnlocked = areLessonResourcesDone(todayLearningOffset());
 
       els.todayPlanMeta.textContent = `第 ${learnedLessonCount()} / ${dailyLessons.length} 天`;
       els.todayPlanTopic.textContent = `目前課程：${dailyLessons[todayLearningOffset()].title}`;
@@ -4736,9 +5515,9 @@
       renderDailyKnowledge();
       els.todayPlanQuestions.innerHTML = indexes.map(index => {
         const done = Boolean(state.feedback[index]);
-        const prefix = done ? "✓" : practiceUnlocked ? "▶" : "鎖";
+        const prefix = done ? "✓" : "▶";
         return `
-          <button class="plan-question ${done ? "done" : ""}" type="button" ${practiceUnlocked ? `data-plan-question="${index}"` : "disabled"}>
+          <button class="plan-question ${done ? "done" : ""}" type="button" data-plan-question="${index}">
             <span>${prefix}</span>
             <span>Q${index + 1} ${truncateTitle(questions[index].title)}</span>
           </button>
@@ -4815,7 +5594,7 @@
         els.lessonReadinessResult.classList.toggle("error", !resourcesDone);
         els.lessonReadinessResult.replaceChildren(
           textElement("strong", resourcesDone ? "尚未檢核" : "先完成學習資源"),
-          textElement("span", resourcesDone ? "寫完後按「分析學習程度」。達到 60 分就會自動解鎖下一天。" : "請先選一個主資源學習；其他資源可依卡點選修，再用自己的話完成檢核。")
+          textElement("span", resourcesDone ? "寫完後按「分析學習程度」；達到 60 分會開放本課實戰挑戰。" : "請先選一個主資源學習；其他資源可依卡點選修，再用自己的話完成檢核。")
         );
         return;
       }
@@ -4856,11 +5635,12 @@
       renderLessonReadiness(offset);
       const resourcesDone = areLessonResourcesDone(offset);
       els.startLessonChallengeBtn.disabled = !learned && !resourcesDone;
+      const challengeUnlocked = isLessonChallengeUnlocked(offset);
       els.startLessonChallengeBtn.textContent = learned
         ? offset < dailyLessons.length - 1 ? "前往下一天" : "已完成全部課程"
-        : !resourcesDone ? "先完成一個主資源" : state.lessonReadiness[offset] ? "重新分析學習程度" : "分析學習程度";
-      els.openTodayLessonBtn.disabled = !learned;
-      els.openTodayLessonBtn.textContent = learned ? "用本課考我" : "達到 60 分後再考我";
+        : !resourcesDone ? "先開啟並實作主資源" : challengeUnlocked ? "進入本課挑戰" : state.lessonReadiness[offset] ? "重新分析學習程度" : "分析學習程度";
+      els.openTodayLessonBtn.disabled = !challengeUnlocked;
+      els.openTodayLessonBtn.textContent = learned ? "再次挑戰本課" : challengeUnlocked ? "進入本課挑戰" : "達到 60 分後再挑戰";
       els.learningPlanTopic.textContent = plan.topic;
       els.learningPlanTime.innerHTML = plan.time.map(([label, minutes]) => `
         <div class="time-row">
@@ -4891,37 +5671,40 @@
       const selectedOffset = activeLearningOffset();
       els.courseNavMeta.textContent = state.view === "learn" ? "學習" : "答題";
       renderCourseProgress();
-      const challengeUnlocked = isLessonLearned(todayOffset);
-      const practiceUnlocked = areLessonResourcesDone(todayOffset);
+      const challengeUnlocked = isLessonChallengeUnlocked(todayOffset);
+      const challengePassed = isLessonLearned(todayOffset);
+      const challengeAttempted = Boolean(state.feedback[todayLearningIndex()]);
       const quickItems = [
         `<button class="nav-item ${state.view === "learn" && selectedOffset === todayOffset ? "active" : ""}" type="button" data-nav-home="today" ${state.view === "learn" && selectedOffset === todayOffset ? "aria-current=\"step\"" : ""}>
           <span>1</span><span>目前學習</span><small>D${todayOffset + 1}</small>
         </button>`,
-        `<button class="nav-item ${state.view === "interview" && state.current === todayLearningIndex() ? "active" : ""} ${state.feedback[todayLearningIndex()] ? "done" : ""} ${challengeUnlocked ? "" : "locked"}" type="button" ${state.view === "interview" && state.current === todayLearningIndex() ? "aria-current=\"step\"" : ""} ${challengeUnlocked ? `data-question="${todayLearningIndex()}"` : "disabled"}>
-          <span>2</span><span>本課挑戰</span><small>${state.feedback[todayLearningIndex()] ? "✓" : challengeUnlocked ? "考" : "鎖"}</small>
+        `<button class="nav-item ${state.view === "interview" && state.current === todayLearningIndex() ? "active" : ""} ${challengePassed ? "done" : ""} ${challengeUnlocked ? "" : "locked"}" type="button" ${state.view === "interview" && state.current === todayLearningIndex() ? "aria-current=\"step\"" : ""} ${challengeUnlocked ? `data-question="${todayLearningIndex()}"` : "disabled"}>
+          <span>2</span><span>本課挑戰</span><small>${challengePassed ? "✓" : challengeAttempted ? "重試" : challengeUnlocked ? "考" : "鎖"}</small>
         </button>`
       ].join("");
       const lessonItems = dailyLessons.map((lesson, index) => {
         const questionIndex = dailyLessonStartIndex + index;
         const active = state.view === "learn" && selectedOffset === index;
         const done = isLessonLearned(index);
+        const ready = isLessonChallengeUnlocked(index);
         const unlocked = isLessonUnlocked(index);
         return `
           <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""} ${unlocked ? "" : "locked"}" type="button" ${active ? "aria-current=\"step\"" : ""} ${unlocked ? `data-lesson="${index}"` : "disabled"}>
             <span>D${index + 1}</span>
             <span>${lesson.title}</span>
-            <small>${done ? "✓" : unlocked ? "進行中" : "鎖定"}</small>
+            <small>${done ? "✓" : ready ? "待挑戰" : unlocked ? "進行中" : "鎖定"}</small>
           </button>
         `;
       }).join("");
-      const mockItems = questions.slice(0, baseQuestionCount).map((question, index) => {
+      const mockItems = visibleMockQuestionIndexes().map((index, visibleIndex) => {
+        const question = questions[index];
         const active = state.view === "interview" && state.current === index;
         const done = Boolean(state.feedback[index]);
         return `
-          <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""} ${practiceUnlocked ? "" : "locked"}" type="button" ${active ? "aria-current=\"step\"" : ""} ${practiceUnlocked ? `data-question="${index}"` : "disabled"}>
-            <span>Q${index + 1}</span>
+          <button class="nav-item ${active ? "active" : ""} ${done ? "done" : ""}" type="button" ${active ? "aria-current=\"step\"" : ""} data-question="${index}">
+            <span>Q${visibleIndex + 1}</span>
             <span>${question.title}</span>
-            <small>${done ? "✓" : practiceUnlocked ? domains[question.domain] : "鎖定"}</small>
+            <small>${done ? "✓" : domains[question.domain]}</small>
           </button>
         `;
       }).join("");
@@ -4935,7 +5718,7 @@
           <div class="nav-list">${lessonItems}</div>
         </div>
         <div class="nav-group">
-          <div class="nav-group-title">模擬面試題庫</div>
+            <div class="nav-group-title">共通＋${interviewTrackLabels[state.interviewTrack]}題庫</div>
           <div class="nav-list">${mockItems}</div>
         </div>
       `;
@@ -4954,36 +5737,42 @@
       state.view = "learn";
       renderAll();
       window.scrollTo({ top: 0 });
+      els.learningLessonTitle.focus({ preventScroll: true });
     }
 
     function openQuestion(index) {
       const target = Math.min(Math.max(index, 0), questions.length - 1);
-      if (target < baseQuestionCount && !areLessonResourcesDone(todayLearningOffset())) {
-        openLearning(todayLearningOffset());
-        setSyncStatus("請先完成本課一個主資源，再進入練習題。", "error");
-        return;
-      }
-      if (target >= dailyLessonStartIndex) {
+      if (isDailyQuestionIndex(target)) {
         const offset = target - dailyLessonStartIndex;
-        if (!isLessonLearned(offset)) {
+        if (!isLessonChallengeUnlocked(offset)) {
           openLearning(offset);
-          setSyncStatus("請先確認本課已學完，再進入挑戰題。", "error");
+          setSyncStatus("請先完成主資源與 60 分文字檢核，再進入本課挑戰。", "error");
           return;
         }
       }
       state.current = target;
-      if (state.current >= dailyLessonStartIndex) {
+      if (isRoleQuestionIndex(state.current) && questions[state.current].track) {
+        state.interviewTrack = questions[state.current].track;
+      }
+      if (isDailyQuestionIndex(state.current)) {
         state.lessonOffset = state.current - dailyLessonStartIndex;
       }
       state.view = "interview";
       renderAll();
       window.scrollTo({ top: 0 });
+      els.questionTitle.focus({ preventScroll: true });
     }
 
     function renderQuestion() {
       const question = questions[state.current];
-      els.questionPanelTitle.textContent = state.current >= dailyLessonStartIndex ? "今日新知挑戰" : "模擬面試題";
-      els.questionCount.textContent = `第 ${state.current + 1} 題 / ${questions.length}`;
+      els.interviewTrackSelect.value = state.interviewTrack;
+      els.questionPanelTitle.textContent = isDailyQuestionIndex(state.current) ? "今日新知挑戰" : question.track ? `${interviewTrackLabels[question.track]}角色題` : "共通模擬面試題";
+      if (isDailyQuestionIndex(state.current)) {
+        els.questionCount.textContent = `D${state.current - dailyLessonStartIndex + 1} 挑戰`;
+      } else {
+        const visible = visibleMockQuestionIndexes();
+        els.questionCount.textContent = `題庫 ${Math.max(1, visible.indexOf(state.current) + 1)} / ${visible.length}`;
+      }
       els.domainTag.textContent = domains[question.domain];
       els.questionTitle.textContent = question.title;
       els.questionHint.textContent = question.hint;
@@ -5093,10 +5882,11 @@
 
     function renderSummary() {
       const complete = completedCount();
+      const relevantTotal = relevantQuestionIndexes().length;
       const current = state.feedback[state.current];
       const focus = weakestDomain();
-      els.progressFill.style.width = `${complete / questions.length * 100}%`;
-      els.completeMetric.textContent = `${Math.round(complete / questions.length * 100)}%`;
+      els.progressFill.style.width = `${relevantTotal ? complete / relevantTotal * 100 : 0}%`;
+      els.completeMetric.textContent = `${relevantTotal ? Math.round(complete / relevantTotal * 100) : 0}%`;
       els.currentScoreMetric.textContent = current ? current.score : "0";
       els.focusMetric.textContent = domains[focus];
       els.averageMetric.textContent = averageScore();
@@ -5118,13 +5908,13 @@
 
     function renderTasks() {
       const focus = weakestDomain();
-      const minutes = 120;
-      const chunks = [35, 30, 30, 25];
+      const minutes = 30;
+      const chunks = [10, 10, 10];
       const tasks = [
         ["重寫目前這題", "把右側缺口補進回答，重新送出一次。"],
         ...taskBank[focus]
       ];
-      els.taskMeta.textContent = `${minutes} 分鐘`;
+      els.taskMeta.textContent = `選配補弱 ${minutes} 分鐘`;
       els.taskList.innerHTML = chunks.map((chunk, index) => {
         const task = tasks[index % tasks.length];
         return `
@@ -5148,8 +5938,25 @@
     function submitFeedback() {
       state.answers[state.current] = els.answerInput.value;
       state.feedback[state.current] = analyzeAnswer(questions[state.current], els.answerInput.value, state.selfChecks[state.current]);
-      renderFeedback();
-      save();
+      const feedback = state.feedback[state.current];
+      let unlockedLesson = -1;
+      if (isDailyQuestionIndex(state.current)) {
+        const offset = state.current - dailyLessonStartIndex;
+        if (!isLessonLearned(offset) && state.lessonReadiness[offset]?.passed && feedback.score >= 65 && feedback.technicalHits >= 3) {
+          state.learnedLessons[offset] = true;
+          state.lessonOffset = offset;
+          unlockedLesson = offset;
+        }
+      }
+      renderAll();
+      if (unlockedLesson >= 0) {
+        setSyncStatus(unlockedLesson < dailyLessons.length - 1
+          ? `本課實戰通過，已解鎖 D${unlockedLesson + 2}。`
+          : "28 天課程與本課實戰已全部完成。", "ok");
+        maybeAutoUploadProgress();
+      } else if (isDailyQuestionIndex(state.current)) {
+        setSyncStatus(`本課挑戰目前 ${feedback.score} 分、技術要點 ${feedback.technicalHits || 0} / 4；需達 65 分且至少 3 / 4 才解鎖下一天。`, "error");
+      }
       els.feedbackPanel.focus({ preventScroll: true });
       els.feedbackPanel.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
     }
@@ -5158,7 +5965,7 @@
       const offset = activeLearningOffset();
       if (!areLessonResourcesDone(offset)) {
         renderLessonReadiness(offset);
-        setSyncStatus(`D${offset + 1} 請先完成一個主資源，再做 60 分檢核。`, "error");
+        setSyncStatus(`D${offset + 1} 請先開啟並實作一個主資源，再做 60 分檢核。`, "error");
         return;
       }
       const lesson = dailyLessons[offset];
@@ -5166,12 +5973,14 @@
       const readiness = analyzeLessonReadiness(lesson, els.lessonReflectionInput.value);
       state.lessonReadiness[offset] = readiness;
       if (readiness.passed) {
-        markLessonLearned(offset, readiness);
+        save();
+        setSyncStatus(`D${offset + 1} 文字檢核通過；現在完成本課挑戰，技術要點至少命中 3 / 4。`, "ok");
+        openQuestion(learningQuestionIndex(offset));
       } else {
         renderLessonReadiness(offset);
         save();
         maybeAutoUploadProgress();
-        setSyncStatus(`D${offset + 1} 目前 ${readiness.score} 分，補到 60 分就能解鎖下一天。`, "error");
+        setSyncStatus(`D${offset + 1} 目前 ${readiness.score} 分，補到 60 分後可進入本課挑戰。`, "error");
       }
     }
 
@@ -5265,16 +6074,16 @@
       els.answerInput.placeholder = "請像面試現場一樣回答。先釐清題目與假設，再講結論、步驟、S-111 專案連結、主動測試方式，以及風險或取捨。";
     }
 
-    function renderAll() {
+    function renderAll(options = {}) {
       renderQuestion();
       renderSummary();
-      save();
+      if (options.persist !== false) save();
     }
 
     els.answerInput.addEventListener("input", () => {
       state.answers[state.current] = els.answerInput.value;
       updateWordCount();
-      save();
+      scheduleSave();
     });
 
     els.checklistGrid.addEventListener("change", event => {
@@ -5293,9 +6102,20 @@
       save();
     });
 
+    els.interviewTrackSelect.addEventListener("change", event => {
+      const nextTrack = event.target.value;
+      if (!Object.hasOwn(interviewTrackLabels, nextTrack)) return;
+      state.interviewTrack = nextTrack;
+      if (isRoleQuestionIndex(state.current) && questions[state.current].track !== nextTrack) {
+        state.current = commonQuestionCount + roleQuestions.findIndex(question => question.track === nextTrack);
+      }
+      renderAll();
+      setSyncStatus(`已切換為${interviewTrackLabels[nextTrack]}角色題；共通題仍會保留。`, "ok");
+    });
+
     els.followupInput.addEventListener("input", () => {
       state.followupAnswers[state.current] = els.followupInput.value;
-      save();
+      scheduleSave();
     });
 
     els.lessonReflectionInput.addEventListener("input", () => {
@@ -5305,7 +6125,7 @@
         state.lessonReadiness[offset] = null;
         renderLessonReadiness(offset);
       }
-      save();
+      scheduleSave();
     });
 
     document.addEventListener("click", event => {
@@ -5353,6 +6173,8 @@
       const offset = activeLearningOffset();
       if (isLessonLearned(offset)) {
         openLearning(Math.min(offset + 1, dailyLessons.length - 1));
+      } else if (isLessonChallengeUnlocked(offset)) {
+        openQuestion(learningQuestionIndex(offset));
       } else {
         submitLessonReadiness();
       }
@@ -5360,7 +6182,7 @@
 
     els.openTodayLessonBtn.addEventListener("click", () => {
       const offset = activeLearningOffset();
-      if (isLessonLearned(offset)) {
+      if (isLessonChallengeUnlocked(offset)) {
         openQuestion(learningQuestionIndex(offset));
       }
     });
@@ -5370,8 +6192,9 @@
     document.getElementById("followupBtn").addEventListener("click", showFollowup);
     document.getElementById("followupFeedbackBtn").addEventListener("click", submitFollowupFeedback);
     document.getElementById("templateBtn").addEventListener("click", insertTemplate);
-    document.getElementById("syncSaveSettingsBtn").addEventListener("click", () => {
-      saveSyncSettings();
+    document.getElementById("syncForm").addEventListener("submit", event => {
+      event.preventDefault();
+      if (!saveSyncSettings()) return;
       setSyncStatus(syncSettings.gistId ? `已儲存 Gist：${syncSettings.gistId}，正在同步進度...` : "已儲存同步設定，正在尋找雲端進度...", "ok");
       maybeAutoDownloadProgress();
     });
@@ -5382,14 +6205,18 @@
     document.getElementById("syncOAuthLogoutBtn").addEventListener("click", event => runBusy(event.currentTarget, "登出中…", "登出失敗", logoutOAuthSync));
     document.getElementById("syncExportBtn").addEventListener("click", exportProgressCode);
     document.getElementById("syncImportBtn").addEventListener("click", importProgressCode);
-    document.getElementById("syncUploadBtn").addEventListener("click", event => runBusy(event.currentTarget, "上傳中…", "上傳失敗", uploadProgressToGist));
-    document.getElementById("syncDownloadBtn").addEventListener("click", event => runBusy(event.currentTarget, "下載中…", "下載失敗", downloadProgressFromGist));
+    document.getElementById("syncUploadBtn").addEventListener("click", event => runBusy(event.currentTarget, "上傳中…", "上傳失敗", () => enqueueSync(() => uploadProgressToGist(false))));
+    document.getElementById("syncDownloadBtn").addEventListener("click", event => runBusy(event.currentTarget, "下載中…", "下載失敗", () => enqueueSync(() => downloadProgressFromGist(false))));
     document.getElementById("syncClearBtn").addEventListener("click", () => {
       if (!window.confirm("確定清除這台裝置的同步 URL、登入階段、Gist token 與 Gist ID 嗎？學習進度不會被刪除。")) return;
       syncSettings.token = "";
       syncSettings.gistId = "";
       syncSettings.oauthSession = "";
       syncSettings.authProvider = "";
+      syncSettings.oauthBaseRevision = null;
+      syncSettings.oauthBaseExists = null;
+      syncSettings.gistBaseRevision = null;
+      syncSettings.gistBaseVersion = "";
       syncSettings.email = "";
       syncSettings.emailChallengeId = "";
       syncSettings.workerUrl = "";
@@ -5400,25 +6227,29 @@
       els.syncGistInput.value = "";
       localStorage.removeItem(syncSettingsKey);
       sessionStorage.removeItem(syncSecretsKey);
+      sessionStorage.removeItem(syncConflictKey);
       renderCourseProgress();
       setSyncStatus("已清除本機同步設定。", "ok");
     });
 
-    document.getElementById("prevBtn").addEventListener("click", () => {
-      openQuestion(Math.max(0, state.current - 1));
-    });
+    function openAdjacentQuestion(direction) {
+      const pool = isDailyQuestionIndex(state.current)
+        ? Array.from({ length: dailyLessons.length }, (_, index) => dailyLessonStartIndex + index).filter(index => isLessonChallengeUnlocked(index - dailyLessonStartIndex))
+        : visibleMockQuestionIndexes();
+      const currentPosition = Math.max(0, pool.indexOf(state.current));
+      const nextPosition = Math.min(pool.length - 1, Math.max(0, currentPosition + direction));
+      if (pool[nextPosition] !== undefined) openQuestion(pool[nextPosition]);
+    }
 
-    document.getElementById("nextBtn").addEventListener("click", () => {
-      openQuestion(Math.min(questions.length - 1, state.current + 1));
-    });
+    document.getElementById("prevBtn").addEventListener("click", () => openAdjacentQuestion(-1));
+    document.getElementById("nextBtn").addEventListener("click", () => openAdjacentQuestion(1));
 
     document.getElementById("resetBtn").addEventListener("click", () => {
       if (!window.confirm("確定清空 28 天課程進度、所有答案、分數、提示與追問嗎？同步設定不會刪除，並會保留一次本機復原。")) return;
-      save();
-      const currentSave = localStorage.getItem("rongDataMockInterview");
-      if (currentSave) localStorage.setItem(resetBackupKey, currentSave);
+      if (!backupCurrentProgress("reset")) return;
       state.current = 0;
       state.view = "learn";
+      state.interviewTrack = "data";
       state.lessonOffset = 0;
       state.learnedLessons = Array(dailyLessons.length).fill(false);
       state.lessonReflections = Array(dailyLessons.length).fill("");
@@ -5431,30 +6262,67 @@
       state.followupQuestions = Array(questions.length).fill("");
       state.followupAnswers = Array(questions.length).fill("");
       state.followupFeedback = Array(questions.length).fill(null);
-      localStorage.removeItem("rongDataMockInterview");
       els.followupOutput.textContent = "按「面試官追問」取得下一個問題。";
       els.followupSection.classList.add("is-hidden");
       renderAll();
       document.getElementById("undoResetBtn").hidden = false;
+      setSyncStatus("已清空練習；可按「復原上次變更」撤銷。", "ok");
     });
 
     document.getElementById("undoResetBtn").addEventListener("click", () => {
-      const backup = localStorage.getItem(resetBackupKey);
-      if (!backup) {
-        window.alert("找不到可復原的清空前進度。");
-        return;
+      try {
+        const raw = localStorage.getItem(progressBackupKey) || localStorage.getItem(legacyResetBackupKey);
+        if (!raw) throw new Error("找不到可復原資料");
+        const backup = JSON.parse(raw);
+        const current = progressStateSnapshot();
+        applySavedProgress(backup.state || backup);
+        localStorage.setItem(progressBackupKey, JSON.stringify({ reason: "undo", createdAt: new Date().toISOString(), state: current }));
+        localStorage.removeItem(legacyResetBackupKey);
+        save({ mergeStored: false, silent: true });
+        renderAll({ persist: false });
+        document.getElementById("undoResetBtn").hidden = false;
+        setSyncStatus("已復原；再次按下可回到復原前狀態。", "ok");
+      } catch (error) {
+        window.alert(`無法復原：${error.message}`);
       }
-      localStorage.setItem("rongDataMockInterview", backup);
-      localStorage.removeItem(resetBackupKey);
-      load();
-      renderAll();
-      document.getElementById("undoResetBtn").hidden = true;
-      setSyncStatus("已復原清空前的本機進度。", "ok");
+    });
+
+    window.addEventListener("storage", event => {
+      if (event.key !== progressStorageKey || !event.newValue) return;
+      try {
+        const incoming = JSON.parse(event.newValue);
+        if (safeRevision(incoming.revision) <= safeRevision(state.revision)) return;
+        const incomingPayload = {
+          app: "rong-data-interview-learning-console",
+          version: Number.isInteger(incoming.version) ? incoming.version : progressVersion,
+          state: incoming
+        };
+        const localPayload = progressPayload();
+        if (hasMeaningfulProgress(localPayload)) preserveSyncConflict("同瀏覽器另一分頁", localPayload, incomingPayload);
+        applyProgressPayload(incomingPayload, { merge: true, preferIncoming: true, persist: false });
+        setSyncStatus("已套用另一個分頁的較新同欄位；變更前副本已保留在匯出碼區。", "ok");
+      } catch (error) {
+        console.warn("Cross-tab progress could not be merged", error);
+      }
+    });
+
+    window.addEventListener("pagehide", flushScheduledSave);
+    document.addEventListener("visibilitychange", () => {
+      if (document.visibilityState === "hidden") flushScheduledSave();
     });
 
     loadSyncSettings();
     load();
-    document.getElementById("undoResetBtn").hidden = !localStorage.getItem(resetBackupKey);
+    try {
+      if (!localStorage.getItem(progressBackupKey) && localStorage.getItem(legacyResetBackupKey)) {
+        const legacy = JSON.parse(localStorage.getItem(legacyResetBackupKey));
+        localStorage.setItem(progressBackupKey, JSON.stringify({ reason: "legacy-reset", createdAt: new Date().toISOString(), state: legacy }));
+        localStorage.removeItem(legacyResetBackupKey);
+      }
+      document.getElementById("undoResetBtn").hidden = !localStorage.getItem(progressBackupKey);
+    } catch {
+      document.getElementById("undoResetBtn").hidden = true;
+    }
     renderAll();
     consumeCloudSessionFromHash();
     maybeAutoDownloadProgress();

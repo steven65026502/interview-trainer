@@ -67,6 +67,7 @@
     .app-shell {
       min-height: 100vh;
       min-height: 100svh;
+      min-height: 100dvh;
       display: grid;
       grid-template-columns: 250px minmax(0, 1fr);
     }
@@ -76,6 +77,7 @@
       top: 0;
       height: 100vh;
       height: 100svh;
+      height: 100dvh;
       padding: 30px 24px 24px;
       border-right: 1px solid var(--line);
       background: #ecebe5;
@@ -83,6 +85,8 @@
       flex-direction: column;
       gap: 30px;
       z-index: 5;
+      overflow-y: auto;
+      scrollbar-gutter: stable;
     }
 
     .brand {
@@ -626,6 +630,212 @@
       line-height: 1.55;
     }
 
+    .learning-stack {
+      min-width: 0;
+      display: grid;
+      gap: 26px;
+    }
+
+    .evidence-block {
+      padding: 22px 0;
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .evidence-heading {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 17px;
+    }
+
+    .evidence-heading h3,
+    .assessment-controls h2 {
+      margin: 0 0 5px;
+      font-size: 18px;
+      letter-spacing: -0.025em;
+    }
+
+    .evidence-heading p,
+    .assessment-control-copy p {
+      max-width: 700px;
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    .evidence-status {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 850;
+    }
+
+    .evidence-status.complete {
+      color: var(--accent-ink);
+    }
+
+    .track-evidence-grid {
+      display: grid;
+      grid-template-columns: minmax(210px, 0.7fr) minmax(260px, 1.3fr);
+      gap: 16px;
+      align-items: end;
+    }
+
+    .evidence-check {
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--surface);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .evidence-check input,
+    .algorithm-check input {
+      width: 19px;
+      height: 19px;
+      accent-color: var(--accent);
+    }
+
+    .evidence-field {
+      min-width: 0;
+      display: grid;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .evidence-field input,
+    .evidence-field select {
+      width: 100%;
+      min-width: 0;
+      min-height: 46px;
+      border: 1px solid var(--line-strong);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--ink);
+      padding: 0 11px;
+    }
+
+    .algorithm-disclosure {
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .algorithm-disclosure > summary {
+      min-height: 70px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .algorithm-disclosure > summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .algorithm-summary-copy strong,
+    .algorithm-summary-copy small {
+      display: block;
+    }
+
+    .algorithm-summary-copy strong {
+      margin-bottom: 5px;
+      font-size: 17px;
+    }
+
+    .algorithm-summary-copy small,
+    .algorithm-disclosure-note {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .algorithm-summary-count {
+      color: var(--accent-ink);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .algorithm-records {
+      display: grid;
+      border-top: 1px solid var(--line);
+    }
+
+    .algorithm-record {
+      display: grid;
+      grid-template-columns: 44px minmax(0, 1fr);
+      gap: 12px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .algorithm-record:last-child {
+      border-bottom: 0;
+    }
+
+    .algorithm-record.complete .algorithm-index {
+      border-color: var(--accent);
+      color: var(--accent-ink);
+      background: var(--accent-soft);
+    }
+
+    .algorithm-index {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 50%;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .algorithm-record-grid {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) 110px 100px;
+      gap: 12px;
+      align-items: end;
+    }
+
+    .algorithm-checks {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-height: 46px;
+      grid-column: 1 / -1;
+    }
+
+    .algorithm-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .algorithm-code-field {
+      grid-column: span 2;
+    }
+
+    .algorithm-disclosure-note {
+      margin: 14px 0 18px 56px;
+    }
+
     .plan-grid {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 320px;
@@ -722,6 +932,12 @@
       border-color: var(--accent);
       color: var(--accent-ink);
       background: var(--accent-soft);
+    }
+
+    .task-mode.optional {
+      border-style: dashed;
+      color: var(--muted);
+      background: transparent;
     }
 
     .week-panel {
@@ -899,6 +1115,52 @@
       padding: 50px 0;
       color: var(--muted);
       text-align: center;
+    }
+
+    .assessment-controls {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.8fr) minmax(320px, 1.2fr);
+      gap: 22px 34px;
+      padding: 24px 0;
+      margin-bottom: 32px;
+      border-top: 1px solid var(--line-strong);
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .assessment-control-copy .eyebrow {
+      margin-bottom: 6px;
+    }
+
+    .assessment-selectors,
+    .assessment-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .assessment-meta-grid {
+      grid-column: 1 / -1;
+      grid-template-columns: minmax(150px, 0.55fr) minmax(180px, 0.7fr) minmax(260px, 1.5fr);
+    }
+
+    .assessment-record-actions {
+      grid-column: 1 / -1;
+      min-height: 46px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .assessment-record-actions span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .assessment-record-actions span.saved {
+      color: var(--accent-ink);
+      font-weight: 800;
     }
 
     .assessment-layout {
@@ -1169,8 +1431,10 @@
       }
 
       .data-menu-panel {
-        right: auto;
-        left: 0;
+        right: 0;
+        left: auto;
+        width: min(190px, calc(100vw - 36px));
+        max-width: calc(100vw - 36px);
       }
 
       .page-head {
@@ -1239,6 +1503,58 @@
         border-top: 1px solid var(--line-strong);
       }
 
+      .evidence-heading,
+      .assessment-record-actions {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .track-evidence-grid,
+      .assessment-controls,
+      .assessment-selectors,
+      .assessment-meta-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .assessment-control-copy,
+      .assessment-selectors,
+      .assessment-meta-grid,
+      .assessment-record-actions {
+        grid-column: 1;
+      }
+
+      .algorithm-disclosure > summary {
+        grid-template-columns: 1fr;
+        gap: 5px;
+        padding: 13px 0;
+      }
+
+      .algorithm-summary-count {
+        white-space: normal;
+      }
+
+      .algorithm-record-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .algorithm-checks,
+      .algorithm-code-field {
+        grid-column: 1;
+      }
+
+      .algorithm-checks {
+        flex-wrap: wrap;
+      }
+
+      .algorithm-disclosure-note {
+        margin-left: 0;
+      }
+
+      .evidence-field input,
+      .evidence-field select {
+        font-size: 16px;
+      }
+
       .task-row {
         grid-template-columns: 38px 58px minmax(0, 1fr);
       }
@@ -1277,6 +1593,7 @@
 
       .score-input {
         grid-column: 2;
+        font-size: 16px;
       }
 
       .interview-table {
@@ -1343,7 +1660,7 @@
           <strong id="railProgressText">0%</strong>
         </div>
         <div class="progress-track" aria-hidden="true"><div class="progress-fill" id="railProgressFill"></div></div>
-        <small id="railProgressNote">0 / 72 個驗收項目</small>
+        <small id="railProgressNote">0 / 131 個驗收項目</small>
       </div>
     </aside>
 
@@ -1395,7 +1712,7 @@
         <section class="section-block">
           <div class="section-title">
             <h2>選擇週次</h2>
-            <p>每週六個主要任務加三個能力閘門。先完成可交付成果，再勾選「我真的會」。</p>
+            <p>每週六個任務、主線成果、逐題演算法證據與三個能力閘門；標示「選修」的任務不阻擋完成。</p>
           </div>
           <div class="week-strip" id="weekStrip" role="tablist" aria-label="八週學習路線"></div>
         </section>
@@ -1440,20 +1757,41 @@
           <div>
             <p class="eyebrow">No-AI readiness check</p>
             <h1 id="verifyTitle" tabindex="-1">用 90 分鐘，確認自己能不能上場。</h1>
-            <p class="page-head-copy">W2 只做 Python／SQL 基準且不計總分；W4、W6、W8 做完整驗收。每項依正確性、邊界處理、測試證據與口頭說明評分。</p>
+            <p class="page-head-copy">W2 只做 Python／SQL 基準且不計 100 分；W4、W6、W8 各自保留一份草稿與保存紀錄。所有紀錄都依目前主線分開，不會沿用其他角色的主線分數。</p>
           </div>
           <div class="head-metric">
-            <span>建議及格</span>
-            <strong>70</strong>
-            <small>核心項目不可為 0</small>
+            <span id="assessmentThresholdLabel">基準模式</span>
+            <strong id="assessmentThresholdValue">—</strong>
+            <small id="assessmentThresholdNote">W2 不判定及格</small>
           </div>
         </div>
+
+        <section class="assessment-controls" aria-labelledby="assessmentControlsTitle">
+          <div class="assessment-control-copy">
+            <p class="eyebrow">Assessment record</p>
+            <h2 id="assessmentControlsTitle">選擇這次驗收</h2>
+            <p id="assessmentModeHelp">W2 是基準；W4、W6、W8 才使用 100 分門檻。修改後先存為草稿，確認證據完整再保存。</p>
+          </div>
+          <div class="assessment-selectors">
+            <label class="evidence-field"><span>驗收週次</span><select id="assessmentRoundSelect"><option value="w2">W2 基準</option><option value="w4">W4 完整驗收</option><option value="w6">W6 完整驗收</option><option value="w8">W8 最終驗收</option></select></label>
+            <label class="evidence-field"><span>職涯主線</span><select id="assessmentTrackSelect"><option value="backend">Python 後端</option><option value="data">資料工程</option><option value="sdet">SDET / QA Automation</option><option value="ai">AI 應用</option></select></label>
+          </div>
+          <div class="assessment-meta-grid">
+            <label class="evidence-field"><span>驗收日期</span><input id="assessmentDate" type="date" data-assessment-meta="date"></label>
+            <label class="evidence-field"><span>評分者</span><input id="assessmentEvaluator" type="text" maxlength="120" autocomplete="off" data-assessment-meta="evaluator" placeholder="本人、同學或面試官姓名"></label>
+            <label class="evidence-field assessment-evidence-field"><span>證據連結（HTTPS）</span><input id="assessmentEvidence" type="url" maxlength="2048" inputmode="url" autocomplete="url" data-assessment-meta="evidenceUrl" placeholder="https://github.com/.../assessment"></label>
+          </div>
+          <div class="assessment-record-actions">
+            <span id="assessmentRecordStatus" role="status" aria-live="polite">尚未建立草稿</span>
+            <button class="button primary" id="saveAssessmentBtn" type="button">保存本次驗收</button>
+          </div>
+        </section>
 
         <div class="assessment-layout">
           <div class="assessment-list" id="assessmentList"></div>
           <aside class="score-panel" aria-labelledby="scorePanelLabel" aria-live="polite">
             <span id="scorePanelLabel">本次總分</span>
-            <div class="score-total"><strong id="scoreTotal">0</strong><small>/ 100</small></div>
+            <div class="score-total"><strong id="scoreTotal">0</strong><small id="scoreMaximum">/ 40</small></div>
             <h3 id="scoreTitle">尚未驗收</h3>
             <p id="scoreNote">完成五個區塊並輸入分數。若未達 70，回到最低分的項目補強即可，不代表你不適合。</p>
           </aside>
@@ -1539,7 +1877,7 @@
         short: "pytest",
         title: "pytest、API 與自動化測試",
         goal: "學會證明程式正確，而不是只確認它剛好能跑；同時建立 SDET 面試需要的測試設計語言。",
-        output: "20+ tests：unit / integration / API / E2E",
+        output: "20+ tests：unit≥6 / integration≥4 / API≥6 / E2E≥4",
         algorithm: "Linked List / Tree：4 題 Easy + 2 題 Medium（累積 21E / 3M）",
         tasks: [
           ["D1", "測試策略與案例設計", "用等價類、邊界值與 decision table，列出正常、錯誤、狀態轉移與重複提交案例。", "設計"],
@@ -1547,7 +1885,7 @@
           ["D3", "mock 外部 API 與失敗情境", "不連外網也能測 timeout、500、壞 JSON 與 retry。", "實作"],
           ["D4", "FastAPI TestClient + 測試資料庫", "測 200、404、409、422，且測試之間資料互不污染。", "實作"],
           ["D5", "Postman / Newman API 流程", "跑完建立→查詢→錯誤輸入的 collection 並保留報告；SDET 主線再以 Playwright 測 UI 持久化。", "實作"],
-          ["D6", "週驗收：取得一個失敗測試並定位 bug", "從錯誤、log、最小重現到修正與 regression test 全程記錄。", "NO AI"]
+          ["D6", "週驗收：取得一個失敗測試並定位 bug", "從錯誤、log、最小重現到修正與 regression test 全程記錄；pytest --collect-only 至少 20 項，unit≥6、integration≥4、API≥6、E2E≥4。", "NO AI"]
         ],
         gates: ["能說明 unit、integration、E2E 各自測什麼", "能使用 fixture、parametrize 與 mock", "修 bug 後會先補一個能重現問題的測試"]
       },
@@ -1622,22 +1960,22 @@
     ];
 
     const videos = [
-      { week: 1, topic: "Python", platform: "YouTube", title: "Learn Python — Full Course for Beginners", author: "freeCodeCamp.org", priority: "主資源", note: "4:26:52｜依時間軸補函式、例外、檔案、模組與類別；2018 課程只補基礎，不作現行版本依據。", url: "https://www.youtube.com/watch?v=rfscVS0vtbw" },
+      { week: 1, topic: "Python", platform: "YouTube", title: "Learn Python — Full Course for Beginners", author: "freeCodeCamp.org", priority: "主資源", note: "4:26:52｜只看本週需要的函式、例外、檔案、模組與類別章節，合計 60–90 分鐘封頂；2018 課程只補基礎，不作現行版本依據。", url: "https://www.youtube.com/watch?v=rfscVS0vtbw" },
       { week: 1, topic: "Python", platform: "YouTube", title: "Python Pandas 資料分析－基礎教學", author: "彭彭的課程", priority: "備用資源", note: "25:12｜繁中快速複習 Series、DataFrame 與基本操作；pandas 2.x 行為以目前官方文件為準。", url: "https://www.youtube.com/watch?v=5QZqzKCDCQ4" },
       { week: 1, topic: "Python", platform: "Bilibili", title: "Pandas 中文教程《Joyful-Pandas》視頻講解", author: "二次元的Datawhale", priority: "備用資源", note: "43 集・7:36:58｜當題庫使用，只挑不熟章節；pandas 2.x 差異以目前官方文件為準。", url: "https://www.bilibili.com/video/BV1tK4y177AF/" },
-      { week: 2, topic: "SQL", platform: "YouTube", title: "Learn PostgreSQL Tutorial — Full Course for Beginners", author: "freeCodeCamp.org", note: "4:19:34｜涵蓋建庫、約束、CRUD、聚合與 JOIN；適合補完整 PostgreSQL 基礎。", url: "https://www.youtube.com/watch?v=qw--VYLpxG4" },
+      { week: 2, topic: "SQL", platform: "YouTube", title: "Learn PostgreSQL Tutorial — Full Course for Beginners", author: "freeCodeCamp.org", priority: "主資源", note: "4:19:34｜只看本週需要的約束、JOIN、聚合、視窗函數與索引章節，合計 60–90 分鐘封頂。", url: "https://www.youtube.com/watch?v=qw--VYLpxG4" },
       { week: 2, topic: "SQL", platform: "Bilibili", title: "PostgreSQL 入門實戰教程", author: "明文传输不", note: "86 集・6:13:30｜中文語音；優先挑子查詢、CTE、索引、視窗函數、ROW_NUMBER 與 LEAD/LAG。", url: "https://www.bilibili.com/video/BV1aGyhBDEp9/" },
-      { week: 3, topic: "FastAPI", platform: "Bilibili", title: "黑馬程序員 PythonWeb：FastAPI 從入門到實戰", author: "黑馬程序員", note: "68 集・14:55:29｜先看 1–29 集的路由、Pydantic 與錯誤處理，再依專案需求挑 ORM、分頁與 Token。", url: "https://www.bilibili.com/video/BV1zV2QBtE39/" },
+      { week: 3, topic: "FastAPI", platform: "Bilibili", title: "黑馬程序員 PythonWeb：FastAPI 從入門到實戰", author: "黑馬程序員", priority: "主資源", note: "68 集・14:55:29｜從 1–29 集只挑本週需要的路由、Pydantic、錯誤處理、ORM 與分頁章節，合計 60–90 分鐘封頂。", url: "https://www.bilibili.com/video/BV1zV2QBtE39/" },
       { week: 3, topic: "FastAPI", platform: "YouTube", title: "Python API Development — Comprehensive Course", author: "freeCodeCamp.org", note: "19:00:27｜只當章節參考；Pydantic v1、SQLAlchemy 1.x 與 Heroku 段落不可照抄，請依現行官方文件重寫。", url: "https://www.youtube.com/watch?v=0sOvCWFmrtA" },
-      { week: 4, topic: "pytest", platform: "YouTube", title: "Pytest Tutorial — How to Test Python Code", author: "freeCodeCamp.org", note: "1:28:38｜基本測試、class、fixture、mark、parametrize 與 mocking，適合一週內跟完。", url: "https://www.youtube.com/watch?v=cHYq1MRoyI0" },
+      { week: 4, topic: "pytest", platform: "YouTube", title: "Pytest Tutorial — How to Test Python Code", author: "freeCodeCamp.org", priority: "主資源", note: "1:28:38｜本週只看基本測試、fixture、mark、parametrize 與 mocking；主資源合計 60–90 分鐘封頂。", url: "https://www.youtube.com/watch?v=cHYq1MRoyI0" },
       { week: 4, topic: "SDET", platform: "YouTube", title: "Postman Beginner's Course — API Testing", author: "freeCodeCamp.org", priority: "主線選修", note: "2:09:37｜涵蓋 Postman collection、測試與 Newman / CI；SDET 主線優先。", url: "https://www.youtube.com/watch?v=VywxIQ2ZXw4" },
       { week: 4, topic: "SDET", platform: "YouTube", title: "Playwright Python：第一個 pytest", author: "Automation Step by Step", priority: "主線選修", note: "30:11｜建立第一個 Playwright + pytest 測試；完成後改測本專案的進度持久化。", url: "https://www.youtube.com/watch?v=FcMKFmGpxCs" },
       { week: 5, topic: "DevOps", platform: "Bilibili", title: "30 分鐘 Linux 入門教程", author: "GeekHour", note: "36:26｜快速補終端、vi 與常用命令，程度正好對應後端／測試職缺的基本要求。", url: "https://www.bilibili.com/video/BV1cq421w72c/" },
       { week: 5, topic: "DevOps", platform: "Bilibili", title: "30 分鐘 Docker 入門教程", author: "GeekHour", note: "9 集・26:08｜包含容器概念、Dockerfile、Docker Desktop 與 Compose；看完直接替 API 實作。", url: "https://www.bilibili.com/video/BV14s4y1i7Vf/" },
       { week: 5, topic: "DevOps", platform: "YouTube", title: "Git and GitHub for Beginners — Crash Course", author: "freeCodeCamp.org", note: "1:08:30｜clone、add、commit、push、pull 與 branch；請直接在這個 GitHub 專案裡操作。", url: "https://www.youtube.com/watch?v=RGOj5yH7evk" },
       { week: 5, topic: "Data Engineering", platform: "Bilibili", title: "Airflow DAG 與排程概念", author: "尚硅谷", priority: "主線選修", note: "4 集・44:24｜資料工程主線只學 DAG、scheduler、retry 與依賴；安裝方式以現行 Airflow 文件為準。", url: "https://www.bilibili.com/video/BV1Y5411o7fk/" },
-      { week: 6, topic: "LeetCode", platform: "Bilibili", title: "《代碼隨想錄》算法公開課", author: "代碼隨想錄", note: "170 集・50:02:17｜只看自己已獨立嘗試但卡住的題目；觀看講解不算完成刷題。", url: "https://space.bilibili.com/525438321/lists/180037?type=season" },
-      { week: 7, topic: "AI / RAG", platform: "YouTube", title: "Learn RAG From Scratch — Python AI Tutorial", author: "freeCodeCamp.org（講者 Lance Martin）", note: "2:33:11｜學 indexing、retrieval、generation、routing 與 CRAG 的流程概念；LangChain API 以現行文件為準。", url: "https://www.youtube.com/watch?v=sVcwVQRHIc8" },
+      { week: 6, topic: "LeetCode", platform: "Bilibili", title: "《代碼隨想錄》算法公開課", author: "代碼隨想錄", priority: "主資源", note: "170 集・50:02:17｜只看已獨立嘗試但卡住的題目，本週影片合計 60–90 分鐘封頂；觀看講解不算完成刷題。", url: "https://space.bilibili.com/525438321/lists/180037?type=season" },
+      { week: 7, topic: "AI / RAG", platform: "YouTube", title: "Learn RAG From Scratch — Python AI Tutorial", author: "freeCodeCamp.org（講者 Lance Martin）", priority: "主資源", note: "2:33:11｜只看本週需要的 indexing、retrieval、generation、routing 與 CRAG 章節，合計 60–90 分鐘封頂；LangChain API 以現行文件為準。", url: "https://www.youtube.com/watch?v=sVcwVQRHIc8" },
       { week: 7, topic: "AI / RAG", platform: "Bilibili", title: "3 小時從零構建專屬 AI 智能助理", author: "賽博門外憨", note: "32 集・2:50:08｜含工具呼叫、RAG、向量儲存、MCP、記憶與 guardrails；商用 API 實作可能產生費用。", url: "https://www.bilibili.com/video/BV1DSsdzXE5h/" }
     ];
 
@@ -1691,6 +2029,22 @@
       ]
     };
 
+    const algorithmPlans = [
+      { easy: 6, medium: 0, redo: 0 },
+      { easy: 6, medium: 0, redo: 0 },
+      { easy: 5, medium: 1, redo: 0 },
+      { easy: 4, medium: 2, redo: 0 },
+      { easy: 4, medium: 2, redo: 0 },
+      { easy: 6, medium: 4, redo: 0 },
+      { easy: 4, medium: 2, redo: 0 },
+      { easy: 0, medium: 0, redo: 6 }
+    ];
+
+    const algorithmTargets = algorithmPlans.slice(0, 7).reduce((totals, plan) => ({
+      easy: totals.easy + plan.easy,
+      medium: totals.medium + plan.medium
+    }), { easy: 0, medium: 0 });
+
     const taskKeysByWeek = [
       ["python-baseline-clean", "python-functions-types", "python-errors-logging", "pandas-cleaning", "api-client-resilience", "python-week-check"],
       ["db-schema", "sql-join-aggregate", "sql-window", "etl-idempotency", "sql-explain", "sql-week-check"],
@@ -1721,12 +2075,54 @@
       { id: "track", title: "主線挑戰｜30 分鐘", detail: "依你選擇的職涯主線完成一個角色題。", max: 30, rubric: "核心結果 12｜邊界 6｜測試證據 6｜口頭說明 6" }
     ];
 
+    const assessmentRounds = {
+      w2: { label: "W2 基準", itemIds: ["python", "sql"], maximum: 40, baseline: true },
+      w4: { label: "W4 完整驗收", itemIds: assessments.map(item => item.id), maximum: 100, baseline: false },
+      w6: { label: "W6 完整驗收", itemIds: assessments.map(item => item.id), maximum: 100, baseline: false },
+      w8: { label: "W8 最終驗收", itemIds: assessments.map(item => item.id), maximum: 100, baseline: false }
+    };
+
+    const assessmentRoundIds = Object.keys(assessmentRounds);
+
     const storageKey = "rongCareerRoadmapV1";
     const backupKey = `${storageKey}LastBackup`;
-    const stateVersion = 2;
+    const stateVersion = 3;
     const maxImportBytes = 1024 * 1024;
     const maxNoteLength = 8000;
+    const maxShortTextLength = 240;
+    const maxUrlLength = 2048;
     let noteSaveTimer = 0;
+
+    function algorithmSlotsForWeek(weekNumber) {
+      const plan = algorithmPlans[weekNumber - 1];
+      if (!plan) return [];
+      const slots = [];
+      for (let index = 0; index < plan.easy; index += 1) {
+        slots.push({ id: `algo-w${weekNumber}-e${index + 1}`, week: weekNumber, label: `E${index + 1}`, expectedDifficulty: "Easy", countsTowardTarget: true, requiresRedoDate: false });
+      }
+      for (let index = 0; index < plan.medium; index += 1) {
+        slots.push({ id: `algo-w${weekNumber}-m${index + 1}`, week: weekNumber, label: `M${index + 1}`, expectedDifficulty: "Medium", countsTowardTarget: true, requiresRedoDate: false });
+      }
+      for (let index = 0; index < plan.redo; index += 1) {
+        const requiresMedium = index >= Math.max(0, plan.redo - 2);
+        slots.push({ id: `algo-w${weekNumber}-r${index + 1}`, week: weekNumber, label: `R${index + 1}`, expectedDifficulty: requiresMedium ? "Medium" : null, countsTowardTarget: false, requiresRedoDate: true });
+      }
+      return slots;
+    }
+
+    const algorithmSlots = algorithmPlans.flatMap((_, index) => algorithmSlotsForWeek(index + 1));
+    const algorithmSlotsById = Object.fromEntries(algorithmSlots.map(slot => [slot.id, slot]));
+
+    function createAssessmentRecord() {
+      return { date: "", evaluator: "", evidenceUrl: "", scores: {}, savedAt: "" };
+    }
+
+    function createAssessmentRecords() {
+      return Object.fromEntries(Object.keys(trackLabels).map(track => [
+        track,
+        Object.fromEntries(assessmentRoundIds.map(round => [round, createAssessmentRecord()]))
+      ]));
+    }
 
     function createDefaultState() {
       return {
@@ -1737,8 +2133,11 @@
         track: "backend",
         tasks: {},
         gates: {},
+        trackEvidence: {},
+        algorithmRecords: {},
         notes: {},
-        scores: {},
+        assessmentRound: "w2",
+        assessmentRecords: createAssessmentRecords(),
         watchedVideos: {},
         videoFilter: "全部",
         revision: 0,
@@ -1761,6 +2160,27 @@
       return Number.isFinite(date.getTime()) && date.getFullYear() === year && date.getMonth() + 1 === month && date.getDate() === day;
     }
 
+    function normalizeShortText(value, maximum = maxShortTextLength) {
+      return typeof value === "string" ? value.trim().slice(0, maximum) : "";
+    }
+
+    function normalizeHttpsUrl(value) {
+      const text = normalizeShortText(value, maxUrlLength);
+      if (!text) return "";
+      try {
+        const url = new URL(text);
+        if (url.protocol !== "https:" || url.username || url.password) return "";
+        return url.href.slice(0, maxUrlLength);
+      } catch {
+        return "";
+      }
+    }
+
+    function normalizeTimestamp(value) {
+      if (typeof value !== "string" || value.length > 40 || !Number.isFinite(Date.parse(value))) return "";
+      return value;
+    }
+
     function normalizeProgressGroup(candidate, group) {
       const normalized = {};
       const source = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate : {};
@@ -1772,6 +2192,94 @@
           if (source[currentId] === true || source[legacyId] === true) normalized[currentId] = true;
         });
       });
+      return normalized;
+    }
+
+    function normalizeTrackEvidence(candidate) {
+      const normalized = {};
+      const source = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate : {};
+      Object.keys(trackLabels).forEach(track => {
+        const sourceTrack = source[track] && typeof source[track] === "object" && !Array.isArray(source[track]) ? source[track] : {};
+        weeks.forEach(weekItem => {
+          const weekId = `w${weekItem.number}`;
+          const sourceRecord = sourceTrack[weekId] && typeof sourceTrack[weekId] === "object" && !Array.isArray(sourceTrack[weekId]) ? sourceTrack[weekId] : {};
+          const record = {
+            done: sourceRecord.done === true,
+            evidenceUrl: normalizeHttpsUrl(sourceRecord.evidenceUrl)
+          };
+          if (record.done || record.evidenceUrl) {
+            if (!normalized[track]) normalized[track] = {};
+            normalized[track][weekId] = record;
+          }
+        });
+      });
+      return normalized;
+    }
+
+    function normalizeAlgorithmRecords(candidate) {
+      const normalized = {};
+      const source = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate : {};
+      algorithmSlots.forEach(slot => {
+        const sourceRecord = source[slot.id];
+        if (!sourceRecord || typeof sourceRecord !== "object" || Array.isArray(sourceRecord)) return;
+        const minutes = Number(sourceRecord.firstMinutes);
+        const difficulty = ["Easy", "Medium"].includes(sourceRecord.difficulty)
+          ? sourceRecord.difficulty
+          : slot.expectedDifficulty || "Easy";
+        const record = {
+          name: normalizeShortText(sourceRecord.name),
+          difficulty,
+          firstMinutes: Number.isInteger(minutes) && minutes >= 1 && minutes <= 240 ? minutes : null,
+          noAi: sourceRecord.noAi === true,
+          accepted: sourceRecord.accepted === true,
+          codeUrl: normalizeHttpsUrl(sourceRecord.codeUrl),
+          redoDate: validIsoDate(sourceRecord.redoDate) ? sourceRecord.redoDate : ""
+        };
+        if (record.name || record.firstMinutes || record.noAi || record.accepted || record.codeUrl || record.redoDate || sourceRecord.difficulty) normalized[slot.id] = record;
+      });
+      return normalized;
+    }
+
+    function normalizeScoreMap(candidate, roundId) {
+      const normalized = {};
+      const source = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate : {};
+      const allowed = new Set(assessmentRounds[roundId].itemIds);
+      assessments.forEach(item => {
+        if (!allowed.has(item.id)) return;
+        const rawValue = item.id === "track" && source.track === undefined ? source.api : source[item.id];
+        const value = Number(rawValue);
+        if (rawValue !== "" && rawValue !== undefined && Number.isFinite(value)) normalized[item.id] = Math.min(item.max, Math.max(0, Math.round(value)));
+      });
+      return normalized;
+    }
+
+    function normalizeAssessmentRecord(candidate, roundId) {
+      const source = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate : {};
+      const record = {
+        date: validIsoDate(source.date) ? source.date : "",
+        evaluator: normalizeShortText(source.evaluator, 120),
+        evidenceUrl: normalizeHttpsUrl(source.evidenceUrl),
+        scores: normalizeScoreMap(source.scores, roundId),
+        savedAt: normalizeTimestamp(source.savedAt)
+      };
+      if (record.savedAt && !assessmentRecordReady(record, roundId)) record.savedAt = "";
+      return record;
+    }
+
+    function normalizeAssessmentRecords(candidate, legacyScores, legacyTrack) {
+      const normalized = createAssessmentRecords();
+      const source = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate : {};
+      Object.keys(trackLabels).forEach(track => {
+        const sourceTrack = source[track] && typeof source[track] === "object" && !Array.isArray(source[track]) ? source[track] : {};
+        assessmentRoundIds.forEach(roundId => {
+          normalized[track][roundId] = normalizeAssessmentRecord(sourceTrack[roundId], roundId);
+        });
+      });
+
+      const legacy = legacyScores && typeof legacyScores === "object" && !Array.isArray(legacyScores) ? legacyScores : null;
+      if (legacy && Object.keys(legacy).length) {
+        normalized[legacyTrack].w8.scores = normalizeScoreMap(legacy, "w8");
+      }
       return normalized;
     }
 
@@ -1788,6 +2296,8 @@
       normalized.track = Object.hasOwn(trackLabels, source.track) ? source.track : "backend";
       normalized.tasks = normalizeProgressGroup(source.tasks, "tasks");
       normalized.gates = normalizeProgressGroup(source.gates, "gates");
+      normalized.trackEvidence = normalizeTrackEvidence(source.trackEvidence);
+      normalized.algorithmRecords = normalizeAlgorithmRecords(source.algorithmRecords);
       normalized.videoFilter = allowedFilters.includes(source.videoFilter) ? source.videoFilter : "全部";
 
       const noteSource = source.notes && typeof source.notes === "object" && !Array.isArray(source.notes) ? source.notes : {};
@@ -1796,25 +2306,26 @@
         if (typeof noteSource[id] === "string" && noteSource[id]) normalized.notes[id] = noteSource[id].slice(0, maxNoteLength);
       });
 
-      const scoreSource = source.scores && typeof source.scores === "object" && !Array.isArray(source.scores) ? source.scores : {};
-      assessments.forEach(item => {
-        const rawValue = item.id === "track" && scoreSource.track === undefined ? scoreSource.api : scoreSource[item.id];
-        const value = Number(rawValue);
-        if (rawValue !== "" && rawValue !== undefined && Number.isFinite(value)) normalized.scores[item.id] = Math.min(item.max, Math.max(0, Math.round(value)));
-      });
+      const hasLegacyScores = source.scores && typeof source.scores === "object" && !Array.isArray(source.scores) && Object.keys(source.scores).length;
+      normalized.assessmentRound = assessmentRoundIds.includes(source.assessmentRound) ? source.assessmentRound : hasLegacyScores ? "w8" : "w2";
+      normalized.assessmentRecords = normalizeAssessmentRecords(source.assessmentRecords, source.scores, normalized.track);
 
       const watchedSource = source.watchedVideos && typeof source.watchedVideos === "object" && !Array.isArray(source.watchedVideos) ? source.watchedVideos : {};
       videos.forEach(video => {
         if (watchedSource[video.url] === true) normalized.watchedVideos[video.url] = true;
       });
 
-      normalized.revision = Number.isInteger(source.revision) && source.revision >= 0 ? source.revision : 0;
-      normalized.updatedAt = typeof source.updatedAt === "string" ? source.updatedAt.slice(0, 40) : "";
+      normalized.revision = safeRevision(source.revision);
+      normalized.updatedAt = normalizeTimestamp(source.updatedAt);
       return normalized;
     }
 
+    function safeRevision(value) {
+      return Number.isSafeInteger(value) && value >= 0 && value <= 10_000_000 ? value : 0;
+    }
+
     function replaceState(nextState) {
-      const previousRevision = Number.isInteger(state.revision) ? state.revision : 0;
+      const previousRevision = safeRevision(state.revision);
       const normalized = normalizeState(nextState);
       normalized.revision = Math.max(previousRevision, normalized.revision);
       Object.keys(state).forEach(key => delete state[key]);
@@ -1861,11 +2372,11 @@
       let storedRevision = 0;
       try {
         const stored = JSON.parse(localStorage.getItem(storageKey) || "null");
-        storedRevision = Number.isInteger(stored?.revision) ? stored.revision : 0;
+        storedRevision = safeRevision(stored?.revision);
       } catch (error) {
         console.warn("Stored revision could not be read", error);
       }
-      state.revision = Math.max(Number(state.revision) || 0, storedRevision) + 1;
+      state.revision = Math.max(safeRevision(state.revision), storedRevision) + 1;
       state.updatedAt = new Date().toISOString();
       try {
         localStorage.setItem(storageKey, JSON.stringify(normalizeState(state)));
@@ -1932,27 +2443,120 @@
       return gateKeysByWeek[weekNumber - 1][index];
     }
 
-    function allProgressIds() {
-      const ids = [];
-      weeks.forEach(week => {
-        week.tasks.forEach((_, index) => ids.push(["tasks", taskId(week.number, index)]));
-        week.gates.forEach((_, index) => ids.push(["gates", gateId(week.number, index)]));
+    function isOptionalTask(task) {
+      return task[3] === "選修";
+    }
+
+    function trackResultId(track, weekNumber) {
+      return `track-${track}-w${weekNumber}`;
+    }
+
+    function trackEvidenceRecord(track, weekNumber, create = false) {
+      const weekId = `w${weekNumber}`;
+      if (!state.trackEvidence[track] && create) state.trackEvidence[track] = {};
+      if (create && !state.trackEvidence[track][weekId]) state.trackEvidence[track][weekId] = { done: false, evidenceUrl: "" };
+      return state.trackEvidence[track]?.[weekId] || { done: false, evidenceUrl: "" };
+    }
+
+    function trackEvidenceComplete(track, weekNumber) {
+      const record = trackEvidenceRecord(track, weekNumber);
+      return record.done === true && Boolean(normalizeHttpsUrl(record.evidenceUrl));
+    }
+
+    function defaultAlgorithmRecord(slot) {
+      return { name: "", difficulty: slot.expectedDifficulty || "Easy", firstMinutes: null, noAi: false, accepted: false, codeUrl: "", redoDate: "" };
+    }
+
+    function algorithmRecord(slotId, create = false) {
+      const slot = algorithmSlotsById[slotId];
+      if (!slot) return null;
+      if (create && !state.algorithmRecords[slotId]) state.algorithmRecords[slotId] = defaultAlgorithmRecord(slot);
+      return state.algorithmRecords[slotId] || defaultAlgorithmRecord(slot);
+    }
+
+    function algorithmRecordComplete(record, slot) {
+      if (!record || !slot) return false;
+      const difficultyMatches = !slot.expectedDifficulty || record.difficulty === slot.expectedDifficulty;
+      return Boolean(
+        normalizeShortText(record.name)
+        && ["Easy", "Medium"].includes(record.difficulty)
+        && difficultyMatches
+        && Number.isInteger(Number(record.firstMinutes))
+        && Number(record.firstMinutes) >= 1
+        && Number(record.firstMinutes) <= 240
+        && record.noAi === true
+        && record.accepted === true
+        && normalizeHttpsUrl(record.codeUrl)
+        && (!slot.requiresRedoDate || validIsoDate(record.redoDate))
+      );
+    }
+
+    function algorithmStats() {
+      const stats = { easy: 0, medium: 0, redo: 0 };
+      algorithmSlots.forEach(slot => {
+        const record = algorithmRecord(slot.id);
+        if (!algorithmRecordComplete(record, slot)) return;
+        if (slot.countsTowardTarget) {
+          if (record.difficulty === "Easy") stats.easy += 1;
+          if (record.difficulty === "Medium") stats.medium += 1;
+        } else {
+          stats.redo += 1;
+        }
       });
-      return ids;
+      return stats;
+    }
+
+    function assessmentItemsForRound(roundId = state.assessmentRound) {
+      const allowed = new Set(assessmentRounds[roundId].itemIds);
+      return assessments.filter(item => allowed.has(item.id));
+    }
+
+    function assessmentRecordReady(record, roundId) {
+      if (!record || !validIsoDate(record.date) || !normalizeShortText(record.evaluator, 120) || !normalizeHttpsUrl(record.evidenceUrl)) return false;
+      return assessmentRounds[roundId].itemIds.every(id => Object.hasOwn(record.scores || {}, id));
+    }
+
+    function assessmentRecordHasContent(record) {
+      return Boolean(record && (record.date || record.evaluator || record.evidenceUrl || record.savedAt || Object.keys(record.scores || {}).length));
+    }
+
+    function currentAssessmentRecord(create = true) {
+      if (create && !state.assessmentRecords[state.track]) state.assessmentRecords[state.track] = {};
+      if (create && !state.assessmentRecords[state.track][state.assessmentRound]) state.assessmentRecords[state.track][state.assessmentRound] = createAssessmentRecord();
+      return state.assessmentRecords[state.track]?.[state.assessmentRound] || createAssessmentRecord();
+    }
+
+    function allProgressItems() {
+      const items = [];
+      weeks.forEach(week => {
+        week.tasks.forEach((task, index) => {
+          if (!isOptionalTask(task)) items.push({ id: taskId(week.number, index), complete: Boolean(state.tasks[taskId(week.number, index)]) });
+        });
+        items.push({ id: trackResultId(state.track, week.number), complete: trackEvidenceComplete(state.track, week.number) });
+        algorithmSlotsForWeek(week.number).forEach(slot => items.push({ id: slot.id, complete: algorithmRecordComplete(algorithmRecord(slot.id), slot) }));
+        week.gates.forEach((_, index) => items.push({ id: gateId(week.number, index), complete: Boolean(state.gates[gateId(week.number, index)]) }));
+      });
+      return items;
     }
 
     function completedCount() {
-      return allProgressIds().filter(([group, id]) => Boolean(state[group][id])).length;
+      return allProgressItems().filter(item => item.complete).length;
+    }
+
+    function weekProgressTotal(week) {
+      return week.tasks.filter(task => !isOptionalTask(task)).length + week.gates.length + 1 + algorithmSlotsForWeek(week.number).length;
     }
 
     function weekCompletedCount(week) {
-      const taskDone = week.tasks.filter((_, index) => state.tasks[taskId(week.number, index)]).length;
+      const taskDone = week.tasks.filter((task, index) => !isOptionalTask(task) && state.tasks[taskId(week.number, index)]).length;
       const gateDone = week.gates.filter((_, index) => state.gates[gateId(week.number, index)]).length;
-      return taskDone + gateDone;
+      const trackDone = trackEvidenceComplete(state.track, week.number) ? 1 : 0;
+      const algorithmDone = algorithmSlotsForWeek(week.number).filter(slot => algorithmRecordComplete(algorithmRecord(slot.id), slot)).length;
+      return taskDone + gateDone + trackDone + algorithmDone;
     }
 
     function updateProgress() {
-      const total = allProgressIds().length;
+      const total = allProgressItems().length;
       const done = completedCount();
       const percent = total ? Math.round(done / total * 100) : 0;
       document.getElementById("railProgressText").textContent = `${percent}%`;
@@ -1965,24 +2569,62 @@
         <button class="week-tab ${state.week === week.number ? "active" : ""}" id="week-tab-${week.number}" type="button" role="tab" data-week="${week.number}" aria-controls="weekDetail" aria-selected="${state.week === week.number}" ${state.week === week.number ? "aria-current=\"step\"" : ""} tabindex="${state.week === week.number ? "0" : "-1"}">
           <span>W${String(week.number).padStart(2, "0")}</span>
           <small>${week.short}</small>
-          <small class="week-progress">${weekCompletedCount(week)} / ${week.tasks.length + week.gates.length}</small>
+          <small class="week-progress">${weekCompletedCount(week)} / ${weekProgressTotal(week)}</small>
         </button>
       `).join("");
     }
 
+    function algorithmRows(weekNumber) {
+      return algorithmSlotsForWeek(weekNumber).map((slot, index) => {
+        const record = algorithmRecord(slot.id);
+        const complete = algorithmRecordComplete(record, slot);
+        const expectation = slot.expectedDifficulty || "Easy / Medium";
+        return `
+          <div class="algorithm-record ${complete ? "complete" : ""}" data-progress-id="${slot.id}" data-algorithm-row="${slot.id}">
+            <span class="algorithm-index">${index + 1}</span>
+            <div class="algorithm-record-grid">
+              <label class="evidence-field" for="${slot.id}-name"><span>題目名稱</span><input id="${slot.id}-name" type="text" maxlength="${maxShortTextLength}" autocomplete="off" data-algorithm-id="${slot.id}" data-algorithm-field="name" placeholder="例如：Two Sum"></label>
+              <label class="evidence-field" for="${slot.id}-difficulty"><span>難度${slot.expectedDifficulty ? `（目標 ${slot.expectedDifficulty}）` : ""}</span><select id="${slot.id}-difficulty" data-algorithm-id="${slot.id}" data-algorithm-field="difficulty" aria-label="${slot.label} 難度，目標 ${expectation}"><option value="Easy">Easy</option><option value="Medium">Medium</option></select></label>
+              <label class="evidence-field" for="${slot.id}-minutes"><span>首次耗時（分鐘）</span><input id="${slot.id}-minutes" type="number" min="1" max="240" step="1" inputmode="numeric" data-algorithm-id="${slot.id}" data-algorithm-field="firstMinutes" placeholder="25"></label>
+              <div class="algorithm-checks" role="group" aria-label="${slot.label} 解題狀態">
+                <label class="algorithm-check"><input type="checkbox" data-algorithm-id="${slot.id}" data-algorithm-field="noAi" ${record.noAi ? "checked" : ""}>首次 No-AI</label>
+                <label class="algorithm-check"><input type="checkbox" data-algorithm-id="${slot.id}" data-algorithm-field="accepted" ${record.accepted ? "checked" : ""}>已 AC</label>
+                <span class="evidence-status ${complete ? "complete" : ""}" data-algorithm-status="${slot.id}">${complete ? "證據完整" : "尚缺證據"}</span>
+              </div>
+              <label class="evidence-field algorithm-code-field" for="${slot.id}-code"><span>程式連結（HTTPS）</span><input id="${slot.id}-code" type="url" maxlength="${maxUrlLength}" inputmode="url" autocomplete="url" data-algorithm-id="${slot.id}" data-algorithm-field="codeUrl" placeholder="https://github.com/.../solution.py"></label>
+              <label class="evidence-field" for="${slot.id}-redo"><span>錯題重做日期${slot.requiresRedoDate ? "（必填）" : "（錯題才填）"}</span><input id="${slot.id}-redo" type="date" data-algorithm-id="${slot.id}" data-algorithm-field="redoDate"></label>
+            </div>
+          </div>
+        `;
+      }).join("");
+    }
+
+    function algorithmDisclosureNote(weekNumber) {
+      return weekNumber === 8
+        ? "W8 六題都必須填重做日期；R5、R6 至少為 Medium。這六題只算錯題重做，不會重複加入 35E / 11M。"
+        : "只有題名、目標難度、首次耗時、No-AI、AC 與 HTTPS 程式連結都完整時，才會計入 35E / 11M 與總進度。";
+    }
+
     function renderWeekDetail() {
       const week = weeks[state.week - 1];
+      const trackRecord = trackEvidenceRecord(state.track, week.number);
+      const trackComplete = trackEvidenceComplete(state.track, week.number);
+      const slots = algorithmSlotsForWeek(week.number);
+      const algorithmDone = slots.filter(slot => algorithmRecordComplete(algorithmRecord(slot.id), slot)).length;
+      const totals = algorithmStats();
       const taskRows = week.tasks.map((task, index) => {
         const id = taskId(week.number, index);
         const checked = Boolean(state.tasks[id]);
+        const optional = isOptionalTask(task);
         const date = shortDate(addDays(state.startDate, (week.number - 1) * 7 + index));
-        const modeClass = task[3] === "NO AI" ? "no-ai" : "";
+        const modeClass = task[3] === "NO AI" ? "no-ai" : optional ? "optional" : "";
+        const modeLabel = optional ? "選修 · 不計進度" : task[3];
         return `
           <label class="task-row ${checked ? "done" : ""}" data-progress-id="${id}">
-            <span class="task-check"><input type="checkbox" data-task-id="${id}" ${checked ? "checked" : ""} aria-label="完成 ${task[1]}"></span>
+            <span class="task-check"><input type="checkbox" data-task-id="${id}" ${checked ? "checked" : ""} aria-label="完成 ${task[1]}${optional ? "，本項不計進度" : ""}"></span>
             <span class="task-day"><strong>${task[0]}</strong><span>${date}</span></span>
             <span class="task-main"><strong class="task-name">${task[1]}</strong><p class="task-proof">驗收：${task[2]}</p></span>
-            <span class="task-mode ${modeClass}">${task[3]}</span>
+            <span class="task-mode ${modeClass}">${modeLabel}</span>
           </label>
         `;
       }).join("");
@@ -2013,7 +2655,27 @@
           </div>
         </div>
         <div class="plan-grid">
-          <div class="task-table">${taskRows}</div>
+          <div class="learning-stack">
+            <div class="task-table">${taskRows}</div>
+            <section class="evidence-block" data-progress-id="${trackResultId(state.track, week.number)}" aria-labelledby="trackEvidenceTitle">
+              <div class="evidence-heading">
+                <div><h3 id="trackEvidenceTitle">本週主線成果｜${trackLabels[state.track]}</h3><p>${trackFocuses[state.track][week.number - 1]}</p></div>
+                <span class="evidence-status ${trackComplete ? "complete" : ""}" id="trackEvidenceStatus">${trackComplete ? "成果與證據完整" : trackRecord.done ? "已勾選，仍缺有效證據" : "尚未完成"}</span>
+              </div>
+              <div class="track-evidence-grid">
+                <label class="evidence-check" for="trackEvidenceDone"><input id="trackEvidenceDone" type="checkbox" data-track-evidence-done ${trackRecord.done ? "checked" : ""}>我已完成這週主線成果</label>
+                <label class="evidence-field" for="trackEvidenceUrl"><span>成果證據（HTTPS）</span><input id="trackEvidenceUrl" type="url" maxlength="${maxUrlLength}" inputmode="url" autocomplete="url" data-track-evidence-url placeholder="https://github.com/.../pull/123"></label>
+              </div>
+            </section>
+            <details class="algorithm-disclosure" id="algorithmEvidence">
+              <summary>
+                <span class="algorithm-summary-copy"><strong>演算法證據紀錄</strong><small id="algorithmSummaryText">本週 ${algorithmDone} / ${slots.length} · 累積 ${totals.easy} / ${algorithmTargets.easy} Easy、${totals.medium} / ${algorithmTargets.medium} Medium</small></span>
+                <span class="algorithm-summary-count">${algorithmDone === slots.length ? "本週證據完整" : `尚缺 ${slots.length - algorithmDone} 題`}</span>
+              </summary>
+              <div class="algorithm-records">${algorithmRows(week.number)}</div>
+              <p class="algorithm-disclosure-note">${algorithmDisclosureNote(week.number)}</p>
+            </details>
+          </div>
           <aside class="week-panel" aria-label="本週能力閘門與筆記">
             <h3>能力閘門</h3>
             <p>完成任務不等於學會。只有你能獨立重做、解釋與驗證時再勾選。</p>
@@ -2025,6 +2687,15 @@
       `;
 
       document.getElementById("weekNote").value = state.notes[`w${week.number}`] || "";
+      document.getElementById("trackEvidenceUrl").value = trackRecord.evidenceUrl || "";
+      slots.forEach(slot => {
+        const record = algorithmRecord(slot.id);
+        document.querySelector(`[data-algorithm-id="${slot.id}"][data-algorithm-field="name"]`).value = record.name || "";
+        document.querySelector(`[data-algorithm-id="${slot.id}"][data-algorithm-field="difficulty"]`).value = record.difficulty;
+        document.querySelector(`[data-algorithm-id="${slot.id}"][data-algorithm-field="firstMinutes"]`).value = record.firstMinutes || "";
+        document.querySelector(`[data-algorithm-id="${slot.id}"][data-algorithm-field="codeUrl"]`).value = record.codeUrl || "";
+        document.querySelector(`[data-algorithm-id="${slot.id}"][data-algorithm-field="redoDate"]`).value = record.redoDate || "";
+      });
       document.getElementById("weekDetail").setAttribute("aria-labelledby", `week-tab-${week.number}`);
 
       document.getElementById("headWeekMetric").textContent = `W${String(week.number).padStart(2, "0")}`;
@@ -2034,7 +2705,9 @@
 
     function renderNextStep() {
       const week = weeks[state.week - 1];
-      const taskIndex = week.tasks.findIndex((_, index) => !state.tasks[taskId(week.number, index)]);
+      const taskIndex = week.tasks.findIndex((task, index) => !isOptionalTask(task) && !state.tasks[taskId(week.number, index)]);
+      const trackIncomplete = !trackEvidenceComplete(state.track, week.number);
+      const algorithmSlot = algorithmSlotsForWeek(week.number).find(slot => !algorithmRecordComplete(algorithmRecord(slot.id), slot));
       const gateIndex = week.gates.findIndex((_, index) => !state.gates[gateId(week.number, index)]);
       const title = document.getElementById("nextStepTitle");
       const meta = document.getElementById("nextStepMeta");
@@ -2046,20 +2719,88 @@
         meta.textContent = `驗收：${task[2]}`;
         button.dataset.progressTarget = taskId(week.number, taskIndex);
         button.textContent = "前往任務";
-        button.disabled = false;
+      } else if (trackIncomplete) {
+        title.textContent = `主線成果｜${trackLabels[state.track]}`;
+        meta.textContent = "勾選完成並貼上可開啟的 HTTPS 成果證據，才會計入進度。";
+        button.dataset.progressTarget = trackResultId(state.track, week.number);
+        button.textContent = "補主線證據";
+      } else if (algorithmSlot) {
+        title.textContent = `演算法證據｜${algorithmSlot.label}`;
+        meta.textContent = "補齊題名、難度、首次耗時、No-AI、AC 與程式連結。";
+        button.dataset.progressTarget = algorithmSlot.id;
+        button.textContent = "補演算法證據";
       } else if (gateIndex >= 0) {
         title.textContent = `能力閘門｜${week.gates[gateIndex]}`;
         meta.textContent = "任務已完成；請關掉參考資料，獨立重做、解釋並驗證後再勾選。";
         button.dataset.progressTarget = gateId(week.number, gateIndex);
         button.textContent = "前往閘門";
-        button.disabled = false;
       } else {
         title.textContent = `Week ${String(week.number).padStart(2, "0")} 已完成`;
         meta.textContent = state.week < weeks.length ? "可以前往下一週；也別忘了更新履歷與投遞紀錄。" : "八週主線完成，請用面試驗收確認目前最低分項目。";
         delete button.dataset.progressTarget;
         button.textContent = state.week < weeks.length ? "前往下一週" : "前往面試驗收";
-        button.disabled = false;
       }
+      button.disabled = false;
+    }
+
+    function validateHttpsInput(input) {
+      const value = input.value.trim();
+      input.setCustomValidity(value && !normalizeHttpsUrl(value) ? "請使用不含帳密的 HTTPS 連結。" : "");
+    }
+
+    function refreshEvidenceProgress() {
+      const trackRecord = trackEvidenceRecord(state.track, state.week);
+      const trackComplete = trackEvidenceComplete(state.track, state.week);
+      const trackStatus = document.getElementById("trackEvidenceStatus");
+      if (trackStatus) {
+        trackStatus.classList.toggle("complete", trackComplete);
+        trackStatus.textContent = trackComplete ? "成果與證據完整" : trackRecord.done ? "已勾選，仍缺有效證據" : "尚未完成";
+      }
+
+      const slots = algorithmSlotsForWeek(state.week);
+      slots.forEach(slot => {
+        const complete = algorithmRecordComplete(algorithmRecord(slot.id), slot);
+        document.querySelector(`[data-algorithm-row="${slot.id}"]`)?.classList.toggle("complete", complete);
+        const status = document.querySelector(`[data-algorithm-status="${slot.id}"]`);
+        if (status) {
+          status.classList.toggle("complete", complete);
+          status.textContent = complete ? "證據完整" : "尚缺證據";
+        }
+      });
+      const done = slots.filter(slot => algorithmRecordComplete(algorithmRecord(slot.id), slot)).length;
+      const totals = algorithmStats();
+      const summary = document.getElementById("algorithmSummaryText");
+      if (summary) summary.textContent = `本週 ${done} / ${slots.length} · 累積 ${totals.easy} / ${algorithmTargets.easy} Easy、${totals.medium} / ${algorithmTargets.medium} Medium`;
+      const summaryCount = document.querySelector(".algorithm-summary-count");
+      if (summaryCount) summaryCount.textContent = done === slots.length ? "本週證據完整" : `尚缺 ${slots.length - done} 題`;
+      renderWeekStrip();
+      renderNextStep();
+      updateProgress();
+    }
+
+    function updateAlgorithmRecordFromControl(control) {
+      const slotId = control.dataset.algorithmId;
+      const field = control.dataset.algorithmField;
+      const slot = algorithmSlotsById[slotId];
+      if (!slot || !["name", "difficulty", "firstMinutes", "noAi", "accepted", "codeUrl", "redoDate"].includes(field)) return;
+      const record = algorithmRecord(slotId, true);
+      if (field === "noAi" || field === "accepted") {
+        record[field] = control.checked;
+      } else if (field === "firstMinutes") {
+        const minutes = control.valueAsNumber;
+        record[field] = Number.isFinite(minutes) && minutes >= 1 && minutes <= 240 ? Math.round(minutes) : null;
+      } else if (field === "difficulty") {
+        record[field] = ["Easy", "Medium"].includes(control.value) ? control.value : slot.expectedDifficulty || "Easy";
+      } else if (field === "redoDate") {
+        record[field] = control.value.slice(0, 10);
+      } else if (field === "codeUrl") {
+        record[field] = control.value.slice(0, maxUrlLength);
+        validateHttpsInput(control);
+      } else {
+        record[field] = control.value.slice(0, maxShortTextLength);
+      }
+      scheduleSave();
+      refreshEvidenceProgress();
     }
 
     function renderVideos() {
@@ -2089,17 +2830,37 @@
     }
 
     function renderAssessments() {
-      document.getElementById("assessmentList").innerHTML = assessments.map(item => `
+      const round = assessmentRounds[state.assessmentRound];
+      const record = currentAssessmentRecord();
+      const items = assessmentItemsForRound();
+      document.getElementById("verifyTitle").textContent = round.baseline
+        ? "用 30 分鐘，留下起始基準。"
+        : "用 90 分鐘，確認自己能不能上場。";
+      document.getElementById("assessmentRoundSelect").value = state.assessmentRound;
+      document.getElementById("assessmentTrackSelect").value = state.track;
+      document.getElementById("assessmentDate").value = record.date || "";
+      document.getElementById("assessmentEvaluator").value = record.evaluator || "";
+      document.getElementById("assessmentEvidence").value = record.evidenceUrl || "";
+      document.getElementById("assessmentModeHelp").textContent = round.baseline
+        ? "W2 只記錄 Python 與 SQL 的起始能力，不套用 70 / 100 及格判定。"
+        : `${round.label} 使用完整 90 分鐘、100 分制；五項皆需作答且不可為 0。`;
+      document.getElementById("assessmentThresholdLabel").textContent = round.baseline ? "基準模式" : "建議及格";
+      document.getElementById("assessmentThresholdValue").textContent = round.baseline ? "—" : "70";
+      document.getElementById("assessmentThresholdNote").textContent = round.baseline ? "W2 不判定及格" : "五項皆需作答且不可為 0";
+      document.getElementById("scorePanelLabel").textContent = `${round.label}總分`;
+      document.getElementById("scoreMaximum").textContent = `/ ${round.maximum}`;
+      document.getElementById("assessmentList").innerHTML = items.map(item => `
         <div class="assessment-row">
           <div><h3>${item.title}</h3><p>${item.id === "track" ? trackAssessmentDetail() : item.detail}</p><small class="assessment-rubric" id="rubric-${item.id}">${item.rubric}</small></div>
           <label><span class="sr-only">${item.title}分數</span><input class="score-input" type="number" min="0" max="${item.max}" step="1" data-score-id="${item.id}" aria-describedby="rubric-${item.id} range-${item.id}" placeholder="/${item.max}"><span class="score-range" id="range-${item.id}">0–${item.max} 分</span></label>
         </div>
       `).join("");
-      assessments.forEach(item => {
+      items.forEach(item => {
         const input = document.querySelector(`[data-score-id="${item.id}"]`);
-        input.value = Object.hasOwn(state.scores, item.id) ? state.scores[item.id] : "";
+        input.value = Object.hasOwn(record.scores, item.id) ? record.scores[item.id] : "";
       });
       updateScore();
+      updateAssessmentRecordStatus();
     }
 
     function trackAssessmentDetail() {
@@ -2113,22 +2874,87 @@
     }
 
     function updateScore() {
-      const total = assessments.reduce((sum, item) => sum + Math.min(item.max, Math.max(0, Number(state.scores[item.id]) || 0)), 0);
-      const hasCoreZero = assessments.some(item => (Number(state.scores[item.id]) || 0) === 0);
+      const round = assessmentRounds[state.assessmentRound];
+      const record = currentAssessmentRecord();
+      const items = assessmentItemsForRound();
+      const total = items.reduce((sum, item) => sum + Math.min(item.max, Math.max(0, Number(record.scores[item.id]) || 0)), 0);
+      const allAnswered = items.every(item => Object.hasOwn(record.scores, item.id));
+      const hasZero = items.some(item => Number(record.scores[item.id]) === 0);
       const totalEl = document.getElementById("scoreTotal");
       const titleEl = document.getElementById("scoreTitle");
       const noteEl = document.getElementById("scoreNote");
       totalEl.textContent = total;
-      if (!Object.keys(state.scores).length) {
+      if (round.baseline) {
+        titleEl.textContent = allAnswered ? "基準已填完" : "等待基準作答";
+        noteEl.textContent = allAnswered
+          ? "這份 40 分基準不判定及格。保留證據後，W4 再用完整驗收比較進步幅度。"
+          : "只填 Python 與 SQL。這次不會因未達 70 分顯示不及格。";
+      } else if (!Object.keys(record.scores).length) {
         titleEl.textContent = "尚未驗收";
         noteEl.textContent = "完成五個區塊並輸入分數。若未達 70，回到最低分的項目補強即可，不代表你不適合。";
-      } else if (total >= 70 && !hasCoreZero) {
+      } else if (allAnswered && total >= 70 && !hasZero) {
         titleEl.textContent = "可以開始密集面試";
         noteEl.textContent = "保留每週一次無 AI 驗收，同時繼續投遞。面試後把真題與卡點補回學習表。";
       } else {
         titleEl.textContent = "找最低分項補強";
-        noteEl.textContent = "不用重學全部。挑最低分的核心項目練 2–3 次，再重新做同一份 90 分鐘驗收。";
+        noteEl.textContent = allAnswered
+          ? "不用重學全部。挑最低分項目練 2–3 次，再重新做同一週的 90 分鐘驗收。"
+          : "這份紀錄仍是草稿；先完成五項分數，再依最低分項補強。";
       }
+    }
+
+    function updateAssessmentRecordStatus(message = "") {
+      const record = currentAssessmentRecord();
+      const status = document.getElementById("assessmentRecordStatus");
+      if (!status) return;
+      status.classList.toggle("saved", Boolean(record.savedAt) && !message);
+      if (message) {
+        status.textContent = message;
+      } else if (record.savedAt) {
+        const saved = new Intl.DateTimeFormat("zh-TW", { dateStyle: "medium", timeStyle: "short" }).format(new Date(record.savedAt));
+        status.textContent = `已保存：${saved}｜${trackLabels[state.track]}・${assessmentRounds[state.assessmentRound].label}`;
+      } else if (assessmentRecordHasContent(record)) {
+        status.textContent = `草稿未保存｜${trackLabels[state.track]}・${assessmentRounds[state.assessmentRound].label}`;
+      } else {
+        status.textContent = "尚未建立草稿";
+      }
+    }
+
+    function markAssessmentDraft(record) {
+      record.savedAt = "";
+      updateAssessmentRecordStatus();
+    }
+
+    function saveAssessmentRecord() {
+      const record = currentAssessmentRecord();
+      const roundId = state.assessmentRound;
+      const evidenceUrl = normalizeHttpsUrl(record.evidenceUrl);
+      if (!validIsoDate(record.date)) {
+        document.getElementById("assessmentDate").focus();
+        updateAssessmentRecordStatus("尚未保存：請填驗收日期。");
+        return;
+      }
+      if (!normalizeShortText(record.evaluator, 120)) {
+        document.getElementById("assessmentEvaluator").focus();
+        updateAssessmentRecordStatus("尚未保存：請填評分者。");
+        return;
+      }
+      if (!evidenceUrl) {
+        document.getElementById("assessmentEvidence").focus();
+        updateAssessmentRecordStatus("尚未保存：請貼上有效的 HTTPS 證據連結。");
+        return;
+      }
+      if (!assessmentRounds[roundId].itemIds.every(id => Object.hasOwn(record.scores, id))) {
+        document.querySelector("[data-score-id]")?.focus();
+        updateAssessmentRecordStatus("尚未保存：請完成這個週次的全部分數。");
+        return;
+      }
+      record.evaluator = normalizeShortText(record.evaluator, 120);
+      record.evidenceUrl = evidenceUrl;
+      record.savedAt = new Date().toISOString();
+      saveState();
+      renderAssessments();
+      setStorageStatus(`${assessmentRounds[roundId].label}已保存；主線：${trackLabels[state.track]}`);
     }
 
     function prefersReducedMotion() {
@@ -2195,8 +3021,10 @@
       if (targetId) {
         const target = document.querySelector(`[data-progress-id="${targetId}"]`);
         if (target) {
+          const disclosure = target.closest("details");
+          if (disclosure) disclosure.open = true;
           target.scrollIntoView({ block: "center", behavior: prefersReducedMotion() ? "auto" : "smooth" });
-          target.querySelector("input").focus({ preventScroll: true });
+          target.querySelector("input, select, textarea")?.focus({ preventScroll: true });
         }
         return;
       }
@@ -2256,15 +3084,40 @@
         renderVideos();
       }
 
+      if (event.target.matches("[data-track-evidence-done]")) {
+        const record = trackEvidenceRecord(state.track, state.week, true);
+        record.done = event.target.checked;
+        saveState();
+        refreshEvidenceProgress();
+      }
+
       if (event.target.matches("[data-score-id]")) {
         const item = assessments.find(entry => entry.id === event.target.dataset.scoreId);
-        event.target.value = Object.hasOwn(state.scores, item.id) ? state.scores[item.id] : "";
+        const record = currentAssessmentRecord();
+        event.target.value = Object.hasOwn(record.scores, item.id) ? record.scores[item.id] : "";
       }
 
       if (event.target.id === "trackSelect") {
         state.track = Object.hasOwn(trackLabels, event.target.value) ? event.target.value : "backend";
         saveState();
+        renderWeekStrip();
         renderWeekDetail();
+        renderAssessments();
+        updateProgress();
+      }
+
+      if (event.target.id === "assessmentTrackSelect") {
+        state.track = Object.hasOwn(trackLabels, event.target.value) ? event.target.value : "backend";
+        saveState();
+        renderWeekStrip();
+        renderWeekDetail();
+        renderAssessments();
+        updateProgress();
+      }
+
+      if (event.target.id === "assessmentRoundSelect") {
+        state.assessmentRound = assessmentRoundIds.includes(event.target.value) ? event.target.value : "w2";
+        saveState();
         renderAssessments();
       }
 
@@ -2284,10 +3137,37 @@
         scheduleSave();
       }
 
+      if (event.target.matches("[data-track-evidence-url]")) {
+        const record = trackEvidenceRecord(state.track, state.week, true);
+        record.evidenceUrl = event.target.value.slice(0, maxUrlLength);
+        validateHttpsInput(event.target);
+        scheduleSave();
+        refreshEvidenceProgress();
+      }
+
+      if (event.target.matches("[data-algorithm-id][data-algorithm-field]")) {
+        updateAlgorithmRecordFromControl(event.target);
+      }
+
+      if (event.target.matches("[data-assessment-meta]")) {
+        const record = currentAssessmentRecord();
+        const field = event.target.dataset.assessmentMeta;
+        if (field === "date") record.date = event.target.value.slice(0, 10);
+        if (field === "evaluator") record.evaluator = event.target.value.slice(0, 120);
+        if (field === "evidenceUrl") {
+          record.evidenceUrl = event.target.value.slice(0, maxUrlLength);
+          validateHttpsInput(event.target);
+        }
+        markAssessmentDraft(record);
+        scheduleSave();
+      }
+
       if (event.target.matches("[data-score-id]")) {
         const item = assessments.find(entry => entry.id === event.target.dataset.scoreId);
-        if (!event.target.value.trim()) delete state.scores[item.id];
-        else if (Number.isFinite(event.target.valueAsNumber)) state.scores[item.id] = Math.min(item.max, Math.max(0, Math.round(event.target.valueAsNumber)));
+        const record = currentAssessmentRecord();
+        if (!event.target.value.trim()) delete record.scores[item.id];
+        else if (Number.isFinite(event.target.valueAsNumber)) record.scores[item.id] = Math.min(item.max, Math.max(0, Math.round(event.target.valueAsNumber)));
+        markAssessmentDraft(record);
         saveState();
         updateScore();
       }
@@ -2295,6 +3175,7 @@
 
     document.getElementById("nextStepBtn").addEventListener("click", activateNextStep);
     document.getElementById("calendarWeekBtn").addEventListener("click", () => selectWeek(calendarWeekNumber()));
+    document.getElementById("saveAssessmentBtn").addEventListener("click", saveAssessmentRecord);
     document.getElementById("exportBtn").addEventListener("click", exportProgress);
     document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importInput").click());
     document.getElementById("importInput").addEventListener("change", async event => {
@@ -2307,6 +3188,8 @@
         const version = payload.version === undefined ? 1 : Number(payload.version);
         if (!Number.isInteger(version) || version < 1 || version > stateVersion) throw new Error(`不支援的進度檔版本：${payload.version}`);
         const nextState = normalizeState(payload.state);
+        nextState.revision = safeRevision(state.revision);
+        nextState.updatedAt = state.updatedAt;
         if (!window.confirm("匯入會完整取代目前進度；系統會先保留一份可復原備份。確定繼續嗎？")) return;
         if (!backupCurrentState("import")) return;
         replaceState(nextState);
@@ -2321,7 +3204,7 @@
     });
 
     document.getElementById("resetBtn").addEventListener("click", () => {
-      if (!window.confirm("確定要清除所有任務、影片、筆記與驗收分數嗎？系統會先保留一份可復原備份。")) return;
+      if (!window.confirm("確定要清除所有任務、主線與演算法證據、影片、筆記及驗收紀錄嗎？系統會先保留一份可復原備份。")) return;
       if (!backupCurrentState("reset")) return;
       replaceState(createDefaultState());
       saveState();
@@ -2346,14 +3229,16 @@
 
     window.addEventListener("popstate", () => {
       const view = window.location.hash.slice(1);
-      switchView(view, { persist: false, scroll: true, focus: true });
+      switchView(view, { persist: false, scroll: false, focus: false });
     });
 
     window.addEventListener("storage", event => {
       if (event.key !== storageKey || !event.newValue) return;
       try {
         const incoming = normalizeState(JSON.parse(event.newValue));
-        if (incoming.revision <= state.revision) return;
+        const incomingIsNewer = incoming.revision > safeRevision(state.revision)
+          || (incoming.revision === safeRevision(state.revision) && incoming.updatedAt > state.updatedAt);
+        if (!incomingIsNewer) return;
         const localUi = { view: state.view, week: state.week, videoFilter: state.videoFilter };
         const note = document.activeElement && document.activeElement.id === "weekNote" ? document.activeElement.value.slice(0, maxNoteLength) : null;
         const noteId = `w${state.week}`;
