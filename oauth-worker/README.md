@@ -1,6 +1,6 @@
-# Rong 工程求職學習與面試工作台 Sync Worker
+# Rong AI 應用與資料整合求職工作台 Sync Worker
 
-這個 Cloudflare Worker 為 GitHub Pages 上的「Rong 工程求職學習與面試工作台」提供兩種登入與進度同步方式：
+這個 Cloudflare Worker 為 GitHub Pages 上的「Rong AI 應用與資料整合求職工作台」提供兩種登入與進度同步方式：
 
 - GitHub OAuth：將進度保存到使用者自己的 private Gist。
 - Email 驗證：將進度保存到每位使用者專屬的 SQLite-backed Durable Object。
@@ -29,14 +29,13 @@
 
 ```powershell
 cd oauth-worker
-npx wrangler login
+npx --yes wrangler@4.123.0 login
 ```
 
-新安裝不需要建立 KV。只有需要遷移舊版 Email 進度時，才保留既有 KV binding：
+新安裝不需要建立 KV。只有需要遷移舊版 Email 進度時，才保留原本存有資料的既有 KV namespace；新建的空 namespace 無法遷移舊資料。可先列出帳號內的 namespace，確認原 id：
 
 ```powershell
-npx wrangler kv namespace create interview_trainer_progress
-npx wrangler kv namespace create interview_trainer_progress --preview
+npx --yes wrangler@4.123.0 kv namespace list
 ```
 
 若有舊資料，把既有 namespace id 寫入 `wrangler.toml` 並取消 KV binding 註解：
@@ -65,9 +64,9 @@ new_sqlite_classes = ["AuthCoordinator"]
 設定 secrets：
 
 ```powershell
-npx wrangler secret put SESSION_SECRET
-npx wrangler secret put RESEND_API_KEY
-npx wrangler secret put GITHUB_CLIENT_SECRET
+npx --yes wrangler@4.123.0 secret put SESSION_SECRET
+npx --yes wrangler@4.123.0 secret put RESEND_API_KEY
+npx --yes wrangler@4.123.0 secret put GITHUB_CLIENT_SECRET
 ```
 
 `SESSION_SECRET` 必須至少 32 bytes，建議使用密碼管理器產生 32 bytes 以上的隨機值。Worker 在 secret 缺漏或過短時會 fail closed 並回傳 HTTP 500。
@@ -78,7 +77,7 @@ npx wrangler secret put GITHUB_CLIENT_SECRET
 [vars]
 APP_ORIGIN = "https://steven65026502.github.io"
 GITHUB_CLIENT_ID = "你的 GitHub OAuth Client ID"
-EMAIL_FROM = "Rong 工程求職學習與面試工作台 <login@your-domain.com>"
+EMAIL_FROM = "Rong AI 應用與資料整合求職工作台 <login@your-domain.com>"
 ```
 
 允許的登入返回頁固定為：
@@ -111,16 +110,16 @@ npm test
 也可以做 Wrangler dry run：
 
 ```powershell
-npx wrangler deploy --dry-run
+npx --yes wrangler@4.123.0 deploy --dry-run
 ```
 
 ## 部署
 
 ```powershell
-npx wrangler deploy
+npx --yes wrangler@4.123.0 deploy
 ```
 
-部署後把 Worker URL 填入 Interview Trainer 的「同步服務 URL」。正式環境不要加入任何會把驗證碼、magic link、session 或 secret 寫到 response、console 或 Git 的除錯功能。
+部署後把 Worker URL 填入「Rong AI 應用與資料整合求職工作台」的「同步服務 URL」。正式環境不要加入任何會把驗證碼、magic link、session 或 secret 寫到 response、console 或 Git 的除錯功能。
 
 ## 參考
 

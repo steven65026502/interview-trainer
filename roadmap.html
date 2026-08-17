@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Rong 的 8 週 Python、SQL、FastAPI、pytest、Docker、LeetCode 與 AI 應用求職學習表。">
+  <meta name="description" content="Rong 的 8 週 AI 應用與資料整合工程師求職學習表：Python、SQL、FastAPI、Docker、RAG、pgvector、AI 評測與可靠 Agent。">
   <link rel="icon" href="data:,">
-  <title>Rong 8 週工程求職學習表</title>
+  <title>Rong 8 週 AI 應用與資料整合學習表</title>
   <style>
     :root {
       --paper: #f3f1eb;
@@ -329,6 +329,10 @@
       padding: 44px 0 26px;
     }
 
+    #planView .page-head {
+      padding: 32px 0 20px;
+    }
+
     .eyebrow {
       margin: 0 0 12px;
       color: var(--accent);
@@ -453,6 +457,10 @@
 
     .section-block {
       padding-top: 42px;
+    }
+
+    #planView > .section-block {
+      padding-top: 28px;
     }
 
     .section-title {
@@ -766,6 +774,81 @@
       font-size: 12px;
       font-weight: 900;
       white-space: nowrap;
+    }
+
+    .career-contract {
+      margin-top: 34px;
+    }
+
+    .career-standard-table-wrap {
+      overflow-x: auto;
+      border-top: 1px solid var(--line);
+    }
+
+    .career-standard-table {
+      min-width: 680px;
+      margin-top: 0;
+    }
+
+    .career-standard-table td:first-child {
+      width: 190px;
+      font-weight: 850;
+      color: var(--ink);
+    }
+
+    .career-standard-list {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 8px 0 22px 24px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .career-standard-list.compact {
+      padding-bottom: 0;
+    }
+
+    .career-standard-list strong,
+    .career-two-column h3,
+    .career-company-rule strong {
+      color: var(--ink);
+    }
+
+    .career-decision-note {
+      margin: -4px 0 22px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .career-two-column {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+      padding: 8px 0 22px;
+    }
+
+    .career-two-column h3 {
+      margin: 0 0 4px;
+      font-size: 14px;
+    }
+
+    .career-company-rule {
+      display: grid;
+      grid-template-columns: 180px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line-strong);
+    }
+
+    .career-company-rule p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.65;
     }
 
     .algorithm-records {
@@ -1533,6 +1616,12 @@
         white-space: normal;
       }
 
+      .career-two-column,
+      .career-company-rule {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+
       .algorithm-record-grid {
         grid-template-columns: 1fr;
       }
@@ -1645,7 +1734,7 @@
     <aside class="rail" aria-label="主要導覽">
       <a class="brand" href="roadmap.html">
         <span class="brand-mark">READY / 08</span>
-        <span class="brand-name">工程求職<br>學習工作台</span>
+        <span class="brand-name">AI 應用與資料整合<br>學習工作台</span>
       </a>
 
       <nav class="rail-nav" aria-label="主要功能">
@@ -1686,9 +1775,9 @@
       <section class="view active" id="planView">
         <div class="page-head">
           <div>
-            <p class="eyebrow">Career engineering sprint</p>
-            <h1 id="planTitle" tabindex="-1">8 週工程求職訓練</h1>
-            <p class="page-head-copy">採 80% 共通核心＋20% 主線選修。先選 Python 後端、資料工程、SDET 或 AI 應用其中一條，每週留下可驗證成果；演算法前 20 分鐘一律不用 AI。</p>
+            <p class="eyebrow">AI application &amp; data integration sprint</p>
+            <h1 id="planTitle" tabindex="-1">8 週 AI 應用與資料整合訓練</h1>
+            <p class="page-head-copy"><strong>作品狀態：規劃中。</strong> 八週內唯一主作品是「企業 IT／設備維運知識與工單 Copilot」。Python、SQL、API、Docker、RAG、評測與 Agent 都累積到同一條可驗證資料流；AI 應用是預設主線，其餘方向只作相鄰投遞。</p>
           </div>
           <div class="head-metric">
             <span>目前週次</span>
@@ -1712,7 +1801,7 @@
         <section class="section-block">
           <div class="section-title">
             <h2>選擇週次</h2>
-            <p>每週六個任務、主線成果、逐題演算法證據與三個能力閘門；標示「選修」的任務不阻擋完成。</p>
+            <p>每週六個任務、角色成果、逐題演算法證據與三個能力閘門。內容版本 v4；舊版 W4–W8 任務不會冒充新版完成，筆記與評量草稿仍會保留。</p>
           </div>
           <div class="week-strip" id="weekStrip" role="tablist" aria-label="八週學習路線"></div>
         </section>
@@ -1725,6 +1814,88 @@
           <li class="cadence-item"><span>作品累積</span><strong>20 分鐘專案整合</strong></li>
           <li class="cadence-item"><span>輸出檢核</span><strong>5 分鐘口頭解釋</strong></li>
         </ul>
+
+        <section class="section-block career-contract" aria-labelledby="careerContractTitle">
+          <div class="section-title">
+            <h2 id="careerContractTitle">主線定位與面試合格標準</h2>
+            <p>主線是 AI 應用與資料整合工程師；不是等全部學完才投，而是每週用同一個 Copilot 留下可驗證證據。</p>
+          </div>
+
+          <details class="algorithm-disclosure" open>
+            <summary><span class="algorithm-summary-copy"><strong>9 項技能／面試合格標準</strong><small>能獨立做、能說明、能驗證，才算學會</small></span><span class="algorithm-summary-count">核心</span></summary>
+            <div class="career-standard-table-wrap">
+              <table class="interview-table career-standard-table">
+                <thead><tr><th>技能</th><th>面試合格標準</th></tr></thead>
+                <tbody>
+                  <tr><td>1. Python</td><td>能用 API 取得資料，完成清理、驗證、資料庫寫入、例外處理與 logging。</td></tr>
+                  <tr><td>2. SQL</td><td>能獨立寫 JOIN、GROUP BY、CTE、Window Function，並處理 NULL、去重與索引判讀。</td></tr>
+                  <tr><td>3. REST API</td><td>能解釋 HTTP、JSON、status code，並以 FastAPI／Pydantic 實作驗證與查詢。</td></tr>
+                  <tr><td>4. Git／Linux</td><td>能操作 branch、commit、merge，並從 process、環境變數與 log 排查問題。</td></tr>
+                  <tr><td>5. Docker</td><td>能寫 Dockerfile／Compose，讓 API 與資料庫用一個指令啟動。</td></tr>
+                  <tr><td>6. 資料工程</td><td>能設計 ETL、資料驗證、冪等、排程、retry 與版本紀錄。</td></tr>
+                  <tr><td>7. RAG</td><td>能說清楚 chunk、metadata、embedding、retrieve、rerank、citation 與 refusal。</td></tr>
+                  <tr><td>8. AI 評測</td><td>能用固定測試集量測檢索、引用、正確率、延遲與失敗，而不是只看幾題 demo。</td></tr>
+                  <tr><td>9. Agent 可靠性</td><td>能處理 tool calling、JSON schema、timeout、retry、權限與 HITL。</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </details>
+
+          <details class="algorithm-disclosure">
+            <summary><span class="algorithm-summary-copy"><strong>5 類投遞方向</strong><small>主線優先，相鄰方向以同一作品證明能力</small></span><span class="algorithm-summary-count">投遞</span></summary>
+            <ol class="career-standard-list">
+              <li><strong>主投：</strong>AI 應用、AI workflow、RAG、AI 評測與 AI QA。</li>
+              <li><strong>平行投遞：</strong>資料整合、Python、後端整合與自動化工程。</li>
+              <li><strong>產業切入：</strong>半導體 IT、製造資料、設備自動化與企業 AI 導入。</li>
+              <li><strong>條件式評估：</strong>AIoT solution 職缺只有在工作包含部署、API、Linux 與 debug 時才值得投。</li>
+              <li><strong>備用方向：</strong>GIS 全端只有在確實撰寫 API、DB 與 frontend 時才列入。</li>
+            </ol>
+            <p class="career-decision-note"><strong>不列入主投：</strong>純 GIS／圖資、行政助理與人工 QA。</p>
+          </details>
+
+          <details class="algorithm-disclosure">
+            <summary><span class="algorithm-summary-copy"><strong>Copilot 的 8 項作品要求</strong><small>唯一作品，不再分散做 Todo API 或無證據聊天機器人</small></span><span class="algorithm-summary-count">作品</span></summary>
+            <ol class="career-standard-list">
+              <li>設備文件與去識別化工單匯入 PostgreSQL，保留來源、版本與處理狀態。</li>
+              <li>用 pgvector 建立會回傳引用來源、證據不足時會拒答的 RAG。</li>
+              <li>以 FastAPI 提供設備知識查詢與工單草稿 API。</li>
+              <li>Agent 只允許 allowlist 內的唯讀 SQL／API 工具。</li>
+              <li>任何寫入或關閉工單前都必須經 HITL 明確確認並留下稽核紀錄。</li>
+              <li>建立固定版本的 50 題測試集，涵蓋可回答、無答案、錯誤來源、惡意提示與服務失敗。</li>
+              <li>報告 retrieval、citation、task success、latency 與 failures，不只展示成功畫面。</li>
+              <li>提供 Docker、README、實作一致的架構圖與三分鐘 demo。</li>
+            </ol>
+          </details>
+
+          <details class="algorithm-disclosure">
+            <summary><span class="algorithm-summary-copy"><strong>AI 使用 5 原則與暫不優先項目</strong><small>AI 可以加速，但不能取代你對結果負責</small></span><span class="algorithm-summary-count">界線</span></summary>
+            <div class="career-two-column">
+              <div>
+                <h3>AI 使用原則</h3>
+                <ol class="career-standard-list compact">
+                  <li>AI 產生的內容，自己必須能說明。</li>
+                  <li>關掉 AI 後，能修改需求並完成核心功能。</li>
+                  <li>能閱讀 log，自行定位錯誤。</li>
+                  <li>使用 AI 後仍要補測試。</li>
+                  <li>能解釋設計選擇、限制與取捨。</li>
+                </ol>
+              </div>
+              <div>
+                <h3>目前暫不優先</h3>
+                <ul class="career-standard-list compact">
+                  <li>PyTorch／CUDA／從零訓練模型與複雜 fine-tune。</li>
+                  <li>Kubernetes、多 Agent 與 LeetCode Hard。</li>
+                  <li>同時學多套前端框架或多種新語言。</li>
+                </ul>
+              </div>
+            </div>
+          </details>
+
+          <aside class="career-company-rule" aria-label="詮華職缺判斷">
+            <strong>詮華條件式判斷</strong>
+            <p>只有職缺明確是 GIS 全端或初階開發，而且面談會直接評估開發能力時才值得面談；若實際偏 GIS 助理或行政支援，先觀察，不作主線。</p>
+          </aside>
+        </section>
         <p class="footer-note">每週安排 6 天、每天約 90 分鐘；D6 驗收取代當天核心實作，D7 休息或補交。影片包含在 45 分鐘核心學習內，每週觀看上限 60–90 分鐘，超時就先停片完成產出。</p>
       </section>
 
@@ -1733,7 +1904,7 @@
           <div>
             <p class="eyebrow">Curated learning library</p>
             <h1 id="videosTitle" tabindex="-1">先看一套，再動手做。</h1>
-            <p class="page-head-copy">這裡只放能直接跟練的免費資源。影片負責建立概念，真正的完成條件仍是把內容做進自己的 Marine Data API。</p>
+            <p class="page-head-copy">這裡只放能直接跟練的免費資源。影片負責建立概念，真正的完成條件仍是把內容做進企業 IT／設備維運 Copilot。</p>
           </div>
           <div class="head-metric" aria-live="polite">
             <span>資源狀態</span>
@@ -1746,7 +1917,7 @@
         <section class="section-block">
           <div class="section-title">
             <h2>影片與播放清單</h2>
-            <p>標示週次是建議時機；同主題只選一個主資源。連結最後核對：2026-08-16。</p>
+             <p>標示週次是建議時機；同主題只選一個主資源。新增的 pgvector／Agent 連結核對於 2026-08-17，其餘既有連結核對於 2026-08-16。</p>
           </div>
           <div class="video-list" id="videoList" aria-live="polite"></div>
         </section>
@@ -1774,7 +1945,7 @@
           </div>
           <div class="assessment-selectors">
             <label class="evidence-field"><span>驗收週次</span><select id="assessmentRoundSelect"><option value="w2">W2 基準</option><option value="w4">W4 完整驗收</option><option value="w6">W6 完整驗收</option><option value="w8">W8 最終驗收</option></select></label>
-            <label class="evidence-field"><span>職涯主線</span><select id="assessmentTrackSelect"><option value="backend">Python 後端</option><option value="data">資料工程</option><option value="sdet">SDET / QA Automation</option><option value="ai">AI 應用</option></select></label>
+            <label class="evidence-field"><span>職涯主線</span><select id="assessmentTrackSelect"><option value="ai">AI 應用與資料整合（主線）</option><option value="data">資料整合／資料工程</option><option value="backend">Python 後端整合</option><option value="sdet">測試自動化（次要）</option></select></label>
           </div>
           <div class="assessment-meta-grid">
             <label class="evidence-field"><span>驗收日期</span><input id="assessmentDate" type="date" data-assessment-meta="date"></label>
@@ -1806,10 +1977,10 @@
             <caption class="sr-only">四種工程職缺的常見面試考點與建議作品證據</caption>
             <thead><tr><th>職涯方向</th><th>高機率考點</th><th>你要拿出的證據</th></tr></thead>
             <tbody>
-              <tr><td>Python 後端</td><td>Python coding、REST、SQL、錯誤處理、簡易系統設計</td><td>可啟動的 FastAPI + PostgreSQL 專案與測試</td></tr>
-              <tr><td>資料工程</td><td>SQL、ETL、資料品質、重跑安全、索引與 pipeline 設計</td><td>可重跑資料流、對帳查詢、log 與資料契約</td></tr>
-              <tr><td>SDET / QA Automation</td><td>測試案例、pytest、API/UI automation、mock、CI 與 flaky test</td><td>單元／整合／E2E 測試與可重現 bug report</td></tr>
-              <tr><td>AI 應用</td><td>LLM API、RAG、structured output、tool calling、品質評估</td><td>有引用、評估集、錯誤 fallback 的小型 RAG API</td></tr>
+              <tr><td>AI 應用與資料整合（主線）</td><td>Python、SQL、資料管線、RAG、pgvector、AI 評測、tool calling 與 HITL</td><td>有引用、可拒答、50 題評估集與稽核紀錄的工單 Copilot</td></tr>
+              <tr><td>資料整合／資料工程</td><td>SQL、ETL、資料品質、冪等、retry、版本與 pipeline 設計</td><td>可重跑 ingestion、對帳查詢、來源版本與失敗紀錄</td></tr>
+              <tr><td>Python 後端整合</td><td>REST、Pydantic、PostgreSQL、狀態碼、錯誤處理與 Docker</td><td>可啟動的 Copilot FastAPI、資料庫 migration 與 API 測試</td></tr>
+              <tr><td>測試自動化（次要）</td><td>pytest、API 測試、mock、AI 輸出與資料品質驗證</td><td>以同一作品的回歸測試與評測失敗報告作證據，不另做 SDET 作品</td></tr>
             </tbody>
           </table>
         </section>
@@ -1824,138 +1995,138 @@
       {
         number: 1,
         short: "Python",
-        title: "Python 基礎與資料處理",
-        goal: "先確認你不是只會讀程式：能把檔案處理拆成函式、處理錯誤、補型別提示，並用小樣本驗證輸出。",
-        output: "data_cleaner.py + sample data + 5 個測試",
+        title: "Python：設備文件與工單資料處理",
+        goal: "建立 Copilot 的資料入口：能從檔案或 API 取得設備文件與工單，完成清理、驗證、例外處理與 logging。",
+        output: "ticket_cleaner.py + 去識別化樣本 + 5 個測試",
         algorithm: "Array / String / Hash Map：6 題 Easy（累積 6E）",
         tasks: [
-          ["D1", "基準測驗：不用 AI 讀取 CSV/JSON，清理欄位後輸出摘要", "留下可重跑程式、輸入樣本與輸出結果。", "NO AI"],
-          ["D2", "函式、型別提示與資料結構", "把 D1 程式拆成 3–5 個小函式，參數與回傳值加上 type hints。", "實作"],
-          ["D3", "例外處理、logging 與邊界資料", "處理空檔、缺欄位、錯誤日期與非數字；為正常與四種邊界各留一個可重跑 pytest。", "實作"],
-          ["D4", "pandas 清洗與分組統計", "完成 dtype、缺值、merge、groupby；用筆數與抽樣值對帳。", "實作"],
-          ["D5", "API 串接：timeout、重試與 JSON 驗證", "呼叫一個公開 API，處理非 200、timeout 與缺欄位。", "實作"],
-          ["D6", "週驗收：關掉教學重做資料清洗", "限時 60 分鐘完成，再錄 3 分鐘說明資料流與錯誤處理。", "NO AI"]
+          ["D1", "基準測驗：不用 AI 清理設備／工單 CSV 與 JSON", "留下可重跑程式、去識別化輸入樣本、欄位驗證與輸出摘要。", "NO AI"],
+          ["D2", "函式、類別、型別提示與資料結構", "把清理流程拆成 3–5 個小函式或 service；參數、回傳值與資料模型加上 type hints。", "實作"],
+          ["D3", "例外處理、logging 與拒收資料", "處理空檔、缺欄位、錯誤日期與非數字；log 記錄批次與錯誤，不寫入敏感工單內容。", "實作"],
+          ["D4", "pandas 清洗、去識別化與統計", "完成 dtype、缺值、去重、merge、groupby；用筆數與抽樣值對帳。", "實作"],
+          ["D5", "工單 API 串接：timeout、retry 與 JSON 驗證", "用 mock API 取得工單，處理非 200、timeout、重試上限與缺欄位。", "實作"],
+          ["D6", "週驗收：關掉 AI 重做 ingestion 前處理", "限時 60 分鐘完成，再錄 3 分鐘說明資料流、拒收規則與錯誤處理。", "NO AI"]
         ],
-        gates: ["不看答案能從零寫出檔案讀取、清洗與輸出", "能解釋 list / dict / set 的使用時機與主要複雜度", "能從 traceback 與 log 找到錯誤位置"]
+        gates: ["不看答案能從 API／檔案取得、清理、驗證並輸出資料", "能解釋 list／dict／set 與 type hints 的使用時機", "能從 traceback 與 log 找到錯誤，且不洩漏工單敏感資料"]
       },
       {
         number: 2,
         short: "SQL",
-        title: "SQL 與 PostgreSQL",
-        goal: "把 SQL 從『看得懂』提升到『從需求自己寫』，特別練 JOIN 粒度、視窗函數、交易與索引判讀。",
-        output: "schema.sql + etl.py + 12_queries.sql + reconciliation.md + EXPLAIN 筆記",
+        title: "SQL、PostgreSQL 與可重跑 ingestion",
+        goal: "為 Copilot 建立可追溯資料層：從需求自己寫 SQL，處理 JOIN 粒度、NULL、去重、交易、版本與索引。",
+        output: "Copilot schema + ingest.py + 12_queries.sql + reconciliation.md",
         algorithm: "Two Pointers / Sliding Window：6 題 Easy（累積 12E）",
         tasks: [
-          ["D1", "建立 observations、runs、hotspots 三張練習表", "寫 PK、FK、NOT NULL、CHECK 與合理的唯一鍵。", "實作"],
-          ["D2", "JOIN、GROUP BY 與聚合粒度", "完成 4 個查詢，逐一檢查 JOIN 前後筆數是否膨脹。", "NO AI"],
-          ["D3", "Subquery、CTE 與 Window Function", "用 ROW_NUMBER 找每組最新一筆，並說明為何不是只用 GROUP BY。", "實作"],
-          ["D4", "可重跑 ETL、交易與 ON CONFLICT", "完成 CSV→staging→observations；同 run_id 重跑筆數不變，中斷會 rollback，並記錄來源、成功、拒收與重複筆數。", "實作"],
-          ["D5", "索引與 EXPLAIN ANALYZE", "產生至少 100,000 筆練習資料並 ANALYZE；比較 plan，也解釋小表使用 Seq Scan 為何不一定是問題。", "實作"],
-          ["D6", "週驗收：30 分鐘 SQL + 15 分鐘口頭說明", "不用 AI 寫 JOIN、window、upsert 各一題並講驗證方式。", "NO AI"]
+          ["D1", "建立 sources、documents、assets、tickets、ingest_runs", "寫 PK、FK、NOT NULL、CHECK、文件版本與合理唯一鍵。", "實作"],
+          ["D2", "JOIN、GROUP BY、NULL 與聚合粒度", "完成 4 個工單／設備查詢，逐一檢查 JOIN 前後筆數與 NULL 是否扭曲結果。", "NO AI"],
+          ["D3", "CTE 與 Window Function", "用 ROW_NUMBER 找每台設備最新工單，處理同時間戳記並說明對帳方式。", "實作"],
+          ["D4", "冪等 ETL、交易、版本與 ON CONFLICT", "完成文件／工單→staging→正式表；同 run_id 重跑筆數不變，中斷 rollback，保存來源、成功、拒收與重複數。", "實作"],
+          ["D5", "索引與 EXPLAIN ANALYZE", "產生至少 100,000 筆練習資料；比較設備、狀態與日期查詢 plan，解釋索引取捨。", "實作"],
+          ["D6", "週驗收：30 分鐘 SQL + 15 分鐘口頭說明", "不用 AI 寫 JOIN、window、dedupe／upsert 各一題並講驗證方式。", "NO AI"]
         ],
-        gates: ["能從中文需求獨立寫出 JOIN / GROUP BY", "能寫每組最新一筆並處理同時間戳記", "知道索引不是越多越好，會先看 query plan"]
+        gates: ["能從工單需求獨立寫 JOIN／GROUP BY／CTE", "能處理 NULL、去重與每組最新一筆", "能說明交易、冪等、資料版本與 query plan"]
       },
       {
         number: 3,
         short: "FastAPI",
-        title: "FastAPI 與 REST API",
-        goal: "把你的海洋資料經驗包成可展示的 API：輸入可驗證、錯誤可預期、查詢可限制、文件可直接使用。",
-        output: "Marine Data API：至少 4 個 endpoint",
+        title: "FastAPI、Postman 與 PostgreSQL API",
+        goal: "建立 Copilot 的最小服務邊界：設備／工單可查詢、工單草稿可驗證、錯誤可預期，Postman 能重跑主要流程。",
+        output: "Copilot API + PostgreSQL migration + Postman collection",
         algorithm: "Stack / Queue / Binary Search：5 題 Easy + 1 題 Medium（累積 17E / 1M）",
         tasks: [
-          ["D1", "建立 FastAPI 專案與 Pydantic schema", "可啟動服務，GET /health 回傳 200，Swagger 可看到 request / response schema。", "實作"],
-          ["D2", "GET /observations：篩選與分頁", "支援 date、lead_hours、limit、offset，錯誤參數有清楚訊息。", "實作"],
-          ["D3", "POST /observations：驗證與狀態碼", "正確使用 201、400/422、409；重複資料不會無聲覆蓋。", "NO AI"],
-          ["D4", "SQLAlchemy 2.x、Alembic 與資料存取", "建立可重跑 migration；route、service、repository 只做必要分層，避免所有邏輯塞進 endpoint。", "實作"],
-          ["D5", "logging、設定與錯誤處理", "密碼由環境變數載入；500 不洩漏內部錯誤，log 足以追查。", "實作"],
-          ["D6", "週驗收：臨時新增 GET /summary", "限時 60 分鐘完成 endpoint、SQL、驗證與一個測試。", "NO AI"]
+          ["D1", "建立 FastAPI、Pydantic schema 與 GET /health", "服務可啟動；Swagger 清楚顯示 request／response schema 與錯誤回應。", "實作"],
+          ["D2", "GET /assets 與 GET /tickets：查詢、篩選、分頁", "支援設備、狀態、日期、limit／offset；錯誤參數有清楚訊息。", "實作"],
+          ["D3", "POST /ticket-drafts：驗證與狀態碼", "只建立草稿；正確使用 201、404、409、422，重複請求不會無聲覆蓋。", "NO AI"],
+          ["D4", "SQLAlchemy 2.x、Alembic 與資料存取", "建立可重跑 migration；route、service、repository 保持必要分層。", "實作"],
+          ["D5", "Postman 流程、mock、logging 與錯誤處理", "重跑 health→查設備→查工單→建立草稿→錯誤輸入；保留 collection 與測試結果。", "實作"],
+          ["D6", "週驗收：臨時新增 GET /tickets/summary", "限時 60 分鐘完成 endpoint、SQL、Pydantic 驗證、Postman 案例與 pytest。", "NO AI"]
         ],
-        gates: ["能說明 200 / 201 / 404 / 409 / 422 / 500 的差異", "能獨立增加一支含驗證的 endpoint", "能說明分頁、timeout 與 payload 限制的理由"]
+        gates: ["能說明 HTTP／JSON 與 200／201／404／409／422／500", "能獨立增加一支含 Pydantic 與 DB 查詢的 endpoint", "能用 Postman、pytest 與 log 驗證正常及失敗流程"]
       },
       {
         number: 4,
-        short: "pytest",
-        title: "pytest、API 與自動化測試",
-        goal: "學會證明程式正確，而不是只確認它剛好能跑；同時建立 SDET 面試需要的測試設計語言。",
-        output: "20+ tests：unit≥6 / integration≥4 / API≥6 / E2E≥4",
+        short: "Ship",
+        title: "Git、Linux、Docker 與可重現交付",
+        goal: "讓 Copilot API 在乾淨環境也能可靠啟動，並能從 process、port、環境變數、container log 與 CI 失敗定位問題。",
+        output: "Git workflow + Docker Compose + CI 綠燈 + clean-start 證據",
         algorithm: "Linked List / Tree：4 題 Easy + 2 題 Medium（累積 21E / 3M）",
         tasks: [
-          ["D1", "測試策略與案例設計", "用等價類、邊界值與 decision table，列出正常、錯誤、狀態轉移與重複提交案例。", "設計"],
-          ["D2", "pytest fixture 與 parametrize", "用 fixture 準備資料；同一驗證規則至少跑 5 組輸入。", "實作"],
-          ["D3", "mock 外部 API 與失敗情境", "不連外網也能測 timeout、500、壞 JSON 與 retry。", "實作"],
-          ["D4", "FastAPI TestClient + 測試資料庫", "測 200、404、409、422，且測試之間資料互不污染。", "實作"],
-          ["D5", "Postman / Newman API 流程", "跑完建立→查詢→錯誤輸入的 collection 並保留報告；SDET 主線再以 Playwright 測 UI 持久化。", "實作"],
-          ["D6", "週驗收：取得一個失敗測試並定位 bug", "從錯誤、log、最小重現到修正與 regression test 全程記錄；pytest --collect-only 至少 20 項，unit≥6、integration≥4、API≥6、E2E≥4。", "NO AI"]
+          ["D1", "Git branch、commit、merge 與 PR", "用 feature branch 完成一個 Copilot API 改動，提交小而可讀，刻意製造並解決一次衝突。", "NO AI"],
+          ["D2", "Linux process、env、port 與 log 排查", "練習 pwd、rg、tail、ps、curl、環境變數、權限與 port；留下故障排查命令。", "實作"],
+          ["D3", "為 FastAPI 寫 Dockerfile", "使用非 root 執行、合理 COPY／RUN／CMD；映像檔不含密碼、測試資料或無關檔案。", "實作"],
+          ["D4", "Docker Compose 串起 API + PostgreSQL", "加入 volume、env、port、migration 與 healthcheck，一個指令即可啟動。", "實作"],
+          ["D5", "CI 執行 lint、migration 與 pytest", "push／PR 自動跑核心檢查；刻意做一次失敗並從 CI log 定位。", "實作"],
+          ["D6", "週驗收：乾淨環境一指令重建", "重新 clone 到新資料夾，依 README 啟動 API／DB、跑 migration、Postman smoke 與 pytest。", "NO AI"]
         ],
-        gates: ["能說明 unit、integration、E2E 各自測什麼", "能使用 fixture、parametrize 與 mock", "修 bug 後會先補一個能重現問題的測試"]
+        gates: ["能完成 branch／commit／merge 並解釋 PR 流程", "能從 process、env、port 與 container log 排查啟動失敗", "別人只看 README 就能用 Compose 啟動並測試"]
       },
       {
         number: 5,
-        short: "DevOps",
-        title: "Linux、Docker、Git 與 CI",
-        goal: "讓作品在另一台機器也能可靠啟動，並能從 port、環境變數、container log 與 CI 失敗快速定位問題。",
-        output: "Docker Compose + GitHub Actions 綠燈",
+        short: "RAG ingest",
+        title: "文件 ingestion、Embedding 與 pgvector",
+        goal: "把設備手冊、SOP、FAQ 與工單變成有來源、有版本、可重跑的檢索資料；先證明 retrieval，再接 LLM。",
+        output: "versioned ingest pipeline + pgvector schema + retrieval_cases.md",
         algorithm: "BFS / DFS：4 題 Easy + 2 題 Medium（累積 25E / 5M）",
         tasks: [
-          ["D1", "Linux 基本操作與 log 排查", "練習 pwd、ls、cd、grep/rg、tail、ps、curl、環境變數與權限。", "實作"],
-          ["D2", "Git branch、commit、merge 與衝突", "用 feature branch 完成一個改動，刻意製造並解決一次衝突。", "NO AI"],
-          ["D3", "為 FastAPI 寫 Dockerfile", "理解 WORKDIR、COPY、RUN、CMD；映像檔不含密碼與無關檔案。", "實作"],
-          ["D4", "Docker Compose 串起 API + PostgreSQL", "加入 volume、env、port 與 healthcheck，一個指令即可啟動。", "實作"],
-          ["D5", "GitHub Actions 執行 pytest", "push / PR 時自動安裝依賴並跑測試；失敗能從 log 定位。", "實作"],
-          ["D6", "週驗收：在乾淨環境重建", "在新建暫存資料夾重新 clone，或由 GitHub Actions / Codespaces 依 README 啟動並跑完測試；不要刪目前工作目錄。", "NO AI"]
+          ["D1", "定義文件／工單 ingestion contract", "列出來源、版本、hash、設備、權限、處理狀態與拒收規則；原文保留可追溯。", "設計"],
+          ["D2", "chunk 與 metadata", "比較兩種 chunk 大小／overlap；每段保存 source_id、document_version、section 與 equipment_id。", "實作"],
+          ["D3", "Embedding 批次、retry 與版本", "批次寫入時處理 timeout、rate limit、重試上限；同模型／版本可冪等重跑。", "實作"],
+          ["D4", "PostgreSQL + pgvector schema", "建立 vector 欄位與 metadata filter；比較 exact search 與一種 ANN 索引的取捨。", "實作"],
+          ["D5", "retrieve、top-k、filter 與失敗診斷", "準備 10 個查詢，保存預期來源、實際 chunks、距離與錯誤分類；必要時加 rerank。", "NO AI"],
+          ["D6", "週驗收：重跑 ingest→retrieve", "清空衍生資料後重新匯入；筆數、版本與 hash 可對帳，10 題 retrieval 結果可重現。", "NO AI"]
         ],
-        gates: ["能從 container log、port 與 env 排查啟動失敗", "能解決基本 merge conflict 並說明 PR 流程", "別人只看 README 就能啟動專案與測試"]
+        gates: ["能說明 chunk、metadata、embedding 與 pgvector 各自責任", "能做可重跑且有版本的 ingestion，不重複寫入", "能以查詢案例解釋 top-k、filter、rerank 與索引取捨"]
       },
       {
         number: 6,
-        short: "LeetCode",
-        title: "演算法模式與限時表達",
-        goal: "不追求競賽難題；練到看得出常見模式、能先講暴力解、再優化並清楚說明 Big-O 與邊界案例。",
-        output: "本週 6 Easy + 4 Medium 的限時解題紀錄",
+        short: "RAG quality",
+        title: "RAG 引用、拒答與 AI 評測",
+        goal: "把 retrieval 接到 LLM，但不把流暢當正確：回答必須結構化、有引用，證據不足時拒答，品質由固定測試集量測。",
+        output: "RAG API + citation/refusal contract + 50 題固定評估集",
         algorithm: "本週 10 題，完成後累積約 31E / 9M",
         tasks: [
-          ["D1", "Array / Hash Map：Two Sum 類型", "25 分鐘內完成，口頭說明 hash map 如何換取空間。", "NO AI"],
-          ["D2", "Two Pointers / Sliding Window", "先寫 O(n²)，再說明如何移動指標降到 O(n)。", "NO AI"],
-          ["D3", "Stack / Queue / Binary Search", "每題先講 invariant 或 stack 裡保存什麼。", "NO AI"],
-          ["D4", "Tree：BFS / DFS", "各寫一題，說清楚遞迴終止條件與 queue 使用方式。", "NO AI"],
-          ["D5", "Heap 與 Top K", "能解釋為何 heap 適合維持前 K 個元素。", "NO AI"],
-          ["D6", "60 分鐘模擬 coding round", "2 題 Easy 或 1 Easy + 1 Medium；全程邊想邊講並自行測試。", "NO AI"]
+          ["D1", "LLM API 與 structured output", "以 JSON schema 回傳 answer、citations、confidence、insufficient_evidence 與 ticket_draft；處理解析失敗。", "實作"],
+          ["D2", "引用契約與來源驗證", "每個關鍵答案句能對應 retrieved chunk；不存在或版本錯誤的引用必須判為失敗。", "實作"],
+          ["D3", "拒答規則與 prompt injection", "證據不足、來源互相衝突或使用者要求忽略規則時明確拒答，不捏造維修步驟。", "NO AI"],
+          ["D4", "建立固定版本 50 題評估集", "涵蓋可回答、無答案、錯誤來源、惡意提示、timeout 與格式解析失敗；保存 expected source／behavior。", "實作"],
+          ["D5", "計算五項品質指標", "報告 retrieval 命中率、引用正確率、任務完成率、p50／p95 latency 與失敗案例通過率；answer／refusal 正確率另列為診斷指標。", "實作"],
+          ["D6", "週驗收：同一版本完整跑 eval", "不用手調個別題；輸出可重跑報告、失敗分類、基準數值與下一個改善實驗。", "NO AI"]
         ],
-        gates: ["25 分鐘內能完成大部分熟悉模式的 Easy", "每題都能說時間／空間複雜度與邊界案例", "看過提示後隔天可以關掉答案重寫"]
+        gates: ["能讓每個答案引用可驗證來源，且不存在假引用", "能在證據不足時穩定拒答，不靠 prompt 補故事", "能用固定評估集與指標比較版本，不用感覺判斷"]
       },
       {
         number: 7,
-        short: "AI / RAG",
-        title: "LLM API、RAG 與品質評估",
-        goal: "以應用工程為主：把模型接進 API，讓輸出有 schema、有來源、有評估集，也能面對 timeout、幻覺與工具失敗。",
-        output: "可引用來源的 Mini RAG API + 10 題評估集",
+        short: "Agent",
+        title: "Tool Calling、Retry 與 HITL",
+        goal: "讓 Agent 只能做被允許且可追查的事：工具有 schema、權限與 timeout；失敗可重試或降級，所有寫入前有人確認。",
+        output: "LangGraph 單 Agent + 唯讀工具 + HITL 工單流程 + audit log",
         algorithm: "混合複習：4 題 Easy + 2 題 Medium（累積約 35E / 11M）",
         tasks: [
-          ["D1", "LLM API 與 structured output", "輸出使用固定 schema；處理 timeout、rate limit 與解析失敗。", "實作"],
-          ["D2", "Embedding、chunking 與 vector search", "用小文件集比較 chunk 大小與 top-k 對檢索結果的影響。", "實作"],
-          ["D3", "建立最小 RAG 流程", "回答必須附來源；檢索不到時明確說不知道。", "實作"],
-          ["D4", "AI 主線選修：Tool calling / Agent 邊界", "建立 allowlist 內的只讀工具；驗證參數、惡意提示、token 與 latency，限制可執行操作。", "選修"],
-          ["D5", "品質評估與幻覺處理", "準備 10 題：6 題可回答、2 題無答案、2 題干擾提示；保存 expected source、retrieved chunks 與失敗分類。", "NO AI"],
-          ["D6", "週驗收：講清楚一條 RAG 資料流", "白板說明 ingest→chunk→embed→retrieve→generate→evaluate 與取捨。", "NO AI"]
+          ["D1", "用 LangGraph 建立最小可觀察流程", "query→retrieve→draft→human review；保存 state、step、耗時與結果，不同時導入 Dify／n8n 或多 Agent。", "實作"],
+          ["D2", "Tool calling 與 JSON schema", "只開放 allowlist 內的設備查詢、工單查詢等唯讀 SQL／API；參數、輸出與權限都驗證。", "實作"],
+          ["D3", "timeout、retry、backoff 與降級", "只重試暫時性錯誤；設定次數／時間上限、idempotency key 與 circuit-breaker 條件。", "實作"],
+          ["D4", "HITL：寫入與關閉前明確確認", "Agent 先顯示結構化工單草稿；使用者確認後才執行，取消／過期不寫入。", "NO AI"],
+          ["D5", "稽核 log、prompt injection 與最小權限", "記錄提議、工具參數、確認者與結果；遮蔽敏感值，測試越權與惡意提示。", "實作"],
+          ["D6", "週驗收：Agent failure drill", "注入 timeout、429、壞 JSON、工具 500、重複確認與拒絕確認；證明不重複寫入且可安全停止。", "NO AI"]
         ],
-        gates: ["能說明 embedding、vector DB、RAG 各自做什麼", "能用評估集而不是感覺判斷回答品質", "能處理無答案、錯誤工具參數與模型回傳格式失敗"]
+        gates: ["能說明 tool schema、allowlist、timeout、retry 與最小權限", "所有寫入／關閉動作都必須經 HITL 並可稽核", "工具失敗、重送與惡意提示不會造成未授權或重複副作用"]
       },
       {
         number: 8,
         short: "Interview",
-        title: "作品整理、模擬面試與投遞",
-        goal: "把前七週產出變成可被面試官理解的證據：README、架構圖、三種長度的專案故事、現場 coding 與角色別模擬面試。",
-        output: "GitHub 作品頁 + 3 次 mock + 投遞紀錄",
+        title: "評測、README、Demo 與面試",
+        goal: "凍結一個可重現版本，讓面試官看得到資料流、RAG 證據、Agent 安全邊界、失敗案例與工程取捨。",
+        output: "Copilot release + eval report + README／架構圖 + 3 分鐘 demo",
         algorithm: "重做 6 題錯題（至少 2 題 Medium），不重複計入新題",
         tasks: [
-          ["D1", "整理 GitHub 與 README", "包含問題、架構、啟動、測試、設計取捨、截圖與限制。", "作品"],
-          ["D2", "準備 30 秒／2 分鐘／5 分鐘專案介紹", "都講清楚個人角色、資料流、困難、驗證證據與結果。", "NO AI"],
-          ["D3", "Python + SQL 模擬面試", "限時寫題、邊想邊講；結束後只修最低分的兩項。", "NO AI"],
-          ["D4", "後端／SDET／資料工程／AI 應用擇一模擬", "依目標 JD 完成一個角色題，記錄追問、證據與最低分項。", "NO AI"],
-          ["D5", "90 分鐘 take-home 模擬", "收到陌生需求後完成最小功能、測試與 README，不追求過度設計。", "NO AI"],
-          ["D6", "投遞與復盤", "投 3–5 個高符合職缺；把實際題目加入模擬面試工具。", "行動"]
+          ["D1", "凍結 50 題 eval 與 release 結果", "保存資料／prompt／模型／embedding 版本，報告 retrieval、citation、task success、latency 與 failures。", "NO AI"],
+          ["D2", "完成 Docker、README 與實作一致架構圖", "包含問題、資料流、啟動、測試、HITL、設計取捨、限制、成本與失敗處理。", "作品"],
+          ["D3", "錄製三分鐘 Copilot demo", "展示提問→引用→拒答案例→工單草稿→人工確認→評估報告，不只展示成功對話。", "作品"],
+          ["D4", "Python／SQL／API／RAG 模擬面試", "不用 AI 完成核心題，口頭說明 schema、資料流、引用、拒答、retry 與 HITL。", "NO AI"],
+          ["D5", "90 分鐘 take-home 與故障排查", "收到陌生變更後完成最小功能、測試與 README；從 log 定位一個注入故障。", "NO AI"],
+          ["D6", "投遞、條件判斷與復盤", "投 3–5 個主線／相鄰職缺；依五類方向與詮華條件篩選，把真題回填工作台。", "行動"]
         ],
-        gates: ["五分鐘內能從輸入一路講到 DB、API、QGIS 與驗證", "能說一個真實 bug 的現象、定位、修正與 regression test", "能在限時與不使用 AI 的情況完成核心題目"]
+        gates: ["三分鐘能展示從資料匯入到引用、工單草稿、HITL 與評測", "能說一個真實 failure 的重現、定位、修正與 regression test", "能在無 AI 下修改需求、讀 log、補測試並解釋設計取捨"]
       }
     ];
 
@@ -1967,65 +2138,67 @@
       { week: 2, topic: "SQL", platform: "Bilibili", title: "PostgreSQL 入門實戰教程", author: "明文传输不", note: "86 集・6:13:30｜中文語音；優先挑子查詢、CTE、索引、視窗函數、ROW_NUMBER 與 LEAD/LAG。", url: "https://www.bilibili.com/video/BV1aGyhBDEp9/" },
       { week: 3, topic: "FastAPI", platform: "Bilibili", title: "黑馬程序員 PythonWeb：FastAPI 從入門到實戰", author: "黑馬程序員", priority: "主資源", note: "68 集・14:55:29｜從 1–29 集只挑本週需要的路由、Pydantic、錯誤處理、ORM 與分頁章節，合計 60–90 分鐘封頂。", url: "https://www.bilibili.com/video/BV1zV2QBtE39/" },
       { week: 3, topic: "FastAPI", platform: "YouTube", title: "Python API Development — Comprehensive Course", author: "freeCodeCamp.org", note: "19:00:27｜只當章節參考；Pydantic v1、SQLAlchemy 1.x 與 Heroku 段落不可照抄，請依現行官方文件重寫。", url: "https://www.youtube.com/watch?v=0sOvCWFmrtA" },
-      { week: 4, topic: "pytest", platform: "YouTube", title: "Pytest Tutorial — How to Test Python Code", author: "freeCodeCamp.org", priority: "主資源", note: "1:28:38｜本週只看基本測試、fixture、mark、parametrize 與 mocking；主資源合計 60–90 分鐘封頂。", url: "https://www.youtube.com/watch?v=cHYq1MRoyI0" },
-      { week: 4, topic: "SDET", platform: "YouTube", title: "Postman Beginner's Course — API Testing", author: "freeCodeCamp.org", priority: "主線選修", note: "2:09:37｜涵蓋 Postman collection、測試與 Newman / CI；SDET 主線優先。", url: "https://www.youtube.com/watch?v=VywxIQ2ZXw4" },
-      { week: 4, topic: "SDET", platform: "YouTube", title: "Playwright Python：第一個 pytest", author: "Automation Step by Step", priority: "主線選修", note: "30:11｜建立第一個 Playwright + pytest 測試；完成後改測本專案的進度持久化。", url: "https://www.youtube.com/watch?v=FcMKFmGpxCs" },
-      { week: 5, topic: "DevOps", platform: "Bilibili", title: "30 分鐘 Linux 入門教程", author: "GeekHour", note: "36:26｜快速補終端、vi 與常用命令，程度正好對應後端／測試職缺的基本要求。", url: "https://www.bilibili.com/video/BV1cq421w72c/" },
-      { week: 5, topic: "DevOps", platform: "Bilibili", title: "30 分鐘 Docker 入門教程", author: "GeekHour", note: "9 集・26:08｜包含容器概念、Dockerfile、Docker Desktop 與 Compose；看完直接替 API 實作。", url: "https://www.bilibili.com/video/BV14s4y1i7Vf/" },
-      { week: 5, topic: "DevOps", platform: "YouTube", title: "Git and GitHub for Beginners — Crash Course", author: "freeCodeCamp.org", note: "1:08:30｜clone、add、commit、push、pull 與 branch；請直接在這個 GitHub 專案裡操作。", url: "https://www.youtube.com/watch?v=RGOj5yH7evk" },
-      { week: 5, topic: "Data Engineering", platform: "Bilibili", title: "Airflow DAG 與排程概念", author: "尚硅谷", priority: "主線選修", note: "4 集・44:24｜資料工程主線只學 DAG、scheduler、retry 與依賴；安裝方式以現行 Airflow 文件為準。", url: "https://www.bilibili.com/video/BV1Y5411o7fk/" },
-      { week: 6, topic: "LeetCode", platform: "Bilibili", title: "《代碼隨想錄》算法公開課", author: "代碼隨想錄", priority: "主資源", note: "170 集・50:02:17｜只看已獨立嘗試但卡住的題目，本週影片合計 60–90 分鐘封頂；觀看講解不算完成刷題。", url: "https://space.bilibili.com/525438321/lists/180037?type=season" },
-      { week: 7, topic: "AI / RAG", platform: "YouTube", title: "Learn RAG From Scratch — Python AI Tutorial", author: "freeCodeCamp.org（講者 Lance Martin）", priority: "主資源", note: "2:33:11｜只看本週需要的 indexing、retrieval、generation、routing 與 CRAG 章節，合計 60–90 分鐘封頂；LangChain API 以現行文件為準。", url: "https://www.youtube.com/watch?v=sVcwVQRHIc8" },
-      { week: 7, topic: "AI / RAG", platform: "Bilibili", title: "3 小時從零構建專屬 AI 智能助理", author: "賽博門外憨", note: "32 集・2:50:08｜含工具呼叫、RAG、向量儲存、MCP、記憶與 guardrails；商用 API 實作可能產生費用。", url: "https://www.bilibili.com/video/BV1DSsdzXE5h/" }
+      { week: 3, topic: "API 測試", platform: "YouTube", title: "Pytest Tutorial — How to Test Python Code", author: "freeCodeCamp.org", priority: "補充資源", note: "1:28:38｜只看 fixture、parametrize 與 mocking；直接替 Copilot API 補正常與失敗案例，不另做 SDET 專案。", url: "https://www.youtube.com/watch?v=cHYq1MRoyI0" },
+      { week: 3, topic: "API 測試", platform: "YouTube", title: "Postman Beginner's Course — API Testing", author: "freeCodeCamp.org", priority: "主資源", note: "2:09:37｜只看 request、environment、collection test 與 Newman；本週影片合計 60–90 分鐘封頂。", url: "https://www.youtube.com/watch?v=VywxIQ2ZXw4" },
+      { week: 5, topic: "pgvector", platform: "YouTube", title: "PostgreSQL as a Vector Database: Getting Started With pgvector", author: "Denis Magda", priority: "主資源", note: "約 15 分鐘｜跟著完成 extension、embedding 寫入與 similarity search；索引參數以 pgvector 現行官方文件為準。", url: "https://www.youtube.com/watch?v=RFnZB76KVWk" },
+      { week: 4, topic: "DevOps", platform: "Bilibili", title: "30 分鐘 Linux 入門教程", author: "GeekHour", note: "36:26｜快速補終端、process、環境變數與常用命令，看完直接做 Copilot 啟動排查。", url: "https://www.bilibili.com/video/BV1cq421w72c/" },
+      { week: 4, topic: "DevOps", platform: "Bilibili", title: "30 分鐘 Docker 入門教程", author: "GeekHour", priority: "主資源", note: "9 集・26:08｜包含容器概念、Dockerfile 與 Compose；看完直接串起 API + PostgreSQL。", url: "https://www.bilibili.com/video/BV14s4y1i7Vf/" },
+      { week: 4, topic: "DevOps", platform: "YouTube", title: "Git and GitHub for Beginners — Crash Course", author: "freeCodeCamp.org", note: "1:08:30｜clone、commit、push、pull 與 branch；直接在 Copilot 專案建立 feature branch。", url: "https://www.youtube.com/watch?v=RGOj5yH7evk" },
+      { week: 6, topic: "AI 評測", platform: "YouTube", title: "RAG Evaluation: Precision, Recall, Faithfulness, RAGAS Explained Clearly", author: "Logical Lenses", priority: "主資源", note: "約 12 分鐘｜先建立 context precision／recall、faithfulness 與 groundedness 的共同語言，再把 50 題固定集轉成可重跑報告。", url: "https://www.youtube.com/watch?v=7_LTU0LA374" },
+      { week: 7, topic: "Agent", platform: "YouTube", title: "LangGraph Agents — Human-In-The-Loop Breakpoints", author: "LangChain", priority: "主資源", note: "官方短講｜理解敏感工具執行前如何暫停並等待人工核准；API 細節以現行 LangGraph 文件為準。", url: "https://www.youtube.com/watch?v=Za8CrPqQxpA" },
+      { week: 7, topic: "Agent", platform: "YouTube", title: "Build Hour: Agentic Tool Calling", author: "OpenAI", priority: "補充案例", note: "官方工單 backlog 案例｜只吸收 tool contract、進度、失敗處理與 eval 思維；實作仍固定使用單一 LangGraph 流程。", url: "https://www.youtube.com/watch?v=7E-qdsVEoB8" },
+      { week: 6, topic: "LeetCode", platform: "Bilibili", title: "《代碼隨想錄》算法公開課", author: "代碼隨想錄", priority: "補弱資源", note: "只看已獨立嘗試但卡住的基礎題；演算法每天 20 分鐘，不取代本週 RAG 評測交付。", url: "https://space.bilibili.com/525438321/lists/180037?type=season" },
+      { week: 5, topic: "AI / RAG", platform: "YouTube", title: "Learn RAG From Scratch — Python AI Tutorial", author: "freeCodeCamp.org（講者 Lance Martin）", priority: "主資源", note: "2:33:11｜只看 indexing、retrieval 與 generation 章節，合計 60–90 分鐘封頂；框架 API 以現行文件為準。", url: "https://www.youtube.com/watch?v=sVcwVQRHIc8" },
+      { week: 6, topic: "AI / RAG", platform: "Bilibili", title: "3 小時從零構建專屬 AI 智能助理", author: "賽博門外憨", note: "32 集・2:50:08｜只挑 RAG、向量儲存、引用與 guardrails 章節；商用 API 實作可能產生費用。", url: "https://www.bilibili.com/video/BV1DSsdzXE5h/" }
     ];
 
     const trackLabels = {
-      backend: "Python 後端",
-      data: "資料工程",
-      sdet: "SDET / QA Automation",
-      ai: "AI 應用"
+      ai: "AI 應用與資料整合",
+      data: "資料整合／資料工程",
+      backend: "Python 後端整合",
+      sdet: "測試自動化（次要）"
     };
 
     const trackFocuses = {
       backend: [
-        "把清洗邏輯拆成可注入、可測試的 service。",
-        "補一個交易失敗案例，說明 rollback 與一致性。",
-        "完成 Alembic migration、基本驗證／權限與 API error contract。",
-        "為 authentication、transaction 與 endpoint 補整合測試。",
-        "用 Compose 啟動 API + DB，CI 執行 migration 與測試。",
-        "練一題 API 系統設計：分頁、快取、交易與擴充邊界。",
-        "把 RAG 包成有 timeout、schema 與 fallback 的後端 endpoint。",
-        "完成後端角色模擬與一份可執行 README。"
+        "把文件／工單清理拆成可注入、可測試的 service。",
+        "為 ingestion 的 transaction、rollback 與 idempotency 補證據。",
+        "完成 Copilot API contract、Alembic migration 與錯誤處理。",
+        "以 Docker／Linux log 證明 API + DB 能在乾淨環境啟動。",
+        "把 pgvector retrieval 包成有 timeout、limit 與 metadata filter 的 service。",
+        "讓 citation／refusal schema 在 API 錯誤時安全降級。",
+        "把 tool allowlist、retry 與 HITL 放在明確 service 邊界。",
+        "完成 Python 後端整合模擬，主作品仍是同一個 Copilot。"
       ],
       data: [
-        "為輸入資料定義欄位、型別、缺值與拒收規則。",
-        "完成可重跑 ETL、reconciliation 與來源／成功／拒收筆數。",
-        "讓 API 只讀取已驗證資料層，說明批次與服務的邊界。",
-        "為資料品質、重跑與部分失敗建立自動化測試。",
-        "做一個 Airflow DAG 選修：retry、依賴、backfill 與失敗告警。",
-        "白板解釋 pipeline 的去重、checkpoint 與 late data。",
-        "把 RAG ingest 視為資料管線，保存版本、來源與評估結果。",
-        "完成資料工程角色模擬與可重跑 pipeline 證據。"
+        "為設備文件與工單定義欄位、型別、缺值、去識別化與拒收規則。",
+        "完成可重跑 ETL、reconciliation 與來源／成功／拒收／重複筆數。",
+        "讓 API 只讀取已驗證資料層，說明 batch 與 serving 邊界。",
+        "在 Compose／CI 中驗證 migration、seed、retry 與資料版本。",
+        "把 chunk／embedding 視為有版本的資料管線，保存 lineage。",
+        "以固定查詢集驗證 retrieval、metadata filter 與 rerank。",
+        "讓工具只讀已驗證資料，所有寫入交給 HITL 流程。",
+        "完成資料整合角色模擬與可重跑 pipeline 證據。"
       ],
       sdet: [
-        "用等價類與邊界值補齊資料清洗測試矩陣。",
-        "以 SQL 建立測試 oracle，核對 API 與資料庫結果。",
-        "建立 API contract、錯誤碼與重複提交測試。",
-        "Newman 跑 API collection；Playwright 測勾選、重載與 JSON 匯出，保留 trace 並連跑 10 次。",
-        "CI 產生測試報告，辨識產品、測試程式與環境造成的 flaky test。",
-        "練一題測試自動化 coding，邊寫邊說明案例與 oracle。",
-        "為 LLM 輸出寫 schema、引用與惡意提示的評估測試。",
-        "完成 SDET 角色模擬與可重現 bug report。"
+        "以 pytest 驗證資料清理、拒收規則與敏感欄位遮蔽。",
+        "用 SQL oracle 核對 ingestion 與 API 結果。",
+        "以 Postman／pytest 覆蓋 API contract、錯誤碼與重複提交。",
+        "在 CI 保存 Copilot API smoke、失敗 log 與 regression test。",
+        "為 chunk、embedding batch 與 pgvector filter 建資料品質案例。",
+        "把 50 題 AI eval 做成可重跑測試並分類 failure。",
+        "測試工具越權、timeout、retry、重複寫入與 HITL 拒絕。",
+        "只把測試自動化當相鄰方向，不另做人工 QA／SDET 作品。"
       ],
       ai: [
-        "用 structured output 將一段文字轉成固定 schema，處理解析失敗。",
-        "把 PostgreSQL 當 metadata store，保存文件版本與檢索欄位。",
-        "以 FastAPI 暴露 RAG endpoint，處理 timeout、rate limit 與 fallback。",
-        "把 10 題 golden set 做成可重跑 pytest。",
-        "容器化 RAG API，從環境變數載入金鑰並記錄成本／延遲。",
-        "維持演算法基礎，另練一題檢索或 top-k 的取捨說明。",
-        "完成引用、無答案、prompt injection 與 tool allowlist 評估。",
-        "完成 AI 應用角色模擬與評估報告。"
+        "把文件／工單清理成可驗證 schema，為後續 RAG 保留來源與版本。",
+        "以 PostgreSQL 保存設備、文件、工單、ingest run 與稽核欄位。",
+        "用 FastAPI 暴露設備查詢與工單草稿 API，處理 schema 與錯誤狀態。",
+        "用 Git／Linux／Docker 交付可重現的 Copilot 基礎服務。",
+        "以 pgvector 完成有 metadata、版本與 retrieval 測試的索引。",
+        "完成有引用、會拒答、可重跑 50 題 eval 的 RAG API。",
+        "只用 LangGraph 建立 tool allowlist、retry、HITL 與 audit log。",
+        "完成 AI 應用與資料整合模擬、三分鐘 demo 與評估報告。"
       ]
     };
 
@@ -2049,30 +2222,30 @@
       ["python-baseline-clean", "python-functions-types", "python-errors-logging", "pandas-cleaning", "api-client-resilience", "python-week-check"],
       ["db-schema", "sql-join-aggregate", "sql-window", "etl-idempotency", "sql-explain", "sql-week-check"],
       ["fastapi-scaffold", "api-list-page", "api-create-validate", "sqlalchemy-alembic", "api-logging-config", "api-summary-check"],
-      ["test-strategy", "pytest-fixtures", "mock-failures", "api-test-db", "newman-flow", "debug-regression"],
-      ["linux-logs", "git-branch-conflict", "dockerfile-api", "compose-api-db", "github-actions-pytest", "clean-clone-check"],
-      ["algo-hashmap", "algo-pointers-window", "algo-stack-queue-search", "algo-tree-bfs-dfs", "algo-heap-topk", "coding-round"],
-      ["llm-structured", "embedding-search", "rag-minimum", "agent-boundary", "rag-evaluation", "rag-explain"],
-      ["portfolio-readme", "project-pitches", "python-sql-mock", "track-mock", "takehome", "applications-review"]
+      ["v4-git-workflow", "v4-linux-diagnostics", "v4-dockerfile", "v4-compose-api-db", "v4-ci-pipeline", "v4-clean-rebuild"],
+      ["v4-ingest-contract", "v4-chunk-metadata", "v4-embedding-batch", "v4-pgvector-schema", "v4-retrieval-debug", "v4-ingest-rebuild"],
+      ["v4-llm-schema", "v4-citation-contract", "v4-refusal", "v4-eval-set", "v4-ai-metrics", "v4-eval-run"],
+      ["v4-langgraph-flow", "v4-tool-schema", "v4-agent-retry", "v4-hitl", "v4-agent-audit", "v4-agent-failure-drill"],
+      ["v4-release-eval", "v4-readme-architecture", "v4-demo", "v4-ai-mock", "v4-takehome", "v4-applications"]
     ];
 
     const gateKeysByWeek = [
       ["python-rebuild", "python-structures", "python-debug"],
       ["sql-write", "sql-grain", "sql-plan"],
       ["api-status", "api-separation", "api-errors"],
-      ["test-case-design", "test-isolation", "test-debug"],
-      ["devops-shell", "devops-container", "devops-ci"],
-      ["algo-complexity", "algo-pattern", "algo-communication"],
-      ["rag-flow", "rag-evidence", "rag-safety"],
-      ["portfolio-explain", "portfolio-bug", "portfolio-no-ai"]
+      ["v4-delivery-git", "v4-delivery-diagnostics", "v4-delivery-reproduce"],
+      ["v4-rag-components", "v4-rag-idempotency", "v4-rag-retrieval"],
+      ["v4-rag-citation", "v4-rag-refusal", "v4-rag-evaluation"],
+      ["v4-agent-boundary", "v4-agent-hitl", "v4-agent-side-effects"],
+      ["v4-demo-flow", "v4-failure-story", "v4-no-ai-ownership"]
     ];
 
     const assessments = [
       { id: "python", title: "Python 資料處理｜15 分鐘", detail: "不用 AI：清理一份髒 CSV，完成型別、缺值、摘要與邊界案例。", max: 20, rubric: "正確輸出 8｜邊界 4｜測試 4｜說明 4" },
       { id: "sql", title: "SQL 查詢｜15 分鐘", detail: "不用 AI：寫 JOIN + GROUP BY 與 ROW_NUMBER 最新一筆，並說明如何對帳。", max: 20, rubric: "查詢正確 8｜粒度／邊界 4｜驗證 4｜說明 4" },
-      { id: "debug", title: "Debug 與測試｜20 分鐘", detail: "取得一個失敗案例，完成最小重現、定位、修正與 regression test。", max: 20, rubric: "重現 4｜定位 6｜測試 6｜說明 4" },
-      { id: "explain", title: "專案說明｜10 分鐘", detail: "用五分鐘講資料流，再回答最大 bug、設計取捨與驗證證據。", max: 10, rubric: "結構 3｜證據 3｜取捨 2｜追問 2" },
-      { id: "track", title: "主線挑戰｜30 分鐘", detail: "依你選擇的職涯主線完成一個角色題。", max: 30, rubric: "核心結果 12｜邊界 6｜測試證據 6｜口頭說明 6" }
+      { id: "debug", title: "可靠性與測試｜20 分鐘", detail: "取得一個 API、RAG 或 Agent 失敗案例，完成最小重現、log 定位、修正與 regression test。", max: 20, rubric: "重現 4｜定位 6｜測試 6｜說明 4" },
+      { id: "explain", title: "Copilot 說明｜10 分鐘", detail: "用五分鐘講 ingestion→retrieval→引用／拒答→工單草稿→HITL→評測，再回答取捨。", max: 10, rubric: "結構 3｜證據 3｜取捨 2｜追問 2" },
+      { id: "track", title: "角色挑戰｜30 分鐘", detail: "以同一個 Copilot 完成所選相鄰職涯方向的角色題。", max: 30, rubric: "核心結果 12｜邊界 6｜測試證據 6｜口頭說明 6" }
     ];
 
     const assessmentRounds = {
@@ -2086,7 +2259,7 @@
 
     const storageKey = "rongCareerRoadmapV1";
     const backupKey = `${storageKey}LastBackup`;
-    const stateVersion = 3;
+    const stateVersion = 4;
     const maxImportBytes = 1024 * 1024;
     const maxNoteLength = 8000;
     const maxShortTextLength = 240;
@@ -2114,7 +2287,7 @@
     const algorithmSlotsById = Object.fromEntries(algorithmSlots.map(slot => [slot.id, slot]));
 
     function createAssessmentRecord() {
-      return { date: "", evaluator: "", evidenceUrl: "", scores: {}, savedAt: "" };
+      return { date: "", evaluator: "", evidenceUrl: "", scores: {}, reviewedScoreIds: [], savedAt: "", contentVersion: stateVersion, needsRevalidation: false };
     }
 
     function createAssessmentRecords() {
@@ -2130,7 +2303,7 @@
         view: "plan",
         week: 1,
         startDate: todayIso(),
-        track: "backend",
+        track: "ai",
         tasks: {},
         gates: {},
         trackEvidence: {},
@@ -2181,7 +2354,7 @@
       return value;
     }
 
-    function normalizeProgressGroup(candidate, group) {
+    function normalizeProgressGroup(candidate, group, sourceVersion = stateVersion) {
       const normalized = {};
       const source = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate : {};
       weeks.forEach((week, weekIndex) => {
@@ -2189,13 +2362,14 @@
         items.forEach((_, index) => {
           const currentId = group === "tasks" ? taskId(week.number, index) : gateId(week.number, index);
           const legacyId = `w${week.number}-${group === "tasks" ? "t" : "g"}${index}`;
-          if (source[currentId] === true || source[legacyId] === true) normalized[currentId] = true;
+          const legacyStillMatches = sourceVersion < stateVersion && week.number <= 3 && source[legacyId] === true;
+          if (source[currentId] === true || legacyStillMatches) normalized[currentId] = true;
         });
       });
       return normalized;
     }
 
-    function normalizeTrackEvidence(candidate) {
+    function normalizeTrackEvidence(candidate, sourceVersion = stateVersion) {
       const normalized = {};
       const source = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate : {};
       Object.keys(trackLabels).forEach(track => {
@@ -2203,9 +2377,12 @@
         weeks.forEach(weekItem => {
           const weekId = `w${weekItem.number}`;
           const sourceRecord = sourceTrack[weekId] && typeof sourceTrack[weekId] === "object" && !Array.isArray(sourceTrack[weekId]) ? sourceTrack[weekId] : {};
+          const hasLegacyEvidence = sourceVersion < stateVersion && weekItem.number >= 4 && (sourceRecord.done === true || sourceRecord.evidenceUrl);
           const record = {
-            done: sourceRecord.done === true,
-            evidenceUrl: normalizeHttpsUrl(sourceRecord.evidenceUrl)
+            done: sourceRecord.done === true && !hasLegacyEvidence,
+            evidenceUrl: normalizeHttpsUrl(sourceRecord.evidenceUrl),
+            contentVersion: hasLegacyEvidence ? sourceVersion : stateVersion,
+            needsRevalidation: Boolean(hasLegacyEvidence)
           };
           if (record.done || record.evidenceUrl) {
             if (!normalized[track]) normalized[track] = {};
@@ -2253,32 +2430,46 @@
       return normalized;
     }
 
-    function normalizeAssessmentRecord(candidate, roundId) {
+    function normalizeReviewedScoreIds(candidate, roundId, scores = {}) {
+      const reviewed = new Set(Array.isArray(candidate) ? candidate.filter(id => typeof id === "string") : []);
+      return assessmentRounds[roundId].itemIds.filter(id => reviewed.has(id) && Object.hasOwn(scores, id));
+    }
+
+    function normalizeAssessmentRecord(candidate, roundId, sourceVersion = stateVersion) {
       const source = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate : {};
+      const hadContent = Boolean(source.date || source.evaluator || source.evidenceUrl || source.savedAt || Object.keys(source.scores || {}).length);
+      const needsRevalidation = source.needsRevalidation === true || (sourceVersion < stateVersion && roundId !== "w2" && hadContent);
+      const scores = normalizeScoreMap(source.scores, roundId);
       const record = {
         date: validIsoDate(source.date) ? source.date : "",
         evaluator: normalizeShortText(source.evaluator, 120),
         evidenceUrl: normalizeHttpsUrl(source.evidenceUrl),
-        scores: normalizeScoreMap(source.scores, roundId),
-        savedAt: normalizeTimestamp(source.savedAt)
+        scores,
+        reviewedScoreIds: sourceVersion >= stateVersion ? normalizeReviewedScoreIds(source.reviewedScoreIds, roundId, scores) : [],
+        savedAt: needsRevalidation ? "" : normalizeTimestamp(source.savedAt),
+        contentVersion: needsRevalidation ? sourceVersion : stateVersion,
+        needsRevalidation
       };
       if (record.savedAt && !assessmentRecordReady(record, roundId)) record.savedAt = "";
       return record;
     }
 
-    function normalizeAssessmentRecords(candidate, legacyScores, legacyTrack) {
+    function normalizeAssessmentRecords(candidate, legacyScores, legacyTrack, sourceVersion = stateVersion) {
       const normalized = createAssessmentRecords();
       const source = candidate && typeof candidate === "object" && !Array.isArray(candidate) ? candidate : {};
       Object.keys(trackLabels).forEach(track => {
         const sourceTrack = source[track] && typeof source[track] === "object" && !Array.isArray(source[track]) ? source[track] : {};
         assessmentRoundIds.forEach(roundId => {
-          normalized[track][roundId] = normalizeAssessmentRecord(sourceTrack[roundId], roundId);
+          normalized[track][roundId] = normalizeAssessmentRecord(sourceTrack[roundId], roundId, sourceVersion);
         });
       });
 
       const legacy = legacyScores && typeof legacyScores === "object" && !Array.isArray(legacyScores) ? legacyScores : null;
       if (legacy && Object.keys(legacy).length) {
         normalized[legacyTrack].w8.scores = normalizeScoreMap(legacy, "w8");
+        normalized[legacyTrack].w8.reviewedScoreIds = [];
+        normalized[legacyTrack].w8.needsRevalidation = true;
+        normalized[legacyTrack].w8.contentVersion = sourceVersion;
       }
       return normalized;
     }
@@ -2289,14 +2480,15 @@
       const allowedViews = ["plan", "videos", "verify"];
       const allowedFilters = ["全部", "YouTube", "Bilibili", ...new Set(videos.map(video => video.topic))];
       const week = Number(source.week);
+      const sourceVersion = Number.isInteger(Number(source.schemaVersion)) ? Number(source.schemaVersion) : 1;
 
       normalized.view = allowedViews.includes(source.view) ? source.view : "plan";
       normalized.week = Number.isInteger(week) && week >= 1 && week <= weeks.length ? week : 1;
       normalized.startDate = validIsoDate(source.startDate) ? source.startDate : todayIso();
-      normalized.track = Object.hasOwn(trackLabels, source.track) ? source.track : "backend";
-      normalized.tasks = normalizeProgressGroup(source.tasks, "tasks");
-      normalized.gates = normalizeProgressGroup(source.gates, "gates");
-      normalized.trackEvidence = normalizeTrackEvidence(source.trackEvidence);
+      normalized.track = sourceVersion >= stateVersion && Object.hasOwn(trackLabels, source.track) ? source.track : "ai";
+      normalized.tasks = normalizeProgressGroup(source.tasks, "tasks", sourceVersion);
+      normalized.gates = normalizeProgressGroup(source.gates, "gates", sourceVersion);
+      normalized.trackEvidence = normalizeTrackEvidence(source.trackEvidence, sourceVersion);
       normalized.algorithmRecords = normalizeAlgorithmRecords(source.algorithmRecords);
       normalized.videoFilter = allowedFilters.includes(source.videoFilter) ? source.videoFilter : "全部";
 
@@ -2308,7 +2500,7 @@
 
       const hasLegacyScores = source.scores && typeof source.scores === "object" && !Array.isArray(source.scores) && Object.keys(source.scores).length;
       normalized.assessmentRound = assessmentRoundIds.includes(source.assessmentRound) ? source.assessmentRound : hasLegacyScores ? "w8" : "w2";
-      normalized.assessmentRecords = normalizeAssessmentRecords(source.assessmentRecords, source.scores, normalized.track);
+      normalized.assessmentRecords = normalizeAssessmentRecords(source.assessmentRecords, source.scores, normalized.track, sourceVersion);
 
       const watchedSource = source.watchedVideos && typeof source.watchedVideos === "object" && !Array.isArray(source.watchedVideos) ? source.watchedVideos : {};
       videos.forEach(video => {
@@ -2454,13 +2646,13 @@
     function trackEvidenceRecord(track, weekNumber, create = false) {
       const weekId = `w${weekNumber}`;
       if (!state.trackEvidence[track] && create) state.trackEvidence[track] = {};
-      if (create && !state.trackEvidence[track][weekId]) state.trackEvidence[track][weekId] = { done: false, evidenceUrl: "" };
-      return state.trackEvidence[track]?.[weekId] || { done: false, evidenceUrl: "" };
+      if (create && !state.trackEvidence[track][weekId]) state.trackEvidence[track][weekId] = { done: false, evidenceUrl: "", contentVersion: stateVersion, needsRevalidation: false };
+      return state.trackEvidence[track]?.[weekId] || { done: false, evidenceUrl: "", contentVersion: stateVersion, needsRevalidation: false };
     }
 
     function trackEvidenceComplete(track, weekNumber) {
       const record = trackEvidenceRecord(track, weekNumber);
-      return record.done === true && Boolean(normalizeHttpsUrl(record.evidenceUrl));
+      return record.needsRevalidation !== true && record.contentVersion === stateVersion && record.done === true && Boolean(normalizeHttpsUrl(record.evidenceUrl));
     }
 
     function defaultAlgorithmRecord(slot) {
@@ -2511,8 +2703,18 @@
       return assessments.filter(item => allowed.has(item.id));
     }
 
+    function assessmentReviewProgress(record, roundId = state.assessmentRound) {
+      const requiredIds = assessmentRounds[roundId].itemIds;
+      const reviewedIds = normalizeReviewedScoreIds(record?.reviewedScoreIds, roundId, record?.scores);
+      return {
+        requiredIds,
+        reviewedIds,
+        complete: requiredIds.every(id => reviewedIds.includes(id))
+      };
+    }
+
     function assessmentRecordReady(record, roundId) {
-      if (!record || !validIsoDate(record.date) || !normalizeShortText(record.evaluator, 120) || !normalizeHttpsUrl(record.evidenceUrl)) return false;
+      if (!record || record.needsRevalidation === true || record.contentVersion !== stateVersion || !validIsoDate(record.date) || !normalizeShortText(record.evaluator, 120) || !normalizeHttpsUrl(record.evidenceUrl)) return false;
       return assessmentRounds[roundId].itemIds.every(id => Object.hasOwn(record.scores || {}, id));
     }
 
@@ -2660,7 +2862,7 @@
             <section class="evidence-block" data-progress-id="${trackResultId(state.track, week.number)}" aria-labelledby="trackEvidenceTitle">
               <div class="evidence-heading">
                 <div><h3 id="trackEvidenceTitle">本週主線成果｜${trackLabels[state.track]}</h3><p>${trackFocuses[state.track][week.number - 1]}</p></div>
-                <span class="evidence-status ${trackComplete ? "complete" : ""}" id="trackEvidenceStatus">${trackComplete ? "成果與證據完整" : trackRecord.done ? "已勾選，仍缺有效證據" : "尚未完成"}</span>
+                <span class="evidence-status ${trackComplete ? "complete" : ""}" id="trackEvidenceStatus">${trackComplete ? "成果與證據完整" : trackRecord.needsRevalidation ? "舊版證據待重新確認" : trackRecord.done ? "已勾選，仍缺有效證據" : "尚未完成"}</span>
               </div>
               <div class="track-evidence-grid">
                 <label class="evidence-check" for="trackEvidenceDone"><input id="trackEvidenceDone" type="checkbox" data-track-evidence-done ${trackRecord.done ? "checked" : ""}>我已完成這週主線成果</label>
@@ -2754,7 +2956,7 @@
       const trackStatus = document.getElementById("trackEvidenceStatus");
       if (trackStatus) {
         trackStatus.classList.toggle("complete", trackComplete);
-        trackStatus.textContent = trackComplete ? "成果與證據完整" : trackRecord.done ? "已勾選，仍缺有效證據" : "尚未完成";
+        trackStatus.textContent = trackComplete ? "成果與證據完整" : trackRecord.needsRevalidation ? "舊版證據待重新確認" : trackRecord.done ? "已勾選，仍缺有效證據" : "尚未完成";
       }
 
       const slots = algorithmSlotsForWeek(state.week);
@@ -2865,10 +3067,10 @@
 
     function trackAssessmentDetail() {
       const details = {
-        backend: "新增 endpoint，完成驗證、交易、錯誤處理與測試。",
-        data: "完成可重跑 load、拒收資料處理與 reconciliation。",
-        sdet: "列 8 個案例，自動化 2 個且包含失敗案例。",
-        ai: "跑 5 題評估，修正 schema、引用或無答案處理失敗。"
+        ai: "跑固定 50 題評估，解釋引用、拒答、HITL、延遲與失敗分類。",
+        data: "完成可重跑 ingestion、拒收、版本與 reconciliation。",
+        backend: "新增 Copilot endpoint，完成驗證、交易、錯誤處理與測試。",
+        sdet: "以 Copilot 的 API／AI failure 建案例與回歸測試，不另做人工 QA 題。"
       };
       return `${trackLabels[state.track]}：${details[state.track]}`;
     }
@@ -2877,14 +3079,20 @@
       const round = assessmentRounds[state.assessmentRound];
       const record = currentAssessmentRecord();
       const items = assessmentItemsForRound();
+      const review = assessmentReviewProgress(record);
       const total = items.reduce((sum, item) => sum + Math.min(item.max, Math.max(0, Number(record.scores[item.id]) || 0)), 0);
       const allAnswered = items.every(item => Object.hasOwn(record.scores, item.id));
       const hasZero = items.some(item => Number(record.scores[item.id]) === 0);
       const totalEl = document.getElementById("scoreTotal");
       const titleEl = document.getElementById("scoreTitle");
       const noteEl = document.getElementById("scoreNote");
-      totalEl.textContent = total;
-      if (round.baseline) {
+      totalEl.textContent = record.needsRevalidation && !review.complete ? "—" : total;
+      if (record.needsRevalidation) {
+        titleEl.textContent = review.complete ? "重新驗收已完成，等待保存" : "舊版草稿待重新驗收";
+        noteEl.textContent = review.complete
+          ? `五項已逐項重新輸入；確認日期、評分者與證據後保存，才會套用新版及格判定。`
+          : `舊分數只供參考，不套用及格判定；請逐項重新輸入，目前已確認 ${review.reviewedIds.length}/${review.requiredIds.length}。`;
+      } else if (round.baseline) {
         titleEl.textContent = allAnswered ? "基準已填完" : "等待基準作答";
         noteEl.textContent = allAnswered
           ? "這份 40 分基準不判定及格。保留證據後，W4 再用完整驗收比較進步幅度。"
@@ -2910,6 +3118,11 @@
       status.classList.toggle("saved", Boolean(record.savedAt) && !message);
       if (message) {
         status.textContent = message;
+      } else if (record.needsRevalidation) {
+        const review = assessmentReviewProgress(record);
+        status.textContent = review.complete
+          ? `舊版分數已逐項重新確認；已確認 ${review.reviewedIds.length}/${review.requiredIds.length} 項，請確認日期、評分者與證據後保存。`
+          : `舊版分數與證據已保留為草稿；已確認 ${review.reviewedIds.length}/${review.requiredIds.length} 項，請依 v4 Copilot 題目逐項重新輸入後再保存。`;
       } else if (record.savedAt) {
         const saved = new Intl.DateTimeFormat("zh-TW", { dateStyle: "medium", timeStyle: "short" }).format(new Date(record.savedAt));
         status.textContent = `已保存：${saved}｜${trackLabels[state.track]}・${assessmentRounds[state.assessmentRound].label}`;
@@ -2929,6 +3142,13 @@
       const record = currentAssessmentRecord();
       const roundId = state.assessmentRound;
       const evidenceUrl = normalizeHttpsUrl(record.evidenceUrl);
+      const review = assessmentReviewProgress(record, roundId);
+      if (record.needsRevalidation && !review.complete) {
+        const firstMissing = review.requiredIds.find(id => !review.reviewedIds.includes(id));
+        document.querySelector(`[data-score-id="${firstMissing}"]`)?.focus();
+        updateAssessmentRecordStatus(`尚未保存：舊版分數需逐項重新輸入，目前已確認 ${review.reviewedIds.length}/${review.requiredIds.length}。`);
+        return;
+      }
       if (!validIsoDate(record.date)) {
         document.getElementById("assessmentDate").focus();
         updateAssessmentRecordStatus("尚未保存：請填驗收日期。");
@@ -2951,6 +3171,9 @@
       }
       record.evaluator = normalizeShortText(record.evaluator, 120);
       record.evidenceUrl = evidenceUrl;
+      record.reviewedScoreIds = assessmentRounds[roundId].itemIds.slice();
+      record.contentVersion = stateVersion;
+      record.needsRevalidation = false;
       record.savedAt = new Date().toISOString();
       saveState();
       renderAssessments();
@@ -3087,6 +3310,8 @@
       if (event.target.matches("[data-track-evidence-done]")) {
         const record = trackEvidenceRecord(state.track, state.week, true);
         record.done = event.target.checked;
+        record.contentVersion = stateVersion;
+        record.needsRevalidation = false;
         saveState();
         refreshEvidenceProgress();
       }
@@ -3140,6 +3365,7 @@
       if (event.target.matches("[data-track-evidence-url]")) {
         const record = trackEvidenceRecord(state.track, state.week, true);
         record.evidenceUrl = event.target.value.slice(0, maxUrlLength);
+        record.contentVersion = stateVersion;
         validateHttpsInput(event.target);
         scheduleSave();
         refreshEvidenceProgress();
@@ -3165,8 +3391,15 @@
       if (event.target.matches("[data-score-id]")) {
         const item = assessments.find(entry => entry.id === event.target.dataset.scoreId);
         const record = currentAssessmentRecord();
-        if (!event.target.value.trim()) delete record.scores[item.id];
-        else if (Number.isFinite(event.target.valueAsNumber)) record.scores[item.id] = Math.min(item.max, Math.max(0, Math.round(event.target.valueAsNumber)));
+        const reviewed = new Set(normalizeReviewedScoreIds(record.reviewedScoreIds, state.assessmentRound, record.scores));
+        if (!event.target.value.trim()) {
+          delete record.scores[item.id];
+          reviewed.delete(item.id);
+        } else if (Number.isFinite(event.target.valueAsNumber)) {
+          record.scores[item.id] = Math.min(item.max, Math.max(0, Math.round(event.target.valueAsNumber)));
+          reviewed.add(item.id);
+        }
+        record.reviewedScoreIds = assessmentRounds[state.assessmentRound].itemIds.filter(id => reviewed.has(id));
         markAssessmentDraft(record);
         saveState();
         updateScore();

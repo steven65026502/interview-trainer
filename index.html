@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Rong 的工程求職學習與模擬面試工作台，包含資料工程專項、四條職涯主線、作答回饋與進度同步。">
+  <meta name="description" content="Rong 的 AI 應用與資料整合工程師學習與面試工作台，以 Python、SQL、API、資料工程為底，完成企業 IT／設備維運知識與工單 Copilot。">
   <link rel="icon" href="data:,">
-  <title>Rong 工程求職學習與面試工作台</title>
+  <title>Rong AI 應用與資料整合求職工作台</title>
   <style>
     :root {
       --bg: #f5f7f8;
@@ -1795,8 +1795,8 @@
   <div class="shell">
     <header>
       <div class="title">
-        <h1>Rong 工程求職學習與面試工作台</h1>
-        <p>以資料工程專項打底，再依後端、資料、SDET 或 AI 應用主線練角色題。</p>
+        <h1>AI 應用與資料整合工程師</h1>
+        <p><strong>作品狀態：規劃中。</strong> 用 Python、SQL、API 與資料工程打底，逐週做出可引用、會拒答、可評測且能安全呼叫工具的企業維運 Copilot。</p>
       </div>
       <div class="actions">
         <a class="btn" href="roadmap.html">8 週學習表</a>
@@ -1810,9 +1810,9 @@
       <section class="panel interview-panel">
         <section class="learning-page" id="learningPage">
           <div class="learning-head">
-            <span id="learningMeta">第 1 天 / 28 天循環</span>
+            <span id="learningMeta">第 1 天 / 28 天面試練習</span>
             <h2>今日學習</h2>
-            <p id="learningIntro">先完成一個主資源與文字檢核，再用實戰挑戰證明技術要點；兩關都通過才解鎖下一天。</p>
+            <p id="learningIntro">這是搭配 8 週實作表的每日面試練習，不取代正式週次；先完成一個主資源與文字檢核，再用實戰挑戰證明技術要點。</p>
             <div><a class="btn primary" href="#currentLesson">直接開始今天</a></div>
           </div>
 
@@ -1821,7 +1821,7 @@
             <ol class="learning-steps">
             <li class="learning-step">
               <strong>1. 讀概念</strong>
-              <span>先知道今天的詞在資料工作裡解決什麼問題。</span>
+              <span>先知道今天的能力在 AI 應用與資料整合裡解決什麼問題。</span>
             </li>
             <li class="learning-step">
               <strong>2. 看資源</strong>
@@ -1829,7 +1829,7 @@
             </li>
             <li class="learning-step">
               <strong>3. 連專案</strong>
-              <span>把概念對到 S-111、PostgreSQL、API 或 QGIS。</span>
+              <span>把概念對到企業 IT／設備維運知識與工單 Copilot。</span>
             </li>
             <li class="learning-step">
               <strong>4. 自我驗收</strong>
@@ -1868,7 +1868,7 @@
                 <label for="lessonReflectionInput"><strong>學習檢核：60 分以上進入實戰挑戰</strong></label>
                 <span>先用自己的話寫 3-5 句，再完成本課挑戰；只有技術要點通過，才會解鎖下一天。</span>
               </div>
-              <textarea id="lessonReflectionInput" maxlength="8000" spellcheck="false" placeholder="例如：我理解 ETL 不是只有轉檔，而是... 在 S-111 裡... 我會檢查..."></textarea>
+              <textarea id="lessonReflectionInput" maxlength="8000" spellcheck="false" placeholder="例如：我理解 RAG 不只是呼叫模型，而是... 在維運 Copilot 裡... 我會檢查..."></textarea>
               <div class="readiness-result" id="lessonReadinessResult" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
                 <strong>尚未檢核</strong>
                 <span>寫完後先做文字檢核；達到 60 分後還要完成本課挑戰。</span>
@@ -1903,12 +1903,12 @@
         <div class="panel-head">
           <h2 id="questionPanelTitle">模擬面試題</h2>
           <div class="question-head-tools">
-            <label class="track-control">角色主線
+            <label class="track-control">模擬題型
               <select id="interviewTrackSelect">
                 <option value="backend">Python 後端</option>
-                <option value="data" selected>資料工程</option>
-                <option value="sdet">SDET</option>
-                <option value="ai">AI 應用</option>
+                <option value="data">資料工程</option>
+                <option value="sdet">測試自動化（次要）</option>
+                <option value="ai" selected>AI 應用與資料整合（主線）</option>
               </select>
             </label>
             <span id="questionCount">第 1 題</span>
@@ -1931,7 +1931,7 @@
           <div class="response-main">
             <div class="answer-box">
               <label for="answerInput">你的回答</label>
-              <textarea id="answerInput" maxlength="8000" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到 S-111 或你做過的資料專案，最後補驗證方式或取捨。"></textarea>
+              <textarea id="answerInput" maxlength="8000" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到企業維運 Copilot，最後補驗證方式或取捨。"></textarea>
               <div class="answer-meta">
                 <span id="wordCount">0 字</span>
                 <span id="saveState">自動儲存</span>
@@ -1951,7 +1951,7 @@
               <button class="btn" id="followupBtn" type="button">面試官追問</button>
               <button class="btn" id="templateBtn" type="button">插入回答結構</button>
             </div>
-            <p class="feedback-disclaimer">這是文字覆蓋與表達結構的啟發式初評，不會執行程式或 SQL，也不能判定技術正確；能力仍以 No-AI 實作、測試與口頭追問為準。</p>
+            <p class="feedback-disclaimer">這是文字覆蓋與表達結構的啟發式評分，不是標準答案，也不會執行程式、SQL 或模型評測，因此不能判定技術正確；下方內容只提供「改寫骨架」，能力仍以 No-AI 實作、pytest／整合測試與口頭追問為準。</p>
           </div>
 
           <div class="interviewer-lens" id="interviewerLens"></div>
@@ -1983,7 +1983,7 @@
             </div>
 
             <div class="feedback-block" id="modelAnswerBlock">
-              <h4>回饋後改寫骨架</h4>
+              <h4>回饋後改寫骨架（非標準答案）</h4>
               <div class="model-answer" id="modelAnswer"></div>
             </div>
           </div>
@@ -2176,7 +2176,8 @@
       python: "Python",
       pipeline: "Pipeline",
       api: "API/DB",
-      testing: "SDET／測試",
+      devops: "Git/Linux/Docker",
+      testing: "測試自動化（次要）",
       ai: "AI 應用",
       story: "專案表達"
     };
@@ -2216,7 +2217,15 @@
         items: [
           ["題目前先問", "誰會用這個 API、需要哪些篩選條件、資料量多大？"],
           ["作答時說", "我會先定義 endpoint、query parameters、response schema。"],
-          ["驗收時補", "limit、bbox、空結果、錯誤訊息、timeout 與文件範例。"]
+          ["驗收時補", "filter、sort、limit、分頁、空結果、錯誤訊息、timeout 與文件範例。"]
+        ]
+      },
+      devops: {
+        focus: "面試官會看你能不能把作品交給別人重現，並從 process、port、env、container 與 CI log 定位失敗。",
+        items: [
+          ["題目前先問", "目標環境、依賴、啟動命令、健康檢查與失敗證據是什麼？"],
+          ["作答時說", "我會用小步 Git 變更、Dockerfile、Compose 與環境變數固定交付邊界。"],
+          ["驗收時補", "乾淨 clone、migration、healthcheck、pytest 與一個可重現的故障排查紀錄。"]
         ]
       },
       testing: {
@@ -2295,7 +2304,7 @@
       {
         domain: "python",
         title: "如果給你一份髒資料，你會如何用 Python 清洗並保證輸出穩定？",
-        hint: "請說明輸入檢查、欄位轉換、錯誤處理、測試資料與可維護性。",
+        hint: "請說明輸入檢查、欄位轉換、錯誤處理、pytest 測試資料與可維護性。",
         guide: [
           ["定義輸入", "先確認欄位、型別、缺失值。"],
           ["拆成函式", "清洗、驗證、輸出分開。"],
@@ -2308,7 +2317,7 @@
           ["例外處理", /例外|錯誤|try|except|異常|防呆/i],
           ["測試或驗證", /測試|驗證|sample|小樣本|assert|檢查/i]
         ],
-        skeleton: "我會先定義輸入資料應該有哪些欄位與型別，再把清洗流程拆成讀取、欄位標準化、異常值處理、輸出驗證幾個函式。對空值、格式錯誤或超出範圍的資料，我會先記錄 log，不讓整批流程無聲失敗。最後用小樣本和 assert 檢查輸出欄位與筆數是否符合預期。",
+        skeleton: "我會先定義設備手冊與工單輸入應有的欄位、型別、編碼與敏感資料規則，再把清洗流程拆成讀取、標準化、去敏、去重與輸出驗證等可測函式。對空值、格式錯誤或不支援檔案，我會分成可拒收與可降級情況並記錄 log，不讓整批流程無聲失敗。最後用 pytest fixture 覆蓋正常、空檔、錯編碼、重複工單與敏感欄位，檢查 schema、筆數與輸出 determinism。",
         followups: [
           "如果資料有 5% 欄位缺失，你會刪除、補值，還是標記？",
           "你會怎麼讓清洗腳本之後容易被別人接手？",
@@ -2317,8 +2326,8 @@
       },
       {
         domain: "python",
-        title: "你如何向面試官說明一段 Python 解法的時間與空間複雜度？",
-        hint: "請用具體例子說明，不需要競賽等級，但要能指出瓶頸。",
+        title: "你如何用一題基礎 LeetCode 說明 Python 解法的時間與空間複雜度？",
+        hint: "請用 Array／Hash Map 類 Easy 題說明；不需要競賽等級，但要能指出瓶頸。",
         guide: [
           ["說資料量", "先定義 n 代表什麼。"],
           ["說主要迴圈", "找出最耗時的部分。"],
@@ -2331,7 +2340,7 @@
           ["空間複雜度", /空間|記憶體|dict|list|set|額外/i],
           ["瓶頸或優化", /瓶頸|優化|hash|索引|快取|改善/i]
         ],
-        skeleton: "我會先定義 n 是輸入資料筆數，再找出程式中主要迴圈或巢狀迴圈。如果只掃過資料一次，時間大約是 O(n)；如果建立 dict 做查找，空間會多 O(n)。我會說明瓶頸在哪裡，例如重複查找或巢狀比對，並提出用 hash map、索引或預先分組降低成本。",
+        skeleton: "我會用 Two Sum 這類基礎 LeetCode 題說明：先定義 n 是陣列長度。雙層掃描是 O(n²) 時間、O(1) 額外空間；改用 dict 記錄看過的值後，只掃一次，時間變 O(n)，但多用 O(n) 空間。我會說清楚這是用記憶體換速度，也能連回工單或知識 chunk 去重時以 hash map 避免重複查找。",
         followups: [
           "如果你的解法有兩層迴圈，什麼情況下可以改成 O(n)？",
           "你會怎麼在口頭回答中避免把 Big O 講得太抽象？",
@@ -2340,25 +2349,25 @@
       },
       {
         domain: "pipeline",
-        title: "請把 S-111 資料從原始檔到 API 的流程講成一條 ETL 管線。",
-        hint: "請包含 NC/H5/S-111 來源、verification pipeline、成果包、資料庫、API/QGIS 與驗證。",
+        title: "請把維運知識與工單從來源到 RAG API 講成一條資料管線。",
+        hint: "請包含文件／工單來源、清洗與去敏、chunk、embedding、pgvector、檢索 API 與驗證。",
         guide: [
-          ["Extract", "NC / H5 / S-111 來源與日期、lead_hours。"],
-          ["Transform", "summary、official hotspot、metric hotspot、spatial stats。"],
-          ["Load", "daily_results 成果包與 PostgreSQL 表格。"],
-          ["Validate", "manifest、筆數、門檻、API / QGIS 回傳。"]
+          ["Extract", "設備手冊、SOP、知識庫與歷史工單。"],
+          ["Transform", "清洗、去敏、切塊並補設備與權限 metadata。"],
+          ["Load", "embedding 與 chunk 寫入 PostgreSQL／pgvector。"],
+          ["Validate", "筆數、權限、檢索命中、引用與拒答案例。"]
         ],
         expected: [
-          ["資料來源", /原始|來源|NetCDF|NC|H5|S-111|檔案|資料/i],
-          ["轉換流程", /verification|pipeline|summary_stats|hotspot_points|spatial_stats|threshold|hotspot|0\.48|official|metric/i],
-          ["成果包與資料庫", /daily_results|成果包|manifest|PostgreSQL|PostGIS|入庫|資料庫|summary_stats|hotspot_points/i],
-          ["API/QGIS 與驗證", /API|Flask|endpoint|驗證|檢查|回傳|GeoJSON|QGIS|筆數|門檻/i]
+          ["知識來源", /手冊|SOP|知識庫|工單|來源|文件|ticket/i],
+          ["轉換與治理", /清洗|去敏|chunk|切塊|metadata|權限|ACL|pipeline/i],
+          ["向量資料庫", /embedding|pgvector|PostgreSQL|vector|入庫|索引/i],
+          ["API 與驗證", /API|FastAPI|retrieve|檢索|引用|citation|拒答|驗證|測試/i]
         ],
-        skeleton: "我會把 S-111 流程拆成 Extract、Transform、Load、Validate。Extract 是掃描 NC / H5 / S-111 類資料，並確認 target_date、target_timestamp 與 lead_hours。Transform 是用 verification_pipeline 計算流速與流向誤差，產生 summary_stats、official hotspot、metric hotspot 與 spatial stats，其中流速 hotspot 用 0.5/1.0 kn，流向 official hotspot 先通過 0.48 kn 真值流速門檻，再用 30/45 deg 分級。Load 不只是入庫，也包含輸出 daily_results 成果包與 manifest；需要交接或前端查詢時再寫入 PostgreSQL/PostGIS，讓 Flask API 依 date、lead_hours、error_type、metric、bbox、threshold 查 hotspot_points。最後用 manifest、筆數、門檻分級、API 回傳與 QGIS 圖層驗證結果可信。",
+        skeleton: "我會把維運 Copilot 的知識流程拆成 Extract、Transform、Load、Validate。Extract 讀取設備手冊、SOP、內部知識庫與歷史工單，保存 source_id、版本與權限。Transform 先清洗、去敏、去重，再依章節與語意切 chunk，補 equipment_id、site、document_version、ACL 等 metadata。Load 產生 embedding，將文字、metadata 與 vector 寫入 PostgreSQL／pgvector。查詢時 FastAPI 先驗證身分與篩選權限，再做向量或混合檢索；模型只能依取回證據回答並附引用，證據不足就拒答。最後用 ingestion 對帳、pytest、檢索評估集、引用正確率與無答案案例驗證。",
         followups: [
-          "如果同一天資料要重跑，你怎麼確保結果不會重複寫入？",
-          "你會把哪些檢查放在 pipeline 最後？",
-          "如果 API 查不到資料，你會怎麼判斷是入庫問題還是查詢條件問題？"
+          "同一份手冊更新後重跑，你怎麼避免重複 chunk？",
+          "文件權限改變時，既有向量要怎麼更新？",
+          "查不到答案時，你如何區分 ingestion、retrieval 與生成問題？"
         ]
       },
       {
@@ -2366,18 +2375,18 @@
         title: "如果批次資料重跑，你會怎麼避免重複寫入或覆蓋錯誤？",
         hint: "請說明 upsert key、idempotency、log、驗證與 rollback 思維。",
         guide: [
-          ["定義唯一鍵", "日期、時間、lead_hours、error_type、座標與 metric。"],
+          ["定義唯一鍵", "source_id、document_version、chunk_hash 或 ticket_id。"],
           ["重跑安全", "同樣輸入產出同樣結果。"],
           ["記錄流程", "log、批次版本、錯誤紀錄。"],
           ["驗證回復", "比對筆數與可 rollback。"]
         ],
         expected: [
-          ["唯一鍵", /key|唯一|upsert|constraint|date|lead_hours|timestamp|error_type|metric|座標/i],
+          ["唯一鍵", /key|唯一|upsert|constraint|source_id|version|chunk|hash|ticket/i],
           ["重跑安全", /idempotent|重跑|覆蓋|重複|同樣結果|安全/i],
           ["log 或版本", /log|版本|batch|紀錄|manifest|錯誤/i],
           ["驗證或回復", /驗證|rollback|restore|比對|檢查|備份/i]
         ],
-        skeleton: "我會先定義資料列的唯一鍵。以 hotspot_points 來說，至少要考慮 target_date、target_timestamp、lead_hours、error_type、位置，以及 metric；official hotspot 對應 metric IS NULL，metric hotspot 則要保留 metric 名稱。重跑時用 upsert 或先刪後寫，而不是盲目 append，讓同一批輸入重跑後結果一致。每次批次會留下 log、版本或 manifest，最後比對筆數、分級與抽樣結果；如果結果異常，能用備份或 dump 回復。",
+        skeleton: "我會先用 source_id、document_version 與 chunk_hash 定義知識 chunk 的唯一性，工單則保留 ticket_id 與 updated_at。重跑時先寫 staging，通過 schema、去敏與權限檢查後才 transaction merge；內容沒變就沿用 embedding，內容變更才重算，刪除或撤權也要同步處理。每批留下 run_id、來源版本、成功／拒收／刪除數與 embedding model 版本，最後對帳 PostgreSQL 筆數與抽樣檢索結果；異常時不發布新索引。",
         followups: [
           "如果 upsert key 設錯，可能會造成什麼後果？",
           "你會怎麼設計批次 log 讓交接者看得懂？",
@@ -2386,54 +2395,54 @@
       },
       {
         domain: "api",
-        title: "請設計一個查詢 threshold hotspot 的 API，並說明參數與回傳欄位。",
-        hint: "請用 /api/threshold-hotspots 這類情境回答，包含前端需要什麼資料。",
+        title: "請設計企業維運 Copilot 的問答 API，並說明輸入、引用與拒答回傳。",
+        hint: "請用 /api/copilot/ask 回答，包含問題、設備範圍、session、引用、拒答與可觀測欄位。",
         guide: [
-          ["定義用途", "查可繪圖的 hotspot rows。"],
-          ["列參數", "date、lead_hours、error_type、metric、threshold、bbox。"],
-          ["列回傳", "lon、lat、value、unit、severity、color、layer。"],
-          ["補限制", "limit、分頁、錯誤訊息。"]
+          ["定義用途", "根據有權限的維運知識回答問題。"],
+          ["列輸入", "question、equipment_id、site、session_id。"],
+          ["列回傳", "answer、citations、refused、reason、request_id。"],
+          ["補限制", "schema、timeout、rate limit、錯誤狀態與資料權限。"]
         ],
         expected: [
-          ["查詢參數", /date|lead_hours|threshold|bbox|limit|error_type|metric|critical_threshold|參數/i],
-          ["回傳欄位", /lon|lat|value|severity|color|unit|layer|layer_id|statistic|欄位|JSON|GeoJSON/i],
-          ["前端用途", /前端|繪圖|地圖|QGIS|圖層|顏色/i],
-          ["限制或錯誤", /limit|分頁|錯誤|空結果|timeout|防止|保護/i]
+          ["輸入與權限", /question|equipment|site|session|scope|權限|ACL|參數/i],
+          ["結構化回傳", /answer|citation|引用|source|refused|reason|request_id|JSON|schema/i],
+          ["RAG 流程", /embedding|pgvector|retrieve|檢索|chunk|RAG|prompt/i],
+          ["限制或錯誤", /timeout|rate.?limit|401|403|422|429|錯誤|拒答|fallback/i]
         ],
-        skeleton: "我會把 /api/threshold-hotspots 定義成查詢可繪圖的 hotspot rows，而不是查完整格網。參數會包含 date、lead_hours、error_type、metric、threshold、critical_threshold、bbox 與 limit；metric 不填或 official 對應資料庫的 metric IS NULL。回傳欄位至少要有 lon、lat、value、unit、severity、color、target_timestamp，以及 layer_id、layer_name_zh、layer_role、statistic，讓前端或 QGIS 可以直接畫點與分圖層。為了避免一次查太多資料，我會加 limit、bbox 與清楚的空結果或錯誤訊息。",
+        skeleton: "我會把 POST /api/copilot/ask 定義成受權限控制的 RAG 問答。輸入用 Pydantic 驗證 question、equipment_id、site 與 session_id；service 先取得使用者 ACL，再用 metadata filter 加 pgvector 檢索。回傳採固定 JSON Schema，至少包含 answer、citations[{source_id,title,section,excerpt}]、refused、reason、request_id 與 latency_ms。證據不足或來源衝突時 refused=true，不讓模型猜。未登入回 401、無權限回 403、schema 錯誤回 422、限流回 429、上游 timeout 回可重試的 503，並以 request_id 串起 log 與評測紀錄。",
         followups: [
-          "如果前端說地圖載入很慢，你會怎麼調 API？",
-          "threshold 應該由前端傳，還是後端固定？你怎麼取捨？",
-          "你會怎麼設計 API 文件讓交接者能直接用？"
+          "citations 是模型自由產生，還是由後端依 chunk 組裝？",
+          "證據彼此衝突時，API 應該怎麼回？",
+          "你會如何避免使用者查到別部門的維運文件？"
         ]
       },
       {
         domain: "api",
-        title: "PostgreSQL/PostGIS 在你的專案裡解決了什麼問題？",
-        hint: "請不要只說『存資料』，要說查詢、空間條件、效能與交接價值。",
+        title: "PostgreSQL／pgvector 在維運 Copilot 裡解決了什麼問題？",
+        hint: "請不要只說『存向量』，要說關聯資料、metadata filter、索引、版本與可追溯性。",
         guide: [
-          ["資料集中", "把批次結果結構化管理。"],
-          ["查詢條件", "日期、時間、lead_hours、error_type、metric、bbox。"],
-          ["效能思考", "索引、limit、空間篩選。"],
-          ["交接價值", "API 和文件可重複使用。"]
+          ["資料集中", "文件、chunk、embedding、工單與權限一起管理。"],
+          ["查詢條件", "向量相似度加設備、站點、版本與 ACL filter。"],
+          ["效能思考", "HNSW／IVFFlat、一般索引、top-k 與 EXPLAIN。"],
+          ["交接價值", "引用可追溯、版本可重建、API 可重複驗證。"]
         ],
         expected: [
-          ["結構化資料", /資料庫|table|結構化|集中|管理/i],
-          ["查詢條件", /date|timestamp|lead_hours|bbox|error_type|metric|threshold|查詢/i],
-          ["效能或索引", /索引|index|效能|limit|空間|PostGIS|bbox/i],
-          ["API 或交接", /API|交接|文件|部署|前端|QGIS/i]
+          ["關聯與向量", /PostgreSQL|pgvector|vector|embedding|table|關聯|資料庫/i],
+          ["metadata 與權限", /metadata|equipment|site|version|ACL|權限|filter|篩選/i],
+          ["效能或索引", /HNSW|IVFFlat|index|索引|EXPLAIN|top.?k|效能/i],
+          ["引用或交接", /citation|引用|source|追溯|版本|API|重建|交接/i]
         ],
-        skeleton: "PostgreSQL/PostGIS 不只是存資料，而是讓批次驗證結果變成可查詢、可交接的資料服務。我的資料庫主線會看 summary_stats 與 hotspot_points；hotspot_points 同一張表裡同時放 official hotspot 與 metric hotspot，靠 error_type、metric、severity 分層。查詢會依 date、target_timestamp、lead_hours、error_type、metric、threshold 或 bbox 篩選 hotspot。PostGIS 能處理空間條件，搭配索引與 limit 可以避免 API 一次回傳過多資料。這也讓前端、QGIS 或文件使用者能用固定 API 重複取得結果。",
+        skeleton: "PostgreSQL／pgvector 不只是存 embedding，而是把 documents、chunks、tickets、equipment、ACL 與版本放在同一個可查詢且可交易的系統。檢索先用使用者權限、site、equipment_id、document_version 做 metadata filter，再以 cosine distance 取 top-k；需要關鍵字時可加全文檢索形成 hybrid search。HNSW 適合讀多且要求低延遲，IVFFlat 需要訓練與 probes 取捨；我會用 EXPLAIN ANALYZE 和評估集量測，不憑感覺選索引。每個 chunk 保存 source_id 與 section，讓 API 引用可追溯、刪除或改版也能重建。",
         followups: [
-          "如果資料表越來越大，你會先加什麼索引？",
-          "bbox 查詢和全表查詢的差異，你會怎麼說明？",
-          "你會怎麼判斷瓶頸在 DB 還是 API server？"
+          "HNSW 與 IVFFlat 你會如何選？",
+          "為什麼不能只把所有 metadata 塞進一個 JSON 欄位？",
+          "你會怎麼判斷瓶頸在 embedding、DB 檢索還是模型？"
         ]
       },
       {
         domain: "story",
-        title: "請用 90 秒介紹 S-111 viewer 專案，讓非海洋領域的人也聽得懂。",
-        hint: "請用 STAR：情境、任務、行動、結果。要講清楚你的角色與產出。",
+        title: "作品完成後，請用 90 秒介紹企業 IT／設備維運知識與工單 Copilot。",
+        hint: "目前作品仍在規劃中；完成前只能說已實作部分與下一步，不能把規劃當成果。完成後再用 STAR 講情境、任務、行動與可驗證結果。",
         guide: [
           ["Situation", "問題背景與使用者需求。"],
           ["Task", "你負責解決什麼。"],
@@ -2443,10 +2452,10 @@
         expected: [
           ["情境", /背景|需求|問題|情境|老師|使用者/i],
           ["任務與角色", /負責|任務|我做|角色|目標/i],
-          ["具體行動", /API|PostgreSQL|PostGIS|QGIS|資料|pipeline|視覺化/i],
+          ["具體行動", /Python|FastAPI|PostgreSQL|pgvector|RAG|embedding|資料|pipeline|評測|Agent/i],
           ["結果", /結果|產出|交接|部署|文件|改善|完成|驗證/i]
         ],
-        skeleton: "這個專案的背景是需要把 S-111 海流驗證資料從研究輸出變成可以查詢與展示的系統。我把 NC/H5/S-111 類資料透過 verification_pipeline 轉成 summary_stats、official hotspot、metric hotspot 與 spatial stats，輸出 daily_results 成果包，也能寫入 PostgreSQL/PostGIS。公開交接主線是 threshold hotspot workflow，讓 QGIS 或前端可以依日期、lead_hours、error_type、metric、threshold 與 bbox 查詢可繪圖的 hotspot。最後成果是可交接的 API、資料庫文件與視覺化流程，讓非開發者也能重複查看警示與關鍵案例。",
+        skeleton: "完成後範本（未完成或沒有實測數值時不可照念）：這個專案要解決的是維運人員面對分散的設備手冊、SOP 與歷史工單，排障時很難快速找到可信依據。我負責把資料來源整理成可重跑的 ingestion pipeline，經過清洗、去敏、chunk 與 embedding 後寫入 PostgreSQL／pgvector，再用 FastAPI 提供具 ACL filter 的 RAG 問答。回答必須附文件與段落引用，證據不足就拒答；工單查詢等工具使用 JSON Schema、timeout／retry 與人工確認。最後用固定評估集、pytest、引用正確率、拒答率、延遲與成本驗證，交付可示範、可測試、可追溯的 Copilot。",
         followups: [
           "如果面試官問『這跟一般資料專案差在哪』，你怎麼回答？",
           "你在這個專案裡最能證明工程能力的是哪一段？",
@@ -2469,7 +2478,7 @@
           ["修正", /修正|修改|解決|調整|改成|fix/i],
           ["驗證", /驗證|測試|確認|結果|筆數|截圖|API/i]
         ],
-        skeleton: "我會先描述問題現象，例如 API 回傳資料與預期不一致，或某個 hotspot 圖層沒有正確顯示。接著我會從 log、資料庫查詢與小範圍測試資料定位問題，確認是資料處理、入庫還是 API 查詢條件造成。修正後我會用相同案例重跑，檢查筆數、欄位值與 API 回傳，確定問題真的被解掉。",
+        skeleton: "我會先描述問題現象，例如 Copilot 引用了錯誤版本的手冊，或有證據不足卻沒有拒答。接著用 request_id 串起 ingestion log、retrieved chunks、prompt、模型輸出與 API response，先做最小重現，再判斷是資料版本、ACL filter、retrieval 還是生成層造成。修正後用相同案例與 regression set 重跑，檢查引用、拒答、權限與 latency，確定根因被修掉而不是只改好一題。",
         followups: [
           "如果 bug 不是你寫的程式造成，你會怎麼溝通？",
           "你如何判斷修正沒有造成新的 regression？",
@@ -2492,11 +2501,11 @@
           ["比較或趨勢", /比較|趨勢|變化|時間|群組|分布/i],
           ["限制", /限制|注意|可能|偏誤|資料缺口|不能代表/i]
         ],
-        skeleton: "我會先說這個查詢回答的是什麼問題，再定義指標的分母、分子與時間範圍。接著我會看不同日期、lead_hours 或 error_type 的分布差異，說明趨勢或異常點。最後我會補資料限制，例如樣本範圍、缺失值或閾值設定，避免把查詢結果過度解讀。",
+        skeleton: "我會先說查詢要回答的是設備故障趨勢、工單處理效率，還是 Copilot 品質，再定義分母、分子、時間範圍與資料粒度。例如首答解決率不能只看完成工單數，還要定義哪些工單真的由建議解決。接著比較設備類型、站點與週期趨勢，最後補資料缺口、樣本數與人工標註限制，避免把相關性誤當改善效果。",
         followups: [
           "如果面試官問這個指標能不能拿來做決策，你怎麼回答？",
           "你會怎麼確認指標沒有被資料粒度影響？",
-          "請用 S-111 hotspot 的例子講一次。"
+          "請用 Copilot 的引用正確率或拒答率講一次。"
         ]
       },
       {
@@ -2506,16 +2515,16 @@
         guide: [
           ["先量測", "看慢在哪一段。"],
           ["查 DB", "索引、查詢條件、資料量。"],
-          ["控回傳", "limit、分頁、bbox。"],
-          ["架構改善", "快取、背景任務、預先聚合。"]
+          ["拆延遲", "embedding、pgvector、rerank、LLM 與 payload。"],
+          ["架構改善", "索引、top-k、cache、背景 ingestion 與串流。"]
         ],
         expected: [
           ["量測瓶頸", /量測|profile|log|瓶頸|時間|慢在哪/i],
           ["DB 查詢", /SQL|DB|索引|index|查詢|explain/i],
-          ["回傳控制", /limit|分頁|bbox|資料量|payload|回傳/i],
-          ["架構改善", /快取|cache|背景|queue|預先|聚合|非同步/i]
+          ["RAG 延遲", /embedding|pgvector|retriev|rerank|LLM|token|payload|top.?k/i],
+          ["架構改善", /索引|快取|cache|背景|queue|stream|串流|非同步/i]
         ],
-        skeleton: "我會先量測慢在哪一段，是 DB 查詢、API 處理還是回傳資料太大。DB 端會看查詢條件、索引與 explain；API 端會加 limit、分頁或 bbox，避免一次回傳過多 hotspot rows。如果是重複查詢，我會考慮快取或預先聚合；如果是大量批次處理，則會改成背景任務或 queue。",
+        skeleton: "我會先用 request_id 分段量測 request validation、query embedding、pgvector search、rerank、prompt 組裝、LLM 與 serialize，不直接猜是模型慢。DB 端用 EXPLAIN ANALYZE 檢查 metadata filter 與向量索引，並量測不同 top-k 的品質／延遲；API 端限制 payload、設定 timeout，長回答可串流。穩定且不含敏感內容的重複查詢才考慮 cache，文件 ingestion 與重建索引放背景 queue。每次優化都重跑相同評估集，避免速度變快但引用與召回變差。",
         followups: [
           "如果只能先做一個改善，你會先做哪個？",
           "你會怎麼向主管解釋 API 變慢不是單純 server 不夠快？",
@@ -2536,13 +2545,13 @@
         ["補測試資料", "替清洗程式設計 3 個邊界案例。"]
       ],
       pipeline: [
-        ["畫 ETL 流程", "用 S-111 寫 Extract、Transform、Load、Validate。"],
+        ["畫知識管線", "用維運文件寫 Extract、Transform、Load、Validate。"],
         ["設計重跑策略", "列出 upsert key、log、驗證與 rollback。"],
         ["資料品質檢查", "定義筆數、欄位範圍、時間粒度檢查。"]
       ],
       api: [
         ["設計 API 回答", "列出參數、回傳欄位、限制與錯誤處理。"],
-        ["DB 效能排查", "說明索引、bbox、limit、分頁的用途。"],
+        ["DB 效能排查", "說明索引、filter、sort、limit 與分頁的用途。"],
         ["API 文件草稿", "把一個 endpoint 寫成可交接說明。"]
       ],
       testing: [
@@ -2551,14 +2560,14 @@
         ["保留失敗證據", "讓 CI 報告、trace、log 與最小重現可交接。"]
       ],
       ai: [
-        ["建立 10 題評估集", "包含可回答、無答案與惡意提示，保存預期來源。"],
+        ["建立 50 題固定評估集", "包含可回答、無答案與惡意提示，保存預期來源。"],
         ["畫 RAG 資料流", "說明 ingest、chunk、retrieve、generate、evaluate 與失敗降級。"],
         ["限制 Agent 工具", "列 allowlist、參數 schema、唯讀邊界與人工確認點。"]
       ],
       story: [
-        ["90 秒 STAR", "用 S-111 講情境、任務、行動、結果。"],
+        ["90 秒 STAR", "用企業維運 Copilot 講情境、任務、行動、結果。"],
         ["最難 bug 故事", "補上定位、修正、驗證證據。"],
-        ["非技術版說明", "把 NetCDF/PostGIS/API 講給外行聽。"]
+        ["非技術版說明", "把 pgvector/RAG/Agent 講給維運人員聽。"]
       ]
     };
 
@@ -2569,472 +2578,415 @@
         time: [["模擬", 60], ["複習", 30]]
       },
       1: {
-        topic: "SQL JOIN / GROUP BY",
+        topic: "SQL JOIN / 資料粒度",
         indexes: [0, 10],
         time: [["SQL", 40], ["面試輸出", 10], ["演算法 No-AI", 20], ["作品實作", 20]]
       },
       2: {
-        topic: "SQL CTE / Window Function",
+        topic: "PostgreSQL / Window Function",
         indexes: [1, 0],
         time: [["SQL", 40], ["面試輸出", 10], ["演算法 No-AI", 20], ["作品實作", 20]]
       },
       3: {
-        topic: "Python 資料清洗 / 複雜度",
+        topic: "Python / pytest / LeetCode 基礎",
         indexes: [2, 3],
         time: [["Python 清洗", 30], ["面試輸出", 10], ["演算法 No-AI", 20], ["作品實作", 30]]
       },
       4: {
-        topic: "PostgreSQL / PostGIS / 資料表設計",
+        topic: "FastAPI / PostgreSQL / pgvector",
         indexes: [7, 6],
         time: [["DB", 40], ["面試輸出", 10], ["演算法 No-AI", 20], ["作品實作", 20]]
       },
       5: {
-        topic: "API / ETL / 錯誤處理",
+        topic: "RAG / 評測 / Agent 安全",
         indexes: [4, 5, 11],
         time: [["工程情境", 40], ["面試輸出", 10], ["演算法 No-AI", 20], ["作品實作", 20]]
       },
       6: {
-        topic: "專案故事 STAR 練習",
+        topic: "維運 Copilot STAR 與 Demo",
         indexes: [8, 9],
         time: [["STAR 寫作", 40], ["口說練習", 20], ["錯題重做", 30]]
       }
     };
 
+    const learningCadence = [["主題實作", 40], ["演算法 No-AI", 20], ["Copilot 整合", 20], ["面試輸出", 10]];
+
     const weekGoals = [
-      "把 SQL 手感拉起來：每天至少完成 2 題並取得回饋",
-      "把 S-111 專案整理成 3 個故事：ETL 流程、效能排查、API 設計",
-      "每天練 1 題情境題追問，分數穩定過 70 才算過關",
-      "找真人模擬面試，工具退場輔助用"
+      "用 Python、pytest、LeetCode、SQL、PostgreSQL 與 FastAPI 建立可獨立完成的工程底座",
+      "完成可重跑 ingestion、Git／Linux／Docker 交付、chunking、embedding、pgvector 與 RAG API",
+      "建立引用、拒答、權限、retrieval／answer 評測與 AI regression 證據",
+      "完成 Tool Calling、JSON Schema、timeout／retry、HITL 與三分鐘 Copilot Demo"
     ];
 
     const weekdayLabels = ["日", "一", "二", "三", "四", "五", "六"];
 
     const dailyLessons = [
       {
-        domain: "pipeline",
-        title: "ETL：把資料流程講成三段",
-        concept: "ETL 是 Extract、Transform、Load。面試時不要只說我有處理資料，要說資料從哪裡來、怎麼轉、最後載入哪裡。",
-        s111: "對應 S-111：verification_pipeline 讀 NC/H5/S-111 類資料，算出 summary_stats、official hotspot、metric hotspot 與 spatial stats；結果會輸出 daily_results 成果包，並可寫入 PostgreSQL/PostGIS 供 Flask API 與 QGIS DB 模式查詢。",
-        terms: ["ETL", "Extract", "Transform", "Load"],
-        challenge: "請用 S-111 專案，把一條 ETL 管線用 60 秒講清楚。"
+        domain: "python",
+        title: "Python 型別提示與輸入驗證",
+        concept: "型別提示讓函式的輸入輸出更清楚；dataclass 或 Pydantic model 則把資料規格寫成可驗證的契約。面試時要能說明型別提示不是執行期保證。",
+        s111: "作品實作：先替設備、文件與工單定義 Python model，包含 equipment_id、source_id、title、content、updated_at 與 access_scope，拒絕缺欄位或錯型別資料。",
+        terms: ["type hints", "dataclass", "validation", "Pydantic"],
+        challenge: "你會如何替維運文件 ingestion 定義清楚又可驗證的 Python 輸入？"
+      },
+      {
+        domain: "testing",
+        title: "pytest：正常、邊界與失敗案例",
+        concept: "pytest 不只是確認 happy path；fixture、parametrize 與 mock 能把正常、邊界、錯誤與外部依賴分開驗證，讓修改後可重跑。",
+        s111: "作品實作：替文件 parser 測空檔、錯編碼、重複工單、敏感欄位與 embedding API timeout；固定 fixture，不呼叫正式服務。",
+        terms: ["pytest", "fixture", "parametrize", "mock"],
+        challenge: "請替一個工單清洗函式設計至少四類 pytest 案例。"
+      },
+      {
+        domain: "python",
+        title: "LeetCode 基礎：Big-O 與 Hash Map",
+        concept: "AI 應用工程仍要能獨立處理 Array、String、Hash Map、Two Pointers 等基礎題，並說清楚時間與空間複雜度；不用先衝 Hard。",
+        s111: "作品實作：用 dict 依 ticket_id 去重，或依 equipment_id 對應設備資料；比較雙層掃描 O(n²) 與一次建立索引 O(n) 的取捨。",
+        terms: ["Big-O", "Array", "Hash Map", "Two Pointers"],
+        challenge: "請用 Two Sum 或工單去重例子，解釋如何從 O(n²) 改成 O(n)。"
       },
       {
         domain: "sql",
-        title: "Primary key / Foreign key",
-        concept: "Primary key 用來唯一識別一列，foreign key 用來連到另一張表。JOIN 前要先確認 key 是否真的唯一。",
-        s111: "對應 S-111：summary_stats 的唯一性是 target_date、target_timestamp、lead_hours；hotspot_points 還要看 error_type、位置與 metric，否則 join 或 upsert 都會出問題。",
-        terms: ["primary key", "foreign key", "JOIN key"],
-        challenge: "看到兩張表時，你會如何確認 JOIN key 是否可靠？"
+        title: "SQL JOIN、Key 與資料粒度",
+        concept: "JOIN 前要先確認 key 是否唯一，以及一列代表文件、chunk、工單還是設備；粒度不同直接 join 會讓筆數與指標膨脹。",
+        s111: "作品實作：documents 對 chunks 是一對多，equipment 對 tickets 也是一對多；回答設備故障數時不能把 chunk join 進來後重複計算工單。",
+        terms: ["JOIN", "primary key", "granularity", "GROUP BY"],
+        challenge: "你會如何驗證 documents、chunks、tickets 與 equipment 的 JOIN 沒有重複計算？"
       },
       {
         domain: "sql",
-        title: "Granularity：資料粒度",
-        concept: "Granularity 是一列資料代表的層級，例如一個使用者、一天、一小時或一個 hotspot。粒度不同的表直接 join 很容易重複計算。",
-        s111: "對應 S-111：target_date 是日層級，summary_stats 是每小時每個 lead_hours 的摘要，hotspot_points 是已超標的空間點，spatial_stats 則是完整有效格點的統計分布。",
-        terms: ["granularity", "one-to-many", "many-to-many"],
-        challenge: "請解釋為什麼 JOIN 前要先確認資料粒度。"
+        title: "Window Function 與 CTE",
+        concept: "Window Function 保留明細又能做組內排名；CTE 把複雜查詢拆成可讀階段。兩者常用來取每台設備最新工單或每份文件最新版本。",
+        s111: "作品實作：用 ROW_NUMBER() OVER(PARTITION BY equipment_id ORDER BY updated_at DESC) 取最新工單，再用 CTE 分開權限篩選與統計。",
+        terms: ["Window Function", "ROW_NUMBER", "CTE", "PARTITION BY"],
+        challenge: "請口述如何用 Window Function 取得每台設備最新一張工單。"
       },
       {
         domain: "sql",
-        title: "Window Function",
-        concept: "Window Function 可以保留每筆明細，同時計算組內排名、前後筆或最新一筆；GROUP BY 則會把資料壓成每組一列。",
-        s111: "對應 S-111：若要在同一個 date、target_timestamp、lead_hours 或 error_type 裡找最高誤差點，又想保留 lon、lat、metric 等明細欄位，就適合用 window 思維。",
-        terms: ["Window Function", "PARTITION BY", "ROW_NUMBER"],
-        challenge: "什麼情況你會用 Window Function，而不是只用 GROUP BY？"
+        title: "PostgreSQL Schema、Index 與 Transaction",
+        concept: "Schema 固定欄位與約束，index 加速常用查詢，transaction 保證一組寫入全成或全敗；效能要用 EXPLAIN ANALYZE 驗證。",
+        s111: "作品實作：documents、chunks、tickets、equipment 與 permissions 分表；source_id/version 設唯一約束，ACL filter 欄位建索引，文件改版與 chunk 更新放同一交易。",
+        terms: ["schema", "index", "transaction", "EXPLAIN ANALYZE"],
+        challenge: "你會如何設計 Copilot 的資料表、唯一鍵、交易邊界與第一批索引？"
       },
       {
-        domain: "sql",
-        title: "CTE vs Subquery",
-        concept: "CTE 用 WITH 把查詢拆段，適合讓複雜邏輯可讀；subquery 適合較小的中間查詢。",
-        s111: "對應 S-111：API 查詢如果同時要過濾 date、lead_hours、error_type、metric、bbox、threshold，可以用 CTE 拆成幾個階段講清楚。",
-        terms: ["CTE", "WITH", "subquery"],
-        challenge: "如果 SQL 查詢變很長，你會怎麼拆，讓面試官看得懂？"
-      },
-      {
-        domain: "python",
-        title: "dtype：欄位型別",
-        concept: "dtype 是資料欄位的型別。數字被當字串、時間無法排序，常常都是 dtype 沒處理好。",
-        s111: "對應 S-111：target_timestamp、lead_hours、lon/lat、value 都必須是正確型別，API 查詢和排序才可信。",
-        terms: ["dtype", "type conversion", "timestamp"],
-        challenge: "拿到一份髒資料時，你會如何先檢查欄位型別？"
-      },
-      {
-        domain: "python",
-        title: "Null / Outlier",
-        concept: "Null 是沒有資料，不等於 0；outlier 是異常值，不一定能直接刪，要先看業務規則與資料來源。",
-        s111: "對應 S-111：缺座標、缺時間或異常誤差值都會影響 hotspot 判定，需要記錄處理規則。",
-        terms: ["null", "outlier", "missing value"],
-        challenge: "你會如何決定缺值或異常值要刪除、補值還是標記？"
-      },
-      {
-        domain: "python",
-        title: "Assert / Validation",
-        concept: "assert 或 validation 是把你對資料的假設寫成檢查，例如欄位必須存在、筆數不能為 0、時間範圍要合理。",
-        s111: "對應 S-111：pipeline 跑完要檢查日期、lead_hours、hotspot 筆數、severity 分級與 API 回傳；流速用 0.5/1.0 kn，流向 official 先通過 0.48 kn 真值流速門檻，再看 30/45 deg。",
-        terms: ["assert", "validation", "data quality"],
-        challenge: "你會替一個資料清洗流程設計哪些 validation？"
-      },
-      {
-        domain: "python",
-        title: "Time complexity",
-        concept: "Time complexity 是資料量變大時，程式耗時如何成長。面試不一定要競賽級，但要能指出主要迴圈與瓶頸。",
-        s111: "對應 S-111：大量 hotspot 或格點資料不能用不必要的巢狀迴圈一筆一筆硬比。",
-        terms: ["time complexity", "O(n)", "loop"],
-        challenge: "請說明一段資料處理程式的時間複雜度，你會怎麼講？"
-      },
-      {
-        domain: "python",
-        title: "Hash map：用 dict 降低查找成本",
-        concept: "Hash map 在 Python 常用 dict 實作，可以用 key 快速查值，避免每次都掃完整份資料。",
-        s111: "對應 S-111：用日期、時間、座標或 id 當 key，可以快速對應統計結果或 hotspot rows。",
-        terms: ["hash map", "dict", "lookup"],
-        challenge: "如果兩層迴圈很慢，你會如何用 hash map 改寫？"
+        domain: "api",
+        title: "FastAPI、Pydantic 與 HTTP 契約",
+        concept: "REST API 要明確定義 request/response schema、驗證、狀態碼、權限與錯誤格式；OpenAPI 只是文件起點，還要用測試證明契約。",
+        s111: "作品實作：建立 POST /api/copilot/ask，輸入 question、equipment_id、site，回傳 answer、citations、refused、reason、request_id；區分 401、403、422、429 與 503。",
+        terms: ["FastAPI", "Pydantic", "HTTP status", "OpenAPI"],
+        challenge: "請設計 Copilot 問答 endpoint 的 request、response 與主要錯誤狀態。"
       },
       {
         domain: "pipeline",
-        title: "Schema：先定義欄位契約",
-        concept: "Schema 是資料表的欄位、型別與規則。沒有 schema，資料流進資料庫後會很難驗證與交接。",
-        s111: "對應 S-111：summary_stats 要定義 target_date、target_timestamp、lead_hours；hotspot_points 要定義 lon、lat、value、unit、error_type、severity、metric 與圖層語意。",
-        terms: ["schema", "column", "data contract"],
-        challenge: "你會如何向面試官說明 schema 在資料工程裡的重要性？"
+        title: "Data Contract、冪等與可重跑 Ingestion",
+        concept: "Ingestion 要把不同文件與工單轉成一致格式；data contract 定義來源規格，idempotent 設計確保同一 run_id 重跑不會重複新增，最後用筆數與版本對帳。",
+        s111: "作品實作：建立 parser interface 並保存 run_id、source version、成功／拒收／重複數；先抽取、去敏、去重與標準化，不支援的檔案進 quarantine，同一版本重跑後筆數不增加。",
+        terms: ["data contract", "idempotent", "ingestion", "reconciliation"],
+        challenge: "不同格式的維運文件重跑時，你如何確保結果一致、可拒收且可追溯？"
+      },
+      {
+        domain: "devops",
+        title: "Git、Linux、Docker 與可重現交付",
+        concept: "作品必須能在乾淨環境重現。Git 保留可審查的變更；Linux 指令用來查 process、port、env 與 log；Dockerfile／Compose 固定 API、PostgreSQL 與 migration 的啟動方式。",
+        s111: "作品實作：用 feature branch 完成一個 API 改動，為 FastAPI 寫非 root Dockerfile，以 Compose 啟動 API + PostgreSQL，從 container log 排查一次刻意注入的錯誤。",
+        terms: ["Git branch", "Linux", "Dockerfile", "Docker Compose"],
+        challenge: "你如何證明別人只看 README，就能在乾淨環境啟動並排查 Copilot API？"
       },
       {
         domain: "pipeline",
-        title: "Idempotent：重跑結果要一致",
-        concept: "Idempotent 是同一批資料重跑多次，結果仍然一致，不會越跑越多或覆蓋錯誤。",
-        s111: "對應 S-111：同一 date、target_timestamp、lead_hours、error_type、位置與 metric 的 hotspot 重跑時，不能因 append 造成重複列。",
-        terms: ["idempotent", "rerun", "duplicate"],
-        challenge: "如果批次資料需要重跑，你會如何確保結果安全？"
+        title: "Chunking、Metadata 與 ACL",
+        concept: "Chunk 太小會失去上下文，太大會降低檢索精度並增加 token；metadata 與 ACL 必須在檢索前限制可見範圍，不能只在回答後遮字。",
+        s111: "作品實作：依章節、步驟與表格邊界切塊，保存 source_id、section、equipment_id、site、document_version、valid_from 與 access_scope。",
+        terms: ["chunking", "metadata", "ACL", "document version"],
+        challenge: "你會如何決定維運手冊的 chunk 邊界，並避免跨部門資料外洩？"
       },
       {
-        domain: "pipeline",
-        title: "Upsert",
-        concept: "Upsert 是有資料就更新，沒有就新增。它通常需要搭配唯一鍵，否則不知道哪一列該更新。",
-        s111: "對應 S-111：hotspot_points 重跑時要用 target_date、target_timestamp、lead_hours、error_type、位置與 metric 控制唯一性；official hotspot 對應 metric IS NULL。",
-        terms: ["upsert", "unique key", "update"],
-        challenge: "你會如何設計 upsert key，避免重跑資料重複？"
+        domain: "ai",
+        title: "Embedding 與相似度",
+        concept: "Embedding 把文字轉成固定維度向量；相似度只代表語意接近，不等於答案正確。模型、維度與正規化方式必須版本化。",
+        s111: "作品實作：批次產生 chunk embedding，保存 embedding_model 與 dimension；遇到 timeout 分批重試，切換模型時以新版本重建，不混用向量。",
+        terms: ["embedding", "cosine similarity", "dimension", "batch"],
+        challenge: "Embedding 模型改版時，你如何安全重建而不讓檢索結果混亂？"
       },
       {
-        domain: "pipeline",
-        title: "ON CONFLICT",
-        concept: "ON CONFLICT 是 PostgreSQL 實作 upsert 的常見語法，遇到唯一鍵衝突時改成更新。",
-        s111: "對應 S-111：若重跑同一批 hotspot rows，可以用唯一鍵搭配 ON CONFLICT DO UPDATE；也要避免 official rows 和 metric rows 被同一個 key 混在一起。",
-        terms: ["ON CONFLICT", "DO UPDATE", "PostgreSQL"],
-        challenge: "請用白話說明 ON CONFLICT 解決了什麼問題。"
+        domain: "ai",
+        title: "pgvector Schema 與向量索引",
+        concept: "pgvector 讓 PostgreSQL 儲存與查詢 vector；HNSW、IVFFlat、距離函數與 metadata index 都有品質、速度、記憶體與建置成本取捨。",
+        s111: "作品實作：chunks 表保存 content、metadata、embedding 與版本；先用 exact search 建 baseline，再以評估集與 EXPLAIN ANALYZE 比較 HNSW 或 IVFFlat。",
+        terms: ["pgvector", "vector column", "HNSW", "IVFFlat"],
+        challenge: "你會如何為 Copilot 選 pgvector 索引，並證明它沒有犧牲太多召回？"
       },
       {
-        domain: "pipeline",
-        title: "Manifest：輸出清單與版本紀錄",
-        concept: "Manifest 是一批輸出的清單，記錄產生了哪些檔案、日期、版本或處理參數。",
-        s111: "對應 S-111：daily_results/YYYYMMDD 裡的 manifest 是成果包入口，應記錄 summary_stats、hotspots、spatial_stats、metric_hotspots、GeoJSON/QML 與參數版本。",
-        terms: ["manifest", "version", "result package"],
-        challenge: "你會在 manifest 裡記錄哪些資訊，讓別人能交接？"
+        domain: "ai",
+        title: "Hybrid Retrieval、Filter 與 Rerank",
+        concept: "純向量搜尋可能漏掉錯誤碼與設備型號；hybrid retrieval 結合全文與向量，再用 metadata filter 和 rerank 提高前幾名品質。",
+        s111: "作品實作：先用 ACL、site、equipment_id 過濾，再合併 pgvector 與 PostgreSQL full-text 結果；rerank 前後都記錄 top-k，才能分析失敗。",
+        terms: ["hybrid search", "full-text search", "metadata filter", "rerank"],
+        challenge: "使用者輸入精確錯誤碼時，為什麼 hybrid search 可能比純向量搜尋可靠？"
+      },
+      {
+        domain: "ai",
+        title: "RAG：Retrieve、Context、Generate",
+        concept: "RAG 是先檢索證據，再把有限且有來源的 context 交給模型生成。檢索錯、context 污染與 prompt 設計是不同失敗層。",
+        s111: "作品實作：query 經權限與設備條件處理後取 top-k chunks，組成含 source marker 的 context；模型只依 context 作答，輸出再由程式組裝 citations。",
+        terms: ["RAG", "retrieve", "context window", "prompt"],
+        challenge: "請畫出 Copilot 從問題到答案的 RAG 資料流，並指出每層失敗點。"
+      },
+      {
+        domain: "ai",
+        title: "引用、來源與可追溯性",
+        concept: "Citation 不應由模型憑空編號；後端要把真正取回的 source_id、標題、章節與 excerpt 對回回答，讓使用者能開啟原文查證。",
+        s111: "作品實作：response 回 citations[{source_id,title,section,excerpt,version}]；引用只允許來自本次 retrieved chunks，文件撤權或改版後不可再顯示舊來源。",
+        terms: ["citation", "source_id", "provenance", "excerpt"],
+        challenge: "你如何防止模型產生看似合理但實際不存在的引用？"
+      },
+      {
+        domain: "ai",
+        title: "證據不足時的拒答",
+        concept: "可信 Copilot 必須知道何時不回答。拒答要基於檢索證據、來源衝突與政策，而不是只靠模型自評的 confidence。",
+        s111: "作品實作：加入無答案、過期手冊與互相衝突來源；證據不足時回 refused=true、reason 與可採取下一步，不生成維修步驟。",
+        terms: ["groundedness", "no-answer", "refusal", "confidence threshold"],
+        challenge: "你會用哪些訊號決定回答、追問澄清，或安全拒答？"
+      },
+      {
+        domain: "ai",
+        title: "AI 評估集與 Ground Truth",
+        concept: "評估集要版本化並包含可回答、無答案、歧義、權限與惡意提示；每題保存 expected source 與判定規則，避免只測 demo 題。",
+        s111: "作品實作：從真實但去識別化的維運情境整理固定 50 題，標註設備、可見範圍、預期來源、是否應拒答與風險等級。",
+        terms: ["evaluation set", "ground truth", "hard negative", "version"],
+        challenge: "你會如何建立一份能長期比較 RAG 版本的維運評估集？"
+      },
+      {
+        domain: "ai",
+        title: "Retrieval 評測：Recall@k 與 MRR",
+        concept: "Retrieval 評測先問正確來源有沒有被找到，再看排名。Recall@k 衡量命中，MRR 關注第一個正確結果排多前面。",
+        s111: "作品實作：固定 query 與 expected source，保存每版 top-k；分開分析 ingestion miss、filter miss、embedding miss 與 rerank miss。",
+        terms: ["Recall@k", "MRR", "precision", "retrieval miss"],
+        challenge: "如果正確 chunk 常在第 8 名，但 prompt 只放前 5 名，你會怎麼診斷與改善？"
+      },
+      {
+        domain: "ai",
+        title: "回答評測：Faithfulness 與引用正確性",
+        concept: "答案好不好要拆成是否回答問題、是否受證據支持、引用是否對應、該拒答時有沒有拒答；LLM judge 只能輔助，需抽樣人工覆核。",
+        s111: "作品實作：每次測試保存 answer、chunks、citations 與版本，計算 answer relevance、faithfulness、citation correctness、refusal precision／recall。",
+        terms: ["faithfulness", "answer relevance", "citation correctness", "human review"],
+        challenge: "檢索命中但回答仍幻覺時，你如何分類問題並設計評測？"
+      },
+      {
+        domain: "testing",
+        title: "Prompt Injection、資料外洩與 Red Team",
+        concept: "文件與使用者輸入都是不可信資料。系統指令、ACL 與工具政策必須由程式碼控制，不能讓文件中的『忽略規則』改寫。",
+        s111: "作品實作：測跨部門查詢、文件注入、要求輸出 system prompt、越權設備與惡意 tool request；記錄拒絕原因但不把 secret 寫入 log。",
+        terms: ["prompt injection", "data leakage", "least privilege", "red team"],
+        challenge: "你會如何證明維運文件中的惡意指令不能越權查資料或呼叫工具？"
+      },
+      {
+        domain: "ai",
+        title: "可觀測性：Latency、Token 與 Cost",
+        concept: "AI API 慢時要分段量測 embedding、retrieval、rerank、LLM 與 serialize；同時追蹤 token、成本、錯誤率與品質，避免只優化單一數字。",
+        s111: "作品實作：用 request_id 串起 API log、retrieved chunk IDs、模型版本、latency breakdown、token、cost 與結果狀態；敏感內容不進一般 log。",
+        terms: ["request_id", "latency", "token cost", "trace"],
+        challenge: "Copilot p95 變慢時，你會如何用 trace 找瓶頸而不洩漏工單內容？"
+      },
+      {
+        domain: "testing",
+        title: "AI Regression 與 pytest",
+        concept: "RAG 與 Agent 修改後要跑固定 regression set。確定性規則用 pytest 精確斷言，模型輸出用結構、引用、政策與可接受範圍驗證。",
+        s111: "作品實作：mock embedding／LLM 測錯誤處理，另對測試環境跑 golden set；任何 chunk、prompt、模型或索引改動都比較品質、延遲與成本。",
+        terms: ["pytest", "golden set", "mock LLM", "regression"],
+        challenge: "哪些 Copilot 測試應 mock 模型，哪些必須呼叫真實模型或向量庫？"
+      },
+      {
+        domain: "ai",
+        title: "LangGraph、Tool Calling 與最小權限",
+        concept: "本作品只用 LangGraph 編排一條可觀察流程，不同時導入 Dify、n8n 或多 Agent。模型只能提出結構化工具意圖；真正執行由程式碼依 allowlist、使用者權限與資源範圍決定。",
+        s111: "作品實作：先提供 read-only 的 get_ticket、search_asset 與 create_draft；模型看不到 DB credential，工具結果也當成不可信輸入再驗證。",
+        terms: ["LangGraph", "Tool Calling", "allowlist", "least privilege"],
+        challenge: "你會如何讓 Copilot 查工單，但不能任意執行 SQL 或改寫正式資料？"
+      },
+      {
+        domain: "ai",
+        title: "JSON Schema 與 Structured Output",
+        concept: "JSON Schema 明確限制欄位、型別、enum、長度與 additionalProperties；解析失敗不能直接把半套參數交給工具。",
+        s111: "作品實作：create_ticket_draft 只接受 equipment_id、summary、priority enum 與 evidence_ids；後端再次驗證 ACL、欄位與引用存在。",
+        terms: ["JSON Schema", "structured output", "validation", "additionalProperties"],
+        challenge: "請設計建立工單草稿的 JSON Schema，並說明模型輸出驗證失敗時怎麼辦。"
       },
       {
         domain: "api",
-        title: "Endpoint",
-        concept: "Endpoint 是 API 的一個網址功能。好的 endpoint 要讓使用者知道它查什麼、參數是什麼、回傳什麼。",
-        s111: "對應 S-111：/api/threshold-hotspots 查可畫圖的 hotspot rows，/api/hotspot-series 只查 hotspot-row series，不是完整格網時間序列。",
-        terms: ["endpoint", "API", "route"],
-        challenge: "請設計一個查 threshold hotspot 的 endpoint。"
+        title: "Timeout、Retry 與 Exponential Backoff",
+        concept: "Timeout 限制單步等待；retry 只適用暫時性且冪等的失敗，需有 backoff、jitter 與上限。不可重試錯誤要快速失敗。",
+        s111: "作品實作：embedding 與唯讀查詢可有限重試；建立工單草稿使用 idempotency key；模型超時則回可理解的降級訊息，不無限循環。",
+        terms: ["timeout", "retry", "exponential backoff", "circuit breaker"],
+        challenge: "Agent 呼叫工單 API timeout 時，哪些情況可以 retry，如何避免重複建立？"
       },
       {
-        domain: "api",
-        title: "Query parameter",
-        concept: "Query parameter 是 URL 後面的篩選條件，例如 date、lead_hours、bbox、limit。",
-        s111: "對應 S-111：前端可以用 date、lead_hours、error_type、metric、threshold、critical_threshold、bbox、limit 篩選 hotspot。",
-        terms: ["query parameter", "date", "limit"],
-        challenge: "你會讓 hotspot API 支援哪些 query parameters？"
+        domain: "ai",
+        title: "LangGraph State、步數上限與冪等",
+        concept: "LangGraph workflow 要明確保存目前步驟、輸入、工具結果與終止原因；限制總步數、時間與成本，重跑寫入步驟必須冪等。",
+        s111: "作品實作：plan→retrieve→tool proposal→policy check→execute→verify；每步有 request_id，超過 step limit 或重複 tool call 就停止並交回人工。",
+        terms: ["agent state", "idempotency key", "step limit", "audit log"],
+        challenge: "你如何避免 Agent 在相同工具間無限循環或重複建立工單？"
       },
       {
-        domain: "api",
-        title: "JSON / GeoJSON",
-        concept: "JSON 是一般結構化資料格式；GeoJSON 是帶有地理座標與幾何資訊的 JSON，適合地圖工具使用。",
-        s111: "對應 S-111：hotspot 點位給 QGIS 或前端地圖畫時可回 lon/lat 或 GeoJSON；spatial_stats 則代表完整有效格點統計，不要和 hotspot GeoJSON 混在一起。",
-        terms: ["JSON", "GeoJSON", "lon/lat"],
-        challenge: "如果前端要畫地圖，你會如何設計 API response？"
-      },
-      {
-        domain: "api",
-        title: "Pagination / Limit",
-        concept: "Pagination 與 limit 用來避免一次回傳太多資料，造成 API 慢、網路 payload 過大或前端卡住。",
-        s111: "對應 S-111：hotspot rows 可能很多，API 需要 limit、bbox 或分頁保護查詢。",
-        terms: ["pagination", "limit", "payload"],
-        challenge: "如果 API 一次回傳 50,000 筆，你會怎麼改善？"
-      },
-      {
-        domain: "api",
-        title: "BBox",
-        concept: "BBox 是地圖矩形範圍，通常用 min_lon、min_lat、max_lon、max_lat 表示。",
-        s111: "對應 S-111：前端地圖只需要目前視窗內的 hotspot，就可以用 bbox 篩選。",
-        terms: ["bbox", "spatial filter", "map viewport"],
-        challenge: "請說明 bbox 為什麼能改善地圖 API 效能。"
-      },
-      {
-        domain: "api",
-        title: "PostGIS / GIST index",
-        concept: "PostGIS 讓 PostgreSQL 支援空間資料；GIST index 常用來加速空間查詢。",
-        s111: "對應 S-111：hotspot 有 lon/lat，若要做範圍查詢，可用 PostGIS 與空間索引提升速度。",
-        terms: ["PostGIS", "GIST index", "spatial query"],
-        challenge: "PostGIS 在你的專案裡不只是存座標，它解決了什麼問題？"
-      },
-      {
-        domain: "api",
-        title: "EXPLAIN ANALYZE",
-        concept: "EXPLAIN ANALYZE 可以看到 PostgreSQL 實際怎麼執行查詢、花多久、是否使用索引。",
-        s111: "對應 S-111：如果 /api/threshold-hotspots 變慢，可以用它判斷是否全表掃描或索引沒用到。",
-        terms: ["EXPLAIN ANALYZE", "query plan", "full table scan"],
-        challenge: "API 查詢變慢時，你會如何用 query plan 排查？"
-      },
-      {
-        domain: "api",
-        title: "Cache",
-        concept: "Cache 是把常用查詢結果暫存起來，減少重複計算或重複打資料庫。",
-        s111: "對應 S-111：固定 date、lead_hours、error_type、metric、threshold 的 hotspot 查詢可以考慮快取，但資料重建或 metric rows 更新後要失效。",
-        terms: ["cache", "TTL", "stale data"],
-        challenge: "哪些 API 查詢適合 cache？cache 的風險是什麼？"
-      },
-      {
-        domain: "api",
-        title: "Timeout / Error handling",
-        concept: "Timeout 避免單一慢查詢卡住服務；error handling 讓錯誤回應清楚、可預期。",
-        s111: "對應 S-111：查不到日期、參數錯誤、DB 太慢時，API 要回清楚訊息，而不是無聲失敗。",
-        terms: ["timeout", "error handling", "fallback"],
-        challenge: "如果 API 查詢失敗，你會怎麼設計錯誤處理？"
+        domain: "ai",
+        title: "HITL、Approval 與 Audit",
+        concept: "Human-in-the-loop 不是所有操作都彈窗，而是依風險分級：唯讀可自動，高風險寫入要顯示影響、證據與參數後由人確認。",
+        s111: "作品實作：搜尋與產生草稿可自動；送出、改優先級或關閉工單前必須 approval。記錄誰在何時核准什麼，失敗時可 rollback 或補償。",
+        terms: ["HITL", "approval", "risk tier", "rollback"],
+        challenge: "請替 Copilot 的查詢、草稿、送出與關單定義 HITL 邊界。"
       },
       {
         domain: "story",
-        title: "STAR",
-        concept: "STAR 是 Situation、Task、Action、Result。它讓專案回答不會散掉，尤其適合講自己的角色與成果。",
-        s111: "對應 S-111：背景是海流驗證，任務是建立 threshold hotspot workflow，行動是 verification_pipeline、daily_results、PostgreSQL/PostGIS、Flask API 與 QGIS/前端交接，結果是可查詢、可展示、可交接的工具。",
-        terms: ["STAR", "Situation", "Result"],
-        challenge: "請用 STAR 講 90 秒 S-111 專案。"
-      },
-      {
-        domain: "story",
-        title: "Trade-off",
-        concept: "Trade-off 是取捨。工程面試常問你為什麼這樣設計，而不是只問你做了什麼。",
-        s111: "對應 S-111：API 回 hotspot rows 比回完整格網輕量，但若要完整動畫就需要新增資料表與 endpoint。",
-        terms: ["trade-off", "constraint", "decision"],
-        challenge: "請說明 S-111 API 只回 hotspot、不回完整格網的取捨。"
-      },
-      {
-        domain: "story",
-        title: "Bottleneck / Profiling",
-        concept: "Bottleneck 是真正拖慢系統的地方；profiling 是量測哪一段最慢。不要憑感覺優化。",
-        s111: "對應 S-111：API 慢可能是 DB query、JSON serialize、payload 太大或缺 bbox，不一定是 server 不夠快。",
-        terms: ["bottleneck", "profiling", "payload"],
-        challenge: "如果 API 變慢，你會如何找出真正瓶頸？"
-      },
-      {
-        domain: "story",
-        title: "Regression",
-        concept: "Regression 是修改後把原本正常的功能弄壞。工程回答要說修完後如何防止回歸。",
-        s111: "對應 S-111：改 hotspot 分級、0.48 kn 流向門檻、API 欄位或 SQL 查詢後，要確認舊的 QGIS/前端流程仍能使用。",
-        terms: ["regression", "regression check", "test case"],
-        challenge: "修完 bug 後，你會如何確認沒有造成新的 regression？"
+        title: "Copilot E2E 驗收與三分鐘 Demo",
+        concept: "最後要把技術串成可驗收的產品故事：問題、資料、RAG、引用／拒答、工具安全、評測、限制與下一步，而不是只展示聊天畫面。",
+        s111: "作品實作：用一題有答案、一題無答案與一個需人工確認的工單流程做 demo；展示引用、audit log、pytest 與評估報告，再用 STAR 說明自己的角色。",
+        terms: ["Copilot", "STAR", "SLO", "runbook"],
+        challenge: "請用三分鐘展示企業 IT／設備維運 Copilot，並說出可驗證成果與目前限制。"
       }
     ];
-
     const questionContexts = [
       {
-        title: "兩張表的 JOIN 情境",
-        note: "面試官會期待你先看主鍵、外鍵與聚合粒度。",
+        title: "JOIN 前先確認粒度",
+        note: "先說一列代表什麼，再談 JOIN 與 GROUP BY；回答最後一定要有筆數對帳。",
         html: `
-          <div class="context-grid">
-            <table class="data-table">
-              <caption>orders</caption>
-              <tr><th>order_id</th><th>user_id</th><th>created_at</th><th>amount</th></tr>
-              <tr><td>101</td><td>U01</td><td>2026-05-01</td><td>800</td></tr>
-              <tr><td>102</td><td>U01</td><td>2026-05-01</td><td>450</td></tr>
-              <tr><td>103</td><td>U02</td><td>2026-05-02</td><td>1200</td></tr>
-            </table>
-            <table class="data-table">
-              <caption>users</caption>
-              <tr><th>user_id</th><th>region</th><th>signup_date</th></tr>
-              <tr><td>U01</td><td>North</td><td>2026-04-20</td></tr>
-              <tr><td>U02</td><td>South</td><td>2026-04-23</td></tr>
-              <tr><td>U03</td><td>North</td><td>2026-05-01</td></tr>
-            </table>
+          <table class="data-table">
+            <tr><th>資料表</th><th>一列代表</th><th>Key</th></tr>
+            <tr><td>equipment</td><td>一台設備</td><td>equipment_id</td></tr>
+            <tr><td>tickets</td><td>一張工單</td><td>ticket_id</td></tr>
+            <tr><td>chunks</td><td>一段文件</td><td>source_id + version + chunk_no</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "保留明細的 SQL",
+        note: "GROUP BY 壓成每組一列；Window Function 可以保留工單明細並標出每台設備最新一筆。",
+        html: `
+          <pre class="code-block">ROW_NUMBER() OVER (
+  PARTITION BY equipment_id
+  ORDER BY updated_at DESC, ticket_id DESC
+)</pre>
+        `
+      },
+      {
+        title: "維運資料清洗邊界",
+        note: "清洗不只改 dtype；還要處理敏感資料、錯編碼、缺設備編號、重複工單與不可解析附件。",
+        html: `
+          <table class="data-table">
+            <tr><th>案例</th><th>預期處理</th></tr>
+            <tr><td>缺 ticket_id</td><td>拒收並記錄原因</td></tr>
+            <tr><td>重複工單</td><td>依 id／版本冪等更新</td></tr>
+            <tr><td>含 Email／電話</td><td>去敏後才進知識庫</td></tr>
+          </table>
+        `
+      },
+      {
+        title: "LeetCode 基礎口述",
+        note: "用 Two Sum 或工單去重說清楚 n、時間、空間與取捨，比只背 O(n) 更有說服力。",
+        html: `
+          <div class="flow-line">
+            <span>雙層掃描 O(n²)</span>→<span>建立 dict</span>→<span>一次遍歷 O(n)</span>→<span>額外空間 O(n)</span>
           </div>
-          <table class="data-table">
-            <caption>目標：計算每日各區域訂單金額</caption>
-            <tr><th>target_date</th><th>region</th><th>total_amount</th><th>order_count</th></tr>
-            <tr><td>2026-05-01</td><td>North</td><td>1250</td><td>2</td></tr>
-          </table>
         `
       },
       {
-        title: "Window Function 小資料",
-        note: "目標是找每位使用者最新一筆事件，同時保留明細欄位。",
+        title: "維運 Copilot 知識管線",
+        note: "每一段都要有版本、權限與驗證證據；RAG 不是把文件直接丟給模型。",
         html: `
-          <table class="data-table">
-            <caption>events</caption>
-            <tr><th>user_id</th><th>event_time</th><th>event_type</th><th>score</th></tr>
-            <tr><td>U01</td><td>09:00</td><td>login</td><td>10</td></tr>
-            <tr><td>U01</td><td>10:30</td><td>purchase</td><td>80</td></tr>
-            <tr><td>U02</td><td>09:20</td><td>login</td><td>20</td></tr>
-            <tr><td>U02</td><td>11:10</td><td>logout</td><td>5</td></tr>
-          </table>
-          <table class="data-table">
-            <caption>目標輸出：每位使用者最新一筆事件</caption>
-            <tr><th>user_id</th><th>event_time</th><th>event_type</th><th>score</th></tr>
-            <tr><td>U01</td><td>10:30</td><td>purchase</td><td>80</td></tr>
-            <tr><td>U02</td><td>11:10</td><td>logout</td><td>5</td></tr>
-          </table>
-          <div class="context-note">請說明你會如何保留整列明細、避免只用 GROUP BY 造成欄位遺失或結果不穩定。</div>
-        `
-      },
-      {
-        title: "髒資料清洗樣本",
-        note: "請說明欄位型別、空值、異常值與輸出驗證。",
-        html: `
-          <table class="data-table">
-            <caption>raw_measurements.csv</caption>
-            <tr><th>station_id</th><th>timestamp</th><th>speed_kn</th><th>lat</th><th>lon</th></tr>
-            <tr><td>A01</td><td>2026/05/01 09:00</td><td>0.72</td><td>25.04</td><td>121.53</td></tr>
-            <tr><td>A02</td><td>2026-05-01T10:00</td><td>NULL</td><td>25.10</td><td>121.60</td></tr>
-            <tr><td>A03</td><td>bad_time</td><td>-9</td><td></td><td>121.70</td></tr>
-          </table>
-        `
-      },
-      {
-        title: "複雜度分析情境",
-        note: "請定義 n 是什麼，並指出瓶頸。",
-        html: `
-          <pre class="code-sample">def count_by_user(rows):
-    result = {}
-    for row in rows:
-        user_id = row["user_id"]
-        result[user_id] = result.get(user_id, 0) + 1
-    return result</pre>
-          <table class="data-table">
-            <tr><th>輸入</th><th>n 的定義</th><th>額外空間</th></tr>
-            <tr><td>rows</td><td>資料列筆數</td><td>不同 user_id 的數量</td></tr>
-          </table>
-        `
-      },
-      {
-        title: "S-111 ETL 流程圖",
-        note: "請把流程講成 Extract、Transform、Load、Validate。",
-        html: `
-          <div class="mini-flow">
-            <span>NC / H5 / S-111</span>→<span>verification_pipeline</span>→<span>summary_stats + official/metric hotspot + spatial_stats</span>→<span>daily_results / PostgreSQL</span>→<span>QGIS / Flask API</span>
+          <div class="flow-line">
+            <span>手冊／SOP／工單</span>→<span>清洗＋去敏＋chunk</span>→<span>embedding＋pgvector</span>→<span>ACL retrieval</span>→<span>引用／拒答</span>
           </div>
+        `
+      },
+      {
+        title: "可重跑的 Ingestion",
+        note: "同一 source_id 與 document_version 重跑後不應增加 chunk；未通過品質門檻不能發布。",
+        html: `
           <table class="data-table">
-            <tr><th>欄位</th><th>用途</th></tr>
-            <tr><td>target_date, target_timestamp, lead_hours</td><td>篩選日期、小時與預報時效</td></tr>
-            <tr><td>lon, lat</td><td>空間位置</td></tr>
-            <tr><td>error_type, value, unit, severity, metric</td><td>區分 speed/direction、數值單位、warning/critical、official/metric 圖層</td></tr>
+            <tr><th>控制</th><th>驗收</th></tr>
+            <tr><td>run_id＋staging</td><td>部分失敗不污染正式表</td></tr>
+            <tr><td>chunk_hash</td><td>相同內容不重算 embedding</td></tr>
+            <tr><td>reconciliation</td><td>來源、成功、拒收、刪除可對帳</td></tr>
           </table>
         `
       },
       {
-        title: "批次重跑與 upsert 情境",
-        note: "請判斷哪些欄位應該成為唯一鍵。",
+        title: "Copilot API 契約",
+        note: "答案、引用與拒答必須是固定 schema；citation 由後端依真正取回的 chunk 組裝。",
         html: `
-          <table class="data-table">
-            <caption>hotspot_points 重跑樣本</caption>
-            <tr><th>run_id</th><th>target_date</th><th>target_timestamp</th><th>lead_hours</th><th>error_type</th><th>lon</th><th>lat</th><th>metric</th></tr>
-            <tr><td>R1</td><td>2026-04-10</td><td>00:00</td><td>24</td><td>direction</td><td>120.30</td><td>26.34</td><td>official(NULL)</td></tr>
-            <tr><td>R2</td><td>2026-04-10</td><td>00:00</td><td>24</td><td>direction</td><td>120.30</td><td>26.34</td><td>official(NULL)</td></tr>
-          </table>
-        `
-      },
-      {
-        title: "Threshold hotspot API 規格草稿",
-        note: "請說明參數、回傳欄位與前端用途。",
-        html: `
-          <table class="data-table">
-            <tr><th>Query param</th><th>範例</th><th>用途</th></tr>
-            <tr><td>date</td><td>2026-04-10</td><td>指定資料日期</td></tr>
-            <tr><td>lead_hours</td><td>24</td><td>指定預報時效</td></tr>
-            <tr><td>error_type</td><td>direction</td><td>speed 或 direction</td></tr>
-            <tr><td>metric</td><td>official</td><td>不填或 official 對應 metric IS NULL</td></tr>
-            <tr><td>bbox</td><td>120,25,122,27</td><td>限制地圖範圍</td></tr>
-            <tr><td>threshold</td><td>30</td><td>direction warning 閾值；speed 可用 0.5 kn</td></tr>
-            <tr><td>critical_threshold</td><td>45</td><td>direction critical 閾值；speed 預設 1.0 kn</td></tr>
-          </table>
-          <pre class="code-sample">{
-  "lon": 120.30,
-  "lat": 26.34,
-  "value": 38.2,
-  "unit": "deg",
-  "severity": "warning",
-  "color": "#f59e0b",
-  "metric": "official",
-  "layer_id": "official_direction_median_hotspots"
+          <pre class="code-block">POST /api/copilot/ask
+{
+  "question": "...",
+  "equipment_id": "EQ-42"
+}
+
+{
+  "answer": "...",
+  "citations": [...],
+  "refused": false,
+  "request_id": "..."
 }</pre>
         `
       },
       {
-        title: "PostgreSQL/PostGIS 表與索引",
-        note: "請說明 DB 不是只存資料，而是支援查詢與交接。",
+        title: "PostgreSQL／pgvector 資料模型",
+        note: "向量、文件版本、設備、工單與 ACL 仍是有關係的資料；不要只建一張無治理的 vector table。",
+        html: `
+          <div class="flow-line">
+            <span>documents</span>→<span>chunks + vector</span>→<span>permissions</span>→<span>tickets / equipment</span>
+          </div>
+        `
+      },
+      {
+        title: "企業維運 Copilot STAR",
+        note: "90 秒只講一條作品主線：找不到可信維運知識 → 建資料與 RAG 系統 → 可引用、拒答、評測與安全執行。",
         html: `
           <table class="data-table">
-            <tr><th>table</th><th>常用條件</th><th>可能索引</th></tr>
-            <tr><td>summary_stats</td><td>target_date, target_timestamp, lead_hours</td><td>(target_date, target_timestamp, lead_hours)</td></tr>
-            <tr><td>hotspot_points</td><td>target_date, target_timestamp, lead_hours, error_type, metric</td><td>(target_date, lead_hours, error_type, metric) + 空間條件</td></tr>
-            <tr><td>geometry</td><td>bbox / map extent</td><td>GIST geometry index</td></tr>
+            <tr><th>STAR</th><th>內容</th></tr>
+            <tr><td>Situation</td><td>手冊、SOP、工單分散，排障慢且難追溯</td></tr>
+            <tr><td>Task</td><td>建立可信且受權限控制的維運 Copilot</td></tr>
+            <tr><td>Action</td><td>Python／SQL／FastAPI／pgvector RAG／Agent guardrails</td></tr>
+            <tr><td>Result</td><td>用評估集、引用、拒答、pytest、延遲與成本驗證</td></tr>
           </table>
         `
       },
       {
-        title: "S-111 專案 STAR 提示",
-        note: "請用這些素材組成 90 秒回答，不要逐字照念。",
+        title: "Bug 定位證據鏈",
+        note: "先判斷 ingestion、retrieval、generation 或 tool layer，再用同一案例與 regression set 驗證。",
+        html: `
+          <div class="flow-line">
+            <span>request_id</span>→<span>retrieved chunks</span>→<span>prompt／answer</span>→<span>tool log</span>→<span>回歸測試</span>
+          </div>
+        `
+      },
+      {
+        title: "把 AI 指標說成決策",
+        note: "分母、分子與資料集版本要先固定；引用正確率、拒答率與首答解決率不能混成一個分數。",
         html: `
           <table class="data-table">
-            <tr><th>STAR</th><th>素材</th></tr>
-            <tr><td>Situation</td><td>S-111 驗證資料需要可查詢、可展示、可交接</td></tr>
-            <tr><td>Task</td><td>建立資料處理、DB、API 與 QGIS/前端使用流程</td></tr>
-            <tr><td>Action</td><td>PostGIS、threshold hotspot、API 文件、部署</td></tr>
-            <tr><td>Result</td><td>其他人可依日期、lead_hours、threshold 查詢與展示</td></tr>
+            <tr><th>指標</th><th>回答的問題</th></tr>
+            <tr><td>Recall@k</td><td>正確來源是否被檢索到</td></tr>
+            <tr><td>Citation correctness</td><td>引用是否真的支持回答</td></tr>
+            <tr><td>Refusal recall</td><td>該拒答的題目是否安全拒答</td></tr>
           </table>
         `
       },
       {
-        title: "Bug 排查紀錄樣本",
-        note: "請講現象、定位、修正、驗證，不要只說很複雜。",
+        title: "RAG 延遲拆解",
+        note: "先量測再優化，並用同一評估集確認速度改善沒有犧牲召回、引用或拒答。",
         html: `
-          <table class="data-table">
-            <tr><th>時間</th><th>觀察</th><th>可能原因</th></tr>
-            <tr><td>09:10</td><td>API 有資料但 QGIS 圖層空白</td><td>欄位名稱或 bbox 條件</td></tr>
-            <tr><td>09:25</td><td>DB count 正常，GeoJSON 缺 color</td><td>API mapping 漏欄位</td></tr>
-            <tr><td>09:40</td><td>修正後前端可顯示 warning/critical</td><td>需補 regression check</td></tr>
-          </table>
-        `
-      },
-      {
-        title: "查詢結果轉指標",
-        note: "請把表格數字轉成可解釋的決策語言。",
-        html: `
-          <table class="data-table">
-            <tr><th>date</th><th>lead_hours</th><th>warning</th><th>critical</th><th>total</th></tr>
-            <tr><td>2026-04-10</td><td>24</td><td>134</td><td>4</td><td>138</td></tr>
-            <tr><td>2026-04-10</td><td>48</td><td>248</td><td>9</td><td>257</td></tr>
-            <tr><td>2026-04-10</td><td>72</td><td>317</td><td>12</td><td>329</td></tr>
-          </table>
-        `
-      },
-      {
-        title: "API 效能排查資料",
-        note: "請判斷瓶頸可能在哪一段，並提出優先改善。",
-        html: `
-          <table class="data-table">
-            <tr><th>步驟</th><th>耗時</th><th>觀察</th></tr>
-            <tr><td>DB query</td><td>1800ms</td><td>沒有 bbox 時掃描筆數過大</td></tr>
-            <tr><td>JSON serialize</td><td>420ms</td><td>回傳 50,000 rows</td></tr>
-            <tr><td>Network</td><td>900ms</td><td>payload 8MB</td></tr>
-          </table>
+          <div class="flow-line">
+            <span>query embedding</span>→<span>pgvector</span>→<span>rerank</span>→<span>LLM</span>→<span>serialize／stream</span>
+          </div>
         `
       }
     ];
-
     const interviewTrackLabels = {
       backend: "Python 後端",
       data: "資料工程",
-      sdet: "SDET",
-      ai: "AI 應用"
+      sdet: "測試自動化（次要）",
+      ai: "AI 應用與資料整合（主線）"
     };
 
     function makeRoleQuestion(config) {
@@ -3069,7 +3021,7 @@
         expected: [["身分驗證", /authentication|登入|token|oauth|jwt|session/i], ["權限控制", /authorization|權限|角色|scope|403/i], ["輸入與狀態碼", /schema|pydantic|401|403|409|422/i], ["安全測試", /hash|secret|環境變數|測試|test|log/i]],
         skeleton: "我會先定義誰能做這個寫入，再把身分驗證與權限判斷分開。FastAPI dependency 驗證 session/token，service 處理規則與 transaction，repository 只負責資料存取。未登入回 401、已登入但無權限回 403，資料衝突回 409，schema 錯誤回 422；secret 不進程式碼或回應。最後用正常、過期 token、錯角色與重複提交測試，並確認 log 不含敏感值。",
         followups: ["401 和 403 為什麼不能混用？", "token 被竊取時你怎麼降低影響？", "你會把權限判斷放在哪一層？"],
-        scenario: "POST /observations 目前任何人都能寫入，準備開放給兩種角色使用。",
+        scenario: "POST /knowledge-sources 目前任何人都能新增維運文件，準備開放給兩種角色使用。",
         constraints: "viewer 只能讀；editor 可寫；不得在資料庫或 log 保存明文密碼。"
       }),
       makeRoleQuestion({
@@ -3083,7 +3035,7 @@
         expected: [["交易邊界", /transaction|交易|commit|rollback/i], ["併發控制", /lock|locking|version|optimistic|pessimistic|併發/i], ["冪等與唯一性", /idempoten|冪等|唯一鍵|unique|upsert/i], ["平行驗證", /parallel|concurr|同時|race|測試|筆數|409/i]],
         skeleton: "我會先把一個業務操作包在 transaction，讓任一寫入失敗時完整 rollback。資料庫以業務唯一鍵防重複；需要更新時用 version 欄位做 optimistic locking，衝突回 409，特定高競爭情境才考慮 row lock。對可重送請求加入 idempotency key。驗收時平行送出相同與相異 payload，檢查只有一份結果、版本正確，並測 deadlock／retry 不會重複提交。",
         followups: ["什麼時候會選 optimistic locking？", "idempotency key 要保存多久？", "deadlock 發生後能直接 retry 嗎？"],
-        scenario: "同一 run_id 的 observation 可能由重試機制同時送達。",
+        scenario: "同一 source_id／document_version 的 ingestion 可能由重試機制同時送達。",
         constraints: "不能用整張表 lock；失敗時不可留下半套資料。"
       }),
       makeRoleQuestion({
@@ -3097,7 +3049,7 @@
         expected: [["可重跑設計", /run_id|idempoten|冪等|upsert|merge|唯一鍵/i], ["排程與補跑", /airflow|dag|schedule|retry|backfill|watermark/i], ["分層載入", /staging|transaction|publish|rollback|分區/i], ["資料對帳", /reconcil|對帳|筆數|reject|quarantine|manifest/i]],
         skeleton: "我會以資料日期與 run_id 定義一次批次，先寫 staging 並保留來源 metadata，通過 schema 與品質檢查後再 transaction merge 到正式表。Airflow DAG 將 extract、validate、load、reconcile 分成可觀察任務，retry 只處理暫時性錯誤，backfill 明確指定資料區間。相同 run_id 重跑後筆數不變；最後對帳來源、成功、拒收、重複數並保存 manifest，全部通過才發布下游可見狀態。",
         followups: ["watermark 遲到資料怎麼處理？", "部分 partition 成功時能發布嗎？", "你如何判斷 retry 不會放大錯誤？"],
-        scenario: "每天載入海洋觀測資料，偶爾會晚到兩天或在載入途中失敗。",
+        scenario: "每天匯入設備手冊、SOP 與工單增量，來源偶爾晚到或在 embedding 中途失敗。",
         constraints: "需要支援指定日期 backfill，正式表不能出現半成品。"
       }),
       makeRoleQuestion({
@@ -3111,7 +3063,7 @@
         expected: [["資料契約", /contract|schema|欄位|型別|version/i], ["相容策略", /backward|forward|相容|migration|default/i], ["隔離與回復", /quarantine|隔離|reject|raw|rollback|replay|重播/i], ["品質與告警", /quality|品質|null|range|freshness|alert|告警|對帳/i]],
         skeleton: "我會把欄位、型別、必填與允許範圍做成版本化 data contract。載入前先做 compatibility check：可相容的新增欄位用明確 default，不相容的改型別停止發布並把原始資料送 quarantine，而不是自動強轉。保留 raw input 與 run metadata 供修復後 replay；告警要附影響日期與下游。最後用 null、range、freshness、筆數與指標對帳確認 migration 沒有改變既有語意。",
         followups: ["新增 nullable 欄位一定相容嗎？", "何時會停整條 pipeline？", "修好 schema 後如何安全重播？"],
-        scenario: "原本整數的 lead_hours 開始出現字串，並新增 source 欄位。",
+        scenario: "原本固定的 ticket priority 改成新 enum，並新增 access_scope 欄位。",
         constraints: "既有報表不能默默把錯誤列當成 0，也要能修復後重播。"
       }),
       makeRoleQuestion({
@@ -3125,7 +3077,7 @@
         expected: [["測試分層", /unit|integration|contract|e2e|API/i], ["案例設計", /等價類|邊界|decision table|狀態轉移|錯誤輸入/i], ["隔離資料", /fixture|seed|cleanup|隔離|獨立|test data/i], ["CI 證據", /CI|newman|pytest|report|報告|log|重跑/i]],
         skeleton: "我會先從建立、查詢、驗證與權限風險做 decision table。純規則放 unit tests，資料庫與 transaction 用 integration tests，request/response schema 做 contract checks，再以 Newman 跑建立→查詢→錯誤輸入的少量 E2E。每個測試有獨立 fixture／資料命名空間與 cleanup，不能依賴執行順序。CI 失敗保留 request、response、log 與報告，讓同一命令可在本機重跑。",
         followups: ["哪些案例不該放 E2E？", "測試資料如何避免互相污染？", "如果 contract 過但 E2E 失敗，你先查哪裡？"],
-        scenario: "POST /observations 後以 GET 查回；錯誤日期應回 422，重複資料回 409。",
+        scenario: "POST /knowledge-sources 後以 GET 查回；錯誤 schema 應回 422，重複版本回 409。",
         constraints: "CI 需在十分鐘內完成，測試不能依賴正式服務。"
       }),
       makeRoleQuestion({
@@ -3139,12 +3091,12 @@
         expected: [["失敗證據", /trace|video|screenshot|截圖|log/i], ["穩定定位", /role locator|getByRole|locator|wait.*condition|auto.?wait|selector/i], ["隔離與環境", /共享|順序|parallel|資料|timezone|viewport|network|環境/i], ["驗證修正", /重跑|repeat|連跑|失敗率|regression|CI/i]],
         skeleton: "我會先在 CI 保留 trace、video、screenshot、console 與 network log，記錄失敗率和環境。用 repeat-each／單獨執行／改變順序提高重現率，再檢查 role locator、等待條件、共享資料、時區、viewport 與網路 stub。修正應移除固定 sleep 和脆弱 selector，而不是把 retry 當答案。最後在隔離與平行模式連跑至少十次，並保留原失敗案例作 regression。",
         followups: ["retry 什麼時候可以保留？", "為何固定 sleep 會讓測試更不穩？", "如何判斷是產品 bug 還是測試 bug？"],
-        scenario: "勾選進度後重載應保留，但 CI 約 5% 看不到勾選狀態。",
+        scenario: "切換設備篩選後答案引用應同步更新，但 CI 約 5% 還顯示上一台設備的來源。",
         constraints: "不得以增加五秒 sleep 作為最終修正。"
       }),
       makeRoleQuestion({
         track: "ai", domain: "ai",
-        title: "你如何證明一個 RAG 系統不是只在示範題上看起來能用？",
+        title: "你如何證明維運 Copilot 的 RAG 不是只在示範題上看起來能用？",
         hint: "請定義評估集、retrieval／answer 指標、無答案、引用與失敗分類。",
         success: "用可重跑資料判斷改動是否真的改善，而不是憑感覺。",
         flow: "建立題集 → 固定 expected source → 跑檢索與回答 → 分類失敗。",
@@ -3153,12 +3105,12 @@
         expected: [["評估資料", /evaluation|評估集|expected|ground truth|題集/i], ["檢索指標", /retriev|recall|precision|top.?k|chunk|命中/i], ["回答與拒答", /faithful|引用|citation|無答案|拒答|hallucination|幻覺/i], ["可重跑證據", /版本|latency|cost|token|失敗分類|regression|重跑/i]],
         skeleton: "我會先建立有版本的評估集，包含可回答、文件沒有答案與干擾提示，逐題保存 expected answer／source。每次執行記錄 query、retrieved chunks、top-k、實際回答與引用，分開 retrieval miss、生成錯誤、無答案誤答和 citation mismatch。除了命中與正確率，也追蹤 latency、token 和 cost。任何 chunking、embedding 或 prompt 改動都跑同一份 regression set，才知道是整體改善還是只修好示範題。",
         followups: ["檢索命中但答案錯，問題在哪一層？", "無答案題要怎麼評分？", "你會先調 chunk 還是 prompt？"],
-        scenario: "Mini RAG 在三題 demo 都成功，但換文件後常引用錯段落。",
+        scenario: "維運 Copilot 在三題 demo 都成功，但換設備手冊後常引用錯段落，無答案時也會硬答。",
         constraints: "只有小型文件集與有限 API 預算，仍需能比較版本。"
       }),
       makeRoleQuestion({
         track: "ai", domain: "ai",
-        title: "Agent 可以呼叫工具時，你如何限制 prompt injection 與錯誤操作？",
+        title: "維運 Copilot 可查工單與建立草稿時，如何限制注入與錯誤操作？",
         hint: "請談 allowlist、schema 驗證、最小權限、確認點、timeout、稽核與降級。",
         success: "模型只能提出受控請求，真正執行仍由程式碼政策決定。",
         flow: "模型產生結構化意圖 → policy／schema 驗證 → 執行 → 驗證結果。",
@@ -3167,7 +3119,7 @@
         expected: [["工具白名單", /allowlist|白名單|未知工具|tool/i], ["參數與權限", /schema|驗證|最小權限|read.?only|唯讀|scope/i], ["注入與確認", /prompt injection|注入|human|人工|確認|approval/i], ["失敗與稽核", /timeout|retry|idempoten|audit|稽核|log|cost|latency/i]],
         skeleton: "我不會讓模型直接執行任意函式。模型只輸出結構化 tool request，程式碼再比對 allowlist、schema、使用者權限與資源範圍；預設工具唯讀，高風險寫入必須人工確認。文件與使用者內容都視為不可信資料，不能改寫系統政策。每次呼叫有 request id、timeout、次數與成本上限，重試需冪等；未知工具、越權參數或驗證失敗直接拒絕並安全降級，稽核 log 不記錄 secret。",
         followups: ["文件裡寫『忽略規則』時怎麼辦？", "哪些操作一定要人工確認？", "工具成功回傳但內容不合理，下一步呢？"],
-        scenario: "模型可查詢資料庫與產生報告，未來可能新增寫入功能。",
+        scenario: "模型可查設備與工單，並能建立工單草稿；送出與關單屬高風險寫入。",
         constraints: "外部文件可能包含惡意指令；資料庫憑證不可交給模型。"
       })
     ];
@@ -3197,20 +3149,20 @@
         hint: `今天先學「${lesson.title}」，再回答：${lesson.challenge}`,
         guide: [
           ["先定義", `用白話說明 ${lesson.terms[0]} 是什麼。`],
-          ["連專案", "把概念連回 S-111、PostgreSQL/PostGIS、API 或 QGIS。"],
+          ["連作品", "把概念連回企業 IT／設備維運知識與工單 Copilot。"],
           ["答題目", "針對今日挑戰題直接回答，不要只背名詞。"],
           ["補驗證", "最後說你會如何檢查、取捨或避免風險。"]
         ],
         expected: [
           ["今日術語", new RegExp(termsPattern, "i")],
           ["白話定義", /意思|代表|用來|概念|白話|指的是|解決.{0,20}問題/i],
-          ["S-111 連結", /S-111|PostgreSQL|PostGIS|Flask|FastAPI|QGIS|NetCDF|hotspot|lead_hours|bbox|pipeline|資料庫/i],
+          ["Copilot 連結", /Copilot|PostgreSQL|pgvector|FastAPI|RAG|embedding|chunk|citation|引用|拒答|Agent|工單|設備|pipeline|資料庫/i],
           ["驗證或取捨", /驗證|檢查|取捨|風險|限制|測試|log|確認|比對|避免|改善/i]
         ],
-        skeleton: `我會先用白話定義 ${lesson.title}：${lesson.concept} 接著我會連到自己的 S-111 經驗：${lesson.s111} 如果面試官問「${lesson.challenge}」，我會先講使用情境，再講我會怎麼做，最後補上驗證方式或取捨，避免只是背名詞。`,
+        skeleton: `我會先用白話定義 ${lesson.title}：${lesson.concept} 接著我會連到企業 IT／設備維運 Copilot：${lesson.s111} 如果面試官問「${lesson.challenge}」，我會先講使用情境，再講我會怎麼做，最後補上驗證方式或取捨，避免只是背名詞。這只是改寫骨架，仍要用實作、測試與評測證明技術正確性。`,
         followups: [
           `請不用術語，向非工程背景的人解釋「${lesson.title}」。`,
-          "這個知識點在你的 S-111 專案裡最像哪一段工作？",
+          "這個知識點在你的企業維運 Copilot 裡最像哪一段工作？",
           "如果面試官追問風險或限制，你會補哪一句？"
         ]
       };
@@ -3224,7 +3176,7 @@
           <table class="data-table">
             <tr><th>欄位</th><th>內容</th></tr>
             <tr><td>核心概念</td><td>${lesson.concept}</td></tr>
-            <tr><td>S-111 對應</td><td>${lesson.s111}</td></tr>
+            <tr><td>Copilot 實作</td><td>${lesson.s111}</td></tr>
             <tr><td>今日挑戰</td><td>${lesson.challenge}</td></tr>
           </table>
           <div class="context-note">今天作答時至少自然用到：${lesson.terms.map(term => `<strong>${term}</strong>`).join("、")}。</div>
@@ -3248,13 +3200,16 @@
     const progressStorageKey = "rongDataMockInterview";
     const progressBackupKey = "rongDataMockInterviewLastChange";
     const progressVersion = 4;
+    const contentVersion = "2026-08-17-ai-copilot-v1";
+    const rubricVersion = "2026-08-17-heuristic-v2";
     const maxTextLength = 8000;
     let saveTimer = 0;
+    let versionResetApplied = false;
 
     const state = {
       current: 0,
       view: "learn",
-      interviewTrack: "data",
+      interviewTrack: "ai",
       lessonOffset: 0,
       learnedLessons: Array(dailyLessons.length).fill(false),
       lessonReflections: Array(dailyLessons.length).fill(""),
@@ -3525,10 +3480,20 @@
       return Number.isSafeInteger(value) && value >= 0 && value <= 10_000_000 ? value : 0;
     }
 
+    function usesCurrentContent(saved) {
+      return Boolean(saved && saved.contentVersion === contentVersion);
+    }
+
+    function usesCurrentRubric(saved) {
+      return usesCurrentContent(saved) && saved.rubricVersion === rubricVersion;
+    }
+
     function progressStateSnapshot() {
       return {
         app: "rong-data-interview-learning-console",
         version: progressVersion,
+        contentVersion,
+        rubricVersion,
         current: state.current,
         view: state.view,
         interviewTrack: state.interviewTrack,
@@ -3551,28 +3516,45 @@
 
     function applySavedProgress(saved) {
       if (!saved || typeof saved !== "object" || Array.isArray(saved)) throw new Error("進度格式不正確");
+      const contentIsCurrent = usesCurrentContent(saved);
+      const rubricIsCurrent = usesCurrentRubric(saved);
+      if (!rubricIsCurrent) versionResetApplied = true;
       state.current = alignSavedQuestionIndex(saved.current, saved.answers);
       state.view = saved.view === "interview" ? "interview" : "learn";
-      state.interviewTrack = Object.hasOwn(interviewTrackLabels, saved.interviewTrack) ? saved.interviewTrack : "data";
+      state.interviewTrack = contentIsCurrent && Object.hasOwn(interviewTrackLabels, saved.interviewTrack) ? saved.interviewTrack : "ai";
       state.answers = normalizeTextArray(saved.answers);
-      state.feedback = mergeSavedArray(saved.feedback, null).map(normalizeFeedbackItem);
-      state.learnedLessons = normalizeLearnedLessons(saved.learnedLessons, state.feedback);
+      state.feedback = rubricIsCurrent
+        ? mergeSavedArray(saved.feedback, null).map(normalizeFeedbackItem)
+        : Array(questions.length).fill(null);
+      state.learnedLessons = rubricIsCurrent
+        ? normalizeLearnedLessons(saved.learnedLessons, state.feedback)
+        : Array(dailyLessons.length).fill(false);
       state.lessonReflections = normalizeTextArray(saved.lessonReflections, dailyLessons.length);
-      state.lessonReadiness = normalizeLessonReadiness(saved.lessonReadiness);
-      state.lessonResources = normalizeLessonResources(saved.lessonResources, state.learnedLessons);
-      backfillReadinessForLearned();
+      state.lessonReadiness = rubricIsCurrent
+        ? normalizeLessonReadiness(saved.lessonReadiness)
+        : Array(dailyLessons.length).fill(null);
+      state.lessonResources = contentIsCurrent
+        ? normalizeLessonResources(saved.lessonResources, state.learnedLessons)
+        : Array.from({ length: dailyLessons.length }, () => Array(4).fill(false));
+      if (rubricIsCurrent) backfillReadinessForLearned();
       const maxOffset = highestUnlockedLessonOffset();
       state.lessonOffset = Number.isInteger(saved.lessonOffset)
         ? Math.min(Math.max(saved.lessonOffset, 0), maxOffset)
         : maxOffset;
+      if (isDailyQuestionIndex(state.current) && !isLessonChallengeUnlocked(state.current - dailyLessonStartIndex)) {
+        state.current = learningQuestionIndex(maxOffset);
+        state.view = "learn";
+      }
       state.hintsOpen = mergeSavedArray(saved.hintsOpen, false).map(value => value === true);
       state.followupQuestions = normalizeTextArray(saved.followupQuestions);
       state.followupAnswers = normalizeTextArray(saved.followupAnswers);
-      state.followupFeedback = mergeSavedArray(saved.followupFeedback, null).map(normalizeFeedbackItem);
+      state.followupFeedback = rubricIsCurrent
+        ? mergeSavedArray(saved.followupFeedback, null).map(normalizeFeedbackItem)
+        : Array(questions.length).fill(null);
       const savedChecks = alignSavedQuestionArray(saved.selfChecks);
       state.selfChecks = questions.map((question, index) => {
         const checks = savedChecks[index];
-        return Array.isArray(checks) && checks.length === question.expected.length
+        return rubricIsCurrent && Array.isArray(checks) && checks.length === question.expected.length
           ? checks.map(value => value === true)
           : Array(question.expected.length).fill(false);
       });
@@ -3586,6 +3568,10 @@
         raw = localStorage.getItem(progressStorageKey) || "";
         if (!raw) return false;
         applySavedProgress(JSON.parse(raw));
+        if (versionResetApplied) {
+          els.saveState.textContent = "內容已更新，請重新檢核";
+          setSyncStatus("已保留舊答案與筆記；課程完成、feedback 與 readiness 已依新版內容／評分規則重設，請重新實作與檢核。", "ok");
+        }
         return true;
       } catch (error) {
         try {
@@ -3894,14 +3880,20 @@
       const incoming = validatedProgressState(payload);
       const shouldMerge = options.merge === true;
       const preferIncoming = shouldMerge && options.preferIncoming === true;
+      const incomingContentIsCurrent = usesCurrentContent(incoming);
+      const incomingRubricIsCurrent = usesCurrentRubric(incoming);
       const textChooser = preferIncoming ? chooseIncomingText : chooseLocalText;
       const feedbackChooser = preferIncoming ? chooseIncomingFeedback : chooseHigherFeedback;
-      const incomingFeedback = mergeSavedArray(incoming.feedback, null).map(normalizeFeedbackItem);
+      const incomingFeedback = incomingRubricIsCurrent
+        ? mergeSavedArray(incoming.feedback, null).map(normalizeFeedbackItem)
+        : Array(questions.length).fill(null);
       if (!shouldMerge) state.current = alignSavedQuestionIndex(incoming.current, incoming.answers);
       const incomingAnswers = normalizeTextArray(incoming.answers);
       state.answers = shouldMerge ? mergeProgressArray(state.answers, incomingAnswers, "", textChooser) : incomingAnswers;
       state.feedback = shouldMerge ? mergeProgressArray(state.feedback, incomingFeedback, null, feedbackChooser) : incomingFeedback;
-      const incomingLearned = normalizeLearnedLessons(incoming.learnedLessons, incomingFeedback);
+      const incomingLearned = incomingRubricIsCurrent
+        ? normalizeLearnedLessons(incoming.learnedLessons, incomingFeedback)
+        : Array(dailyLessons.length).fill(false);
       state.learnedLessons = shouldMerge
         ? Array.from({ length: dailyLessons.length }, (_, index) => Boolean(state.learnedLessons[index] || incomingLearned[index]))
         : incomingLearned;
@@ -3909,20 +3901,24 @@
       state.lessonReflections = shouldMerge
         ? Array.from({ length: dailyLessons.length }, (_, index) => incomingReflections[index] || state.lessonReflections[index] || "")
         : incomingReflections;
-      const incomingReadiness = normalizeLessonReadiness(incoming.lessonReadiness);
+      const incomingReadiness = incomingRubricIsCurrent
+        ? normalizeLessonReadiness(incoming.lessonReadiness)
+        : Array(dailyLessons.length).fill(null);
       state.lessonReadiness = shouldMerge ? mergeReadiness(state.lessonReadiness, incomingReadiness, preferIncoming) : incomingReadiness;
-      const incomingResources = normalizeLessonResources(incoming.lessonResources, incomingLearned);
+      const incomingResources = incomingContentIsCurrent
+        ? normalizeLessonResources(incoming.lessonResources, incomingLearned)
+        : Array.from({ length: dailyLessons.length }, () => Array(4).fill(false));
       state.lessonResources = shouldMerge
         ? mergeLessonResources(state.lessonResources, incomingResources, state.learnedLessons)
-        : normalizeLessonResources(incoming.lessonResources, state.learnedLessons);
-      backfillReadinessForLearned();
+        : incomingResources;
+      if (incomingRubricIsCurrent || shouldMerge) backfillReadinessForLearned();
       const maxOffset = highestUnlockedLessonOffset();
       state.lessonOffset = Number.isInteger(incoming.lessonOffset)
         ? Math.min(Math.max(shouldMerge ? Math.max(state.lessonOffset, incoming.lessonOffset) : incoming.lessonOffset, 0), maxOffset)
         : maxOffset;
       if (!shouldMerge) {
         state.view = incoming.view === "interview" ? "interview" : "learn";
-        state.interviewTrack = Object.hasOwn(interviewTrackLabels, incoming.interviewTrack) ? incoming.interviewTrack : "data";
+        state.interviewTrack = incomingContentIsCurrent && Object.hasOwn(interviewTrackLabels, incoming.interviewTrack) ? incoming.interviewTrack : "ai";
       }
       if (isDailyQuestionIndex(state.current) && !isLessonChallengeUnlocked(state.current - dailyLessonStartIndex)) {
         state.current = learningQuestionIndex(maxOffset);
@@ -3934,14 +3930,16 @@
         : incomingHints;
       const incomingQuestions = normalizeTextArray(incoming.followupQuestions);
       const incomingAnswersFollowup = normalizeTextArray(incoming.followupAnswers);
-      const incomingFollowupFeedback = mergeSavedArray(incoming.followupFeedback, null).map(normalizeFeedbackItem);
+      const incomingFollowupFeedback = incomingRubricIsCurrent
+        ? mergeSavedArray(incoming.followupFeedback, null).map(normalizeFeedbackItem)
+        : Array(questions.length).fill(null);
       state.followupQuestions = shouldMerge ? mergeProgressArray(state.followupQuestions, incomingQuestions, "", textChooser) : incomingQuestions;
       state.followupAnswers = shouldMerge ? mergeProgressArray(state.followupAnswers, incomingAnswersFollowup, "", textChooser) : incomingAnswersFollowup;
       state.followupFeedback = shouldMerge ? mergeProgressArray(state.followupFeedback, incomingFollowupFeedback, null, feedbackChooser) : incomingFollowupFeedback;
       const incomingChecksSource = alignSavedQuestionArray(incoming.selfChecks);
       const incomingChecks = questions.map((question, index) => {
         const checks = incomingChecksSource[index];
-        return Array.isArray(checks) && checks.length === question.expected.length
+        return incomingRubricIsCurrent && Array.isArray(checks) && checks.length === question.expected.length
           ? checks.map(value => value === true)
           : Array(question.expected.length).fill(false);
       });
@@ -4515,11 +4513,11 @@
         issues.push("可以再補一點「邊想邊講」的語言：例如卡住時會說目前想法、卡在哪、下一步要驗證什麼。");
       }
 
-      if (/S-111|PostgreSQL|PostGIS|QGIS|API|NetCDF|Flask|FastAPI|SQL|Python|pytest|Playwright|RAG|embedding|Agent|tool calling|hotspot|0\.48|lead_hours|bbox/i.test(text)) {
+      if (/Copilot|PostgreSQL|pgvector|API|FastAPI|SQL|Python|pytest|LeetCode|RAG|embedding|chunk|citation|引用|拒答|Agent|tool calling|JSON Schema|HITL|工單|設備|pipeline/i.test(text)) {
         score += 4;
-        strengths.push("有連到具體技術或 S-111 專案，這會讓回答更有辨識度。");
+        strengths.push("有連到企業維運 Copilot 或具體技術，這會讓回答更有辨識度。");
       } else {
-        issues.push("缺少具體專案或技術名詞。建議連到 S-111、PostgreSQL/PostGIS、API、QGIS 或資料管線。");
+        issues.push("缺少具體作品或技術名詞。建議連到企業維運 Copilot、Python／SQL／FastAPI、pgvector RAG、評測或 Agent 安全。");
       }
 
       if (/驗證|檢查|測試|比對|筆數|log|assert|結果|確認|對帳|抽樣/i.test(text)) {
@@ -4607,9 +4605,9 @@
       else if (score >= 45) title = "有骨架但不夠穩";
 
       const summary = score >= 80
-        ? "這題已經能被追問，接下來練精簡和臨場口說。"
+        ? "啟發式文字檢核顯示結構完整；接下來仍要用實作、測試與追問驗證技術正確性。"
         : score >= 65
-          ? "回答方向對，但還要補證據、限制或專案細節。"
+          ? "啟發式文字檢核方向可用，但還要補證據、限制與實作驗證。"
           : score >= 45
             ? "有回答到一部分，但面試官可能會追問你具體怎麼做。"
             : "目前還不夠像面試答案，先照改寫骨架重寫一次。";
@@ -4703,11 +4701,11 @@
         issues.push("請先用白話說這個概念是在解決什麼問題。");
       }
 
-      if (/S-111|PostgreSQL|PostGIS|QGIS|API|NetCDF|hotspot|lead_hours|bbox|target_date|資料庫|pipeline/i.test(answer)) {
+      if (/Copilot|PostgreSQL|pgvector|FastAPI|API|RAG|embedding|chunk|citation|引用|拒答|Agent|tool|JSON Schema|HITL|工單|設備|資料庫|pipeline/i.test(answer)) {
         score += 16;
-        strengths.push("有連到你的 S-111 或資料專案。");
+        strengths.push("有連到企業維運 Copilot 的具體實作。");
       } else {
-        issues.push("請把這課連到 S-111、PostgreSQL/PostGIS、API、QGIS 或 NetCDF 其中一段。");
+        issues.push("請把這課連到企業維運 Copilot 的 Python／SQL／FastAPI、pgvector RAG、評測或 Agent 其中一段。");
       }
 
       if (/我會|先|接著|然後|最後|步驟|流程|檢查|確認|驗證|比對|筆數|測試|log/i.test(answer)) {
@@ -4731,7 +4729,7 @@
       const copiedSignals = conceptWords.filter(word => answer.includes(word)).length;
       if (answer.includes(lesson.concept.slice(0, 18)) || copiedSignals >= 5) {
         score -= 8;
-        issues.push("看起來有點像照抄教材。請換成你自己的語氣，再加一個 S-111 例子。");
+        issues.push("看起來有點像照抄教材。請換成自己的語氣，再加一個維運 Copilot 實作例子。");
       }
 
       if (/大概|可能就是|之類|等等|反正|應該可以/.test(answer)) {
@@ -4811,9 +4809,9 @@
     function videoSearchQuery(lesson, platform) {
       const terms = lesson.terms.join(" ");
       if (platform === "youtube") {
-        return `${terms} data engineering tutorial interview`;
+        return `${terms} Python FastAPI pgvector RAG Agent tutorial interview`;
       }
-      return `${lesson.title} ${terms} 數據工程 面試 教程`;
+      return `${lesson.title} ${terms} AI 應用 資料工程 面試 教程`;
     }
 
     function videoSearchUrl(platform, lesson) {
@@ -4826,6 +4824,13 @@
 
     const curatedVideos = {
       youtube: [
+        { match: /pytest|pydantic|fastapi/i, label: "搜尋 Python API 測試", url: "https://www.youtube.com/results?search_query=Python+FastAPI+Pydantic+pytest+tutorial" },
+        { match: /git branch|linux|dockerfile|docker compose/i, label: "Git and GitHub for Beginners", url: "https://www.youtube.com/watch?v=RGOj5yH7evk" },
+        { match: /langgraph/i, label: "LangGraph Human-In-The-Loop", url: "https://www.youtube.com/watch?v=Za8CrPqQxpA" },
+        { match: /embedding|pgvector|hybrid|rerank|rag|chunk/i, label: "搜尋 pgvector RAG", url: "https://www.youtube.com/results?search_query=pgvector+RAG+embedding+tutorial" },
+        { match: /citation|grounded|no-answer|evaluation|recall|mrr|faithful/i, label: "搜尋 RAG Evaluation", url: "https://www.youtube.com/results?search_query=RAG+evaluation+citations+refusal+tutorial" },
+        { match: /tool calling|json schema|structured output|agent|hitl/i, label: "搜尋 Agent Tool Calling", url: "https://www.youtube.com/results?search_query=Agent+tool+calling+JSON+Schema+HITL+tutorial" },
+        { match: /prompt injection|data leakage|red team/i, label: "搜尋 LLM Security", url: "https://www.youtube.com/results?search_query=LLM+prompt+injection+security+red+team" },
         { match: /etl|data pipeline/i, label: "IBM ETL", url: "https://www.youtube.com/watch?v=OW5OgsLpDCQ" },
         { match: /primary|foreign/i, label: "PK/FK + JOIN", url: "https://www.youtube.com/watch?v=G3lJAxg1cy8" },
         { match: /granularity/i, label: "Granularity + joins", url: "https://www.youtube.com/watch?v=CPNFQ3xF20Q" },
@@ -4842,9 +4847,8 @@
         { match: /manifest|version/i, label: "Data versioning", url: "https://www.youtube.com/watch?v=kLKBcPonMYw" },
         { match: /timeout|error handling/i, label: "API timeout errors", url: "https://www.youtube.com/watch?v=IhZxdlJvXco" },
         { match: /endpoint|query parameter/i, label: "REST API basics", url: "https://www.youtube.com/watch?v=-mN3VyJuCjM" },
-        { match: /json|geojson/i, label: "GeoJSON intro", url: "https://www.youtube.com/watch?v=HGz9wA-ImlM" },
+        { match: /json/i, label: "搜尋 JSON REST API", url: "https://www.youtube.com/results?search_query=JSON+REST+API+tutorial" },
         { match: /pagination|limit/i, label: "API pagination", url: "https://www.youtube.com/watch?v=14K_a2kKTxU" },
-        { match: /bbox|postgis|gist/i, label: "PostGIS intro", url: "https://www.youtube.com/watch?v=ruTP-4yRl1A" },
         { match: /explain/i, label: "Postgres EXPLAIN", url: "https://www.youtube.com/watch?v=P7EUFtjeAmI" },
         { match: /cache/i, label: "HTTP caching", url: "https://www.youtube.com/watch?v=HiBDZgTNpXY" },
         { match: /star/i, label: "Kelly Tsai 面試技巧", url: "https://www.youtube.com/watch?v=zMwDYz0b_7g" },
@@ -4854,6 +4858,13 @@
         { match: /regression/i, label: "Regression testing", url: "https://www.youtube.com/watch?v=AWX6WvYktwk" }
       ],
       bilibili: [
+        { match: /pytest|pydantic|fastapi/i, label: "搜尋 Python API 測試", url: "https://search.bilibili.com/all?keyword=Python%20FastAPI%20Pydantic%20pytest%20教程" },
+        { match: /git branch|linux|dockerfile|docker compose/i, label: "30 分鐘 Docker 入門", url: "https://www.bilibili.com/video/BV14s4y1i7Vf/" },
+        { match: /langgraph/i, label: "搜尋 LangGraph HITL", url: "https://search.bilibili.com/all?keyword=LangGraph%20HITL%20教程" },
+        { match: /embedding|pgvector|hybrid|rerank|rag|chunk/i, label: "搜尋 pgvector RAG", url: "https://search.bilibili.com/all?keyword=pgvector%20RAG%20embedding%20教程" },
+        { match: /citation|grounded|no-answer|evaluation|recall|mrr|faithful/i, label: "搜尋 RAG 評測", url: "https://search.bilibili.com/all?keyword=RAG%20评测%20引用%20拒答" },
+        { match: /tool calling|json schema|structured output|agent|hitl/i, label: "搜尋 Agent Tool Calling", url: "https://search.bilibili.com/all?keyword=Agent%20Tool%20Calling%20JSON%20Schema%20HITL" },
+        { match: /prompt injection|data leakage|red team/i, label: "搜尋 LLM 安全", url: "https://search.bilibili.com/all?keyword=LLM%20Prompt%20Injection%20安全" },
         { match: /etl|data pipeline/i, label: "數據工程 ETL", url: "https://www.bilibili.com/video/BV1kt421473m/" },
         { match: /primary|foreign/i, label: "主鍵與外鍵", url: "https://www.bilibili.com/video/BV1hS4y1i7mD/" },
         { match: /granularity|join/i, label: "SQL JOIN", url: "https://www.bilibili.com/video/BV1Xm4y1973L/" },
@@ -4867,8 +4878,7 @@
         { match: /idempotent|manifest/i, label: "ETL 資料處理", url: "https://www.bilibili.com/video/BV1uD42157g5/" },
         { match: /upsert|on conflict/i, label: "PostgreSQL 速通", url: "https://www.bilibili.com/video/BV1XrqwBXEGX/" },
         { match: /endpoint|query parameter|pagination|timeout|error handling/i, label: "REST API 設計", url: "https://www.bilibili.com/video/BV1rk7azRE2F/" },
-        { match: /json|geojson/i, label: "JSON 入門", url: "https://www.bilibili.com/video/BV1AnJazZEPe/" },
-        { match: /bbox|postgis|gist/i, label: "PostGIS 實戰", url: "https://www.bilibili.com/video/BV1AN411U76a/" },
+        { match: /json/i, label: "JSON 入門", url: "https://www.bilibili.com/video/BV1AnJazZEPe/" },
         { match: /explain/i, label: "PostgreSQL 優化", url: "https://www.bilibili.com/video/BV1fS4y1F7a4/" },
         { match: /cache/i, label: "REST API Cache", url: "https://www.bilibili.com/video/BV1ksR5YsEFC/" },
         { match: /star/i, label: "資料分析 STAR", url: "https://www.bilibili.com/video/BV1jb411X7Su/" },
@@ -4889,6 +4899,18 @@
     }
 
     const curatedReferences = [
+      { match: /type hints|pydantic|dataclass/i, label: "Pydantic 文件", url: "https://docs.pydantic.dev/latest/" },
+      { match: /pytest|fixture|parametrize|mock llm|regression/i, label: "pytest 文件", url: "https://docs.pytest.org/en/stable/" },
+      { match: /big-o|hash map|two pointers/i, label: "Python complexity", url: "https://wiki.python.org/moin/TimeComplexity" },
+      { match: /fastapi|openapi|http status/i, label: "FastAPI 文件", url: "https://fastapi.tiangolo.com/" },
+      { match: /git branch|linux|dockerfile|docker compose/i, label: "Docker Get Started", url: "https://docs.docker.com/get-started/" },
+      { match: /langgraph/i, label: "LangGraph Human-in-the-loop", url: "https://docs.langchain.com/oss/python/langchain/human-in-the-loop" },
+      { match: /data contract|ingestion|chunking|metadata|acl/i, label: "AI Engineer Roadmap", url: "https://roadmap.sh/ai-engineer" },
+      { match: /embedding|rag|citation|grounded|no-answer|evaluation|faithful|tool calling|structured output|agent|hitl/i, label: "OpenAI 開發文件", url: "https://platform.openai.com/docs" },
+      { match: /pgvector|hnsw|ivfflat|vector column/i, label: "pgvector 文件", url: "https://github.com/pgvector/pgvector" },
+      { match: /hybrid|full-text|rerank/i, label: "PostgreSQL Full Text Search", url: "https://www.postgresql.org/docs/current/textsearch.html" },
+      { match: /prompt injection|data leakage|red team/i, label: "OWASP LLM Security", url: "https://genai.owasp.org/" },
+      { match: /json schema|additionalproperties/i, label: "JSON Schema", url: "https://json-schema.org/learn/getting-started-step-by-step" },
       { match: /etl/i, label: "IBM ETL", url: "https://www.ibm.com/think/topics/etl" },
       { match: /primary|foreign/i, label: "PostgreSQL constraints", url: "https://www.postgresql.org/docs/current/ddl-constraints.html" },
       { match: /granularity/i, label: "Kimball grain", url: "https://www.kimballgroup.com/2008/11/fact-tables/" },
@@ -4904,9 +4926,8 @@
       { match: /upsert|on conflict/i, label: "PostgreSQL INSERT", url: "https://www.postgresql.org/docs/current/sql-insert.html" },
       { match: /manifest/i, label: "Frictionless Data Package", url: "https://specs.frictionlessdata.io/data-package/" },
       { match: /endpoint|query parameter/i, label: "Microsoft API guidelines", url: "https://github.com/microsoft/api-guidelines" },
-      { match: /json|geojson/i, label: "GeoJSON RFC 7946", url: "https://datatracker.ietf.org/doc/html/rfc7946" },
+      { match: /json/i, label: "MDN JSON", url: "https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/JSON" },
       { match: /pagination|limit/i, label: "Microsoft pagination", url: "https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#pagination" },
-      { match: /bbox|postgis|gist/i, label: "PostGIS workshop", url: "https://postgis.net/workshops/postgis-intro/" },
       { match: /explain/i, label: "PostgreSQL EXPLAIN", url: "https://www.postgresql.org/docs/current/using-explain.html" },
       { match: /cache/i, label: "MDN HTTP caching", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" },
       { match: /timeout|error handling/i, label: "Microsoft REST errors", url: "https://github.com/microsoft/api-guidelines/blob/vNext/azure/Guidelines.md#errors" },
@@ -4918,6 +4939,14 @@
     ];
 
     const curatedPractice = [
+      { match: /type hints|pydantic|fastapi/i, label: "FastAPI Tutorial", url: "https://fastapi.tiangolo.com/tutorial/" },
+      { match: /pytest|fixture|parametrize|mock llm|regression/i, label: "pytest Getting Started", url: "https://docs.pytest.org/en/stable/getting-started.html" },
+      { match: /big-o|hash map|two pointers/i, label: "LeetCode Hash Table", url: "https://leetcode.com/explore/learn/card/hash-table/" },
+      { match: /git branch|linux|dockerfile|docker compose/i, label: "Docker Get Started", url: "https://docs.docker.com/get-started/" },
+      { match: /langgraph/i, label: "LangGraph Quickstart", url: "https://docs.langchain.com/oss/python/langgraph/quickstart" },
+      { match: /pgvector|hnsw|ivfflat|vector column/i, label: "pgvector Examples", url: "https://github.com/pgvector/pgvector" },
+      { match: /embedding|rag|citation|grounded|no-answer|evaluation|faithful|tool calling|structured output|agent|hitl/i, label: "OpenAI Cookbook", url: "https://github.com/openai/openai-cookbook" },
+      { match: /json schema|additionalproperties/i, label: "JSON Schema 練習", url: "https://json-schema.org/learn/getting-started-step-by-step" },
       { match: /etl/i, label: "Kaggle Data Cleaning", url: "https://www.kaggle.com/learn/data-cleaning" },
       { match: /primary|foreign/i, label: "SQLBolt joins", url: "https://sqlbolt.com/lesson/select_queries_with_joins" },
       { match: /granularity/i, label: "SQLBolt aggregates", url: "https://sqlbolt.com/lesson/select_queries_with_aggregates" },
@@ -4933,8 +4962,7 @@
       { match: /upsert|on conflict/i, label: "db<>fiddle PostgreSQL", url: "https://dbfiddle.uk/" },
       { match: /manifest/i, label: "Frictionless tools", url: "https://framework.frictionlessdata.io/" },
       { match: /endpoint|query parameter|pagination|timeout|error handling/i, label: "Postman Learn", url: "https://learning.postman.com/docs/introduction/overview/" },
-      { match: /json|geojson/i, label: "geojson.io", url: "https://geojson.io/" },
-      { match: /bbox|postgis|gist/i, label: "PostGIS workshop", url: "https://postgis.net/workshops/postgis-intro/" },
+      { match: /json/i, label: "JSONPlaceholder", url: "https://jsonplaceholder.typicode.com/" },
       { match: /explain/i, label: "Use The Index, Luke", url: "https://use-the-index-luke.com/sql/explain-plan/postgresql" },
       { match: /cache/i, label: "http caching demo", url: "https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching" },
       { match: /star/i, label: "MIT STAR worksheet", url: "https://capd.mit.edu/resources/the-star-method-for-behavioral-interviews/" },
@@ -4949,11 +4977,11 @@
     }
 
     function referenceResource(lesson) {
-      return lessonResource(curatedReferences, lesson, { label: "Roadmap Data Engineering", url: "https://roadmap.sh/data-engineer" });
+      return lessonResource(curatedReferences, lesson, { label: "Roadmap AI Engineer", url: "https://roadmap.sh/ai-engineer" });
     }
 
     function practiceResource(lesson) {
-      return lessonResource(curatedPractice, lesson, { label: "Roadmap Projects", url: "https://roadmap.sh/projects" });
+      return lessonResource(curatedPractice, lesson, { label: "OpenAI Cookbook", url: "https://github.com/openai/openai-cookbook" });
     }
 
     function lessonResourceSequence(lesson) {
@@ -5053,6 +5081,9 @@
         python: "能說出檢查、清洗、例外資料與測試方式。",
         pipeline: "能說出資料怎麼進來、怎麼重跑、怎麼避免髒資料進庫。",
         api: "能說出 endpoint、參數、回傳、效能與錯誤處理。",
+        devops: "能說出如何啟動、觀察、重現與排查服務，不只背指令。",
+        testing: "能把正常、邊界與失敗風險寫成可重跑測試，並保留定位證據。",
+        ai: "能說出模型、資料、檢索、評測或工具各自責任，以及失敗時如何安全停止。",
         story: "能用 STAR 或取捨語言，把技術選擇講成面試答案。"
       };
       return [
@@ -5064,352 +5095,255 @@
 
     const teachingDetails = [
       {
-        match: /etl/i,
-        simple: "ETL 不是單純把檔案轉格式，而是把資料來源、轉換規則、載入位置串成可重跑的流程。面試時要講清楚輸入、處理、輸出。",
-        steps: "先說 Extract：資料來自 NC / H5 / S-111 類檔案；再說 Transform：verification_pipeline 會對 24h/48h/72h 計算流速與流向誤差，產生 summary_stats、official hotspot、metric hotspot、spatial stats 與 GeoJSON/QML；最後說 Load：輸出 daily_results 成果包與 manifest，必要時寫入 PostgreSQL/PostGIS 的 summary_stats / hotspot_points，給 Flask API 或 QGIS DB 模式使用。",
-        interview: "你可以說：我做的是一條可驗證的資料管線，不只是寫 script。每一步都有欄位檢查、筆數確認與重跑策略。",
-        mistake: "不要把所有輸出都叫 hotspot。official hotspot 是正式超標點；metric hotspot 是 mean/median/std 等指標超標點；spatial stats 是完整有效格點統計分布，不是只保留超標點。"
+        match: /type hints|pydantic|dataclass/i,
+        simple: "型別提示讓人與工具知道資料應該長什麼樣；Pydantic 才會在執行時驗證輸入。",
+        steps: "先定義 equipment、document、ticket model，再限制必填欄位、enum、長度與時間格式；驗證失敗要回清楚錯誤，不要偷偷轉成錯的值。",
+        interview: "你可以說：type hints 提高可讀性與靜態檢查，Pydantic 負責 API 邊界的 runtime validation。",
+        mistake: "不要把 type hints 當成自動驗證；也不要接受任意 dict 一路傳進資料庫。"
       },
       {
-        match: /primary|foreign/i,
-        simple: "Primary key 是一列資料的身分證，foreign key 是連到另一張表的關係。JOIN 前要先確認 key 的唯一性與對應關係。",
-        steps: "先檢查每張表一列代表什麼，再確認 key 是否唯一，接著看 JOIN 後筆數是否合理，最後才做聚合或分析。",
-        interview: "你可以說：我不會一開始就 JOIN，我會先確認粒度與 key，避免 one-to-many 或 many-to-many 讓金額、筆數被放大。",
-        mistake: "不要看到同名欄位就拿來 JOIN。欄位名稱相同不代表語意相同，也不代表粒度一致。"
+        match: /pytest|regression/i,
+        simple: "pytest 把預期行為寫成可重跑證據；AI 系統仍需要大量確定性的單元與整合測試。",
+        steps: "純函式用 unit test，PostgreSQL／pgvector 用 integration test，外部模型以 mock 測錯誤路徑，再用固定評估集驗證真實 RAG 品質。",
+        interview: "你可以說：模型輸出不完全固定，但 schema、權限、引用來源、拒答政策與 timeout 行為都可以精確測。",
+        mistake: "不要只測 happy path，也不要把 retry 當成 flaky test 的修正。"
       },
       {
-        match: /granularity/i,
-        simple: "Granularity 是一列資料代表的層級。資料表可能是一人一列、一天一列、一小時一列，或一個 hotspot 一列。",
-        steps: "讀表時先問：一列代表誰、什麼時間、什麼空間範圍。JOIN 或 GROUP BY 前先把兩邊粒度對齊。",
-        interview: "你可以說：我會先確認資料粒度，因為粒度不同直接合併，可能讓統計結果重複計算。",
-        mistake: "不要只看欄位完整就放心。粒度錯了，SQL 語法正確也會算出錯的結果。"
+        match: /leetcode|big-o|hash map/i,
+        simple: "基礎演算法用來證明你能獨立拆問題；重點是 Array、Hash Map、Two Pointers 與複雜度，不是先衝 Hard。",
+        steps: "先定義 n，再說 baseline、主要迴圈、額外資料結構與優化後複雜度，最後補一個邊界案例。",
+        interview: "你可以用 Two Sum 或工單去重解釋：dict 把 O(n²) 查找改成 O(n)，代價是 O(n) 空間。",
+        mistake: "不要只背答案；要能不用 AI 寫出來並解釋取捨。"
       },
       {
-        match: /window/i,
-        simple: "Window Function 是在不壓扁明細列的情況下，計算組內排名、前後筆、累積值或最新一筆。",
-        steps: "先用 PARTITION BY 定義組，再用 ORDER BY 定義組內順序，最後用 ROW_NUMBER、RANK 或聚合 window 取得需要的結果。",
-        interview: "你可以說：如果我需要保留原始欄位，又要在每個群組內找最新或最高的一筆，我會用 window function，而不是只用 GROUP BY。",
-        mistake: "不要把 Window Function 和 GROUP BY 混成同一件事。GROUP BY 會改變列數，Window Function 通常保留列數。"
+        match: /join|window|row_number|cte/i,
+        simple: "SQL 先釐清一列代表什麼，再決定 JOIN、GROUP BY、Window Function 或 CTE。",
+        steps: "檢查 key 唯一性與粒度，先量 join 前後筆數；需要保留明細與組內排名時用 window，複雜流程用 CTE 拆段。",
+        interview: "你可以用 documents→chunks 與 equipment→tickets 的一對多關係說明避免重複統計。",
+        mistake: "不要因查詢能跑就認為結果正確；many-to-many 最容易讓指標膨脹。"
       },
       {
-        match: /cte|subquery/i,
-        simple: "CTE 是用 WITH 把複雜查詢拆成可讀的階段；subquery 適合比較短、只用一次的中間結果。",
-        steps: "把查詢拆成過濾、清洗、聚合、排序幾段。每段 CTE 都要能單獨解釋它的輸入與輸出。",
-        interview: "你可以說：當 SQL 同時有日期、bbox、threshold 和排序邏輯時，我會用 CTE 拆段，讓面試官看得懂也方便 debug。",
-        mistake: "不要為了炫技把所有查詢都塞 CTE。重點是可讀、可驗證，不是語法看起來複雜。"
+        match: /postgresql|schema|index|transaction|explain/i,
+        simple: "PostgreSQL 同時承接關聯資料、權限、版本與 pgvector；schema、transaction 與 index 是可靠性的底座。",
+        steps: "先畫 documents、chunks、tickets、equipment、permissions，再定唯一鍵與 transaction boundary；最後用 EXPLAIN ANALYZE 驗證索引。",
+        interview: "你可以說：向量檢索前仍要做 ACL 與 metadata filter，因此一般 B-tree index 和向量索引同樣重要。",
+        mistake: "不要看到慢就直接加 index，也不要把所有 metadata 都塞進不可治理的 JSON。"
       },
       {
-        match: /dtype/i,
-        simple: "dtype 是欄位型別。時間被當字串、數字被當文字、座標變成空值，都會讓排序、計算與查詢出錯。",
-        steps: "先檢查欄位型別，再轉換 timestamp、numeric、category，接著處理轉換失敗的列，最後確認統計範圍合理。",
-        interview: "你可以說：我會先做 schema 與 dtype 檢查，因為資料型別錯誤會讓後面的 API 查詢和分析結果不可信。",
-        mistake: "不要直接拿資料開始算。先看 dtype，常常比直接 debug 統計結果更快。"
+        match: /fastapi|http|openapi/i,
+        simple: "FastAPI endpoint 是可驗證的契約：輸入、輸出、權限、狀態碼與錯誤格式都要明確。",
+        steps: "Pydantic 驗證 request，dependency 驗證身分與 ACL，service 做 RAG，response model 固定 answer、citations、refused 與 request_id。",
+        interview: "你可以主動區分 401、403、422、429 與上游 timeout 的 503。",
+        mistake: "不要讓所有錯誤都回 500，也不要把模型原始輸出直接當 API response。"
       },
       {
-        match: /null|outlier/i,
-        simple: "Null 是缺資料，不等於 0；outlier 是異常值，不一定是錯值。處理前要先看資料來源與規則。",
-        steps: "先標記缺值與異常值，再分成可刪、可補、需保留三類，最後把規則記錄下來讓結果可追溯。",
-        interview: "你可以說：我不會一律刪 outlier，而是先確認它是觀測異常、格式問題，還是真實但罕見的現象。",
-        mistake: "不要把缺值補 0 當萬用解。對流速、座標或誤差來說，0 可能有真實意義。"
+        match: /data contract|ingestion|chunk/i,
+        simple: "知識 ingestion 要可重跑、可追溯、可撤權；chunking 則決定模型實際看見的證據範圍。",
+        steps: "保存 source_id、version、ACL，解析後去敏、去重、按章節切塊，再以 run_id 對帳成功、拒收、刪除與重播。",
+        interview: "你可以說：chunk 太小失去上下文，太大降低精度；我會用評估集比較，而不是只憑字數。",
+        mistake: "不要先切塊再補權限；ACL 必須跟每個可檢索 chunk 一起治理。"
       },
       {
-        match: /assert|validation/i,
-        simple: "Validation 是把你對資料的假設寫成檢查。它讓 pipeline 失敗得早、失敗得清楚，而不是默默產生錯結果。",
-        steps: "檢查欄位存在、型別正確、筆數不是 0、時間範圍合理、severity 分級符合固定規則，最後記錄 log。S-111 裡要特別確認 speed 0.5/1.0 kn、direction 0.48 kn 真值流速門檻與 30/45 deg 分級沒有混用。",
-        interview: "你可以說：我會把資料品質檢查放進流程，讓每次重跑都能確認輸入與輸出沒有偏掉。",
-        mistake: "不要只靠肉眼看幾列資料。面試官會想知道你如何自動化驗證。"
+        match: /embedding|pgvector|hybrid|rerank/i,
+        simple: "Embedding 與 pgvector 負責語意候選；hybrid search、metadata filter 與 rerank 負責讓前幾名更符合設備情境。",
+        steps: "先建立 exact-search baseline，再比較 HNSW／IVFFlat；錯誤碼與型號用全文檢索補強，最後保存 rerank 前後 top-k。",
+        interview: "你可以說：相似度高不等於答案正確，所以索引要同時量 latency 與 Recall@k。",
+        mistake: "不要混用不同 embedding model 或 dimension，也不要只看一題 demo 選索引。"
       },
       {
-        match: /time complexity/i,
-        simple: "Time complexity 是資料量變大時，程式耗時怎麼成長。資料工程不一定要競賽級，但要能指出主要瓶頸。",
-        steps: "先找主要迴圈與查找動作，再判斷是不是 O(n)、O(n log n) 或 O(n^2)，最後用資料結構或批次處理改善。",
-        interview: "你可以說：如果資料量變大，我會先看是否有巢狀迴圈或重複查找，再考慮用 dict、索引或資料庫查詢取代。",
-        mistake: "不要只說「效能不好」。要說清楚慢在哪一段、資料量增加時會怎麼變慢。"
+        match: /rag|citation|引用|拒答|grounded|no-answer/i,
+        simple: "可信 RAG 要同時做到找對來源、只依證據回答、附可查引用，以及證據不足時拒答。",
+        steps: "權限過濾後 retrieve，context 帶 source marker，模型輸出結構化內容，後端只接受本次 chunks 的 citation，無證據則 refused=true。",
+        interview: "你可以分開 retrieval miss、generation error、citation mismatch 與 no-answer 誤答。",
+        mistake: "不要讓模型自行杜撰網址或來源編號，也不要把語氣保守當成真正拒答政策。"
       },
       {
-        match: /hash map|dict/i,
-        simple: "Hash map 在 Python 裡常用 dict 實作，適合用 key 快速查值，避免每次都掃完整份資料。",
-        steps: "先決定 key，例如日期、時間、座標或 id，再把資料整理成 dict，最後用一次查找取代重複迴圈。",
-        interview: "你可以說：我會用 dict 建索引，把重複掃描改成 key lookup，讓資料配對更穩定也更快。",
-        mistake: "不要為了用 dict 而忽略 key 是否唯一。key 設錯，查得快也只是快地查錯。"
+        match: /evaluation|recall|mrr|faithful|human review/i,
+        simple: "AI 評測要把檢索、回答、引用與拒答拆開，並用版本化題集重跑。",
+        steps: "建立可回答、無答案、歧義、越權與惡意題；保存 expected source，再追 Recall@k、MRR、faithfulness、citation correctness 與 refusal 指標。",
+        interview: "你可以說：LLM judge 只作輔助，重要或分歧案例仍需人工抽樣覆核。",
+        mistake: "不要只報一個總分；沒有資料集版本與失敗分類，分數不能比較。"
       },
       {
-        match: /schema/i,
-        simple: "Schema 是資料欄位、型別與約束的契約。它讓資料進資料庫前有規格，交接時也知道每欄代表什麼。",
-        steps: "先定義欄位名稱與型別，再定義唯一鍵、必要欄位、索引與單位，最後把 schema 寫進文件或 migration。",
-        interview: "你可以說：我會先固定 schema，因為 pipeline、API 和前端都依賴同一份資料契約。",
-        mistake: "不要讓資料表長成『先塞進去再說』。沒有 schema，後面 API 與分析都很難穩定。"
+        match: /prompt injection|observability|latency|token|tool calling|json schema|timeout|agent|hitl/i,
+        simple: "Agent 的安全邊界由程式碼政策決定：工具白名單、JSON Schema、最小權限、timeout、步數上限與 HITL。",
+        steps: "模型只提出 tool request；後端驗證 schema、ACL、risk tier 與 idempotency key，再執行、驗證結果並寫 audit log。",
+        interview: "你可以說：唯讀搜尋可自動，送出或關閉工單要顯示證據與參數，經人工核准後才執行。",
+        mistake: "不要把 DB credential 給模型，不要無限 retry，也不要把工具回傳當成可信指令。"
       },
       {
-        match: /idempotent/i,
-        simple: "Idempotent 是同一批資料重跑多次，結果仍然一致，不會越跑越多，也不會覆蓋錯誤資料。",
-        steps: "先設唯一鍵或批次識別，再用 upsert 或先刪後寫控制重跑結果，最後比對筆數與摘要統計。",
-        interview: "你可以說：資料工程要能重跑，所以我會設計冪等流程，避免 append 導致重複列。",
-        mistake: "不要只說『重跑一次就好』。重跑如果沒有冪等設計，可能會把錯誤放大。"
-      },
-      {
-        match: /upsert/i,
-        simple: "Upsert 是有資料就更新、沒有就新增。它通常需要搭配唯一鍵，否則資料庫不知道哪一列該更新。",
-        steps: "先定義唯一鍵，再決定衝突時更新哪些欄位，最後驗證重跑前後筆數不會增加。",
-        interview: "你可以說：我會用 upsert 或先刪後寫讓同一 date、target_timestamp、lead_hours、error_type、位置與 metric 的結果可重跑，避免重複寫入 hotspot rows。",
-        mistake: "不要只說『避免重複』。要說唯一鍵怎麼設，衝突時更新什麼。"
-      },
-      {
-        match: /on conflict/i,
-        simple: "ON CONFLICT 是 PostgreSQL 常見的 upsert 語法。它在唯一鍵衝突時改成 DO UPDATE 或 DO NOTHING。",
-        steps: "先建立 unique constraint，再寫 INSERT ... ON CONFLICT，最後決定更新欄位與 updated_at。",
-        interview: "你可以說：我會用 ON CONFLICT DO UPDATE 讓重跑結果覆蓋同一批資料，而不是新增重複列。",
-        mistake: "不要忘記唯一鍵。沒有 unique constraint，ON CONFLICT 沒有可判斷的衝突目標。"
-      },
-      {
-        match: /manifest/i,
-        simple: "Manifest 是一批輸出的清單與版本紀錄。它讓別人知道這次跑了哪些資料、用什麼參數、產出哪些檔案。",
-        steps: "記錄日期、版本、輸入檔、輸出檔、threshold、筆數、錯誤訊息與產生時間。",
-        interview: "你可以說：我會用 manifest 讓資料包可交接，別人不用打開每個檔案也知道這批結果的範圍與版本。",
-        mistake: "不要只交一堆檔案。沒有 manifest，接手的人不知道哪個檔案是正式輸出。"
-      },
-      {
-        match: /endpoint/i,
-        simple: "Endpoint 是 API 的一個功能入口。好的 endpoint 要讓使用者看得出它查什麼、用哪些參數、回傳什麼。",
-        steps: "先定義資源名稱，再定義 query parameters，接著設計 response 欄位，最後補錯誤狀態與文件。",
-        interview: "你可以說：我會把 threshold hotspot 設成清楚的 endpoint，讓前端或 QGIS 可以用 date、lead_hours、error_type、metric、bbox、threshold 查資料。",
-        mistake: "不要把所有查詢都塞進一個萬用 endpoint。功能太混會讓參數與回傳很難維護。"
-      },
-      {
-        match: /query parameter/i,
-        simple: "Query parameter 是 URL 後面的篩選條件，例如 date、lead_hours、bbox、limit。它讓同一個 endpoint 支援不同查詢。",
-        steps: "先列出必要參數，再決定可選參數與預設值，最後驗證格式、範圍與錯誤訊息。",
-        interview: "你可以說：我會讓 hotspot API 用 query parameter 篩選 date、lead_hours、error_type、metric、bbox、threshold 與 limit，降低 payload。",
-        mistake: "不要讓參數沒有界線。沒有 limit 或 bbox，API 很容易一次回傳太多資料。"
-      },
-      {
-        match: /json|geojson/i,
-        simple: "JSON 是一般結構化資料；GeoJSON 是帶幾何資訊的 JSON，適合地圖工具直接讀取。",
-        steps: "一般表格資料用 JSON；需要畫點、線、面時用 GeoJSON，並確認座標順序與座標系統。",
-        interview: "你可以說：如果前端或 QGIS 要畫 hotspot，我會讓 API 回傳 lon/lat 或 GeoJSON，讓資料能直接視覺化。",
-        mistake: "不要把 lat/lon 順序搞反。GeoJSON 座標通常是 longitude, latitude。"
-      },
-      {
-        match: /pagination|limit/i,
-        simple: "Pagination 和 limit 用來控制一次回傳多少資料，避免 API、網路和前端被大量資料拖慢。",
-        steps: "先設定 limit，再提供 offset 或 cursor，最後回傳 total、next 或 has_more 讓前端知道是否還有資料。",
-        interview: "你可以說：如果 hotspot rows 很多，我會用 bbox、limit 和 pagination 讓 API 回傳可控制。",
-        mistake: "不要一次回傳所有資料。資料量小時看不出問題，上線後很容易慢。"
-      },
-      {
-        match: /bbox/i,
-        simple: "BBox 是地圖上的矩形範圍，通常是 min_lon、min_lat、max_lon、max_lat。它讓 API 只查目前視窗內資料。",
-        steps: "前端送目前地圖範圍，後端用空間條件過濾，再配合索引加速，最後只回傳需要顯示的點。",
-        interview: "你可以說：bbox 能減少 DB 掃描和 API payload，對地圖型資料很重要。",
-        mistake: "不要只做前端篩選。資料已經全回到前端才篩，效能壓力仍然存在。"
-      },
-      {
-        match: /postgis|gist/i,
-        simple: "PostGIS 讓 PostgreSQL 支援空間資料；GIST index 常用來加速空間範圍查詢。",
-        steps: "先把 lon/lat 建成 geometry，再建立 GIST index，查詢時用 ST_Intersects、ST_Within 或 bbox 條件。",
-        interview: "你可以說：PostGIS 不只是存座標，而是讓資料庫能有效處理空間查詢。",
-        mistake: "不要只把座標存在兩個 numeric 欄位就以為完成空間查詢設計。"
-      },
-      {
-        match: /explain/i,
-        simple: "EXPLAIN ANALYZE 會顯示 PostgreSQL 實際查詢計畫與耗時，幫你知道慢在全表掃描、排序、join 還是索引沒用到。",
-        steps: "先跑慢查詢，再看 actual time、rows、scan type，接著調整索引或 SQL，最後重新測量。",
-        interview: "你可以說：我會先用 EXPLAIN ANALYZE 找瓶頸，而不是憑感覺加 index。",
-        mistake: "不要只看 SQL 語法。SQL 寫得出來不代表資料庫執行得有效率。"
-      },
-      {
-        match: /cache/i,
-        simple: "Cache 是把常用結果暫存起來，減少重複查 DB 或重複計算。它適合變動不頻繁、查詢成本高的資料。",
-        steps: "先判斷哪些查詢常被重複使用，再設定 key、TTL 與失效規則，最後確認資料更新時 cache 會被刷新。",
-        interview: "你可以說：固定 date、lead_hours、error_type、metric、threshold 的 hotspot 查詢可能適合 cache，但資料重建或 metric rows 更新後要處理失效問題。",
-        mistake: "不要只說 cache 會變快。cache 的主要風險是 stale data，也就是資料過期。"
-      },
-      {
-        match: /timeout|error handling/i,
-        simple: "Timeout 防止單一請求卡住整個服務；error handling 讓錯誤可預期、可追蹤、可回報。",
-        steps: "設定 timeout，驗證參數，捕捉 DB 或外部 API 錯誤，回傳清楚的 status code 與 message。",
-        interview: "你可以說：API 查不到日期、參數錯或 DB 慢時，要有明確錯誤回應，而不是讓前端空白。",
-        mistake: "不要把所有錯誤都回 500。參數錯、查無資料、系統錯誤應該分開處理。"
-      },
-      {
-        match: /star/i,
-        simple: "STAR 是 Situation、Task、Action、Result。它讓專案經驗不會散掉，也能清楚說出你的角色與成果。",
-        steps: "先講背景，再講你負責的任務，接著講你做了什麼，最後講結果或可交接成果。",
-        interview: "你可以說：在 S-111 專案中，我負責把海流驗證資料整理成 threshold hotspot workflow，串起 daily_results、PostgreSQL/PostGIS、Flask API 與 QGIS/前端使用流程。",
-        mistake: "不要只列技術名詞。面試官想知道你在什麼情境下解決了什麼問題。"
-      },
-      {
-        match: /trade-off|tradeoff/i,
-        simple: "Trade-off 是取捨。工程設計通常沒有完美答案，面試官想看你是否知道限制與代價。",
-        steps: "先說選項 A 和 B，再說限制條件，接著說你選哪個，最後補上風險與未來可改進方向。",
-        interview: "你可以說：只回 hotspot rows 可以減少 payload 並支援快速展示；/api/hotspot-series 也只回 hotspot-row series。如果要完整格網動畫或完整 24 小時格點曲線，就需要另設資料表與 API。",
-        mistake: "不要把自己的選擇講成唯一正解。成熟回答會說明限制與取捨。"
-      },
-      {
-        match: /bottleneck|profiling/i,
-        simple: "Bottleneck 是真正拖慢系統的部分；profiling 是用量測找出它，而不是靠猜。",
-        steps: "先分段量測 DB query、資料處理、serialize、network，再針對最慢段落優化，最後比較前後數字。",
-        interview: "你可以說：API 慢時我會先量測，不會直接猜是 server 慢；可能是 query、payload 或缺少 bbox。",
-        mistake: "不要一慢就重寫全部。先找最大瓶頸，通常一兩個點就能改善很多。"
-      },
-      {
-        match: /regression/i,
-        simple: "Regression 是修改後把原本正常的功能弄壞。資料與 API 專案尤其要檢查舊流程是否仍然能跑。",
-        steps: "先列出原本應該正常的案例，再改 code，最後重跑查詢、API response、前端或 QGIS 流程。",
-        interview: "你可以說：修 bug 後我會補 regression check，確認舊的 API 欄位、0.48 kn 流向門檻、warning/critical 分級與 QGIS/前端流程沒有被破壞。",
-        mistake: "不要只確認新功能可用。面試官會更在意你有沒有保護既有功能。"
+        match: /copilot|demo|star/i,
+        simple: "作品面試要講一條清楚主線：維運知識分散，如何變成可信、可評測且可安全執行的 Copilot。",
+        steps: "用 STAR 說背景與角色，再展示 ingestion、pgvector RAG、引用／拒答、工具確認與評估報告。",
+        interview: "你可以用一題有答案、一題無答案與一個需 HITL 的工單流程完成三分鐘 demo。",
+        mistake: "不要只展示聊天畫面；要說自己的決策、驗證證據、限制與下一步。"
       }
     ];
-
     const termPlainExplanations = {
-      "ETL": "把資料從來源取出、整理轉換、放到可使用的位置。",
-      "Extract": "取資料，像讀 NetCDF、CSV、API 或資料庫。",
-      "Transform": "轉資料，像清欄位、改型別、算指標、分級。",
-      "Load": "載入結果，像寫入 PostgreSQL/PostGIS 或輸出 GeoJSON。",
-      "primary key": "能唯一代表一列資料的欄位或欄位組合。",
-      "foreign key": "用來連到另一張表主鍵的關係欄位。",
-      "JOIN key": "兩張表用來對接的欄位，必須先確認語意與唯一性。",
-      "granularity": "一列資料代表的層級，例如一天、一小時、一個點。",
-      "one-to-many": "左邊一列對右邊多列，join 後筆數可能放大。",
-      "many-to-many": "兩邊都可能多列對多列，最容易讓統計重複。",
-      "Window Function": "保留明細列，同時算組內排名、最新一筆或累積值。",
-      "PARTITION BY": "把資料分組後，在每組內做 window 計算。",
-      "ROW_NUMBER": "在每組內依排序給 1、2、3，用來取最新或最高一筆。",
-      "CTE": "用 WITH 把複雜 SQL 拆成可讀的階段。",
-      "WITH": "宣告 CTE 的 SQL 關鍵字。",
-      "subquery": "放在查詢裡面的中間查詢。",
-      "dtype": "欄位型別，例如文字、數字、時間。",
-      "type conversion": "把欄位轉成正確型別，例如字串轉 timestamp。",
-      "timestamp": "含日期與時間的欄位，用來排序、篩選或對齊資料。",
-      "null": "缺資料，不等於 0。",
-      "outlier": "異常值，可能是錯誤，也可能是真實少見事件。",
-      "missing value": "缺值，需要決定刪除、補值、標記或保留。",
-      "assert": "把假設寫成檢查，不符合就讓流程停下來。",
-      "validation": "系統性檢查資料是否符合規則。",
-      "data quality": "資料是否完整、正確、一致、可追溯。",
-      "time complexity": "資料量變大時，程式耗時如何成長。",
-      "O(n)": "資料筆數增加一倍，主要工作量大約也增加一倍。",
-      "loop": "重複處理資料的迴圈，常是效能瓶頸來源。",
-      "hash map": "用 key 快速找 value 的資料結構。",
-      "dict": "Python 裡常用的 hash map 實作。",
-      "lookup": "用 key 查資料的動作。",
-      "schema": "欄位、型別、約束與資料規格。",
-      "column": "資料表的一個欄位。",
-      "data contract": "資料生產者與使用者都遵守的欄位契約。",
-      "idempotent": "同一批資料重跑多次，結果仍一致。",
-      "rerun": "重新執行同一批處理流程。",
-      "duplicate": "重複資料，常由 append 或 join 錯誤造成。",
-      "upsert": "有資料就更新，沒有就新增。",
-      "unique key": "用來判斷資料是否同一筆的唯一條件。",
-      "update": "更新既有資料列。",
-      "ON CONFLICT": "PostgreSQL 處理唯一鍵衝突的 upsert 語法。",
-      "DO UPDATE": "衝突時改成更新欄位。",
-      "PostgreSQL": "常見關聯式資料庫，你的專案用它承接查詢。",
-      "manifest": "輸出清單與版本紀錄。",
-      "version": "資料、程式或參數的版本，用來追溯結果。",
-      "result package": "一批可交接的輸出成果與說明。",
-      "endpoint": "API 的一個功能網址。",
-      "API": "讓前端、QGIS 或其他程式查資料的介面。",
-      "route": "後端把某個網址對到某段處理邏輯。",
-      "query parameter": "URL 後面的篩選條件。",
-      "date": "日期篩選條件，常用來指定資料批次。",
-      "limit": "限制一次回傳幾筆資料。",
-      "JSON": "常見結構化資料格式。",
-      "GeoJSON": "帶地理幾何資訊的 JSON，適合地圖工具。",
-      "lon/lat": "經度與緯度，GeoJSON 通常是 longitude, latitude。",
-      "pagination": "分頁回傳，避免一次塞太多資料。",
-      "payload": "API 回傳或傳輸的資料量。",
-      "bbox": "地圖矩形範圍，用 min/max lon/lat 表示。",
-      "spatial filter": "用空間條件篩選資料。",
-      "map viewport": "使用者目前在地圖上看到的範圍。",
-      "PostGIS": "讓 PostgreSQL 支援空間資料與空間查詢。",
-      "GIST index": "常用來加速 PostGIS 空間查詢的索引。",
-      "spatial query": "依位置、範圍或幾何關係查資料。",
-      "EXPLAIN ANALYZE": "看 PostgreSQL 實際查詢計畫與耗時。",
-      "query plan": "資料庫執行 SQL 的步驟規劃。",
-      "full table scan": "整張表掃過，資料大時常會慢。",
-      "cache": "暫存常用結果，減少重複查詢或計算。",
-      "TTL": "快取多久後過期。",
-      "stale data": "快取過期或沒更新，導致看到舊資料。",
-      "timeout": "超過等待時間就中止請求。",
-      "error handling": "讓錯誤可預期、可回報、可追蹤。",
-      "fallback": "主要方法失敗時的替代做法。",
-      "STAR": "Situation、Task、Action、Result 的專案回答結構。",
-      "Situation": "背景情境，為什麼需要做這件事。",
-      "Result": "結果與影響，最好能具體到可交接或可量測。",
-      "trade-off": "取捨，說明為什麼選 A 不選 B。",
-      "constraint": "限制條件，例如時間、資料量、維護成本。",
-      "decision": "在限制下做出的設計選擇。",
-      "bottleneck": "真正拖慢系統的地方。",
-      "profiling": "用量測找出哪一段最慢。",
-      "regression": "修改後把原本正常的功能弄壞。",
-      "regression check": "確認舊功能沒有被新修改破壞的檢查。",
-      "test case": "用來驗證行為是否正確的測試情境。"
+      "type hints": "在函式與變數標示預期型別，方便閱讀與靜態檢查。",
+      "dataclass": "用宣告式方式整理 Python 資料物件。",
+      "validation": "在資料進入核心流程前檢查格式、範圍與規則。",
+      "Pydantic": "可在 Python 執行時驗證與轉換資料的 model 工具。",
+      "pytest": "Python 常用測試框架。",
+      "fixture": "可重用的測試前置資料或環境。",
+      "parametrize": "用多組輸入重跑同一測試邏輯。",
+      "mock": "用可控制替身隔離外部 API 或模型。",
+      "Big-O": "描述資料量變大時，時間或空間成本如何成長。",
+      "Array": "按位置排列的一組資料。",
+      "Hash Map": "用 key 快速查值的資料結構，Python 常以 dict 實作。",
+      "Two Pointers": "用兩個索引協同掃描資料，常減少重複迴圈。",
+      "JOIN": "依 key 把不同資料表的列接在一起。",
+      "primary key": "唯一識別資料表中一列的欄位或欄位組合。",
+      "granularity": "一列資料代表的層級，例如一份文件、一個 chunk 或一張工單。",
+      "GROUP BY": "把相同條件的資料分組後聚合。",
+      "Window Function": "保留明細列，同時計算組內排名、前後筆或累積值。",
+      "ROW_NUMBER": "依指定分組與排序替每列編號。",
+      "CTE": "用 WITH 把複雜 SQL 拆成可讀階段。",
+      "PARTITION BY": "指定 Window Function 的組內計算範圍。",
+      "schema": "欄位、型別、關係、約束與資料規格。",
+      "index": "讓資料庫更快找到常查資料的輔助結構。",
+      "transaction": "讓一組資料庫操作全成或全敗。",
+      "EXPLAIN ANALYZE": "顯示 PostgreSQL 實際查詢計畫與耗時。",
+      "FastAPI": "以 Python 建立 API 的框架。",
+      "HTTP status": "用狀態碼區分成功、輸入錯誤、權限問題與系統失敗。",
+      "OpenAPI": "描述 API endpoint、schema 與回應的標準格式。",
+      "data contract": "資料生產者與使用者共同遵守的版本化規格。",
+      "idempotent": "同一操作重跑多次仍得到相同結果。",
+      "run_id": "識別一次資料處理批次的編號。",
+      "reconciliation": "對帳來源、成功、拒收、刪除與輸出數量。",
+      "ingestion": "把來源資料可靠地讀入與整理成系統可用格式。",
+      "parser": "把 PDF、Markdown、工單等來源解析成結構化資料。",
+      "PII": "可識別個人的敏感資料，需要去敏或受控處理。",
+      "metadata": "描述內容來源、設備、版本、時間與權限的附加欄位。",
+      "chunking": "把長文件切成可檢索且保留足夠上下文的片段。",
+      "ACL": "控制誰能看哪些文件或設備資料的存取清單。",
+      "document version": "用來辨識內容改版並重建索引的文件版本。",
+      "embedding": "把文字轉成可比較語意相似度的固定維度向量。",
+      "cosine similarity": "比較兩個向量方向接近程度的方法。",
+      "dimension": "一個 embedding 含有多少數值。",
+      "batch": "把多筆資料成批處理以降低呼叫成本。",
+      "pgvector": "讓 PostgreSQL 儲存與查詢向量的擴充套件。",
+      "vector column": "資料表中保存 embedding 的向量欄位。",
+      "HNSW": "常見的近似向量索引，查詢快但建置與記憶體成本較高。",
+      "IVFFlat": "把向量分群後近似搜尋的索引，需要調整 lists 與 probes。",
+      "hybrid search": "結合關鍵字與向量語意的檢索方式。",
+      "full-text search": "依字詞與排名搜尋文字內容。",
+      "metadata filter": "在向量搜尋前依權限、設備、站點或版本縮小候選。",
+      "rerank": "重新評分候選結果，把最相關證據排到前面。",
+      "RAG": "先檢索外部證據，再讓模型依證據生成回答。",
+      "retrieve": "依查詢取回相關 chunks。",
+      "context window": "模型一次能接收的文字與 token 範圍。",
+      "prompt": "交給模型的指令、問題與受控 context。",
+      "citation": "讓回答指回實際來源與段落的引用。",
+      "source_id": "穩定識別來源文件的編號。",
+      "provenance": "資料從哪裡來、經過哪些版本與處理的來源鏈。",
+      "excerpt": "提供給使用者核對的短來源片段。",
+      "groundedness": "回答內容是否受提供證據支持。",
+      "no-answer": "文件中沒有足夠證據可回答的題目。",
+      "refusal": "證據不足、越權或高風險時安全停止回答。",
+      "confidence threshold": "觸發追問或拒答的門檻之一，不能單獨當真相。",
+      "evaluation set": "用來固定比較系統版本的一組題目與期望結果。",
+      "ground truth": "人工確認的預期來源、答案範圍或行為。",
+      "hard negative": "看似相關但不應被當成正確證據的干擾資料。",
+      "version": "使資料、模型、prompt 與評測結果可以追溯比較。",
+      "Recall@k": "前 k 個檢索結果是否包含預期來源的比例。",
+      "MRR": "第一個正確結果排名倒數的平均值。",
+      "precision": "取回結果中真正相關者的比例。",
+      "retrieval miss": "正確來源沒有進入候選結果。",
+      "faithfulness": "回答中的主張是否能由 context 支持。",
+      "answer relevance": "回答是否直接解決使用者問題。",
+      "citation correctness": "引用是否存在且真的支持相鄰主張。",
+      "human review": "由人抽樣檢查重要或有爭議案例。",
+      "prompt injection": "惡意內容試圖改寫系統規則或誘導越權。",
+      "data leakage": "敏感或未授權資料被不當輸出。",
+      "least privilege": "每個人與工具只拿完成任務所需的最小權限。",
+      "red team": "主動設計攻擊案例找出系統弱點。",
+      "request_id": "串起一次請求各層 log 與 trace 的識別碼。",
+      "latency": "一次請求從開始到回應所花的時間。",
+      "token cost": "模型輸入與輸出 token 造成的使用成本。",
+      "trace": "記錄一次請求各步驟、耗時與結果的鏈路。",
+      "golden set": "固定保留、可重跑的代表性回歸案例。",
+      "mock LLM": "以可預測替身測模型 API 的成功與失敗路徑。",
+      "regression": "修改後原本正常行為被破壞。",
+      "Tool Calling": "模型提出結構化工具意圖，由程式驗證後執行。",
+      "allowlist": "只允許明確列出的工具或操作。",
+      "tool result": "工具回傳的資料，仍需驗證且不能當成系統指令。",
+      "JSON Schema": "描述 JSON 欄位、型別、限制與是否允許額外欄位。",
+      "structured output": "要求模型輸出符合固定可解析結構。",
+      "additionalProperties": "JSON Schema 是否允許未定義欄位的設定。",
+      "timeout": "超過等待上限就停止單一步驟。",
+      "retry": "符合條件的暫時性失敗再次嘗試。",
+      "exponential backoff": "每次重試逐步增加等待時間。",
+      "circuit breaker": "上游持續失敗時暫停呼叫以避免雪崩。",
+      "agent state": "Agent 目前步驟、工具結果與終止原因的狀態。",
+      "idempotency key": "讓重送寫入不會重複建立資源的識別碼。",
+      "step limit": "限制 Agent 最多能執行幾步。",
+      "audit log": "記錄誰在何時要求、核准與執行了什麼。",
+      "HITL": "在高風險決策或操作前加入人工確認。",
+      "approval": "人明確核准即將執行的具體參數與影響。",
+      "risk tier": "依影響程度決定自動執行或人工確認。",
+      "rollback": "讓失敗或誤操作能回到安全狀態。",
+      "Copilot": "協助人找知識、形成建議並在受控邊界內操作的應用。",
+      "STAR": "用 Situation、Task、Action、Result 組織專案故事。",
+      "SLO": "對可用性、延遲或品質設定的服務目標。",
+      "runbook": "故障、部署與回復時可照著操作的步驟文件。"
     };
-
     const domainInterviewReasons = {
-      sql: "SQL 題看起來是在考語法，其實是在看你能不能先判斷資料層級、關聯與結果是否合理。會寫查詢只是第一步，能解釋為什麼這樣查才是面試加分點。",
-      python: "Python 題不只是寫出會跑的程式。面試官會看你如何處理髒資料、型別、邊界條件與效能，因為資料流程最怕的是安靜地產生錯結果。",
-      pipeline: "Pipeline 題在看你有沒有工程思維：資料從哪裡來、怎麼轉換、如何重跑、如何驗證、如何交接。這比單次寫 script 更接近正式資料工程工作。",
-      api: "API / DB 題在看你能不能把資料變成別人可查、可用、可維護的服務。好的回答要同時講參數、資料量、錯誤、效能與使用者情境。",
-      story: "專案表達題在看你能不能把做過的事翻譯成面試官聽得懂的問題、行動與結果。不是把技術名詞排出來，而是說清楚你解決了什麼。"
+      sql: "SQL 題看起來在考語法，其實是在看你能不能先判斷 key、資料粒度與結果是否合理。會寫查詢只是第一步，能用筆數與對帳證明才完整。",
+      python: "Python 題不只要求程式會跑；面試官會看型別、例外、邊界、複雜度與可測性，因為 ingestion 最怕安靜產生錯資料。",
+      pipeline: "資料管線題在看來源、轉換、版本、權限、重跑、對帳與回復。這些能力直接決定 RAG 的知識是否可信。",
+      api: "API／DB 題在看你能否把資料與模型變成可維護服務：schema、狀態碼、權限、timeout、效能與可觀測性缺一不可。",
+      devops: "交付題在看作品能否由別人重現，以及你能否從 process、port、env、container 與 CI log 找到啟動或部署問題。",
+      testing: "測試題在看你是否能把風險變成可重跑證據。AI 不確定，不代表 schema、權限、引用、拒答與失敗處理不能被驗證。",
+      ai: "AI 應用題重點不是背名詞，而是能把 retrieval、generation、evaluation 與 tool policy 拆開，說清楚失敗邊界和證據。",
+      story: "專案表達題要把企業維運問題翻譯成你的設計、行動、驗證與限制；不是展示聊天畫面或堆模型名詞。"
     };
 
     const domainProjectBridges = {
-      sql: "在你的 S-111 專案裡，SQL 不只是撈資料，而是把日期、target_timestamp、lead_hours、error_type、metric、空間點與 hotspot 分級等條件對齊。只要粒度或 key 錯，API 回傳看起來正常，實際統計就可能偏掉。",
-      python: "在你的 S-111 專案裡，Python 是從 NC/H5/S-111 到成果包與資料庫的主流程。它要整理時間、座標、lead_hours、流速/流向誤差與圖層輸出，後面的 QGIS、PostgreSQL 與 API 才站得住。",
-      pipeline: "你的 S-111 經驗很適合講 pipeline，因為它不是單點任務：原始 NC/H5/S-111、驗證統計、official/metric hotspot、spatial stats、daily_results 成果包、PostgreSQL、Flask API 與 QGIS 都串在一起。",
-      api: "你的 S-111 API 重點是 threshold hotspot workflow。面試時可以強調你讓資料能依日期、lead_hours、error_type、metric、threshold、bbox 等條件被查詢；同時要說清楚 /api/hotspot-series 只回 hotspot-row series，不是完整格網曲線。",
-      story: "你的專案故事主軸可以固定成：把複雜海流資料整理成可查詢、可視覺化、可交接的資料應用。這句話能讓非海洋領域的面試官先聽懂價值。"
+      sql: "在企業維運 Copilot 裡，documents、chunks、equipment、tickets 與 permissions 粒度不同。SQL key 或 join 錯，評估與回答看起來正常，實際可能重複工單或跨權限取錯來源。",
+      python: "Python 是 Copilot 的資料與服務主線：parser、去敏、chunking、embedding batch、FastAPI 與測試都需要明確型別、例外處理與可重跑設計。",
+      pipeline: "Copilot 不是單一模型呼叫；手冊／SOP／工單、清洗、版本、ACL、embedding、pgvector、評估集與重建流程必須串成可追溯管線。",
+      api: "Copilot API 要固定 answer、citations、refused、reason 與 request_id，並區分輸入錯誤、權限、限流、上游 timeout 和安全降級。",
+      devops: "Copilot 必須能由 README 與 Compose 在乾淨環境重建；healthcheck、migration、環境變數與 log 都要成為可驗證交付的一部分。",
+      testing: "作品中的 pytest、integration test、evaluation set 與 red-team cases 能證明你會驗證，而不是只靠 demo 成功。",
+      ai: "作品主線從 pgvector RAG 進到引用、拒答、retrieval／answer 評測，再到受控 Tool Calling、JSON Schema、timeout／retry 與 HITL。",
+      story: "專案故事固定成一條：把分散且受權限控制的維運知識，做成可引用、會拒答、可評測並能安全協助工單流程的 Copilot。"
     };
 
     const lessonProjectDetails = [
-      { match: /etl/i, text: "你可以把 S-111 說成很完整的 ETL：Extract 是掃描 NC/H5/S-111 類資料；Transform 是計算 24h/48h/72h 的流速與流向誤差，產生 summary_stats、official hotspot、metric hotspot 與 spatial stats；Load 是輸出 daily_results 成果包與 manifest，並可寫入 PostgreSQL/PostGIS，讓 QGIS 或 Flask API 依情境查詢。" },
-      { match: /primary|foreign/i, text: "你可以用 hotspot_points 舉例：如果 target_date、target_timestamp、lead_hours、error_type、位置與 metric 無法共同識別一筆結果，重跑或 join 時就可能重複或對錯資料。official hotspot 則要記得是 metric IS NULL。" },
-      { match: /granularity/i, text: "S-111 很適合練 granularity，因為 target_date 是日層級，summary_stats 是每小時每個 lead_hours 的摘要，hotspot_points 是已超標的空間點，spatial_stats 是完整有效格點統計。你要先說清楚一列代表什麼，才談得上正確 join 或聚合。" },
-      { match: /window/i, text: "如果你想在每個 date、target_timestamp、lead_hours 或 error_type 裡找最大誤差 hotspot，同時保留 lon、lat、metric 等明細欄位，這就是 window function 很好解釋的場景。" },
-      { match: /cte|subquery/i, text: "你可以把 threshold hotspot 查詢拆成幾段：先篩 date、lead_hours、error_type 與 metric，再套 bbox，再套 threshold，最後排序或限制筆數。這樣面試官比較容易跟上你的 SQL 思路。" },
-      { match: /dtype/i, text: "S-111 的時間、lead_hours、lon/lat、value 都不能只是看起來像數字或時間。型別錯會讓排序、篩選、API response 與視覺化都變得不可靠。" },
-      { match: /null|outlier/i, text: "缺座標、缺時間或異常值不能只用刪除處理。你可以說明會先標記，再依欄位用途決定刪除、保留或排除於 hotspot 計算之外。" },
-      { match: /assert|validation/i, text: "S-111 的 validation 可以檢查欄位存在、日期範圍、lead_hours、座標範圍、筆數，以及固定分級規則：speed 0.5-1.0 kn 是 warning、>= 1.0 kn 是 critical；direction official 先通過 0.48 kn 真值流速門檻，再用 30/45 deg 分級。" },
-      { match: /time complexity/i, text: "如果 hotspot 或格點資料變大，Python 裡不必要的巢狀迴圈會很快拖慢流程。你可以說會先找主要迴圈，再用 dict、向量化或資料庫查詢降低成本。" },
-      { match: /hash map|dict/i, text: "你可以把日期、時間、座標或 station id 組成 key，用 dict 快速對應統計值或 hotspot rows，避免每筆資料都去掃另一份資料。" },
-      { match: /schema/i, text: "S-111 的 schema 不是只列欄位，而是交接契約。summary_stats 的 target_date、target_timestamp、lead_hours，以及 hotspot_points 的 lon、lat、value、unit、error_type、severity、metric 固定後，API、QGIS 與文件才會一致。" },
-      { match: /idempotent/i, text: "你的重跑情境很適合講冪等：同一 date、target_timestamp、lead_hours、error_type、位置與 metric 的 hotspot rows 重跑後，資料庫結果應該一致，不應該因 append 而越跑越多。" },
-      { match: /upsert/i, text: "Upsert 可以用來處理 S-111 批次重跑。重點不是只說會用 upsert，而是說唯一鍵怎麼設、official 的 metric IS NULL 怎麼處理、衝突時哪些欄位更新、如何驗證筆數沒有膨脹。" },
-      { match: /on conflict/i, text: "在 PostgreSQL 裡，你可以用 ON CONFLICT DO UPDATE 表達重跑策略：遇到同一筆 hotspot 結果就更新，而不是新增另一列；但前提是 unique key 要能區分 error_type、位置與 metric。" },
-      { match: /manifest/i, text: "S-111 result package 可以用 manifest 記錄輸入檔、summary_stats、hotspots、spatial_stats、metric_hotspots、GeoJSON/QML、日期、lead_hours、threshold、筆數與版本。這會讓交接比只丟一包檔案可靠很多。" },
-      { match: /endpoint/i, text: "你的 API 可以講成幾個明確 endpoint，例如 /api/threshold-hotspots 查可畫圖的 hotspot，/api/hotspot-series 查 hotspot-row series。要主動說明 hotspot-series 不是完整格網時間序列。" },
-      { match: /query parameter/i, text: "S-111 API 的 query parameter 可以直接連到使用者需求：date 指定日期、lead_hours 指定預報時效、error_type 分 speed/direction、metric 分 official/std_dir 等圖層、bbox 限制地圖範圍、threshold 控制 hotspot 條件。" },
-      { match: /json|geojson/i, text: "如果使用者要在地圖上看 hotspot，你可以回 lon/lat 或 GeoJSON。重點是要分清 hotspots.geojson 是超標點，spatial_stats_XXh.geojson 是完整有效格點統計，metric_hotspots.geojson 是輔助指標圖層。" },
-      { match: /pagination|limit/i, text: "當 hotspot rows 變多時，你可以用 limit、bbox 或 pagination 控制 payload。這樣比較像正式服務，而不是把所有資料一次丟給前端。" },
-      { match: /bbox/i, text: "BBox 很適合你的地圖場景：使用者只看目前視窗範圍，後端就只查這個範圍內的 hotspot，減少 DB 掃描與網路 payload。" },
-      { match: /postgis|gist/i, text: "PostGIS 在你的專案裡不只是存 lon/lat，而是讓資料庫能做空間範圍查詢。GIST index 則是讓 bbox 或空間查詢更快的關鍵。" },
-      { match: /explain/i, text: "如果 threshold hotspot API 變慢，你可以用 EXPLAIN ANALYZE 看是不是 full table scan、排序太重、索引沒用到，然後再決定要不要加索引或改 SQL。" },
-      { match: /cache/i, text: "固定 date、lead_hours、error_type、metric、threshold 的 hotspot 查詢可能適合 cache，但你要同時講 TTL 與資料重建後如何失效，避免 stale data。" },
-      { match: /timeout|error handling/i, text: "S-111 API 可能遇到參數錯、查無資料、DB 查詢慢。你可以說會區分 400、404、500 類錯誤，並回傳清楚 message，讓前端不會只顯示空白。" },
-      { match: /star/i, text: "你的 STAR 可以固定成：海流驗證資料需要被查詢與展示；你負責整理 threshold hotspot workflow；你做了 verification_pipeline、daily_results、PostGIS、Flask API 與文件；結果是可交接、可查詢的工具。" },
-      { match: /trade-off|tradeoff/i, text: "你可以說只回 hotspot rows 的優點是 payload 小、API 快、容易展示；代價是不能直接播放完整格網動畫，/api/hotspot-series 也只看 hotspot row 的時間資料。這就是清楚的工程取捨。" },
-      { match: /bottleneck|profiling/i, text: "S-111 API 慢時，瓶頸可能在 DB query、JSON serialize、payload、bbox 缺失或前端繪圖。面試時請先講量測，再講優化。" },
-      { match: /regression/i, text: "如果你改了 hotspot 分級、0.48 kn 流向門檻、API 欄位或 SQL 條件，regression check 要確認舊的 QGIS/前端流程仍可使用，warning/critical 分級也沒有跑掉。" }
+      { match: /type hints|pydantic/i, text: "替 equipment、document、chunk 與 ticket 定義 model；API 邊界由 Pydantic 驗證，核心 service 不接收任意 dict。" },
+      { match: /pytest|regression/i, text: "以 fixture 測 parser，mock embedding／LLM 的錯誤路徑，再用 PostgreSQL／pgvector integration test 與版本化 golden set 保護整條流程。" },
+      { match: /leetcode|big-o|hash map/i, text: "用工單去重或設備映射連回基礎演算法：先說 O(n²) baseline，再用 dict 降成 O(n)，並交代額外空間。" },
+      { match: /join|window|cte/i, text: "用 documents→chunks、equipment→tickets 的一對多關係講粒度；用 ROW_NUMBER 取每台設備最新工單，最後以筆數對帳。" },
+      { match: /postgresql|schema|index|transaction|explain/i, text: "把文件、chunks、權限、設備與工單放進明確 schema；文件改版與 chunks 更新在交易內完成，索引用 EXPLAIN ANALYZE 驗證。" },
+      { match: /fastapi|http|openapi/i, text: "POST /api/copilot/ask 用 Pydantic 固定輸入與輸出，ACL 在 retrieval 前執行，response 明確包含引用、拒答與 request_id。" },
+      { match: /data contract|ingestion/i, text: "來源 contract、run_id、staging、quarantine 與 reconciliation 讓手冊和工單能安全重跑；未通過品質門檻不發布向量索引。" },
+      { match: /git branch|linux|dockerfile|docker compose/i, text: "用 feature branch 留下可審查變更；Dockerfile／Compose 固定 API + PostgreSQL，並以乾淨重建、healthcheck、pytest 與 container log 驗收。" },
+      { match: /chunk/i, text: "依章節、維修步驟與表格邊界切 chunk，保存 source_id、section、equipment_id、version 與 ACL，再以評估集選 chunk size。" },
+      { match: /embedding|pgvector|hybrid|rerank/i, text: "先用 exact vector search 建 baseline，再比較 HNSW／IVFFlat；錯誤碼用 full-text 補強，ACL 與設備 filter 必須先套用。" },
+      { match: /rag|citation|引用|拒答|grounded/i, text: "query→ACL retrieval→context→structured answer；citations 只由本次 chunks 組裝，來源不足或衝突就拒答並給下一步。" },
+      { match: /evaluation|recall|mrr|faithful|human review/i, text: "評估集同時包含可回答、無答案、越權與惡意題，分別追 retrieval、answer、citation、refusal、latency 與 cost。" },
+      { match: /prompt injection|observability|latency|token/i, text: "用 request_id 串起各層 trace，不記敏感全文；red-team 測文件注入、跨 ACL 與 secret extraction，失敗時安全降級。" },
+      { match: /tool calling|json schema|timeout|agent|hitl/i, text: "模型只提出結構化意圖；後端驗證 allowlist、schema、ACL、idempotency、step limit 與 risk tier，高風險工單操作進 HITL。" },
+      { match: /copilot|demo|star/i, text: "Demo 固定展示有答案、無答案與需人工核准三條路徑，再以 pytest、評估報告、audit log、SLO 與 runbook 說明可驗證成果。" }
     ];
 
     const lessonChecklists = [
-      { match: /etl/i, items: ["能把流程拆成 Extract、Transform、Load 三段。", "能說出每段的輸入與輸出。", "能補一句如何驗證筆數、欄位或結果。"] },
-      { match: /primary|foreign|granularity/i, items: ["先問一列資料代表什麼。", "確認 key 是否唯一，以及 join 後筆數是否合理。", "回答時主動提到 one-to-many 或 many-to-many 的風險。"] },
-      { match: /window|cte|subquery/i, items: ["能說出這個 SQL 工具解決哪種查詢問題。", "能用小資料說明輸入與目標輸出。", "能講出不用它時可能發生什麼限制。"] },
-      { match: /dtype|null|outlier|assert|validation/i, items: ["先檢查欄位、型別、空值與異常值。", "把處理規則寫成可重跑、可追溯的流程。", "最後補一個 validation 或 log，證明結果可靠。"] },
-      { match: /time complexity|hash map|dict/i, items: ["先定義 n 代表什麼資料量。", "指出主要迴圈、查找或巢狀結構。", "提出一個具體改善方式，例如 dict、索引或批次處理。"] },
-      { match: /schema|idempotent|upsert|on conflict|manifest/i, items: ["說清楚資料契約、唯一鍵或版本紀錄。", "說明重跑時如何避免重複或覆蓋錯誤。", "用筆數、摘要統計或 manifest 驗證交接結果。"] },
-      { match: /endpoint|query parameter|json|geojson|pagination|bbox|postgis|gist|explain|cache|timeout|error handling/i, items: ["先講使用者要查什麼，再講 endpoint 或參數。", "說明資料量、效能、錯誤處理或索引。", "把 response 設計連到前端、QGIS 或地圖使用情境。"] },
-      { match: /star|trade-off|bottleneck|profiling|regression/i, items: ["先講問題，不要先堆技術名詞。", "用 S-111 的具體情境補證據。", "最後講結果、取捨、驗證或下一步。"] }
+      { match: /type hints|pydantic|pytest/i, items: ["能說明輸入／輸出與 validation boundary。", "至少列一個正常、邊界與失敗測試。", "分清 mock、integration 與真實模型評測。"] },
+      { match: /leetcode|big-o|hash map/i, items: ["先定義 n。", "講出時間與額外空間。", "能不用 AI 寫出基礎解法並測邊界。"] },
+      { match: /join|window|cte|postgresql|schema|index|transaction|explain/i, items: ["先說資料粒度與 key。", "說明 SQL／索引選擇原因。", "用筆數、constraint 或 EXPLAIN 驗證。"] },
+      { match: /fastapi|http|openapi|data contract|ingestion/i, items: ["定義 schema、狀態碼與權限。", "說清楚重跑、拒收與 timeout。", "留下 log、run_id 或對帳證據。"] },
+      { match: /chunk|embedding|pgvector|hybrid|rerank|rag/i, items: ["畫出資料流與每層輸入輸出。", "說明版本、ACL 與索引取捨。", "用固定評估集比較品質與延遲。"] },
+      { match: /citation|引用|拒答|grounded|evaluation|recall|mrr|faithful/i, items: ["分開 retrieval、answer、citation 與 refusal。", "包含無答案與 hard negative。", "保存 expected source、版本與人工覆核。"] },
+      { match: /prompt injection|observability|latency|token|regression/i, items: ["先列風險與可觀測證據。", "敏感內容不進一般 log。", "修正後重跑 red-team 與 regression set。"] },
+      { match: /tool calling|json schema|timeout|agent|hitl/i, items: ["工具使用 allowlist 與最小權限。", "參數通過 JSON Schema 與 ACL 驗證。", "寫入有 idempotency、步數上限與人工確認。"] },
+      { match: /copilot|demo|star/i, items: ["先講維運問題與自己的角色。", "只講企業維運 Copilot 這一條作品主線。", "最後講評測、限制、SLO 與下一步。"] }
     ];
-
     function teachingDetailFor(lesson) {
       return teachingDetails.find(item => item.match.test(lesson.title)) || {
         simple: lesson.concept,
         steps: `先定義 ${lesson.terms[0]}，再說它在資料流程中的位置，最後補上你會如何驗證結果。`,
-        interview: `你可以把它連回 S-111：${lesson.s111}`,
+        interview: `你可以把它連回企業維運 Copilot：${lesson.s111}`,
         mistake: "不要只背術語。請用一個資料流程或專案例子說明它實際解決什麼問題。"
       };
     }
@@ -5427,7 +5361,7 @@
       const match = lessonChecklists.find(item => item.match.test(lesson.title));
       return match ? match.items : [
         `能白話說出 ${lesson.terms[0]} 的用途。`,
-        "能連到自己的 S-111 專案，而不是只講課本定義。",
+        "能連到企業維運 Copilot 的具體實作，而不是只講課本定義。",
         "能補一句驗證、風險或取捨。"
       ];
     }
@@ -5456,7 +5390,7 @@
               <p>${detail.steps}</p>
             </section>
             <section class="lesson-deep-section lesson-s111-bridge">
-              <strong>3. 連到你的 S-111 專案</strong>
+              <strong>3. 連到企業維運 Copilot</strong>
               <p>${projectBridge}</p>
             </section>
           </div>
@@ -5468,7 +5402,7 @@
             <section class="lesson-deep-section">
               <strong>5. 面試可以怎麼說</strong>
               <p>${detail.interview}</p>
-              <p class="lesson-answer-frame">回答順序：先白話定義，再講使用情境，接著連到 S-111，最後補驗證、風險或取捨。</p>
+              <p class="lesson-answer-frame">回答順序：先白話定義，再講使用情境，接著連到企業維運 Copilot，最後補驗證、風險或取捨。</p>
             </section>
             <section class="lesson-deep-section">
               <strong>6. 讀完後檢查自己</strong>
@@ -5507,7 +5441,7 @@
       const plan = dailyPlans[dayIndex];
       const week = currentWeekNumber();
       const indexes = todayRecommendationIndexes(dayIndex);
-      const maxMinutes = Math.max(...plan.time.map(item => item[1]));
+      const maxMinutes = Math.max(...learningCadence.map(item => item[1]));
 
       els.todayPlanMeta.textContent = `第 ${learnedLessonCount()} / ${dailyLessons.length} 天`;
       els.todayPlanTopic.textContent = `目前課程：${dailyLessons[todayLearningOffset()].title}`;
@@ -5523,7 +5457,7 @@
           </button>
         `;
       }).join("");
-      els.todayPlanTime.innerHTML = plan.time.map(([label, minutes]) => `
+      els.todayPlanTime.innerHTML = learningCadence.map(([label, minutes]) => `
         <div class="time-row">
           <span>${label}</span>
           <div class="time-track"><span style="width:${Math.max(12, Math.round(minutes / maxMinutes * 100))}%"></span></div>
@@ -5540,7 +5474,7 @@
       const lesson = dailyLessons[offset];
       const questionIndex = todayLearningIndex();
       const learned = isLessonLearned(offset);
-      els.dailyKnowledgeDay.textContent = `第 ${offset + 1} 天 / 28 天路線`;
+      els.dailyKnowledgeDay.textContent = `第 ${offset + 1} 天 / 28 天面試練習`;
       els.dailyKnowledgeTitle.textContent = lesson.title;
       els.dailyKnowledgeConcept.textContent = lesson.concept;
       els.dailyKnowledgeTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
@@ -5608,14 +5542,12 @@
     }
 
     function renderLearningPage() {
-      const dayIndex = new Date().getDay();
-      const plan = dailyPlans[dayIndex];
       const week = currentWeekNumber();
       const offset = activeLearningOffset();
       const lesson = dailyLessons[offset];
       const questionIndex = learningQuestionIndex(offset);
       const learned = isLessonLearned(offset);
-      const maxMinutes = Math.max(...plan.time.map(item => item[1]));
+      const maxMinutes = Math.max(...learningCadence.map(item => item[1]));
 
       els.learningMeta.textContent = `第 ${learnedLessonCount()} / ${dailyLessons.length} 天已確認`;
       els.learningLessonDay.textContent = learned ? `已學完・第 ${offset + 1} 天` : `目前課程・第 ${offset + 1} 天`;
@@ -5631,7 +5563,7 @@
       setResourceLink(els.learningPracticeLink, resources[3].prefix, resources[3].resource, { offset, step: 3 });
       els.learningResourceStatus.textContent = resourceStatusText(offset);
       els.learningOutcomes.innerHTML = learningOutcomes(lesson).map(outcome => `<li>${outcome}</li>`).join("");
-      els.lessonReflectionInput.placeholder = `例如：我理解 ${lesson.title} 是... 它會用在... 在 S-111 裡我可以連到... 我會用...確認結果。`;
+      els.lessonReflectionInput.placeholder = `例如：我理解 ${lesson.title} 是... 它會用在... 在企業維運 Copilot 裡我可以連到... 我會用...確認結果。`;
       renderLessonReadiness(offset);
       const resourcesDone = areLessonResourcesDone(offset);
       els.startLessonChallengeBtn.disabled = !learned && !resourcesDone;
@@ -5641,8 +5573,8 @@
         : !resourcesDone ? "先開啟並實作主資源" : challengeUnlocked ? "進入本課挑戰" : state.lessonReadiness[offset] ? "重新分析學習程度" : "分析學習程度";
       els.openTodayLessonBtn.disabled = !challengeUnlocked;
       els.openTodayLessonBtn.textContent = learned ? "再次挑戰本課" : challengeUnlocked ? "進入本課挑戰" : "達到 60 分後再挑戰";
-      els.learningPlanTopic.textContent = plan.topic;
-      els.learningPlanTime.innerHTML = plan.time.map(([label, minutes]) => `
+      els.learningPlanTopic.textContent = lesson.title;
+      els.learningPlanTime.innerHTML = learningCadence.map(([label, minutes]) => `
         <div class="time-row">
           <span>${label}</span>
           <div class="time-track"><span style="width:${Math.max(12, Math.round(minutes / maxMinutes * 100))}%"></span></div>
@@ -5660,7 +5592,7 @@
       els.courseProgressTitle.textContent = `課程進度 ${learned} / ${dailyLessons.length}`;
       els.courseProgressFill.style.width = `${learned / dailyLessons.length * 100}%`;
       els.courseProgressNote.textContent = learned >= dailyLessons.length
-        ? "28 天路線已完成，可以回頭加練模擬面試題。"
+        ? "28 天面試練習已完成，可以回頭加練模擬面試題。"
         : `目前解鎖 D${currentOffset + 1}：${dailyLessons[currentOffset].title}`;
       els.syncMeta.textContent = syncSettings.oauthSession ? authProviderLabel() : syncSettings.gistId ? "Gist" : "本機";
       updateEmailSyncState();
@@ -5714,7 +5646,7 @@
           <div class="nav-list">${quickItems}</div>
         </div>
         <div class="nav-group">
-          <div class="nav-group-title">28 天知識路線</div>
+          <div class="nav-group-title">28 天面試練習（搭配 8 週實作表）</div>
           <div class="nav-list">${lessonItems}</div>
         </div>
         <div class="nav-group">
@@ -5952,7 +5884,7 @@
       if (unlockedLesson >= 0) {
         setSyncStatus(unlockedLesson < dailyLessons.length - 1
           ? `本課實戰通過，已解鎖 D${unlockedLesson + 2}。`
-          : "28 天課程與本課實戰已全部完成。", "ok");
+          : "28 天面試練習與本課實戰已全部完成。", "ok");
         maybeAutoUploadProgress();
       } else if (isDailyQuestionIndex(state.current)) {
         setSyncStatus(`本課挑戰目前 ${feedback.score} 分、技術要點 ${feedback.technicalHits || 0} / 4；需達 65 分且至少 3 / 4 才解鎖下一天。`, "error");
@@ -6043,8 +5975,8 @@
       }
       if (/因為|所以|取捨|風險|限制|如果|我會/.test(text)) score += 25;
       else issues.push("追問需要更直接回到原因、取捨或下一步行動。");
-      if (/S-111|PostgreSQL|PostGIS|API|QGIS|SQL|Python|資料|hotspot|pipeline/i.test(text)) score += 20;
-      else issues.push("建議把追問回答連回你的資料專案或具體技術。");
+      if (/Copilot|PostgreSQL|pgvector|FastAPI|API|SQL|Python|pytest|RAG|embedding|citation|引用|拒答|Agent|HITL|工單|設備|pipeline/i.test(text)) score += 20;
+      else issues.push("建議把追問回答連回企業維運 Copilot 或具體技術。");
       if (/驗證|檢查|測試|比對|筆數|確認|log/i.test(text)) score += 20;
       else issues.push("補一句你會如何驗證，回答會更像工程實戰。");
       if (/大概|可能就是|之類|等等/.test(text)) {
@@ -6058,7 +5990,7 @@
     }
 
     function insertTemplate() {
-      const writtenTemplate = `我會先釐清：輸入、輸出、限制，以及面試官想看的指標是什麼。\n\n我的結論是：\n\n我的思路會這樣展開：\n\n如果連到我的 S-111 / 資料專案經驗：\n\n我會主動驗證：正常案例、邊界案例、錯誤輸入或筆數比對。\n\n如果過程卡住，我會跟面試官說：目前我的想法是... 卡在... 下一步我會...\n\n可能的風險或取捨：`;
+      const writtenTemplate = `我會先釐清：輸入、輸出、限制，以及面試官想看的指標是什麼。\n\n我的結論是：\n\n我的思路會這樣展開：\n\n如果連到企業 IT／設備維運知識與工單 Copilot：\n\n我會主動驗證：正常、邊界、無答案、錯誤輸入、權限或 timeout 案例。\n\n如果過程卡住，我會跟面試官說：目前我的想法是... 卡在... 下一步我會...\n\n可能的風險或取捨：`;
       const template = writtenTemplate;
       if (!normalize(els.answerInput.value)) {
         els.answerInput.value = template;
@@ -6071,7 +6003,7 @@
     }
 
     function updateAnswerModeText() {
-      els.answerInput.placeholder = "請像面試現場一樣回答。先釐清題目與假設，再講結論、步驟、S-111 專案連結、主動測試方式，以及風險或取捨。";
+      els.answerInput.placeholder = "請像面試現場一樣回答。先釐清題目與假設，再講結論、步驟、企業維運 Copilot 連結、主動測試方式，以及風險或取捨。";
     }
 
     function renderAll(options = {}) {
@@ -6245,11 +6177,11 @@
     document.getElementById("nextBtn").addEventListener("click", () => openAdjacentQuestion(1));
 
     document.getElementById("resetBtn").addEventListener("click", () => {
-      if (!window.confirm("確定清空 28 天課程進度、所有答案、分數、提示與追問嗎？同步設定不會刪除，並會保留一次本機復原。")) return;
+      if (!window.confirm("確定清空 28 天面試練習進度、所有答案、分數、提示與追問嗎？同步設定不會刪除，並會保留一次本機復原。")) return;
       if (!backupCurrentProgress("reset")) return;
       state.current = 0;
       state.view = "learn";
-      state.interviewTrack = "data";
+      state.interviewTrack = "ai";
       state.lessonOffset = 0;
       state.learnedLessons = Array(dailyLessons.length).fill(false);
       state.lessonReflections = Array(dailyLessons.length).fill("");

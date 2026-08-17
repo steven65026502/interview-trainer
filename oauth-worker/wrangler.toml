@@ -5,7 +5,7 @@ compatibility_date = "2026-05-26"
 [vars]
 APP_ORIGIN = "https://steven65026502.github.io"
 GITHUB_CLIENT_ID = "replace_with_github_oauth_client_id"
-EMAIL_FROM = "Rong 工程求職學習與面試工作台 <onboarding@resend.dev>"
+EMAIL_FROM = "Rong AI 應用與資料整合求職工作台 <onboarding@resend.dev>"
 
 [[durable_objects.bindings]]
 name = "AUTH_COORDINATOR"
@@ -16,17 +16,15 @@ tag = "v1-auth-coordinator"
 new_sqlite_classes = ["AuthCoordinator"]
 
 # Set these as Cloudflare Worker secrets, not plain vars:
-# wrangler secret put GITHUB_CLIENT_SECRET
-# wrangler secret put SESSION_SECRET
-# wrangler secret put RESEND_API_KEY
+# npx --yes wrangler@4.123.0 secret put GITHUB_CLIENT_SECRET
+# npx --yes wrangler@4.123.0 secret put SESSION_SECRET
+# npx --yes wrangler@4.123.0 secret put RESEND_API_KEY
 
 # Optional legacy binding: keep only while migrating Email progress from the
 # previous KV-backed release. New progress is stored in Durable Objects.
-# To create a legacy-compatible namespace:
-# npx wrangler kv namespace create interview_trainer_progress
-# npx wrangler kv namespace create interview_trainer_progress --preview
-#
-# Then replace the ids below and uncomment this block.
+# Reuse the original namespace ids that already contain the legacy data; a new
+# empty namespace cannot migrate old progress. If there is no legacy data,
+# leave this block disabled. Then replace the ids below and uncomment it.
 #
 # [[kv_namespaces]]
 # binding = "PROGRESS_KV"

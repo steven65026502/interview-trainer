@@ -718,9 +718,9 @@ function emailBody(email, code, magicLink) {
   const safeCode = escapeHtml(code);
   const safeLink = escapeHtml(magicLink);
   return {
-    subject: "Rong 工程求職學習與面試工作台登入驗證碼",
+    subject: "Rong AI 應用與資料整合求職工作台登入驗證碼",
     text: [
-      "你的 Rong 工程求職學習與面試工作台登入驗證碼是：",
+      "你的 Rong AI 應用與資料整合求職工作台登入驗證碼是：",
       "",
       code,
       "",
@@ -731,7 +731,7 @@ function emailBody(email, code, magicLink) {
     ].join("\n"),
     html: `
       <div style="font-family:system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;line-height:1.6;color:#17201d;">
-        <h2 style="margin:0 0 12px;">Rong 工程求職學習與面試工作台登入</h2>
+        <h2 style="margin:0 0 12px;">Rong AI 應用與資料整合求職工作台登入</h2>
         <p>這是寄給 <strong>${safeEmail}</strong> 的登入驗證碼：</p>
         <p style="font-size:26px;letter-spacing:6px;font-weight:700;margin:18px 0;">${safeCode}</p>
         <p><a href="${safeLink}" style="display:inline-block;padding:10px 14px;border-radius:6px;background:#1f6f5b;color:#fff;text-decoration:none;">直接登入學習系統</a></p>
