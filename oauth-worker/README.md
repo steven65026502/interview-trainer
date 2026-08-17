@@ -105,7 +105,7 @@ Client ID 放在 `wrangler.toml`；Client secret 只能用 `wrangler secret put 
 npm test
 ```
 
-測試涵蓋 redirect allowlist、缺少 secret、公開 debug 資料移除、OAuth state cookie／一次性與速率限制、超過 128 筆過期紀錄的分頁回收、session 到期與撤銷、Content-Type 與 body size 上限、Email／GitHub CAS 衝突，以及前端 409 停寫與衝突副本保留。
+測試涵蓋 redirect allowlist、缺少 secret、公開 debug 資料移除、OAuth state cookie／一次性與速率限制、超過 128 筆過期紀錄的分頁回收、session 到期與撤銷、Content-Type 與 body size 上限、Email／GitHub CAS 衝突、progress v5 降版拒絕，以及前端 409 停寫與衝突副本保留。
 
 也可以做 Wrangler dry run：
 
@@ -114,6 +114,8 @@ npx --yes wrangler@4.123.0 deploy --dry-run
 ```
 
 ## 部署
+
+若同時更新 Course 前端，部署順序必須是 Worker 在前、前端在後。新版 Worker 仍接受 v1–v4 並可升級到 v5；某位使用者寫入 v5 後，該使用者的舊版 v1–v4 寫入會收到 409，避免理解題進度被降版覆寫。開始寫入 v5 後，不可回滾到只認得 v4 的 Worker。
 
 ```powershell
 npx --yes wrangler@4.123.0 deploy

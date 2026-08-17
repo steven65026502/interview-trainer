@@ -355,14 +355,37 @@ test("JSON endpoints enforce Content-Type, byte limits, and progress envelope sc
   assert.equal(progressTooLarge.status, 413);
 });
 
-function progressPayload(revision, answer = `answer-${revision}`) {
+function progressPayload(revision, answer = `answer-${revision}`, version = 4) {
   return {
     app: "rong-data-interview-learning-console",
-    version: 4,
+    version,
     exportedAt: new Date().toISOString(),
     state: { revision, answers: [answer], learnedLessons: [true] }
   };
 }
+
+test("progress accepts envelopes v1-v5 and rejects v6", async () => {
+  for (let version = 1; version <= 5; version += 1) {
+    const env = makeEnv();
+    const token = await __test.issueSession({
+      provider: "email",
+      email: `student-v${version}@example.com`,
+      user_id: `user-v${version}`
+    }, env);
+    const response = await putProgress(env, token, progressPayload(1, `v${version}`, version), 0);
+    assert.equal(response.status, 200, `expected v${version} to be accepted`);
+  }
+
+  const env = makeEnv();
+  const token = await __test.issueSession({
+    provider: "email",
+    email: "student-v6@example.com",
+    user_id: "user-v6"
+  }, env);
+  const response = await putProgress(env, token, progressPayload(1, "v6", 6), 0);
+  assert.equal(response.status, 400);
+  assert.deepEqual(await response.json(), { error: "Invalid progress payload" });
+});
 
 async function putProgress(env, token, payload, baseRevision, baseExists = baseRevision > 0) {
   return worker.fetch(jsonRequest("https://worker.example/progress", { ...payload, baseRevision, baseExists }, {
@@ -400,6 +423,27 @@ test("Email progress uses per-user Durable Object CAS: stale writes fail and fre
   assert.deepEqual(await download.json(), second);
 });
 
+test("Email progress atomically rejects v1-v4 after the user reaches v5", async () => {
+  const env = makeEnv();
+  const token = await __test.issueSession({ provider: "email", email: "student@example.com", user_id: "user-id" }, env);
+  assert.equal((await putProgress(env, token, progressPayload(1, "legacy", 4), 0)).status, 200);
+
+  const upgraded = progressPayload(2, "upgraded", 5);
+  assert.equal((await putProgress(env, token, upgraded, 1)).status, 200);
+
+  for (let version = 1; version <= 4; version += 1) {
+    const response = await putProgress(env, token, progressPayload(3, `downgrade-v${version}`, version), 2);
+    assert.equal(response.status, 409, `expected v${version} downgrade to be rejected`);
+    assert.deepEqual(await response.json(), { error: "Progress version downgrade is not allowed" });
+  }
+
+  const download = await worker.fetch(new Request("https://worker.example/progress", {
+    headers: { Authorization: `Bearer ${token}`, Origin: APP_ORIGIN }
+  }), env);
+  assert.equal(download.status, 200);
+  assert.deepEqual(await download.json(), upgraded);
+});
+
 test("legacy Email KV progress migrates into the Durable Object without stale overwrite", async () => {
   const env = makeEnv();
   const legacy = progressPayload(0, "legacy-without-trusted-revision");
@@ -414,9 +458,14 @@ test("legacy Email KV progress migrates into the Durable Object without stale ov
   }), env);
   assert.deepEqual(await download.json(), legacy);
 
-  const fresh = progressPayload(1, "merged");
+  const fresh = progressPayload(1, "merged", 5);
   assert.equal((await putProgress(env, token, fresh, 0, true)).status, 200);
   assert.equal(JSON.parse(env.PROGRESS_KV.values.get("progress:email:user-id")).state.revision, 0);
+
+  const migrated = await worker.fetch(new Request("https://worker.example/progress", {
+    headers: { Authorization: `Bearer ${token}`, Origin: APP_ORIGIN }
+  }), env);
+  assert.deepEqual(await migrated.json(), fresh);
 });
 
 test("GitHub Gist progress is serialized in a per-user Durable Object", async t => {
@@ -459,5 +508,23 @@ test("GitHub Gist progress is serialized in a per-user Durable Object", async t 
     headers: { Authorization: `Bearer ${token}`, Origin: APP_ORIGIN }
   }), env);
   assert.equal(download.status, 200);
-  assert.ok([2, 3].includes((await download.json()).state.revision));
+  const serialized = await download.json();
+  assert.ok([2, 3].includes(serialized.state.revision));
+
+  const upgraded = progressPayload(serialized.state.revision + 1, "upgraded", 5);
+  assert.equal((await putProgress(env, token, upgraded, serialized.state.revision)).status, 200);
+  const writesAfterUpgrade = writes;
+
+  for (let version = 1; version <= 4; version += 1) {
+    const response = await putProgress(
+      env,
+      token,
+      progressPayload(upgraded.state.revision + 1, `downgrade-v${version}`, version),
+      upgraded.state.revision
+    );
+    assert.equal(response.status, 409, `expected v${version} downgrade to be rejected`);
+    assert.deepEqual(await response.json(), { error: "Progress version downgrade is not allowed" });
+  }
+  assert.equal(writes, writesAfterUpgrade);
+  assert.deepEqual(remote, upgraded);
 });

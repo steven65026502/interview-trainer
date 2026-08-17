@@ -1,6 +1,6 @@
 const PROGRESS_FILE = "rong-data-interview-progress.json";
 const PROGRESS_APP = "rong-data-interview-learning-console";
-const PROGRESS_VERSION = 4;
+const PROGRESS_VERSION = 5;
 const GITHUB_API = "https://api.github.com";
 const RESEND_API = "https://api.resend.com/emails";
 const APP_PATH = "/interview-trainer/";
@@ -495,6 +495,14 @@ function validateProgressEnvelope(payload) {
 function progressRevision(payload) {
   const revision = payload && payload.state && payload.state.revision;
   return Number.isSafeInteger(revision) && revision >= 0 && revision <= 10_000_000 ? revision : 0;
+}
+
+function wouldDowngradeProgressVersion(current, incoming) {
+  return Boolean(
+    current
+    && current.version === PROGRESS_VERSION
+    && incoming.version < PROGRESS_VERSION
+  );
 }
 
 function validateProgressWrite(payload) {
@@ -1177,6 +1185,9 @@ export class AuthCoordinator {
           current = validateProgressEnvelope(body.fallbackPayload);
           await transaction.put("progress", current);
         }
+        if (wouldDowngradeProgressVersion(current, payload)) {
+          return internalJson({ error: "Progress version downgrade is not allowed" }, 409);
+        }
         const currentRevision = progressRevision(current);
         if (body.baseExists !== Boolean(current) || body.baseRevision !== currentRevision) {
           return internalJson({ error: "Progress conflict", currentRevision }, 409);
@@ -1190,6 +1201,9 @@ export class AuthCoordinator {
     }
     return this.runProgressExclusive(async () => {
       const current = await readGithubProgress(body.token);
+      if (wouldDowngradeProgressVersion(current, payload)) {
+        return internalJson({ error: "Progress version downgrade is not allowed" }, 409);
+      }
       const currentRevision = progressRevision(current);
       if (body.baseExists !== Boolean(current) || body.baseRevision !== currentRevision) {
         return internalJson({ error: "Progress conflict", currentRevision }, 409);
