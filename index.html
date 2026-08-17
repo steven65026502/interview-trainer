@@ -292,6 +292,280 @@
       gap: 14px;
     }
 
+    .course-stepper {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fff;
+      padding: 10px;
+    }
+
+    .course-stepper ol {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .course-step {
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      display: flex;
+      font-size: 12px;
+      font-weight: 750;
+      gap: 8px;
+      min-height: 44px;
+      padding: 8px 10px;
+    }
+
+    .course-step span {
+      align-items: center;
+      background: #edf1f2;
+      border-radius: 50%;
+      color: var(--ink);
+      display: inline-flex;
+      flex: 0 0 24px;
+      height: 24px;
+      justify-content: center;
+    }
+
+    .course-step.current {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    .course-step.current span,
+    .course-step.done span {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .course-step.done {
+      border-color: rgba(22, 163, 74, 0.3);
+      color: var(--ok);
+    }
+
+    .course-stage {
+      border: 1px solid #dfe7e8;
+      border-radius: 6px;
+      background: #fff;
+      display: grid;
+      gap: 14px;
+      padding: 16px;
+    }
+
+    .course-stage.locked {
+      background: #f7f9f9;
+    }
+
+    .course-stage-head {
+      align-items: start;
+      display: flex;
+      gap: 14px;
+      justify-content: space-between;
+    }
+
+    .course-stage-head h4 {
+      font-size: 17px;
+      line-height: 1.45;
+      margin: 3px 0 0;
+    }
+
+    .course-kicker,
+    .course-stage-status {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .course-stage-status {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      flex: 0 0 auto;
+      padding: 5px 9px;
+    }
+
+    .course-video {
+      background: #101717;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .course-video iframe {
+      aspect-ratio: 16 / 9;
+      border: 0;
+      display: block;
+      width: 100%;
+    }
+
+    .course-video-fallback {
+      color: #fff;
+      display: grid;
+      gap: 8px;
+      line-height: 1.6;
+      padding: 18px;
+    }
+
+    .course-video-fallback a {
+      color: #a7f3d0;
+      font-weight: 800;
+    }
+
+    .course-complete-check {
+      align-items: flex-start;
+      border: 1px solid var(--line-strong);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      gap: 10px;
+      min-height: 52px;
+      padding: 10px 12px;
+    }
+
+    .course-complete-check:hover {
+      background: var(--accent-soft);
+    }
+
+    .course-complete-check input {
+      flex: 0 0 auto;
+      height: 20px;
+      margin-top: 2px;
+      width: 20px;
+    }
+
+    .course-complete-check span {
+      display: grid;
+      gap: 3px;
+    }
+
+    .course-complete-check small {
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    .course-extras {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #f8fafa;
+      padding: 0 14px;
+    }
+
+    .course-extras summary {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      font-size: 13px;
+      font-weight: 800;
+      min-height: 44px;
+    }
+
+    .course-extras[open] {
+      padding-bottom: 14px;
+    }
+
+    .lesson-quiz-form,
+    .lesson-quiz-questions {
+      display: grid;
+      gap: 14px;
+    }
+
+    .quiz-question {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      display: grid;
+      gap: 9px;
+      margin: 0;
+      min-width: 0;
+      padding: 12px;
+    }
+
+    .quiz-question legend {
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.55;
+      padding: 0 4px;
+    }
+
+    .quiz-option {
+      align-items: flex-start;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      cursor: pointer;
+      display: flex;
+      gap: 9px;
+      min-height: 48px;
+      padding: 10px;
+    }
+
+    .quiz-option:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .quiz-option input {
+      flex: 0 0 auto;
+      height: 18px;
+      margin-top: 2px;
+      width: 18px;
+    }
+
+    .quiz-option span {
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .quiz-option.correct {
+      border-color: rgba(22, 163, 74, 0.45);
+      background: #f1fbf5;
+    }
+
+    .quiz-option.wrong {
+      border-color: rgba(185, 28, 28, 0.4);
+      background: #fff5f5;
+    }
+
+    .lesson-quiz-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .lesson-quiz-result {
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      display: grid;
+      gap: 8px;
+      font-size: 13px;
+      line-height: 1.65;
+      padding-top: 12px;
+    }
+
+    .lesson-quiz-result strong {
+      color: var(--ink);
+    }
+
+    .lesson-quiz-result.ok strong {
+      color: var(--ok);
+    }
+
+    .lesson-quiz-result.error strong {
+      color: var(--danger);
+    }
+
+    .lesson-quiz-result ol {
+      display: grid;
+      gap: 7px;
+      margin: 0;
+      padding-left: 20px;
+    }
+
     .lesson-title {
       display: grid;
       gap: 6px;
@@ -552,6 +826,29 @@
       width: 0%;
       background: var(--accent);
       transition: width 180ms ease;
+    }
+
+    .course-progress-native {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      background: #edf1f2;
+      display: block;
+      height: 8px;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .course-progress-native::-webkit-progress-bar {
+      background: #edf1f2;
+    }
+
+    .course-progress-native::-webkit-progress-value {
+      background: var(--accent);
+    }
+
+    .course-progress-native::-moz-progress-bar {
+      background: var(--accent);
     }
 
     .tag {
@@ -1774,6 +2071,35 @@
         grid-template-columns: 1fr;
       }
 
+      .course-stepper ol {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .course-stage-head {
+        align-items: stretch;
+        flex-direction: column;
+      }
+
+      .course-stage-status {
+        align-self: start;
+      }
+
+      .lesson-readiness textarea,
+      .quiz-option span {
+        font-size: 16px;
+      }
+
+      .lesson-quiz-actions,
+      .lesson-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+      }
+
+      .lesson-quiz-actions .btn,
+      .lesson-actions .btn {
+        width: 100%;
+      }
+
       .sync-grid input,
       .sync-grid textarea {
         min-height: 44px;
@@ -1806,78 +2132,141 @@
       </div>
     </header>
 
-    <main class="layout" id="main-content">
+    <main class="layout" id="main-content" tabindex="-1">
       <section class="panel interview-panel">
         <section class="learning-page" id="learningPage">
           <div class="learning-head">
             <span id="learningMeta">第 1 天 / 28 天面試練習</span>
             <h2>今日學習</h2>
-            <p id="learningIntro">這是搭配 8 週實作表的每日面試練習，不取代正式週次；先完成一個主資源與文字檢核，再用實戰挑戰證明技術要點。</p>
-            <div><a class="btn primary" href="#currentLesson">直接開始今天</a></div>
+            <p id="learningIntro">這是搭配 8 週實作表的每日 Course：完成一個影片或短文教材、兩題理解題、Copilot 應用題，再進入面試實戰。</p>
+            <div><a class="btn primary" href="#learningLessonTitle">直接開始今天</a></div>
           </div>
 
           <details class="learning-guide">
-            <summary>第一次使用？查看 5 步學習流程</summary>
+            <summary>第一次使用？查看 Course 上課流程</summary>
             <ol class="learning-steps">
             <li class="learning-step">
-              <strong>1. 讀概念</strong>
-              <span>先知道今天的能力在 AI 應用與資料整合裡解決什麼問題。</span>
+              <strong>1. 完成單一教材</strong>
+              <span>每課只指定一個主教材：有合適影片就看影片，否則讀本站短文。</span>
             </li>
             <li class="learning-step">
-              <strong>2. 看資源</strong>
-              <span>用精選影片、文件或練習題補齊背景。</span>
+              <strong>2. 做兩題理解題</strong>
+              <span>單選題有固定答案與解析；答錯可看解析後重新作答。</span>
             </li>
             <li class="learning-step">
-              <strong>3. 連專案</strong>
-              <span>把概念對到企業 IT／設備維運知識與工單 Copilot。</span>
+              <strong>3. 寫 Copilot 應用題</strong>
+              <span>用自己的話連到作品情境；評分看技術要點，不要求逐字相同。</span>
             </li>
             <li class="learning-step">
-              <strong>4. 自我驗收</strong>
-              <span>確認自己能白話講出定義、例子與風險後，再進入本課挑戰。</span>
+              <strong>4. 做面試實戰</strong>
+              <span>用本課挑戰題口述作答，通過技術要點後才完成這一課。</span>
             </li>
             <li class="learning-step">
-              <strong>5. 再被考</strong>
-              <span>學完後用本課挑戰題檢查自己是否真的會講。</span>
+              <strong>5. 解鎖下一課</strong>
+              <span>理解題與應用題都通過，才會開放下一天；延伸資源不列入門檻。</span>
             </li>
             </ol>
           </details>
 
-          <section class="lesson-article" id="currentLesson">
+          <section class="lesson-article" id="currentLesson" tabindex="-1">
             <div class="lesson-title">
               <span class="lesson-meta" id="learningLessonDay">第 1 天</span>
               <h3 id="learningLessonTitle" tabindex="-1">載入中</h3>
             </div>
             <p class="lesson-copy" id="learningLessonConcept"></p>
             <div class="knowledge-tags" id="learningLessonTags"></div>
-            <p class="knowledge-s111 lesson-copy" id="learningLessonS111"></p>
-            <div class="lesson-teaching" id="learningTeaching"></div>
-            <div class="video-links" role="group" aria-label="本課學習資源">
-              <span>延伸資源</span>
-              <a id="learningYoutubeLink" href="#" target="_blank" rel="noopener noreferrer">YouTube</a>
-              <a id="learningBilibiliLink" href="#" target="_blank" rel="noopener noreferrer">Bilibili</a>
-              <a id="learningReferenceLink" href="#" target="_blank" rel="noopener noreferrer">文件</a>
-              <a id="learningPracticeLink" href="#" target="_blank" rel="noopener noreferrer">練習</a>
-            </div>
-            <div class="resource-status" id="learningResourceStatus">請選一個主資源學習；其他資源為選修。</div>
             <div class="knowledge-outcomes">
               <strong>今日驗收</strong>
               <ul id="learningOutcomes"></ul>
             </div>
-            <div class="lesson-readiness">
-              <div class="readiness-head">
-                <label for="lessonReflectionInput"><strong>學習檢核：60 分以上進入實戰挑戰</strong></label>
-                <span>先用自己的話寫 3-5 句，再完成本課挑戰；只有技術要點通過，才會解鎖下一天。</span>
+
+            <nav class="course-stepper" aria-label="本課進度">
+              <ol>
+                <li class="course-step" id="courseStepSource"><span>1</span>教材</li>
+                <li class="course-step" id="courseStepQuiz"><span>2</span>理解題</li>
+                <li class="course-step" id="courseStepApplication"><span>3</span>應用題</li>
+                <li class="course-step" id="courseStepChallenge"><span>4</span>實戰</li>
+              </ol>
+            </nav>
+
+            <section class="course-stage" id="courseSourceStage" aria-labelledby="courseSourceTitle">
+              <div class="course-stage-head">
+                <div>
+                  <span class="course-kicker" id="courseSourceType">短文課</span>
+                  <h4 id="courseSourceTitle">1. 完成本課主教材</h4>
+                </div>
+                <span class="course-stage-status" id="courseSourceStatus">進行中</span>
               </div>
-              <textarea id="lessonReflectionInput" maxlength="8000" spellcheck="false" placeholder="例如：我理解 RAG 不只是呼叫模型，而是... 在維運 Copilot 裡... 我會檢查..."></textarea>
-              <div class="readiness-result" id="lessonReadinessResult" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
-                <strong>尚未檢核</strong>
-                <span>寫完後先做文字檢核；達到 60 分後還要完成本課挑戰。</span>
+              <div class="course-video is-hidden" id="courseVideo"></div>
+              <div class="lesson-teaching" id="learningTeaching"></div>
+              <label class="course-complete-check">
+                <input id="courseSourceDoneInput" type="checkbox">
+                <span>
+                  <strong id="courseSourceDoneLabel">我已讀完本課短文</strong>
+                  <small>請完成教材後再勾選；單純開啟連結不代表已學會。</small>
+                </span>
+              </label>
+            </section>
+
+            <details class="course-extras">
+              <summary>課後延伸資源（選修，不影響解鎖）</summary>
+              <div class="video-links" role="group" aria-label="本課延伸學習資源">
+                <span>依卡點選用，不需要四個都看</span>
+                <a id="learningYoutubeLink" href="#" target="_blank" rel="noopener noreferrer">YouTube</a>
+                <a id="learningBilibiliLink" href="#" target="_blank" rel="noopener noreferrer">Bilibili</a>
+                <a id="learningReferenceLink" href="#" target="_blank" rel="noopener noreferrer">文件</a>
+                <a id="learningPracticeLink" href="#" target="_blank" rel="noopener noreferrer">練習</a>
               </div>
-            </div>
-            <div class="lesson-actions">
-              <button class="btn primary" id="startLessonChallengeBtn" type="button">分析學習程度</button>
-              <button class="btn" id="openTodayLessonBtn" type="button">回到今日新知</button>
-            </div>
+              <div class="resource-status" id="learningResourceStatus">尚未開啟延伸資源。</div>
+            </details>
+
+            <section class="course-stage locked" id="lessonQuizStage" aria-labelledby="lessonQuizTitle">
+              <div class="course-stage-head">
+                <div>
+                  <span class="course-kicker">有標準答案</span>
+                  <h4 id="lessonQuizTitle">2. 教材理解題</h4>
+                </div>
+                <span class="course-stage-status" id="lessonQuizStatus">尚未開放</span>
+              </div>
+              <form class="lesson-quiz-form" id="lessonQuizForm" novalidate>
+                <div class="lesson-quiz-questions" id="lessonQuizQuestions"></div>
+                <div class="lesson-quiz-actions">
+                  <button class="btn primary" id="lessonQuizSubmitBtn" type="submit">檢查答案</button>
+                  <button class="btn" id="lessonQuizRetryBtn" type="button" hidden>重新作答</button>
+                </div>
+              </form>
+              <div class="lesson-quiz-result" id="lessonQuizResult" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
+                <strong>先完成教材</strong>
+                <span>勾選完成後即可回答兩題；送出後會顯示固定答案與解析。</span>
+              </div>
+            </section>
+
+            <section class="course-stage locked" id="courseApplicationStage" aria-labelledby="courseApplicationTitle">
+              <div class="course-stage-head">
+                <div>
+                  <span class="course-kicker">開放式實作</span>
+                  <h4 id="courseApplicationTitle">3. Copilot 應用題</h4>
+                </div>
+                <span class="course-stage-status" id="courseApplicationStatus">尚未開放</span>
+              </div>
+              <p class="lesson-copy">以下作品連結是一個可接受方向，不是唯一標準答案；請用自己的設計與驗證方式作答。</p>
+              <p class="knowledge-s111 lesson-copy" id="learningLessonS111"></p>
+              <div class="lesson-readiness">
+                <div class="readiness-head">
+                  <label for="lessonReflectionInput"><strong>用自己的話回答：60 分以上進入面試實戰</strong></label>
+                  <span>寫 3–5 句，包含概念、Copilot 情境與驗證方式。這裡是啟發式教練回饋，不代表程式或架構已被正式測試。</span>
+                </div>
+                <textarea id="lessonReflectionInput" maxlength="8000" spellcheck="false" placeholder="例如：我理解 RAG 不只是呼叫模型，而是... 在維運 Copilot 裡... 我會檢查..."></textarea>
+                <div class="readiness-result" id="lessonReadinessResult" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
+                  <strong>尚未開放</strong>
+                  <span>先通過兩題教材理解題。</span>
+                </div>
+              </div>
+              <div class="lesson-actions">
+                <button class="btn primary" id="startLessonChallengeBtn" type="button">檢查應用回答</button>
+                <button class="btn" id="openTodayLessonBtn" type="button">進入面試實戰</button>
+              </div>
+            </section>
           </section>
 
           <div class="learning-time">
@@ -2026,7 +2415,7 @@
       </section>
 
       <aside class="side">
-        <section class="panel course-nav-panel" id="courseNavPanel">
+        <section class="panel course-nav-panel" id="courseNavPanel" tabindex="-1">
           <div class="panel-head">
             <h3>學習目錄</h3>
             <span id="courseNavMeta">今日</span>
@@ -2034,7 +2423,7 @@
           <div class="side-body course-nav" id="courseNav"></div>
         </section>
 
-        <section class="panel sync-panel-card" id="syncPanelCard">
+        <section class="panel sync-panel-card" id="syncPanelCard" tabindex="-1">
           <div class="panel-head">
             <h3>進度同步</h3>
             <span id="syncMeta">本機</span>
@@ -2042,7 +2431,7 @@
           <form class="side-body sync-panel" id="syncForm">
             <div class="course-status">
               <strong id="courseProgressTitle">課程進度 0 / 28</strong>
-              <div class="progress"><span id="courseProgressFill"></span></div>
+              <progress class="course-progress-native" id="courseProgressBar" aria-label="課程完成進度" max="28" value="0">0 / 28</progress>
               <p id="courseProgressNote">完成目前課程後才會解鎖下一天。</p>
             </div>
             <div class="sync-grid">
@@ -2117,7 +2506,7 @@
                 <a id="dailyReferenceLink" href="#" target="_blank" rel="noopener noreferrer">官方 / 文章</a>
                 <a id="dailyPracticeLink" href="#" target="_blank" rel="noopener noreferrer">練習題</a>
               </div>
-              <div class="resource-status" id="dailyResourceStatus">請選一個主資源學習；其他資源為選修。</div>
+              <div class="resource-status" id="dailyResourceStatus">從本課 Course 開始；外部影片、文件與練習皆為選修。</div>
               <div class="knowledge-outcomes">
                 <strong>今日驗收</strong>
                 <ul id="dailyKnowledgeOutcomes"></ul>
@@ -2622,6 +3011,7 @@
 
     const dailyLessons = [
       {
+        id: "python-types-validation",
         domain: "python",
         title: "Python 型別提示與輸入驗證",
         concept: "型別提示讓函式的輸入輸出更清楚；dataclass 或 Pydantic model 則把資料規格寫成可驗證的契約。面試時要能說明型別提示不是執行期保證。",
@@ -2630,6 +3020,7 @@
         challenge: "你會如何替維運文件 ingestion 定義清楚又可驗證的 Python 輸入？"
       },
       {
+        id: "pytest-cases",
         domain: "testing",
         title: "pytest：正常、邊界與失敗案例",
         concept: "pytest 不只是確認 happy path；fixture、parametrize 與 mock 能把正常、邊界、錯誤與外部依賴分開驗證，讓修改後可重跑。",
@@ -2638,6 +3029,7 @@
         challenge: "請替一個工單清洗函式設計至少四類 pytest 案例。"
       },
       {
+        id: "algo-big-o-hashmap",
         domain: "python",
         title: "LeetCode 基礎：Big-O 與 Hash Map",
         concept: "AI 應用工程仍要能獨立處理 Array、String、Hash Map、Two Pointers 等基礎題，並說清楚時間與空間複雜度；不用先衝 Hard。",
@@ -2646,6 +3038,7 @@
         challenge: "請用 Two Sum 或工單去重例子，解釋如何從 O(n²) 改成 O(n)。"
       },
       {
+        id: "sql-join-grain",
         domain: "sql",
         title: "SQL JOIN、Key 與資料粒度",
         concept: "JOIN 前要先確認 key 是否唯一，以及一列代表文件、chunk、工單還是設備；粒度不同直接 join 會讓筆數與指標膨脹。",
@@ -2654,6 +3047,7 @@
         challenge: "你會如何驗證 documents、chunks、tickets 與 equipment 的 JOIN 沒有重複計算？"
       },
       {
+        id: "sql-window-cte",
         domain: "sql",
         title: "Window Function 與 CTE",
         concept: "Window Function 保留明細又能做組內排名；CTE 把複雜查詢拆成可讀階段。兩者常用來取每台設備最新工單或每份文件最新版本。",
@@ -2662,6 +3056,7 @@
         challenge: "請口述如何用 Window Function 取得每台設備最新一張工單。"
       },
       {
+        id: "postgres-schema-index-transaction",
         domain: "sql",
         title: "PostgreSQL Schema、Index 與 Transaction",
         concept: "Schema 固定欄位與約束，index 加速常用查詢，transaction 保證一組寫入全成或全敗；效能要用 EXPLAIN ANALYZE 驗證。",
@@ -2670,6 +3065,7 @@
         challenge: "你會如何設計 Copilot 的資料表、唯一鍵、交易邊界與第一批索引？"
       },
       {
+        id: "fastapi-http-contract",
         domain: "api",
         title: "FastAPI、Pydantic 與 HTTP 契約",
         concept: "REST API 要明確定義 request/response schema、驗證、狀態碼、權限與錯誤格式；OpenAPI 只是文件起點，還要用測試證明契約。",
@@ -2678,6 +3074,7 @@
         challenge: "請設計 Copilot 問答 endpoint 的 request、response 與主要錯誤狀態。"
       },
       {
+        id: "data-contract-ingestion",
         domain: "pipeline",
         title: "Data Contract、冪等與可重跑 Ingestion",
         concept: "Ingestion 要把不同文件與工單轉成一致格式；data contract 定義來源規格，idempotent 設計確保同一 run_id 重跑不會重複新增，最後用筆數與版本對帳。",
@@ -2686,6 +3083,7 @@
         challenge: "不同格式的維運文件重跑時，你如何確保結果一致、可拒收且可追溯？"
       },
       {
+        id: "git-linux-docker",
         domain: "devops",
         title: "Git、Linux、Docker 與可重現交付",
         concept: "作品必須能在乾淨環境重現。Git 保留可審查的變更；Linux 指令用來查 process、port、env 與 log；Dockerfile／Compose 固定 API、PostgreSQL 與 migration 的啟動方式。",
@@ -2694,6 +3092,7 @@
         challenge: "你如何證明別人只看 README，就能在乾淨環境啟動並排查 Copilot API？"
       },
       {
+        id: "chunk-metadata-acl",
         domain: "pipeline",
         title: "Chunking、Metadata 與 ACL",
         concept: "Chunk 太小會失去上下文，太大會降低檢索精度並增加 token；metadata 與 ACL 必須在檢索前限制可見範圍，不能只在回答後遮字。",
@@ -2702,6 +3101,7 @@
         challenge: "你會如何決定維運手冊的 chunk 邊界，並避免跨部門資料外洩？"
       },
       {
+        id: "embedding-similarity",
         domain: "ai",
         title: "Embedding 與相似度",
         concept: "Embedding 把文字轉成固定維度向量；相似度只代表語意接近，不等於答案正確。模型、維度與正規化方式必須版本化。",
@@ -2710,6 +3110,7 @@
         challenge: "Embedding 模型改版時，你如何安全重建而不讓檢索結果混亂？"
       },
       {
+        id: "pgvector-index",
         domain: "ai",
         title: "pgvector Schema 與向量索引",
         concept: "pgvector 讓 PostgreSQL 儲存與查詢 vector；HNSW、IVFFlat、距離函數與 metadata index 都有品質、速度、記憶體與建置成本取捨。",
@@ -2718,6 +3119,7 @@
         challenge: "你會如何為 Copilot 選 pgvector 索引，並證明它沒有犧牲太多召回？"
       },
       {
+        id: "hybrid-retrieval-rerank",
         domain: "ai",
         title: "Hybrid Retrieval、Filter 與 Rerank",
         concept: "純向量搜尋可能漏掉錯誤碼與設備型號；hybrid retrieval 結合全文與向量，再用 metadata filter 和 rerank 提高前幾名品質。",
@@ -2726,6 +3128,7 @@
         challenge: "使用者輸入精確錯誤碼時，為什麼 hybrid search 可能比純向量搜尋可靠？"
       },
       {
+        id: "rag-flow",
         domain: "ai",
         title: "RAG：Retrieve、Context、Generate",
         concept: "RAG 是先檢索證據，再把有限且有來源的 context 交給模型生成。檢索錯、context 污染與 prompt 設計是不同失敗層。",
@@ -2734,6 +3137,7 @@
         challenge: "請畫出 Copilot 從問題到答案的 RAG 資料流，並指出每層失敗點。"
       },
       {
+        id: "citation-traceability",
         domain: "ai",
         title: "引用、來源與可追溯性",
         concept: "Citation 不應由模型憑空編號；後端要把真正取回的 source_id、標題、章節與 excerpt 對回回答，讓使用者能開啟原文查證。",
@@ -2742,6 +3146,7 @@
         challenge: "你如何防止模型產生看似合理但實際不存在的引用？"
       },
       {
+        id: "rag-refusal",
         domain: "ai",
         title: "證據不足時的拒答",
         concept: "可信 Copilot 必須知道何時不回答。拒答要基於檢索證據、來源衝突與政策，而不是只靠模型自評的 confidence。",
@@ -2750,6 +3155,7 @@
         challenge: "你會用哪些訊號決定回答、追問澄清，或安全拒答？"
       },
       {
+        id: "ai-eval-ground-truth",
         domain: "ai",
         title: "AI 評估集與 Ground Truth",
         concept: "評估集要版本化並包含可回答、無答案、歧義、權限與惡意提示；每題保存 expected source 與判定規則，避免只測 demo 題。",
@@ -2758,6 +3164,7 @@
         challenge: "你會如何建立一份能長期比較 RAG 版本的維運評估集？"
       },
       {
+        id: "retrieval-metrics",
         domain: "ai",
         title: "Retrieval 評測：Recall@k 與 MRR",
         concept: "Retrieval 評測先問正確來源有沒有被找到，再看排名。Recall@k 衡量命中，MRR 關注第一個正確結果排多前面。",
@@ -2766,6 +3173,7 @@
         challenge: "如果正確 chunk 常在第 8 名，但 prompt 只放前 5 名，你會怎麼診斷與改善？"
       },
       {
+        id: "answer-faithfulness",
         domain: "ai",
         title: "回答評測：Faithfulness 與引用正確性",
         concept: "答案好不好要拆成是否回答問題、是否受證據支持、引用是否對應、該拒答時有沒有拒答；LLM judge 只能輔助，需抽樣人工覆核。",
@@ -2774,6 +3182,7 @@
         challenge: "檢索命中但回答仍幻覺時，你如何分類問題並設計評測？"
       },
       {
+        id: "prompt-injection-redteam",
         domain: "testing",
         title: "Prompt Injection、資料外洩與 Red Team",
         concept: "文件與使用者輸入都是不可信資料。系統指令、ACL 與工具政策必須由程式碼控制，不能讓文件中的『忽略規則』改寫。",
@@ -2782,6 +3191,7 @@
         challenge: "你會如何證明維運文件中的惡意指令不能越權查資料或呼叫工具？"
       },
       {
+        id: "observability-latency-cost",
         domain: "ai",
         title: "可觀測性：Latency、Token 與 Cost",
         concept: "AI API 慢時要分段量測 embedding、retrieval、rerank、LLM 與 serialize；同時追蹤 token、成本、錯誤率與品質，避免只優化單一數字。",
@@ -2790,6 +3200,7 @@
         challenge: "Copilot p95 變慢時，你會如何用 trace 找瓶頸而不洩漏工單內容？"
       },
       {
+        id: "ai-regression-pytest",
         domain: "testing",
         title: "AI Regression 與 pytest",
         concept: "RAG 與 Agent 修改後要跑固定 regression set。確定性規則用 pytest 精確斷言，模型輸出用結構、引用、政策與可接受範圍驗證。",
@@ -2798,6 +3209,7 @@
         challenge: "哪些 Copilot 測試應 mock 模型，哪些必須呼叫真實模型或向量庫？"
       },
       {
+        id: "langgraph-tool-permissions",
         domain: "ai",
         title: "LangGraph、Tool Calling 與最小權限",
         concept: "本作品只用 LangGraph 編排一條可觀察流程，不同時導入 Dify、n8n 或多 Agent。模型只能提出結構化工具意圖；真正執行由程式碼依 allowlist、使用者權限與資源範圍決定。",
@@ -2806,6 +3218,7 @@
         challenge: "你會如何讓 Copilot 查工單，但不能任意執行 SQL 或改寫正式資料？"
       },
       {
+        id: "json-schema-output",
         domain: "ai",
         title: "JSON Schema 與 Structured Output",
         concept: "JSON Schema 明確限制欄位、型別、enum、長度與 additionalProperties；解析失敗不能直接把半套參數交給工具。",
@@ -2814,6 +3227,7 @@
         challenge: "請設計建立工單草稿的 JSON Schema，並說明模型輸出驗證失敗時怎麼辦。"
       },
       {
+        id: "timeout-retry-backoff",
         domain: "api",
         title: "Timeout、Retry 與 Exponential Backoff",
         concept: "Timeout 限制單步等待；retry 只適用暫時性且冪等的失敗，需有 backoff、jitter 與上限。不可重試錯誤要快速失敗。",
@@ -2822,6 +3236,7 @@
         challenge: "Agent 呼叫工單 API timeout 時，哪些情況可以 retry，如何避免重複建立？"
       },
       {
+        id: "langgraph-state-idempotency",
         domain: "ai",
         title: "LangGraph State、步數上限與冪等",
         concept: "LangGraph workflow 要明確保存目前步驟、輸入、工具結果與終止原因；限制總步數、時間與成本，重跑寫入步驟必須冪等。",
@@ -2830,6 +3245,7 @@
         challenge: "你如何避免 Agent 在相同工具間無限循環或重複建立工單？"
       },
       {
+        id: "hitl-audit",
         domain: "ai",
         title: "HITL、Approval 與 Audit",
         concept: "Human-in-the-loop 不是所有操作都彈窗，而是依風險分級：唯讀可自動，高風險寫入要顯示影響、證據與參數後由人確認。",
@@ -2838,6 +3254,7 @@
         challenge: "請替 Copilot 的查詢、草稿、送出與關單定義 HITL 邊界。"
       },
       {
+        id: "copilot-demo",
         domain: "story",
         title: "Copilot E2E 驗收與三分鐘 Demo",
         concept: "最後要把技術串成可驗收的產品故事：問題、資料、RAG、引用／拒答、工具安全、評測、限制與下一步，而不是只展示聊天畫面。",
@@ -3199,12 +3616,29 @@
 
     const progressStorageKey = "rongDataMockInterview";
     const progressBackupKey = "rongDataMockInterviewLastChange";
-    const progressVersion = 4;
-    const contentVersion = "2026-08-17-ai-copilot-v1";
-    const rubricVersion = "2026-08-17-heuristic-v2";
+    const progressVersion = 5;
+    const contentVersion = "2026-08-17-ai-course-v3";
+    const rubricVersion = "2026-08-17-course-gate-v4";
     const maxTextLength = 8000;
     let saveTimer = 0;
     let versionResetApplied = false;
+
+    const lessonIdSet = new Set(dailyLessons.map(lesson => lesson.id));
+    if (lessonIdSet.size !== dailyLessons.length || dailyLessons.some(lesson => !/^[a-z0-9-]+$/.test(lesson.id))) {
+      throw new Error("課程 ID 必須存在、唯一且只能使用小寫英數與連字號");
+    }
+
+    function emptyLessonCourseRecord(updatedAt = "") {
+      return { sourceDone: false, answers: ["", ""], checked: false, attempts: 0, updatedAt };
+    }
+
+    function emptyLessonCourseState(updatedAt = "") {
+      const records = Object.create(null);
+      dailyLessons.forEach(lesson => {
+        records[lesson.id] = emptyLessonCourseRecord(updatedAt);
+      });
+      return records;
+    }
 
     const state = {
       current: 0,
@@ -3215,6 +3649,7 @@
       lessonReflections: Array(dailyLessons.length).fill(""),
       lessonReadiness: Array(dailyLessons.length).fill(null),
       lessonResources: Array.from({ length: dailyLessons.length }, () => Array(4).fill(false)),
+      lessonCourse: emptyLessonCourseState(),
       answers: Array(questions.length).fill(""),
       feedback: Array(questions.length).fill(null),
       hintsOpen: Array(questions.length).fill(false),
@@ -3265,12 +3700,31 @@
       learningLessonTags: document.getElementById("learningLessonTags"),
       learningLessonS111: document.getElementById("learningLessonS111"),
       learningTeaching: document.getElementById("learningTeaching"),
+      courseStepSource: document.getElementById("courseStepSource"),
+      courseStepQuiz: document.getElementById("courseStepQuiz"),
+      courseStepApplication: document.getElementById("courseStepApplication"),
+      courseStepChallenge: document.getElementById("courseStepChallenge"),
+      courseSourceStage: document.getElementById("courseSourceStage"),
+      courseSourceType: document.getElementById("courseSourceType"),
+      courseSourceStatus: document.getElementById("courseSourceStatus"),
+      courseVideo: document.getElementById("courseVideo"),
+      courseSourceDoneInput: document.getElementById("courseSourceDoneInput"),
+      courseSourceDoneLabel: document.getElementById("courseSourceDoneLabel"),
       learningYoutubeLink: document.getElementById("learningYoutubeLink"),
       learningBilibiliLink: document.getElementById("learningBilibiliLink"),
       learningReferenceLink: document.getElementById("learningReferenceLink"),
       learningPracticeLink: document.getElementById("learningPracticeLink"),
       learningResourceStatus: document.getElementById("learningResourceStatus"),
       learningOutcomes: document.getElementById("learningOutcomes"),
+      lessonQuizStage: document.getElementById("lessonQuizStage"),
+      lessonQuizForm: document.getElementById("lessonQuizForm"),
+      lessonQuizQuestions: document.getElementById("lessonQuizQuestions"),
+      lessonQuizSubmitBtn: document.getElementById("lessonQuizSubmitBtn"),
+      lessonQuizRetryBtn: document.getElementById("lessonQuizRetryBtn"),
+      lessonQuizStatus: document.getElementById("lessonQuizStatus"),
+      lessonQuizResult: document.getElementById("lessonQuizResult"),
+      courseApplicationStage: document.getElementById("courseApplicationStage"),
+      courseApplicationStatus: document.getElementById("courseApplicationStatus"),
       lessonReflectionInput: document.getElementById("lessonReflectionInput"),
       lessonReadinessResult: document.getElementById("lessonReadinessResult"),
       learningPlanTopic: document.getElementById("learningPlanTopic"),
@@ -3310,7 +3764,7 @@
       syncPayloadBox: document.getElementById("syncPayloadBox"),
       syncStatus: document.getElementById("syncStatus"),
       courseProgressTitle: document.getElementById("courseProgressTitle"),
-      courseProgressFill: document.getElementById("courseProgressFill"),
+      courseProgressBar: document.getElementById("courseProgressBar"),
       courseProgressNote: document.getElementById("courseProgressNote"),
       bars: document.getElementById("bars"),
       taskList: document.getElementById("taskList"),
@@ -3405,6 +3859,33 @@
       return typeof value === "string" ? value.slice(0, maxLength) : "";
     }
 
+    function normalizeEvaluationFingerprint(value) {
+      return typeof value === "string" && /^eval-v1-[0-9a-f]{8}$/.test(value) ? value : "";
+    }
+
+    function evaluationFingerprint(kind, lessonId, text, checks = []) {
+      const canonical = JSON.stringify([
+        kind,
+        lessonId,
+        contentVersion,
+        rubricVersion,
+        safeText(text),
+        Array.isArray(checks) ? checks.map(value => value === true) : []
+      ]);
+      return `eval-v1-${stableCourseHash(canonical).toString(16).padStart(8, "0")}`;
+    }
+
+    function lessonReadinessEvaluationFingerprint(offset, reflection = state.lessonReflections[offset]) {
+      return evaluationFingerprint("readiness", dailyLessons[offset].id, reflection);
+    }
+
+    function lessonChallengeEvaluationFingerprint(offset, answer, checks) {
+      const questionIndex = dailyLessonStartIndex + offset;
+      const currentAnswer = answer === undefined ? state.answers[questionIndex] : answer;
+      const currentChecks = checks === undefined ? state.selfChecks[questionIndex] : checks;
+      return evaluationFingerprint("challenge", dailyLessons[offset].id, currentAnswer, currentChecks);
+    }
+
     function normalizeTextArray(savedArray, length = questions.length) {
       const source = length === questions.length ? alignSavedQuestionArray(savedArray) : Array.isArray(savedArray) ? savedArray : [];
       return Array.from({ length }, (_, index) => safeText(source[index]));
@@ -3422,7 +3903,8 @@
         summary: safeText(item.summary, 1200),
         strengths: normalizeTextList(item.strengths),
         issues: normalizeTextList(item.issues),
-        technicalHits: Number.isInteger(item.technicalHits) ? Math.min(4, Math.max(0, item.technicalHits)) : undefined
+        technicalHits: Number.isInteger(item.technicalHits) ? Math.min(4, Math.max(0, item.technicalHits)) : undefined,
+        evaluationFingerprint: normalizeEvaluationFingerprint(item.evaluationFingerprint)
       };
     }
 
@@ -3458,22 +3940,31 @@
       });
     }
 
-    function backfillReadinessForLearned() {
-      state.learnedLessons.forEach((learned, index) => {
-        if (learned && !state.lessonReadiness[index]) {
-          state.lessonReadiness[index] = {
-            score: 60,
-            passed: true,
-            title: "已解鎖",
-            summary: "這一課已有舊版完成紀錄。之後的新課會先做 60 分文字檢核，再用本課挑戰驗收技術要點。",
-            strengths: ["已保留原本完成進度。"],
-            issues: ["想更穩的話，可以補寫學習檢核再重新分析。"]
-          };
-        }
-        if (learned && Array.isArray(state.lessonResources[index])) {
-          state.lessonResources[index] = Array(4).fill(true);
-        }
+    function normalizeCourseTimestamp(value) {
+      if (typeof value !== "string" || !value || !Number.isFinite(Date.parse(value))) return "";
+      return value.slice(0, 40);
+    }
+
+    function normalizeLessonCourse(savedCourse) {
+      const source = savedCourse && typeof savedCourse === "object" && !Array.isArray(savedCourse) ? savedCourse : null;
+      const records = Object.create(null);
+      dailyLessons.forEach(lesson => {
+        const item = source && Object.hasOwn(source, lesson.id) && source[lesson.id] && typeof source[lesson.id] === "object" && !Array.isArray(source[lesson.id])
+          ? source[lesson.id]
+          : null;
+        const answers = Array.from({ length: 2 }, (_, index) => {
+          const value = item && Array.isArray(item.answers) ? item.answers[index] : "";
+          return value === "0" || value === "1" || value === "2" ? value : "";
+        });
+        records[lesson.id] = {
+          sourceDone: Boolean(item && item.sourceDone === true),
+          answers,
+          checked: Boolean(item && item.checked === true && answers.every(Boolean)),
+          attempts: item && Number.isInteger(item.attempts) ? Math.min(1000, Math.max(0, item.attempts)) : 0,
+          updatedAt: normalizeCourseTimestamp(item && item.updatedAt)
+        };
       });
+      return records;
     }
 
     function safeRevision(value) {
@@ -3502,6 +3993,7 @@
         lessonReflections: state.lessonReflections,
         lessonReadiness: state.lessonReadiness,
         lessonResources: state.lessonResources,
+        lessonCourse: state.lessonCourse,
         answers: state.answers,
         feedback: state.feedback,
         hintsOpen: state.hintsOpen,
@@ -3536,15 +4028,7 @@
       state.lessonResources = contentIsCurrent
         ? normalizeLessonResources(saved.lessonResources, state.learnedLessons)
         : Array.from({ length: dailyLessons.length }, () => Array(4).fill(false));
-      if (rubricIsCurrent) backfillReadinessForLearned();
-      const maxOffset = highestUnlockedLessonOffset();
-      state.lessonOffset = Number.isInteger(saved.lessonOffset)
-        ? Math.min(Math.max(saved.lessonOffset, 0), maxOffset)
-        : maxOffset;
-      if (isDailyQuestionIndex(state.current) && !isLessonChallengeUnlocked(state.current - dailyLessonStartIndex)) {
-        state.current = learningQuestionIndex(maxOffset);
-        state.view = "learn";
-      }
+      state.lessonCourse = contentIsCurrent ? normalizeLessonCourse(saved.lessonCourse) : emptyLessonCourseState();
       state.hintsOpen = mergeSavedArray(saved.hintsOpen, false).map(value => value === true);
       state.followupQuestions = normalizeTextArray(saved.followupQuestions);
       state.followupAnswers = normalizeTextArray(saved.followupAnswers);
@@ -3558,6 +4042,16 @@
           ? checks.map(value => value === true)
           : Array(question.expected.length).fill(false);
       });
+      pruneStaleLessonEvaluations();
+      sanitizeLearnedLessons();
+      const maxOffset = highestUnlockedLessonOffset();
+      state.lessonOffset = Number.isInteger(saved.lessonOffset)
+        ? Math.min(Math.max(saved.lessonOffset, 0), maxOffset)
+        : maxOffset;
+      if (isDailyQuestionIndex(state.current) && !isLessonChallengeUnlocked(state.current - dailyLessonStartIndex)) {
+        state.current = learningQuestionIndex(maxOffset);
+        state.view = "learn";
+      }
       state.revision = safeRevision(saved.revision);
       state.updatedAt = typeof saved.updatedAt === "string" ? saved.updatedAt.slice(0, 40) : "";
     }
@@ -3570,7 +4064,7 @@
         applySavedProgress(JSON.parse(raw));
         if (versionResetApplied) {
           els.saveState.textContent = "內容已更新，請重新檢核";
-          setSyncStatus("已保留舊答案與筆記；課程完成、feedback 與 readiness 已依新版內容／評分規則重設，請重新實作與檢核。", "ok");
+          setSyncStatus("已保留舊答案與筆記；課程完成、理解題、feedback 與 readiness 已依新版內容／評分規則重設，請重新作答與檢核。", "ok");
         }
         return true;
       } catch (error) {
@@ -3801,6 +4295,11 @@
       const hasText = key => Array.isArray(candidate[key]) && candidate[key].some(value => typeof value === "string" && value.trim());
       const hasRecord = key => Array.isArray(candidate[key]) && candidate[key].some(Boolean);
       const hasFlag = key => Array.isArray(candidate[key]) && candidate[key].some(value => Array.isArray(value) ? value.some(Boolean) : value === true);
+      const hasCourseWork = candidate.lessonCourse && typeof candidate.lessonCourse === "object" && !Array.isArray(candidate.lessonCourse)
+        && dailyLessons.some(lesson => {
+          const item = candidate.lessonCourse[lesson.id];
+          return item && typeof item === "object" && (item.sourceDone === true || (Array.isArray(item.answers) && item.answers.some(Boolean)) || Number(item.attempts) > 0);
+        });
       return hasText("answers")
         || hasText("lessonReflections")
         || hasText("followupAnswers")
@@ -3809,7 +4308,8 @@
         || hasRecord("followupFeedback")
         || hasFlag("learnedLessons")
         || hasFlag("lessonResources")
-        || hasFlag("selfChecks");
+        || hasFlag("selfChecks")
+        || hasCourseWork;
     }
 
     function validatedProgressState(payload) {
@@ -3854,6 +4354,39 @@
         if (selected !== undefined && selected !== null && selected !== "") return selected;
         return typeof fallbackValue === "function" ? fallbackValue(index) : fallbackValue;
       });
+    }
+
+    function lessonCourseRecordTouched(record) {
+      return Boolean(record && (
+        record.updatedAt
+        || record.sourceDone
+        || record.checked
+        || Number(record.attempts) > 0
+        || (Array.isArray(record.answers) && record.answers.some(Boolean))
+      ));
+    }
+
+    function mergeLessonCourse(localCourse, incomingCourse, preferIncoming = false) {
+      const localRecords = normalizeLessonCourse(localCourse);
+      const incomingRecords = normalizeLessonCourse(incomingCourse);
+      const merged = Object.create(null);
+      dailyLessons.forEach(lesson => {
+        const localItem = localRecords[lesson.id];
+        const incomingItem = incomingRecords[lesson.id];
+        const localTouched = lessonCourseRecordTouched(localItem);
+        const incomingTouched = lessonCourseRecordTouched(incomingItem);
+        const selected = localTouched && incomingTouched
+          ? (preferIncoming ? incomingItem : localItem)
+          : incomingTouched ? incomingItem : localItem;
+        merged[lesson.id] = {
+          sourceDone: selected.sourceDone,
+          answers: [...selected.answers],
+          checked: selected.checked,
+          attempts: selected.attempts,
+          updatedAt: selected.updatedAt
+        };
+      });
+      return merged;
     }
 
     function chooseLocalText(local, incoming) {
@@ -3911,18 +4444,13 @@
       state.lessonResources = shouldMerge
         ? mergeLessonResources(state.lessonResources, incomingResources, state.learnedLessons)
         : incomingResources;
-      if (incomingRubricIsCurrent || shouldMerge) backfillReadinessForLearned();
-      const maxOffset = highestUnlockedLessonOffset();
-      state.lessonOffset = Number.isInteger(incoming.lessonOffset)
-        ? Math.min(Math.max(shouldMerge ? Math.max(state.lessonOffset, incoming.lessonOffset) : incoming.lessonOffset, 0), maxOffset)
-        : maxOffset;
+      const incomingCourse = incomingContentIsCurrent ? normalizeLessonCourse(incoming.lessonCourse) : emptyLessonCourseState();
+      state.lessonCourse = shouldMerge
+        ? mergeLessonCourse(state.lessonCourse, incomingCourse, preferIncoming)
+        : incomingCourse;
       if (!shouldMerge) {
         state.view = incoming.view === "interview" ? "interview" : "learn";
         state.interviewTrack = incomingContentIsCurrent && Object.hasOwn(interviewTrackLabels, incoming.interviewTrack) ? incoming.interviewTrack : "ai";
-      }
-      if (isDailyQuestionIndex(state.current) && !isLessonChallengeUnlocked(state.current - dailyLessonStartIndex)) {
-        state.current = learningQuestionIndex(maxOffset);
-        state.view = "learn";
       }
       const incomingHints = mergeSavedArray(incoming.hintsOpen, false).map(value => value === true);
       state.hintsOpen = shouldMerge
@@ -3946,6 +4474,16 @@
       state.selfChecks = shouldMerge
         ? questions.map((question, index) => Array.from({ length: question.expected.length }, (_, checkIndex) => Boolean(state.selfChecks[index]?.[checkIndex] || incomingChecks[index][checkIndex])))
         : incomingChecks;
+      pruneStaleLessonEvaluations();
+      sanitizeLearnedLessons();
+      const maxOffset = highestUnlockedLessonOffset();
+      state.lessonOffset = Number.isInteger(incoming.lessonOffset)
+        ? Math.min(Math.max(shouldMerge ? Math.max(state.lessonOffset, incoming.lessonOffset) : incoming.lessonOffset, 0), maxOffset)
+        : maxOffset;
+      if (isDailyQuestionIndex(state.current) && !isLessonChallengeUnlocked(state.current - dailyLessonStartIndex)) {
+        state.current = learningQuestionIndex(maxOffset);
+        state.view = "learn";
+      }
       if (options.trustRevision !== false) {
         state.revision = Math.max(safeRevision(state.revision), safeRevision(incoming.revision));
       }
@@ -4655,8 +5193,61 @@
       return [...visibleMockQuestionIndexes(), ...Array.from({ length: dailyLessons.length }, (_, index) => dailyLessonStartIndex + index)];
     }
 
+    function isLessonReadinessPassed(index) {
+      const readiness = state.lessonReadiness[index];
+      return Boolean(readiness
+        && readiness.passed
+        && readiness.evaluationFingerprint === lessonReadinessEvaluationFingerprint(index));
+    }
+
     function isLessonChallengeUnlocked(index) {
-      return isLessonLearned(index) || Boolean(state.lessonReadiness[index] && state.lessonReadiness[index].passed);
+      return isLessonLearned(index) || Boolean(isLessonQuizPassed(index) && isLessonReadinessPassed(index));
+    }
+
+    function hasCurrentLessonCompletionEvidence(index) {
+      const feedback = state.feedback[dailyLessonStartIndex + index];
+      return isLessonQuizPassed(index)
+        && isLessonReadinessPassed(index)
+        && Boolean(feedback
+          && feedback.score >= 65
+          && feedback.technicalHits >= 3
+          && feedback.evaluationFingerprint === lessonChallengeEvaluationFingerprint(index));
+    }
+
+    function pruneStaleLessonEvaluations() {
+      dailyLessons.forEach((_, index) => {
+        const questionIndex = dailyLessonStartIndex + index;
+        const readiness = state.lessonReadiness[index];
+        const feedback = state.feedback[questionIndex];
+        const staleReadiness = Boolean(readiness
+          && readiness.evaluationFingerprint !== lessonReadinessEvaluationFingerprint(index));
+        const staleFeedback = Boolean(feedback
+          && feedback.evaluationFingerprint !== lessonChallengeEvaluationFingerprint(index));
+        if (staleReadiness) {
+          state.lessonReadiness[index] = null;
+          state.feedback[questionIndex] = null;
+          state.learnedLessons[index] = false;
+        } else if (staleFeedback) {
+          state.feedback[questionIndex] = null;
+          state.learnedLessons[index] = false;
+        }
+      });
+    }
+
+    function invalidateLessonChallengeEvaluation(index) {
+      if (!Number.isInteger(index) || index < 0 || index >= dailyLessons.length) return;
+      state.feedback[dailyLessonStartIndex + index] = null;
+      state.learnedLessons[index] = false;
+    }
+
+    function invalidateLessonEvaluations(index) {
+      if (!Number.isInteger(index) || index < 0 || index >= dailyLessons.length) return;
+      state.lessonReadiness[index] = null;
+      invalidateLessonChallengeEvaluation(index);
+    }
+
+    function sanitizeLearnedLessons() {
+      state.learnedLessons = state.learnedLessons.map((learned, index) => Boolean(learned && hasCurrentLessonCompletionEvidence(index)));
     }
 
     function isLessonUnlocked(index) {
@@ -4898,6 +5489,35 @@
       };
     }
 
+    const primaryCourseVideos = Object.freeze({
+      "algo-big-o-hashmap": { label: "Big O Notation", url: "https://www.youtube.com/watch?v=XMUe3zFhM5c" },
+      "sql-join-grain": { label: "Granularity and joins", url: "https://www.youtube.com/watch?v=CPNFQ3xF20Q" },
+      "sql-window-cte": { label: "SQL Window Functions", url: "https://www.youtube.com/watch?v=rIcB4zMYMas" },
+      "postgres-schema-index-transaction": { label: "Database schema design", url: "https://www.youtube.com/watch?v=5RpUmDEsn1k" },
+      "fastapi-http-contract": { label: "REST API basics", url: "https://www.youtube.com/watch?v=-mN3VyJuCjM" },
+      "data-contract-ingestion": { label: "Idempotency", url: "https://www.youtube.com/watch?v=GsZ_ZtlRCBg" },
+      "git-linux-docker": { label: "Git and GitHub for Beginners", url: "https://www.youtube.com/watch?v=RGOj5yH7evk" },
+      "ai-regression-pytest": { label: "Regression testing", url: "https://www.youtube.com/watch?v=AWX6WvYktwk" },
+      "langgraph-tool-permissions": { label: "LangGraph Human-in-the-loop", url: "https://www.youtube.com/watch?v=Za8CrPqQxpA" },
+      "timeout-retry-backoff": { label: "API timeout and error handling", url: "https://www.youtube.com/watch?v=IhZxdlJvXco" },
+      "copilot-demo": { label: "面試表達與 STAR", url: "https://www.youtube.com/watch?v=zMwDYz0b_7g" }
+    });
+
+    function coursePrimaryVideo(lesson) {
+      return Object.hasOwn(primaryCourseVideos, lesson.id) ? primaryCourseVideos[lesson.id] : null;
+    }
+
+    function youtubeEmbedUrl(url) {
+      try {
+        const parsed = new URL(url);
+        if (parsed.hostname !== "www.youtube.com" || parsed.pathname !== "/watch") return "";
+        const videoId = parsed.searchParams.get("v") || "";
+        return /^[A-Za-z0-9_-]{11}$/.test(videoId) ? `https://www.youtube-nocookie.com/embed/${videoId}` : "";
+      } catch {
+        return "";
+      }
+    }
+
     const curatedReferences = [
       { match: /type hints|pydantic|dataclass/i, label: "Pydantic 文件", url: "https://docs.pydantic.dev/latest/" },
       { match: /pytest|fixture|parametrize|mock llm|regression/i, label: "pytest 文件", url: "https://docs.pytest.org/en/stable/" },
@@ -5004,10 +5624,6 @@
       return index === -1 ? 4 : index;
     }
 
-    function areLessonResourcesDone(offset) {
-      return completedResourceCount(offset) >= 1;
-    }
-
     function isResourceStepUnlocked(offset, step) {
       return isLessonUnlocked(offset);
     }
@@ -5018,7 +5634,7 @@
       const done = tracked ? Boolean(state.lessonResources[offset] && state.lessonResources[offset][step]) : false;
       const unlocked = tracked ? isResourceStepUnlocked(offset, step) : true;
       const status = done ? "✓" : unlocked ? "開啟" : "鎖";
-      const resourceType = tracked ? (step === 0 ? "建議主資源" : "替代／選修") : "";
+      const resourceType = tracked ? (step === 0 ? "建議影片" : "延伸／選修") : "";
       const label = tracked ? `${resourceType}・${prefix}：${resource.label} ${status}` : `${prefix}：${resource.label}`;
 
       element.textContent = label;
@@ -5051,9 +5667,8 @@
 
     function resourceStatusText(offset) {
       const done = completedResourceCount(offset);
-      if (isLessonLearned(offset)) return "本課資源與檢核已完成，可以進入挑戰或下一天。";
-      if (done >= 1) return `已開啟一個主資源，另開啟 ${Math.max(0, done - 1)} 個選修。請先實作，再寫學習檢核。`;
-      return "請先選一個主資源學習；其餘影片、文件與練習為選修。";
+      if (done >= 1) return `已開啟 ${done} 個延伸資源；這只是閱讀記錄，不影響本課解鎖。`;
+      return "尚未開啟延伸資源；可等理解題卡住時再選用。";
     }
 
     function markLessonResourceVisited(offset, step) {
@@ -5067,7 +5682,7 @@
       const changed = !state.lessonResources[offset][step];
       state.lessonResources[offset][step] = true;
       if (changed) {
-        setSyncStatus(`D${offset + 1} 已開啟主資源；請完成實作與兩階段檢核，不能只用點擊當作學會。`, "ok");
+        setSyncStatus(`D${offset + 1} 已開啟一個延伸資源；它不會代替教材理解題與實作驗收。`, "ok");
         save();
         renderAll();
         maybeAutoUploadProgress();
@@ -5165,7 +5780,14 @@
         mistake: "不要只報一個總分；沒有資料集版本與失敗分類，分數不能比較。"
       },
       {
-        match: /prompt injection|observability|latency|token|tool calling|json schema|timeout|agent|hitl/i,
+        match: /observability|latency|token|trace/i,
+        simple: "AI 可觀測性要用同一個 request_id 拆開量測檢索、rerank、模型與回傳階段，並一起追蹤延遲、token、成本、錯誤率與品質。",
+        steps: "記錄各階段 trace 與 p50／p95 latency，保存模型和索引版本、token 用量與結果狀態；一般 log 只留必要 metadata，不寫入敏感工單全文。",
+        interview: "你可以說：p95 變慢時先沿 request_id 找到耗時階段，再判斷是資料庫、rerank、模型或序列化，不先猜瓶頸。",
+        mistake: "不要只看平均延遲或 token 成本，也不要為了除錯把未去敏的 prompt、文件與工單直接寫進 log。"
+      },
+      {
+        match: /prompt injection|tool calling|json schema|timeout|agent|hitl/i,
         simple: "Agent 的安全邊界由程式碼政策決定：工具白名單、JSON Schema、最小權限、timeout、步數上限與 HITL。",
         steps: "模型只提出 tool request；後端驗證 schema、ACL、risk tier 與 idempotency key，再執行、驗證結果並寫 audit log。",
         interview: "你可以說：唯讀搜尋可自動，送出或關閉工單要顯示證據與參數，經人工核准後才執行。",
@@ -5265,6 +5887,8 @@
       "golden set": "固定保留、可重跑的代表性回歸案例。",
       "mock LLM": "以可預測替身測模型 API 的成功與失敗路徑。",
       "regression": "修改後原本正常行為被破壞。",
+      "Git branch": "把獨立變更放在分支上，方便審查、測試與合併，不直接污染主線。",
+      "LangGraph": "用明確的 state、節點與轉移規則編排可中斷、可恢復的 Agent 工作流程。",
       "Tool Calling": "模型提出結構化工具意圖，由程式驗證後執行。",
       "allowlist": "只允許明確列出的工具或操作。",
       "tool result": "工具回傳的資料，仍需驗證且不能當成系統指令。",
@@ -5366,7 +5990,7 @@
       ];
     }
 
-    function renderTeachingCards(lesson) {
+    function renderTeachingCards(lesson, hasVideo = false) {
       const detail = teachingDetailFor(lesson);
       const terms = lesson.terms.map(term => `
         <div class="term-row">
@@ -5377,7 +6001,7 @@
       const checklist = lessonChecklist(lesson).map(item => `<li>${item}</li>`).join("");
       const projectBridge = matchedText(lessonProjectDetails, lesson, domainProjectBridges[lesson.domain]);
       return `
-        <h4 class="lesson-teaching-title">文字教學：先讀懂，再看影片</h4>
+        <h4 class="lesson-teaching-title">${hasVideo ? "影片重點摘要：理解題以此摘要為準" : "本課短文：理解題以此內容為準"}</h4>
         <div class="lesson-deep">
           <section class="lesson-deep-section">
             <strong>1. 先抓大意</strong>
@@ -5415,6 +6039,208 @@
           </section>
         </div>
       `;
+    }
+
+    function stableCourseHash(value) {
+      let hash = 2166136261;
+      for (let index = 0; index < value.length; index += 1) {
+        hash ^= value.charCodeAt(index);
+        hash = Math.imul(hash, 16777619);
+      }
+      return hash >>> 0;
+    }
+
+    function courseDecoys(values, correct, seed, count = 2) {
+      const pool = [...new Set(values.filter(value => typeof value === "string" && value && value !== correct))];
+      if (!pool.length) return [];
+      const chosen = [];
+      const start = seed % pool.length;
+      for (let step = 0; step < pool.length && chosen.length < count; step += 1) {
+        chosen.push(pool[(start + step) % pool.length]);
+      }
+      return chosen;
+    }
+
+    function orderedCourseOptions(correct, decoys, seed) {
+      const values = [correct, ...decoys];
+      const shift = seed % values.length;
+      const options = values.map((_, index) => values[(index + shift) % values.length]);
+      return { options, correctIndex: options.indexOf(correct) };
+    }
+
+    function lessonQuizDefinitions(offset) {
+      const lesson = dailyLessons[offset];
+      const detail = teachingDetailFor(lesson);
+      const coreSeed = stableCourseHash(`${lesson.id}:core`);
+      const termSeed = stableCourseHash(`${lesson.id}:term`);
+      const coreDecoyPool = dailyLessons.filter(item => item.id !== lesson.id).map(item => teachingDetailFor(item).simple);
+      const coreOptions = orderedCourseOptions(detail.simple, courseDecoys(coreDecoyPool, detail.simple, coreSeed), coreSeed);
+      const primaryTerm = lesson.terms[0];
+      const primaryTermMeaning = termExplanation(primaryTerm);
+      const termDecoyPool = dailyLessons
+        .flatMap(item => item.terms)
+        .filter(term => term !== primaryTerm)
+        .map(termExplanation);
+      const termOptions = orderedCourseOptions(primaryTermMeaning, courseDecoys(termDecoyPool, primaryTermMeaning, termSeed), termSeed);
+      return [
+        {
+          id: `${lesson.id}:core`,
+          prompt: "依本課教材，哪一句最符合今天的核心重點？",
+          options: coreOptions.options,
+          correctIndex: coreOptions.correctIndex,
+          explanation: detail.simple
+        },
+        {
+          id: `${lesson.id}:term`,
+          prompt: `「${primaryTerm}」在本課的意思最接近哪一項？`,
+          options: termOptions.options,
+          correctIndex: termOptions.correctIndex,
+          explanation: `${primaryTerm}：${primaryTermMeaning}`
+        }
+      ];
+    }
+
+    function lessonCourseRecord(offset) {
+      const lesson = dailyLessons[offset];
+      if (!state.lessonCourse || typeof state.lessonCourse !== "object" || Array.isArray(state.lessonCourse)) {
+        state.lessonCourse = emptyLessonCourseState();
+      }
+      if (!state.lessonCourse[lesson.id]) state.lessonCourse[lesson.id] = emptyLessonCourseRecord();
+      return state.lessonCourse[lesson.id];
+    }
+
+    function updateLessonCourseRecord(offset, changes) {
+      const lesson = dailyLessons[offset];
+      const current = lessonCourseRecord(offset);
+      state.lessonCourse[lesson.id] = {
+        ...current,
+        ...changes,
+        answers: Array.isArray(changes.answers) ? [...changes.answers] : [...current.answers],
+        updatedAt: new Date().toISOString()
+      };
+      return state.lessonCourse[lesson.id];
+    }
+
+    function isLessonSourceDone(offset) {
+      return Boolean(lessonCourseRecord(offset).sourceDone);
+    }
+
+    function isLessonQuizPassed(offset) {
+      const record = lessonCourseRecord(offset);
+      if (!record.sourceDone || !record.checked) return false;
+      return lessonQuizDefinitions(offset).every((question, index) => record.answers[index] === String(question.correctIndex));
+    }
+
+    function renderCourseStep(element, done, current) {
+      element.classList.toggle("done", done);
+      element.classList.toggle("current", current);
+      if (current) element.setAttribute("aria-current", "step");
+      else element.removeAttribute("aria-current");
+    }
+
+    function renderCoursePrimary(offset) {
+      const lesson = dailyLessons[offset];
+      const video = coursePrimaryVideo(lesson);
+      const embedUrl = video ? youtubeEmbedUrl(video.url) : "";
+      els.courseSourceType.textContent = video ? "影片課＋本站摘要" : "短文課";
+      els.courseSourceDoneLabel.textContent = video ? "我已看完影片並讀過重點摘要" : "我已讀完本課短文";
+      els.courseVideo.classList.toggle("is-hidden", !embedUrl);
+      if (els.courseVideo.dataset.lessonId !== lesson.id) {
+        els.courseVideo.replaceChildren();
+        els.courseVideo.dataset.lessonId = lesson.id;
+        if (embedUrl) {
+          const iframe = document.createElement("iframe");
+          iframe.src = embedUrl;
+          iframe.title = `${lesson.title}：${video.label}`;
+          iframe.loading = "lazy";
+          iframe.allowFullscreen = true;
+          iframe.referrerPolicy = "strict-origin-when-cross-origin";
+          iframe.allow = "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+          const fallback = document.createElement("div");
+          fallback.className = "course-video-fallback";
+          fallback.append(textElement("strong", `示範影片：${video.label}`));
+          const link = document.createElement("a");
+          link.href = video.url;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = "無法播放時，在 YouTube 開啟";
+          fallback.append(link);
+          els.courseVideo.append(iframe, fallback);
+        }
+      }
+      els.learningTeaching.innerHTML = renderTeachingCards(lesson, Boolean(video));
+      els.courseSourceDoneInput.checked = isLessonSourceDone(offset);
+    }
+
+    function renderLessonQuiz(offset) {
+      const sourceDone = isLessonSourceDone(offset);
+      const passed = isLessonQuizPassed(offset);
+      const record = lessonCourseRecord(offset);
+      const questionsForLesson = lessonQuizDefinitions(offset);
+      const questionElements = questionsForLesson.map((question, questionIndex) => {
+        const fieldset = document.createElement("fieldset");
+        fieldset.className = "quiz-question";
+        fieldset.dataset.quizIndex = String(questionIndex);
+        const legend = document.createElement("legend");
+        legend.textContent = `${questionIndex + 1}. ${question.prompt}`;
+        fieldset.append(legend);
+        question.options.forEach((option, optionIndex) => {
+          const label = document.createElement("label");
+          label.className = "quiz-option";
+          const selected = record.answers[questionIndex] === String(optionIndex);
+          if (record.checked && optionIndex === question.correctIndex) label.classList.add("correct");
+          if (record.checked && selected && optionIndex !== question.correctIndex) label.classList.add("wrong");
+          const input = document.createElement("input");
+          input.type = "radio";
+          input.name = `lesson-quiz-${question.id}`;
+          input.value = String(optionIndex);
+          input.dataset.quizIndex = String(questionIndex);
+          input.checked = selected;
+          input.disabled = !sourceDone || record.checked;
+          const copy = document.createElement("span");
+          copy.textContent = `${String.fromCharCode(65 + optionIndex)}. ${option}`;
+          label.append(input, copy);
+          fieldset.append(label);
+        });
+        return fieldset;
+      });
+      els.lessonQuizQuestions.replaceChildren(...questionElements);
+      els.lessonQuizStage.classList.toggle("locked", !sourceDone);
+      els.lessonQuizSubmitBtn.disabled = !sourceDone || record.checked;
+      els.lessonQuizRetryBtn.hidden = !record.checked;
+      els.lessonQuizStatus.textContent = passed ? "已通過" : !sourceDone ? "尚未開放" : record.checked ? "請重答" : "進行中";
+      els.lessonQuizResult.classList.remove("ok", "error");
+      if (!sourceDone) {
+        els.lessonQuizResult.replaceChildren(textElement("strong", "先完成教材"), textElement("span", "勾選教材完成後即可回答兩題。"));
+      } else if (!record.checked) {
+        els.lessonQuizResult.replaceChildren(textElement("strong", "尚未檢查"), textElement("span", "兩題都選完後按「檢查答案」；答錯會顯示固定解析並可重答。"));
+      } else {
+        const correctCount = questionsForLesson.filter((question, index) => record.answers[index] === String(question.correctIndex)).length;
+        els.lessonQuizResult.classList.add(passed ? "ok" : "error");
+        const explanationList = document.createElement("ol");
+        questionsForLesson.forEach(question => explanationList.append(textElement("li", question.explanation)));
+        els.lessonQuizResult.replaceChildren(
+          textElement("strong", passed ? `理解題通過｜${correctCount} / ${questionsForLesson.length}` : `答對 ${correctCount} / ${questionsForLesson.length}，請看解析後重答`),
+          textElement("span", "以下是本版教材的標準答案解析；開放式 Copilot 題仍可能有多種合理做法。"),
+          explanationList
+        );
+      }
+    }
+
+    function renderCourseStages(offset) {
+      const sourceDone = isLessonSourceDone(offset);
+      const quizPassed = isLessonQuizPassed(offset);
+      const applicationPassed = isLessonReadinessPassed(offset);
+      const learned = isLessonLearned(offset);
+      const milestones = [sourceDone, quizPassed, applicationPassed, learned];
+      const currentStep = milestones.findIndex(done => !done);
+      [els.courseStepSource, els.courseStepQuiz, els.courseStepApplication, els.courseStepChallenge].forEach((element, index) => {
+        renderCourseStep(element, milestones[index], currentStep === index);
+      });
+      els.courseSourceStatus.textContent = sourceDone ? "已完成" : "進行中";
+      els.courseApplicationStage.classList.toggle("locked", !quizPassed);
+      els.courseApplicationStatus.textContent = applicationPassed ? "已通過" : quizPassed ? "進行中" : "尚未開放";
+      els.lessonReflectionInput.disabled = !quizPassed && !learned;
     }
 
     function todayRecommendationIndexes(dayIndex) {
@@ -5488,7 +6314,13 @@
       els.dailyKnowledgeOutcomes.innerHTML = learningOutcomes(lesson).map(outcome => `<li>${outcome}</li>`).join("");
       els.dailyKnowledgeBtn.classList.toggle("done", learned);
       els.dailyKnowledgeBtnIcon.textContent = learned ? "✓" : "▶";
-      els.dailyKnowledgeBtnText.textContent = learned ? "用本課考我" : areLessonResourcesDone(offset) ? "寫學習檢核" : "先完成學習資源";
+      els.dailyKnowledgeBtnText.textContent = learned
+        ? "用本課考我"
+        : isLessonQuizPassed(offset)
+          ? "寫 Copilot 應用題"
+          : isLessonSourceDone(offset)
+            ? "做教材理解題"
+            : "開始本課";
     }
 
     function activeLearningOffset() {
@@ -5519,16 +6351,22 @@
       return wrapper;
     }
 
-    function renderLessonReadiness(offset) {
+    function renderLessonReadiness(offset, options = {}) {
       const readiness = state.lessonReadiness[offset];
-      els.lessonReflectionInput.value = state.lessonReflections[offset] || "";
+      if (!options.preserveInput) els.lessonReflectionInput.value = state.lessonReflections[offset] || "";
       els.lessonReadinessResult.classList.remove("ok", "error");
-      if (!readiness) {
-        const resourcesDone = areLessonResourcesDone(offset);
-        els.lessonReadinessResult.classList.toggle("error", !resourcesDone);
+      if (!isLessonQuizPassed(offset)) {
+        els.lessonReadinessResult.classList.add("error");
         els.lessonReadinessResult.replaceChildren(
-          textElement("strong", resourcesDone ? "尚未檢核" : "先完成學習資源"),
-          textElement("span", resourcesDone ? "寫完後按「分析學習程度」；達到 60 分會開放本課實戰挑戰。" : "請先選一個主資源學習；其他資源可依卡點選修，再用自己的話完成檢核。")
+          textElement("strong", "先通過教材理解題"),
+          textElement("span", "兩題都有固定答案；通過後才會開放這一題 Copilot 應用練習。")
+        );
+        return;
+      }
+      if (!readiness) {
+        els.lessonReadinessResult.replaceChildren(
+          textElement("strong", "尚未檢核"),
+          textElement("span", "寫完後按「檢查應用回答」；達到 60 分會開放本課面試實戰。")
         );
         return;
       }
@@ -5555,7 +6393,7 @@
       els.learningLessonConcept.textContent = lesson.concept;
       els.learningLessonTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
       els.learningLessonS111.textContent = lesson.s111;
-      els.learningTeaching.innerHTML = renderTeachingCards(lesson);
+      renderCoursePrimary(offset);
       const resources = lessonResourceSequence(lesson);
       setResourceLink(els.learningYoutubeLink, resources[0].prefix, resources[0].resource, { offset, step: 0 });
       setResourceLink(els.learningBilibiliLink, resources[1].prefix, resources[1].resource, { offset, step: 1 });
@@ -5564,15 +6402,17 @@
       els.learningResourceStatus.textContent = resourceStatusText(offset);
       els.learningOutcomes.innerHTML = learningOutcomes(lesson).map(outcome => `<li>${outcome}</li>`).join("");
       els.lessonReflectionInput.placeholder = `例如：我理解 ${lesson.title} 是... 它會用在... 在企業維運 Copilot 裡我可以連到... 我會用...確認結果。`;
+      renderLessonQuiz(offset);
       renderLessonReadiness(offset);
-      const resourcesDone = areLessonResourcesDone(offset);
-      els.startLessonChallengeBtn.disabled = !learned && !resourcesDone;
+      renderCourseStages(offset);
+      const quizPassed = isLessonQuizPassed(offset);
+      els.startLessonChallengeBtn.disabled = !learned && !quizPassed;
       const challengeUnlocked = isLessonChallengeUnlocked(offset);
       els.startLessonChallengeBtn.textContent = learned
         ? offset < dailyLessons.length - 1 ? "前往下一天" : "已完成全部課程"
-        : !resourcesDone ? "先開啟並實作主資源" : challengeUnlocked ? "進入本課挑戰" : state.lessonReadiness[offset] ? "重新分析學習程度" : "分析學習程度";
+        : !quizPassed ? "先通過教材理解題" : state.lessonReadiness[offset] ? "重新檢查應用回答" : "檢查應用回答";
       els.openTodayLessonBtn.disabled = !challengeUnlocked;
-      els.openTodayLessonBtn.textContent = learned ? "再次挑戰本課" : challengeUnlocked ? "進入本課挑戰" : "達到 60 分後再挑戰";
+      els.openTodayLessonBtn.textContent = learned ? "再次挑戰本課" : challengeUnlocked ? "進入面試實戰" : "應用題達 60 分後開放";
       els.learningPlanTopic.textContent = lesson.title;
       els.learningPlanTime.innerHTML = learningCadence.map(([label, minutes]) => `
         <div class="time-row">
@@ -5590,7 +6430,8 @@
       const learned = learnedLessonCount();
       const currentOffset = highestUnlockedLessonOffset();
       els.courseProgressTitle.textContent = `課程進度 ${learned} / ${dailyLessons.length}`;
-      els.courseProgressFill.style.width = `${learned / dailyLessons.length * 100}%`;
+      els.courseProgressBar.value = learned;
+      els.courseProgressBar.textContent = `${learned} / ${dailyLessons.length}`;
       els.courseProgressNote.textContent = learned >= dailyLessons.length
         ? "28 天面試練習已完成，可以回頭加練模擬面試題。"
         : `目前解鎖 D${currentOffset + 1}：${dailyLessons[currentOffset].title}`;
@@ -5678,7 +6519,7 @@
         const offset = target - dailyLessonStartIndex;
         if (!isLessonChallengeUnlocked(offset)) {
           openLearning(offset);
-          setSyncStatus("請先完成主資源與 60 分文字檢核，再進入本課挑戰。", "error");
+          setSyncStatus("請先完成教材、通過兩題理解題，再讓 Copilot 應用回答達到 60 分。", "error");
           return;
         }
       }
@@ -5870,16 +6711,17 @@
     function submitFeedback() {
       state.answers[state.current] = els.answerInput.value;
       state.feedback[state.current] = analyzeAnswer(questions[state.current], els.answerInput.value, state.selfChecks[state.current]);
-      const feedback = state.feedback[state.current];
       let unlockedLesson = -1;
       if (isDailyQuestionIndex(state.current)) {
         const offset = state.current - dailyLessonStartIndex;
-        if (!isLessonLearned(offset) && state.lessonReadiness[offset]?.passed && feedback.score >= 65 && feedback.technicalHits >= 3) {
+        state.feedback[state.current].evaluationFingerprint = lessonChallengeEvaluationFingerprint(offset);
+        if (!isLessonLearned(offset) && hasCurrentLessonCompletionEvidence(offset)) {
           state.learnedLessons[offset] = true;
           state.lessonOffset = offset;
           unlockedLesson = offset;
         }
       }
+      const feedback = state.feedback[state.current];
       renderAll();
       if (unlockedLesson >= 0) {
         setSyncStatus(unlockedLesson < dailyLessons.length - 1
@@ -5895,25 +6737,75 @@
 
     function submitLessonReadiness() {
       const offset = activeLearningOffset();
-      if (!areLessonResourcesDone(offset)) {
+      if (!isLessonQuizPassed(offset)) {
         renderLessonReadiness(offset);
-        setSyncStatus(`D${offset + 1} 請先開啟並實作一個主資源，再做 60 分檢核。`, "error");
+        setSyncStatus(`D${offset + 1} 請先完成教材並答對兩題理解題。`, "error");
         return;
       }
       const lesson = dailyLessons[offset];
       state.lessonReflections[offset] = els.lessonReflectionInput.value;
-      const readiness = analyzeLessonReadiness(lesson, els.lessonReflectionInput.value);
+      const readiness = {
+        ...analyzeLessonReadiness(lesson, els.lessonReflectionInput.value),
+        evaluationFingerprint: lessonReadinessEvaluationFingerprint(offset)
+      };
       state.lessonReadiness[offset] = readiness;
       if (readiness.passed) {
         save();
-        setSyncStatus(`D${offset + 1} 文字檢核通過；現在完成本課挑戰，技術要點至少命中 3 / 4。`, "ok");
+        setSyncStatus(`D${offset + 1} Copilot 應用回答通過；現在完成面試實戰，技術要點至少命中 3 / 4。`, "ok");
         openQuestion(learningQuestionIndex(offset));
       } else {
         renderLessonReadiness(offset);
         save();
         maybeAutoUploadProgress();
-        setSyncStatus(`D${offset + 1} 目前 ${readiness.score} 分，補到 60 分後可進入本課挑戰。`, "error");
+        setSyncStatus(`D${offset + 1} 應用回答目前 ${readiness.score} 分，補到 60 分後可進入面試實戰。`, "error");
       }
+    }
+
+    function submitLessonQuiz() {
+      const offset = activeLearningOffset();
+      const record = lessonCourseRecord(offset);
+      if (!record.sourceDone) {
+        setSyncStatus(`D${offset + 1} 請先完成本課主教材。`, "error");
+        els.courseSourceDoneInput.focus();
+        return;
+      }
+      const missingIndex = record.answers.findIndex(answer => !answer);
+      if (missingIndex >= 0) {
+        els.lessonQuizResult.classList.remove("ok");
+        els.lessonQuizResult.classList.add("error");
+        els.lessonQuizResult.replaceChildren(
+          textElement("strong", `第 ${missingIndex + 1} 題尚未作答`),
+          textElement("span", "請完成兩題後再檢查答案。")
+        );
+        const fieldset = els.lessonQuizQuestions.querySelector(`[data-quiz-index="${missingIndex}"]`);
+        if (fieldset) {
+          fieldset.setAttribute("tabindex", "-1");
+          fieldset.focus();
+        }
+        return;
+      }
+      updateLessonCourseRecord(offset, { checked: true, attempts: record.attempts + 1 });
+      save();
+      renderLearningPage();
+      renderCourseNav();
+      const passed = isLessonQuizPassed(offset);
+      setSyncStatus(passed
+        ? `D${offset + 1} 理解題 2 / 2 通過，已開放 Copilot 應用題。`
+        : `D${offset + 1} 理解題尚未全對；請看解析後重新作答。`, passed ? "ok" : "error");
+      els.lessonQuizResult.focus({ preventScroll: true });
+      els.lessonQuizResult.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
+    }
+
+    function retryLessonQuiz() {
+      const offset = activeLearningOffset();
+      updateLessonCourseRecord(offset, { answers: ["", ""], checked: false });
+      invalidateLessonEvaluations(offset);
+      save();
+      renderLearningPage();
+      renderCourseNav();
+      const firstOption = els.lessonQuizQuestions.querySelector("input[type=radio]");
+      if (firstOption) firstOption.focus();
+      setSyncStatus(`D${offset + 1} 已清除本次選項，請重新作答。`, "ok");
     }
 
     function showFollowup() {
@@ -5998,6 +6890,12 @@
         els.answerInput.value += `\n\n回答結構：\n${template}`;
       }
       state.answers[state.current] = els.answerInput.value;
+      if (isDailyQuestionIndex(state.current)) {
+        const offset = state.current - dailyLessonStartIndex;
+        invalidateLessonChallengeEvaluation(offset);
+        renderFeedback();
+        renderCourseNav();
+      }
       updateWordCount();
       save();
     }
@@ -6014,6 +6912,12 @@
 
     els.answerInput.addEventListener("input", () => {
       state.answers[state.current] = els.answerInput.value;
+      if (isDailyQuestionIndex(state.current)) {
+        const offset = state.current - dailyLessonStartIndex;
+        invalidateLessonChallengeEvaluation(offset);
+        renderFeedback();
+        renderCourseNav();
+      }
       updateWordCount();
       scheduleSave();
     });
@@ -6023,6 +6927,12 @@
       if (!input) return;
       const index = Number(input.dataset.check);
       state.selfChecks[state.current][index] = input.checked;
+      if (isDailyQuestionIndex(state.current)) {
+        const offset = state.current - dailyLessonStartIndex;
+        invalidateLessonChallengeEvaluation(offset);
+        renderFeedback();
+        renderCourseNav();
+      }
       save();
     });
 
@@ -6053,12 +6963,43 @@
     els.lessonReflectionInput.addEventListener("input", () => {
       const offset = activeLearningOffset();
       state.lessonReflections[offset] = els.lessonReflectionInput.value;
-      if (!isLessonLearned(offset)) {
-        state.lessonReadiness[offset] = null;
-        renderLessonReadiness(offset);
-      }
+      invalidateLessonEvaluations(offset);
+      renderLessonReadiness(offset, { preserveInput: true });
+      renderCourseStages(offset);
+      renderCourseNav();
       scheduleSave();
     });
+
+    els.courseSourceDoneInput.addEventListener("change", () => {
+      const offset = activeLearningOffset();
+      updateLessonCourseRecord(offset, { sourceDone: els.courseSourceDoneInput.checked });
+      invalidateLessonEvaluations(offset);
+      save();
+      renderLearningPage();
+      renderCourseNav();
+      setSyncStatus(els.courseSourceDoneInput.checked
+        ? `D${offset + 1} 教材完成，現在回答兩題理解題。`
+        : `D${offset + 1} 已取消教材完成標記。`, els.courseSourceDoneInput.checked ? "ok" : "error");
+    });
+
+    els.lessonQuizForm.addEventListener("change", event => {
+      const input = event.target.closest("input[type=radio][data-quiz-index]");
+      if (!input) return;
+      const offset = activeLearningOffset();
+      const record = lessonCourseRecord(offset);
+      const answers = [...record.answers];
+      answers[Number(input.dataset.quizIndex)] = input.value;
+      updateLessonCourseRecord(offset, { answers, checked: false });
+      invalidateLessonEvaluations(offset);
+      scheduleSave();
+    });
+
+    els.lessonQuizForm.addEventListener("submit", event => {
+      event.preventDefault();
+      submitLessonQuiz();
+    });
+
+    els.lessonQuizRetryBtn.addEventListener("click", retryLessonQuiz);
 
     document.addEventListener("click", event => {
       const resourceLink = event.target.closest("[data-resource-step]");
@@ -6105,8 +7046,6 @@
       const offset = activeLearningOffset();
       if (isLessonLearned(offset)) {
         openLearning(Math.min(offset + 1, dailyLessons.length - 1));
-      } else if (isLessonChallengeUnlocked(offset)) {
-        openQuestion(learningQuestionIndex(offset));
       } else {
         submitLessonReadiness();
       }
@@ -6187,6 +7126,7 @@
       state.lessonReflections = Array(dailyLessons.length).fill("");
       state.lessonReadiness = Array(dailyLessons.length).fill(null);
       state.lessonResources = Array.from({ length: dailyLessons.length }, () => Array(4).fill(false));
+      state.lessonCourse = emptyLessonCourseState(new Date().toISOString());
       state.answers = Array(questions.length).fill("");
       state.feedback = Array(questions.length).fill(null);
       state.hintsOpen = Array(questions.length).fill(false);
@@ -6237,6 +7177,20 @@
         console.warn("Cross-tab progress could not be merged", error);
       }
     });
+
+    function focusHashTarget(hash = window.location.hash) {
+      if (!hash || hash === "#") return;
+      const target = document.getElementById(decodeURIComponent(hash.slice(1)));
+      if (target && typeof target.focus === "function") target.focus({ preventScroll: true });
+    }
+
+    document.addEventListener("click", event => {
+      const link = event.target.closest('a[href^="#"]');
+      if (!link) return;
+      const hash = link.getAttribute("href") || "";
+      if (hash.length > 1) requestAnimationFrame(() => focusHashTarget(hash));
+    });
+    window.addEventListener("hashchange", () => focusHashTarget());
 
     window.addEventListener("pagehide", flushScheduledSave);
     document.addEventListener("visibilitychange", () => {

@@ -351,3 +351,125 @@ test("normal save treats a newer localStorage revision as incoming and preserves
   assert.equal(written.revision, 3);
   assert.match(html, /applyProgressPayload\(incomingPayload, \{ merge: true, preferIncoming: true, persist: false \}\)/);
 });
+
+test("lesson evaluation fingerprints are allowlisted and stale inputs prune the correct gate layer", () => {
+  const state = {
+    lessonReflections: ["original reflection"],
+    lessonReadiness: [null],
+    learnedLessons: [true],
+    answers: ["original answer"],
+    selfChecks: [[true, false]],
+    feedback: [null]
+  };
+  const context = {
+    JSON,
+    Math,
+    contentVersion: "content-v1",
+    rubricVersion: "rubric-v1",
+    maxTextLength: 8000,
+    dailyLessons: [{ id: "lesson-one" }],
+    dailyLessonStartIndex: 0,
+    state
+  };
+  vm.createContext(context);
+  vm.runInContext([
+    extractFunction("safeText"),
+    extractFunction("stableCourseHash"),
+    extractFunction("normalizeEvaluationFingerprint"),
+    extractFunction("evaluationFingerprint"),
+    extractFunction("lessonReadinessEvaluationFingerprint"),
+    extractFunction("lessonChallengeEvaluationFingerprint"),
+    extractFunction("pruneStaleLessonEvaluations")
+  ].join("\n"), context);
+
+  const readinessFingerprint = vm.runInContext("lessonReadinessEvaluationFingerprint(0)", context);
+  const feedbackFingerprint = vm.runInContext("lessonChallengeEvaluationFingerprint(0)", context);
+  state.lessonReadiness[0] = { passed: true, evaluationFingerprint: readinessFingerprint };
+  state.feedback[0] = { score: 80, technicalHits: 4, evaluationFingerprint: feedbackFingerprint };
+  assert.equal(vm.runInContext(`normalizeEvaluationFingerprint("${feedbackFingerprint}")`, context), feedbackFingerprint);
+  assert.equal(vm.runInContext('normalizeEvaluationFingerprint("eval-v1-not-hex")', context), "");
+
+  state.answers[0] = "changed after evaluation";
+  vm.runInContext("pruneStaleLessonEvaluations()", context);
+  assert.equal(state.lessonReadiness[0].passed, true);
+  assert.equal(state.feedback[0], null);
+  assert.equal(state.learnedLessons[0], false);
+
+  state.feedback[0] = {
+    score: 80,
+    technicalHits: 4,
+    evaluationFingerprint: vm.runInContext("lessonChallengeEvaluationFingerprint(0)", context)
+  };
+  state.learnedLessons[0] = true;
+  state.lessonReflections[0] = "changed reflection";
+  vm.runInContext("pruneStaleLessonEvaluations()", context);
+  assert.equal(state.lessonReadiness[0], null);
+  assert.equal(state.feedback[0], null);
+  assert.equal(state.learnedLessons[0], false);
+});
+
+test("lesson invalidation is layered and preserves later results", () => {
+  const state = {
+    lessonReadiness: [{ passed: true }, { passed: true }],
+    learnedLessons: [true, true],
+    feedback: [{ score: 80 }, { score: 90 }]
+  };
+  const context = {
+    Number,
+    dailyLessons: [{ id: "lesson-one" }, { id: "lesson-two" }],
+    dailyLessonStartIndex: 0,
+    state
+  };
+  vm.createContext(context);
+  vm.runInContext([
+    extractFunction("invalidateLessonChallengeEvaluation"),
+    extractFunction("invalidateLessonEvaluations")
+  ].join("\n"), context);
+  vm.runInContext("invalidateLessonChallengeEvaluation(0)", context);
+
+  assert.equal(state.lessonReadiness[0].passed, true);
+  assert.equal(state.feedback[0], null);
+  assert.equal(state.learnedLessons[0], false);
+  assert.equal(state.lessonReadiness[1].passed, true);
+  assert.equal(state.feedback[1].score, 90);
+  assert.equal(state.learnedLessons[1], true);
+
+  state.feedback[0] = { score: 80 };
+  state.learnedLessons[0] = true;
+  vm.runInContext("invalidateLessonEvaluations(0)", context);
+  assert.equal(state.lessonReadiness[0], null);
+  assert.equal(state.feedback[0], null);
+  assert.equal(state.learnedLessons[0], false);
+});
+
+test("lesson course merge uses touched-record precedence instead of client timestamps", () => {
+  const local = {
+    lesson: { sourceDone: true, answers: ["1", "2"], checked: true, attempts: 1, updatedAt: "2026-01-01T00:00:00.000Z" }
+  };
+  const futureReset = {
+    lesson: { sourceDone: false, answers: ["", ""], checked: false, attempts: 0, updatedAt: "9999-01-01T00:00:00.000Z" }
+  };
+  const context = {
+    Boolean,
+    Number,
+    Array,
+    dailyLessons: [{ id: "lesson" }],
+    normalizeLessonCourse: value => structuredClone(value)
+  };
+  vm.createContext(context);
+  vm.runInContext(`${extractFunction("lessonCourseRecordTouched")}\n${extractFunction("mergeLessonCourse")}`, context);
+
+  context.local = local;
+  context.futureReset = futureReset;
+  const localWins = vm.runInContext("mergeLessonCourse(local, futureReset, false)", context);
+  const incomingWins = vm.runInContext("mergeLessonCourse(local, futureReset, true)", context);
+  assert.equal(localWins.lesson.sourceDone, true);
+  assert.equal(incomingWins.lesson.sourceDone, false);
+  assert.equal(incomingWins.lesson.updatedAt, "9999-01-01T00:00:00.000Z");
+
+  context.untouched = {
+    lesson: { sourceDone: false, answers: ["", ""], checked: false, attempts: 0, updatedAt: "" }
+  };
+  const tombstoneWinsMissing = vm.runInContext("mergeLessonCourse(untouched, futureReset, false)", context);
+  assert.equal(tombstoneWinsMissing.lesson.updatedAt, "9999-01-01T00:00:00.000Z");
+});
