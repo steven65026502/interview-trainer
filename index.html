@@ -669,6 +669,33 @@
       background: #fff;
     }
 
+    .lesson-project-bridge {
+      border-left: 3px solid var(--accent);
+      background: #f4f8f8;
+    }
+
+    .lesson-evidence-note {
+      border-top: 1px solid #e5ebec;
+      color: var(--ink) !important;
+      font-size: 12px !important;
+      margin-top: 10px !important;
+      padding-top: 10px;
+    }
+
+    .lesson-status-note {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      margin-top: 8px;
+      padding: 4px 9px;
+      border: 1px solid #b9cacc;
+      border-radius: 999px;
+      background: #fff;
+      color: #425154;
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
     .lesson-answer-frame {
       border-left: 3px solid #b8c7c9;
       color: var(--ink) !important;
@@ -1967,6 +1994,11 @@
         border-left: 0;
       }
 
+      .lesson-deep-grid .lesson-project-bridge {
+        border-top: 3px solid var(--accent);
+        border-left: 1px solid #d7e0e2;
+      }
+
       .side {
         order: 0;
         position: static;
@@ -2138,7 +2170,7 @@
           <div class="learning-head">
             <span id="learningMeta">第 1 天 / 28 天面試練習</span>
             <h2>今日學習</h2>
-            <p id="learningIntro">這是搭配 8 週實作表的每日 Course：完成一個影片或短文教材、兩題理解題、Copilot 應用題，再進入面試實戰。</p>
+            <p id="learningIntro">這是搭配 8 週實作表的每日 Course：完成一個影片或短文教材、兩題理解題、專案轉譯題，再進入面試實戰。</p>
             <div><a class="btn primary" href="#learningLessonTitle">直接開始今天</a></div>
           </div>
 
@@ -2154,8 +2186,8 @@
               <span>單選題有固定答案與解析；答錯可看解析後重新作答。</span>
             </li>
             <li class="learning-step">
-              <strong>3. 寫 Copilot 應用題</strong>
-              <span>用自己的話連到作品情境；評分看技術要點，不要求逐字相同。</span>
+              <strong>3. 寫專案轉譯題</strong>
+              <span>優先套用論文或做過的專案，再說如何延伸到 Copilot；評分不要求逐字相同。</span>
             </li>
             <li class="learning-step">
               <strong>4. 做面試實戰</strong>
@@ -2163,7 +2195,7 @@
             </li>
             <li class="learning-step">
               <strong>5. 解鎖下一課</strong>
-              <span>理解題與應用題都通過，才會開放下一天；延伸資源不列入門檻。</span>
+              <span>理解題與專案轉譯題都通過，才會開放下一天；延伸資源不列入門檻。</span>
             </li>
             </ol>
           </details>
@@ -2184,7 +2216,7 @@
               <ol>
                 <li class="course-step" id="courseStepSource"><span>1</span>教材</li>
                 <li class="course-step" id="courseStepQuiz"><span>2</span>理解題</li>
-                <li class="course-step" id="courseStepApplication"><span>3</span>應用題</li>
+                <li class="course-step" id="courseStepApplication"><span>3</span>專案轉譯題</li>
                 <li class="course-step" id="courseStepChallenge"><span>4</span>實戰</li>
               </ol>
             </nav>
@@ -2245,25 +2277,25 @@
               <div class="course-stage-head">
                 <div>
                   <span class="course-kicker">開放式實作</span>
-                  <h4 id="courseApplicationTitle">3. Copilot 應用題</h4>
+                  <h4 id="courseApplicationTitle">3. 專案轉譯題</h4>
                 </div>
                 <span class="course-stage-status" id="courseApplicationStatus">尚未開放</span>
               </div>
-              <p class="lesson-copy">以下作品連結是一個可接受方向，不是唯一標準答案；請用自己的設計與驗證方式作答。</p>
+              <p class="lesson-copy">優先用論文、QGIS／S-111／S-104 或其他做過的專案回答；再補一句如何延伸到規劃中的 Copilot。頁面會清楚區分既有經驗與延伸練習。</p>
               <p class="knowledge-s111 lesson-copy" id="learningLessonS111"></p>
               <div class="lesson-readiness">
                 <div class="readiness-head">
                   <label for="lessonReflectionInput"><strong>用自己的話回答：60 分以上進入面試實戰</strong></label>
-                  <span>寫 3–5 句，包含概念、Copilot 情境與驗證方式。這裡是啟發式教練回饋，不代表程式或架構已被正式測試。</span>
+                  <span>寫 3–5 句，包含概念、真實專案情境與驗證方式；不適合套既有經驗時再使用 Copilot 規劃。這是啟發式教練回饋，不代表技術正確性已被正式測試。</span>
                 </div>
-                <textarea id="lessonReflectionInput" maxlength="8000" spellcheck="false" placeholder="例如：我理解 RAG 不只是呼叫模型，而是... 在維運 Copilot 裡... 我會檢查..."></textarea>
+                <textarea id="lessonReflectionInput" maxlength="8000" spellcheck="false" placeholder="例如：我理解這個概念是在解決... 在我的論文／專案中最接近... 若延伸到 Copilot，我會... 我會用...確認結果。"></textarea>
                 <div class="readiness-result" id="lessonReadinessResult" role="status" aria-live="polite" aria-atomic="true" tabindex="-1">
                   <strong>尚未開放</strong>
                   <span>先通過兩題教材理解題。</span>
                 </div>
               </div>
               <div class="lesson-actions">
-                <button class="btn primary" id="startLessonChallengeBtn" type="button">檢查應用回答</button>
+                <button class="btn primary" id="startLessonChallengeBtn" type="button">檢查專案回答</button>
                 <button class="btn" id="openTodayLessonBtn" type="button">進入面試實戰</button>
               </div>
             </section>
@@ -2320,7 +2352,7 @@
           <div class="response-main">
             <div class="answer-box">
               <label for="answerInput">你的回答</label>
-              <textarea id="answerInput" maxlength="8000" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到企業維運 Copilot，最後補驗證方式或取捨。"></textarea>
+              <textarea id="answerInput" maxlength="8000" placeholder="請像面試現場一樣回答。建議先講結論，再講步驟，接著連到你的論文／既有專案或規劃中的 Copilot，最後補驗證方式或取捨。"></textarea>
               <div class="answer-meta">
                 <span id="wordCount">0 字</span>
                 <span id="saveState">自動儲存</span>
@@ -3263,6 +3295,195 @@
         challenge: "請用三分鐘展示企業 IT／設備維運 Copilot，並說出可驗證成果與目前限制。"
       }
     ];
+
+    const lessonExperienceDetails = Object.freeze({
+      "python-types-validation": {
+        kind: "案例改寫",
+        hook: "檔案能打開，不代表資料能用。SPD 少一欄、時間格式跑掉，或單位判錯，後面的圖和統計仍可能很順地產生，只是整條流程一起錯。",
+        project: "你的轉檔程式把 NetCDF 的 SPD／DIR 對應到 S-111 HDF5 的 surfaceCurrentSpeed／surfaceCurrentDirection；現行程式也會對非 kn 單位直接報錯。這一課把既有檢查改寫成明確的 Python model 與 validation boundary；不假裝原系統已經使用 Pydantic。",
+        challenge: "若一批 NetCDF 缺少 SPD、DIR 或有效時間，甚至單位說明不清楚，你會如何在轉成 S-111 HDF5 前擋下來並留下可追查錯誤？"
+      },
+      "pytest-cases": {
+        kind: "案例改寫",
+        hook: "測試的價值不是畫面出現綠勾，而是三個月後換了一批資料，仍能立即知道哪個舊行為被改壞。",
+        project: "論文已有很好的驗收素材：42 個目標日、114 個日期×時距組合；四項門檻計數由原始資料重算後，與正式資料庫逐組 114/114 一致。程式裡也有一條值得補測的真實失敗路徑：資料庫寫入回傳 False，上層仍可能回報 Pipeline 完成。這一課把兩者整理成 pytest。",
+        challenge: "你會如何把 114 組四項門檻計數的原始資料重算與資料庫一致性檢查寫成 pytest，並證明資料庫寫入回傳 False 時 Pipeline 不會假裝成功？"
+      },
+      "algo-big-o-hashmap": {
+        kind: "案例改寫",
+        hook: "當你要替每個有效時間找前一、二、三天的發布檔，最直覺的做法是一直重掃檔名；資料一多，等待時間就藏在這些重複搜尋裡。",
+        project: "你的資料具有 target time、issue time 與 24h／48h／72h 預報時距。可先用巢狀搜尋寫 baseline，再用 dict 建立「有效時間＋時距 → 檔案」索引，順便說明資料期開頭缺 48h／72h 是邊界效應，不是遺漏。",
+        challenge: "若有 n 個目標時間與 n 個發布檔，你會如何用 Hash Map 取代重複掃描，並說明時間、空間複雜度與資料期開頭的邊界案例？"
+      },
+      "sql-join-grain": {
+        kind: "既有經驗",
+        hook: "JOIN 最可怕的不是報錯，而是結果看起來合理、筆數卻悄悄翻倍。只用 station_id 連 S-104 格點和六分鐘潮位，可能把同一天的資料互相複製。",
+        project: "S-104 路線需要把潮位站、時間戳、最近兩個有效海上格點與 rank 對齊。回答時先說一列代表「一站、一時點、一個候選格點」，再談 composite key、JOIN 與筆數對帳。",
+        challenge: "S-104 格網與 CWA 六分鐘潮位資料應用哪些 key 對齊？你會怎麼證明 JOIN 後沒有把 240 個時點或 rank 1／rank 2 重複放大？"
+      },
+      "sql-window-cte": {
+        kind: "案例改寫",
+        hook: "你常常不是只想知道每站有幾筆，而是想保留所有明細，同時標出每站最新或最重要的一筆。這正是 Window Function 出場的時候。",
+        project: "可用 target_date、forecast_horizon 與產製時間練習：CTE 先整理合法批次，ROW_NUMBER 再替每個目標日／時距標出最新結果。這是依論文資料模型設計的練習，不宣稱現有查詢已經這樣寫。",
+        challenge: "請用 CTE 與 ROW_NUMBER 保留所有檢核明細，同時標出每個 target_date／forecast_horizon 最新的一筆，並說明排序相同時如何穩定決勝。"
+      },
+      "postgres-schema-index-transaction": {
+        kind: "案例改寫",
+        hook: "一筆檢核若只寫進摘要、點位卻失敗，QGIS 可能顯示一個永遠對不回統計的半成品。Transaction 就是在避免這種尷尬。",
+        project: "你的系統讓成果包保存完整場與圖檔，PostgreSQL 保存逐時摘要和品質關注點位，API／QGIS 負責查詢。可由這個分工設計唯一鍵、transaction boundary，再用 EXPLAIN ANALYZE 驗證常查日期與時距的索引。",
+        challenge: "若 summary 與 hotspot points 必須一起發布，你會如何設計唯一鍵、transaction 與索引，避免半套寫入及 ON CONFLICT 對不到 constraint？"
+      },
+      "fastapi-http-contract": {
+        kind: "案例改寫",
+        hook: "API 回 200 不代表回答完整。若少了比較基準、來源時間或單位，前端照樣能畫出一張無法解釋的圖。",
+        project: "論文成果包保存可離線重現的結果，PostgreSQL 保存可查詢資料，唯讀 API 提供條件查詢，QGIS 再重建圖層。這一課把既有查詢需求改寫成 FastAPI／Pydantic 契約；不宣稱原系統已使用 FastAPI。",
+        challenge: "請替品質監測結果設計一個唯讀 FastAPI endpoint；response 除了數值，還要如何回傳 target time、forecast horizon、比較基準、單位與來源，讓 QGIS 能安全重建？"
+      },
+      "data-contract-ingestion": {
+        kind: "既有經驗",
+        hook: "同一批檔案重跑兩次，不該多出兩份結果；少一個上游檔案，也不該默默當成零。",
+        project: "你的流程是 NetCDF → S-111 HDF5 → 時滯預報比對 → PostgreSQL／成果包 → API／QGIS。S-104 曾在跨檔邊界多出 8,712 筆重複資料，後來以複合唯一鍵與保留較新發布列修復；這正好能說明 data contract 和冪等不是抽象名詞。",
+        challenge: "同一批 NetCDF 被重送，或資料期開頭缺少較早發布檔時，你會如何以 data contract、run_id、冪等鍵與 reconciliation 避免重複寫入或把缺檔當成零？"
+      },
+      "git-linux-docker": {
+        kind: "案例改寫",
+        hook: "『我的電腦可以跑』通常是環境資訊沒有被說清楚。QGIS 套件、Python 版本、資料庫連線與檔案路徑，換台電腦就會一起現形。",
+        project: "你已經用 Git 管理論文與程式，interview-trainer 也有 GitHub Actions 驗證 HTML、JavaScript、Worker tests 與部署 bundle。這一課不宣稱論文系統已 Docker 化，而是練習把可獨立運行的 API＋PostgreSQL 包成 Compose，QGIS 外掛則另外記錄安裝相依。",
+        challenge: "若要讓另一台電腦重現你的唯讀 API＋PostgreSQL，你會如何安排 Git branch、環境變數、Dockerfile、Compose、healthcheck 與 container log？QGIS 相依要怎麼交代？"
+      },
+      "chunk-metadata-acl": {
+        kind: "求職延伸",
+        hook: "把整本論文切成固定 500 字很省事，但『0.48 節為何不是官方門檻』的前提和限制很可能被切到兩邊。",
+        project: "可把論文、口試問答、S-111／S-104 規範與撤回說明做成練習語料。chunk 應保留章節、產品、日期、版本、圖表編號與有效／撤回狀態；未來若加入受限資料，再把 ACL 跟著每個 chunk 保存。",
+        challenge: "若要把論文與口試問答做成知識庫，你會怎麼切 chunk，才能保住『門檻、比較基準、限制』的上下文，並避免把已撤回成果檢索出來？"
+      },
+      "embedding-similarity": {
+        kind: "求職延伸",
+        hook: "口委問『00Z 能不能算獨立真值』，原文標題未必出現同一句話；只靠關鍵字，可能剛好錯過真正的答辯段落。",
+        project: "可把口試問題與論文章節做 embedding，測試不同問法是否仍能找回相同證據。這是把既有文件延伸為語意檢索練習，不代表論文系統已經使用 embedding。",
+        challenge: "你會如何用三種不同問法測試『00Z 不是獨立觀測』是否找到同一段證據？除了 cosine similarity，還要保存哪些版本與人工判讀？"
+      },
+      "pgvector-index": {
+        kind: "求職延伸",
+        hook: "向量索引像替圖書館重新排架：找得更快，不代表一定走到正確書架。先有可核對的查詢，才知道 HNSW／IVFFlat 是否值得。",
+        project: "可將論文 chunks 與 embedding 放進 PostgreSQL＋pgvector，保留 product、section、version、withdrawn 等 metadata。先跑 exact search，再以固定口試題比較索引速度與 Recall@k。",
+        challenge: "若用 pgvector 保存論文 chunks，你會如何建立 exact-search baseline，再比較 HNSW／IVFFlat 的 latency、Recall@k 與 metadata filter？"
+      },
+      "hybrid-retrieval-rerank": {
+        kind: "求職延伸",
+        hook: "『S-104、LAT、0.48 kn』這些代碼和數字很適合關鍵字搜尋；『為什麼不能說成預報精度』則更像語意問題。兩種查法各有盲點。",
+        project: "用 full-text 抓產品代碼、站名與門檻，用 embedding 找概念相近段落，再以 product／version／withdrawn filter 排除錯資料。rerank 前後都保留 top-k，才看得出改善在哪。",
+        challenge: "面對同時含產品代碼、數字與自然語言的口試題，你會如何組合 full-text、vector search、metadata filter 與 rerank，並比較排序前後？"
+      },
+      "rag-flow": {
+        kind: "求職延伸",
+        hook: "RAG 比較像開卷考，不是把整本論文塞上桌。先翻到對的頁面，再回答，而且要讓人看得出答案來自哪裡。",
+        project: "可用高風險口試題做最小 RAG，例如『S-104 有號比較差值能否稱為同基準預報精度？』系統要先找回垂直基準限制，再形成帶引用回答。",
+        challenge: "請設計一條回答 S-104 垂直基準問題的 RAG 流程，說明 query、retrieve、context、生成、引用與證據不足時各自怎麼處理。"
+      },
+      "citation-traceability": {
+        kind: "既有經驗",
+        hook: "同一個數字可能同時出現在原始 NetCDF 重算、資料庫摘要、圖表和口試筆記。只寫『根據系統結果』，之後很難知道哪個才是根。",
+        project: "你的論文已明確區分：正式統計由原始 NetCDF 重算，資料庫／API 負責條件查詢，成果包負責離線重現，QGIS 負責視覺檢視。這正是 provenance 與 citation 的實例。",
+        challenge: "若回答『四項門檻計數逐組 114/114 一致』，你會如何讓 citation 指回原始重算證據，而不是只引用資料庫或 QGIS 畫面？source_id、版本與處理鏈要怎麼保存？"
+      },
+      "rag-refusal": {
+        kind: "案例改寫",
+        hook: "說『目前不能下結論』不是示弱。像 S-104 的 LAT 與 CWA 海圖基準，硬湊成同一基準精度反而是不可靠的答案。",
+        project: "你的答辯資料已列出明確邊界：研究門檻不是 IHO 官方標準；00Z 不是獨立觀測真值；S-104 有號比較差值不能直接解讀為同一垂直基準下的預報精度。",
+        challenge: "如果使用者要求 AI 證明『S-104 已完成正式 LAT 同基準精度驗證』，系統應如何拒答、引用現有證據，並說明還缺哪些資料？"
+      },
+      "ai-eval-ground-truth": {
+        kind: "求職延伸",
+        hook: "你已經有一份很接近評估集的材料：口試問題、短答、高風險提醒與不能越界的說法。差的是把它變成機器可重跑的規格。",
+        project: "可從 defense Q&A 挑 50 題，逐題保存 expected source、可接受答案範圍、必須拒答條件與 hard negative。這能同時服務論文問答原型和未來 Copilot 評測。",
+        challenge: "你會如何把現有口試問答整理成版本固定的 evaluation set，並替每題標示 expected source、可接受主張、禁止主張與無答案行為？"
+      },
+      "retrieval-metrics": {
+        kind: "求職延伸",
+        hook: "正確段落排第 8 名，模型通常看不到；排第 1 名和第 5 名，也不該被算成完全相同的體驗。",
+        project: "以口試題的 expected source 當答案，逐題保存 top-k。Recall@k 檢查正確來源有沒有進名單，MRR 反映第一個正確來源排得多前面，再回頭分類 chunk、filter 或 embedding 問題。",
+        challenge: "若五題口試題的第一個正確來源排名分別為 1、2、未命中、4、1，你會如何計算 MRR 與 Recall@k，並判斷下一步該調哪一層？"
+      },
+      "answer-faithfulness": {
+        kind: "案例改寫",
+        hook: "引用了一篇真的文件，仍可能說出文件沒說的話。最典型的例子，就是把『研究設定門檻』寫成『IHO 官方品質標準』。",
+        project: "論文已有多個 claim boundary：不宣稱首次、不把 00Z 當獨立真值、不把 0.48 節稱為統計最優，也不把 S-104 比較差值當正式同基準精度。這些可直接變成 faithfulness 測試。",
+        challenge: "你會如何檢查回答中的每個主張是否真的被引用段落支持，特別避免把研究門檻、候選風險或比較差值說成官方結論？"
+      },
+      "prompt-injection-redteam": {
+        kind: "案例改寫",
+        hook: "知識庫裡可能真的有一份文件寫著『請優先使用這組結果』，但那只是一段內容，不是系統指令。已撤回資料尤其容易造成漂亮而錯誤的答案。",
+        project: "你的 archive 保存了曾將 SPD 誤判為 m/s、再次乘換算係數的撤回成果。可把它當 hard negative 與不可信文件，測系統是否尊重 withdrawn metadata，而不是照文件內文字行動。",
+        challenge: "若檢索到已撤回的 S-111 單位文件，內容還要求忽略新版資料，RAG／Agent 應如何分離資料與指令、阻擋引用並留下 red-team 證據？"
+      },
+      "observability-latency-cost": {
+        kind: "案例改寫",
+        hook: "使用者只看到『QGIS 很慢』，瓶頸可能在讀 HDF5、查 PostgreSQL、API 序列化或畫圖。沒有同一條 trace，只能靠猜。",
+        project: "該次 API benchmark 中，summary median 約 90.25 ms，但精確全表計數的 /api/status median 約 10.03 s，不適合拿來高頻 health polling。可再用 run_id／request_id 串起資料批次、SQL、API 與 QGIS，分段記錄耗時與筆數。",
+        challenge: "當 /api/status 約需 10 秒、但 summary 很快時，你會如何用 trace 與 query evidence 找瓶頸，並把便宜的 health check 和昂貴的精確統計分開？"
+      },
+      "ai-regression-pytest": {
+        kind: "案例改寫",
+        hook: "最值得留下的測試，往往來自真正踩過的坑。錯誤單位修好一次不夠，還要讓同一種錯永遠回不來。",
+        project: "你曾撤回把原生 kn 誤判為 m/s、又乘 1.9438444924406 的 S-111 結果，並恢復正式資料庫與輸出。可把已知輸入、正確單位、關鍵數值範圍與禁止二次換算寫成 regression tests。",
+        challenge: "你會如何把 S-111 單位誤判事件寫成 regression test，確保轉檔、資料庫、API、GeoJSON 與 QGIS 不再出現二次換算？"
+      },
+      "langgraph-tool-permissions": {
+        kind: "求職延伸",
+        hook: "模型可以建議『查某日資料』，但不該自己拼 SQL、拿資料庫密碼，更不能把『清空正式表』當成普通工具。",
+        project: "你的論文系統已有唯讀查詢能力，正適合先包成 read-only tool。LangGraph 只負責 state 與流程，程式碼仍要驗證工具 allowlist、日期、產品範圍與使用者權限。",
+        challenge: "如果 Agent 可以查 S-111／S-104 品質結果，你會開放哪些唯讀工具、限制哪些參數，並如何阻止模型直接接觸 SQL 或資料庫憑證？"
+      },
+      "json-schema-output": {
+        kind: "案例改寫",
+        hook: "模型回『大概有幾個異常點』很像人話，卻不是程式能安全處理的資料。工具需要知道欄位、型別、單位與哪些欄位絕對不能多。",
+        project: "供 QGIS 使用的唯讀 API 會回傳固定 JSON／GeoJSON，interview-trainer Worker 也會檢查 progress envelope、Content-Type 與大小。這一課把這些 schema-like 邊界正式改寫成 JSON Schema；未來 RAG 回答再加入 citations、refused 與 reason。",
+        challenge: "請替品質查詢工具設計 JSON Schema，要求日期、時距、數值、單位、來源與限制；哪些欄位用 enum，為什麼要限制 additionalProperties？"
+      },
+      "timeout-retry-backoff": {
+        kind: "求職延伸",
+        hook: "下載一個檔案 timeout，重試通常合理；資料庫已經寫成功但回應斷線，直接重試可能多寫一份。兩種失敗不能用同一套處理。",
+        project: "可用上游 NetCDF 取得、資料庫寫入與唯讀 API 分別練 timeout／retry。讀取可有限重試；寫入必須搭配 idempotency key、transaction 與結果查核。",
+        challenge: "NetCDF 下載 timeout 與 PostgreSQL commit 後連線中斷，各自能不能 retry？你會如何設定 backoff、jitter、冪等鍵與停止條件？"
+      },
+      "langgraph-state-idempotency": {
+        kind: "案例改寫",
+        hook: "流程跑到『已寫資料庫、尚未產生 GeoJSON』就中斷時，重新開始不能假裝前面什麼都沒發生。狀態要能告訴你從哪裡安全接回去。",
+        project: "論文管線可轉成 validate → convert → compare → persist → package → publish；interview-trainer 則已用 revision／CAS、帶 updatedAt 的空白 touched record、undo 與 fingerprint 處理跨電腦同步和舊評量。兩者都能拿來解釋 state 與冪等，但都不宣稱已使用 LangGraph。",
+        challenge: "若資料管線在寫入後中斷，或兩台電腦同時更新學習進度，你會如何設計 state、checkpoint、revision／CAS 與 idempotency，避免重複與舊資料覆蓋？"
+      },
+      "hitl-audit": {
+        kind: "案例改寫",
+        hook: "查詢資料可以自動化；改正式單位、覆蓋資料庫或發布一組新結論，值得多停一秒讓人確認。",
+        project: "S-111 單位成果曾撤回；interview-trainer 的清空與匯入已有確認及可復原備份，同步衝突則保留 local／remote 完整副本供人工比對。可由這些已做過的保護設計風險分級：讀取與草稿可自動，正式覆寫或發布前要顯示來源、影響筆數與版本。",
+        challenge: "請替論文資料系統的查詢、重算、覆蓋正式表、發布 GeoJSON 與撤回成果定義 HITL 邊界；核准畫面至少要顯示哪些證據？"
+      },
+      "copilot-demo": {
+        kind: "案例改寫",
+        hook: "三分鐘 Demo 不需要把所有按鈕點一遍。選一條資料，讓觀眾看見它怎麼進來、怎麼被驗證、怎麼被查到，以及哪裡必須停下來。",
+        project: "先用你真正完成的 NetCDF → S-111 → 品質檢核 → PostgreSQL／成果包 → API／QGIS 講工程能力；再明確說 Copilot 是下一步，將同樣的可追溯、拒答、評測與人工確認原則移到文件與工單。",
+        challenge: "請用三分鐘介紹你的論文系統，接著用一句話說它如何自然延伸到企業維運 Copilot；哪些是已完成，哪些仍是規劃？"
+      }
+    });
+
+    const lessonExperienceStatusNotes = Object.freeze({
+      "既有經驗": "已在論文或專案中完成，可作為面試證據。",
+      "案例改寫": "以真實資料為底；本課新增技術仍要實作驗證。",
+      "求職延伸": "規劃練習，完成前不能說成既有成果。"
+    });
+
+    function lessonExperience(lesson) {
+      return Object.hasOwn(lessonExperienceDetails, lesson.id)
+        ? lessonExperienceDetails[lesson.id]
+        : {
+            kind: "求職延伸",
+            hook: lesson.concept,
+            project: lesson.s111,
+            challenge: lesson.challenge
+          };
+    }
+
     const questionContexts = [
       {
         title: "JOIN 前先確認粒度",
@@ -3559,33 +3780,35 @@
     }
 
     function buildDailyQuestion(lesson, index) {
+      const experience = lessonExperience(lesson);
       const termsPattern = lesson.terms.map(escapeRegExp).join("|");
       return {
         domain: lesson.domain,
         title: `今日新知挑戰 D${index + 1}：${lesson.title}`,
-        hint: `今天先學「${lesson.title}」，再回答：${lesson.challenge}`,
+        hint: `今天先學「${lesson.title}」，再回答：${experience.challenge}`,
         guide: [
           ["先定義", `用白話說明 ${lesson.terms[0]} 是什麼。`],
-          ["連作品", "把概念連回企業 IT／設備維運知識與工單 Copilot。"],
+          ["連經驗", "優先套用論文、S-111／S-104、QGIS 或你做過的資料系統；不適合時再用規劃中的 Copilot。"],
           ["答題目", "針對今日挑戰題直接回答，不要只背名詞。"],
           ["補驗證", "最後說你會如何檢查、取捨或避免風險。"]
         ],
         expected: [
           ["今日術語", new RegExp(termsPattern, "i")],
           ["白話定義", /意思|代表|用來|概念|白話|指的是|解決.{0,20}問題/i],
-          ["Copilot 連結", /Copilot|PostgreSQL|pgvector|FastAPI|RAG|embedding|chunk|citation|引用|拒答|Agent|工單|設備|pipeline|資料庫/i],
+          ["專案連結", /論文|S-100|S-111|S-104|QGIS|NetCDF|HDF5|GeoJSON|CWA|潮位|海流|PostgreSQL|API|Copilot|pgvector|FastAPI|RAG|embedding|chunk|citation|引用|拒答|Agent|工單|設備|pipeline|資料庫/i],
           ["驗證或取捨", /驗證|檢查|取捨|風險|限制|測試|log|確認|比對|避免|改善/i]
         ],
-        skeleton: `我會先用白話定義 ${lesson.title}：${lesson.concept} 接著我會連到企業 IT／設備維運 Copilot：${lesson.s111} 如果面試官問「${lesson.challenge}」，我會先講使用情境，再講我會怎麼做，最後補上驗證方式或取捨，避免只是背名詞。這只是改寫骨架，仍要用實作、測試與評測證明技術正確性。`,
+        skeleton: `我會先用白話定義 ${lesson.title}：${lesson.concept} 接著用自己的經驗說明：${experience.project} 如果面試官問「${experience.challenge}」，我會先講當時的資料與限制，再講處理步驟和驗證證據。若要延伸到企業 IT／設備維運 Copilot，目前規劃是：${lesson.s111.replace(/^作品實作：/, "")} 我會明確分開已完成與規劃中的內容，不把類比說成既有實作。`,
         followups: [
           `請不用術語，向非工程背景的人解釋「${lesson.title}」。`,
-          "這個知識點在你的企業維運 Copilot 裡最像哪一段工作？",
+          "這個知識點在你的論文或既有專案裡最像哪一段工作？哪些只是延伸練習？",
           "如果面試官追問風險或限制，你會補哪一句？"
         ]
       };
     }
 
     function buildDailyContext(lesson, index) {
+      const experience = lessonExperience(lesson);
       return {
         title: `今日新知 D${index + 1}：${lesson.title}`,
         note: "先讀概念，再用下面的挑戰題作答。",
@@ -3593,8 +3816,9 @@
           <table class="data-table">
             <tr><th>欄位</th><th>內容</th></tr>
             <tr><td>核心概念</td><td>${lesson.concept}</td></tr>
-            <tr><td>Copilot 實作</td><td>${lesson.s111}</td></tr>
-            <tr><td>今日挑戰</td><td>${lesson.challenge}</td></tr>
+            <tr><td>${experience.kind}</td><td>${lessonExperienceStatusNotes[experience.kind]} ${experience.project}</td></tr>
+            <tr><td>Copilot 延伸（規劃）</td><td>${lesson.s111.replace(/^作品實作：/, "")}</td></tr>
+            <tr><td>今日挑戰</td><td>${experience.challenge}</td></tr>
           </table>
           <div class="context-note">今天作答時至少自然用到：${lesson.terms.map(term => `<strong>${term}</strong>`).join("、")}。</div>
         `
@@ -3617,8 +3841,8 @@
     const progressStorageKey = "rongDataMockInterview";
     const progressBackupKey = "rongDataMockInterviewLastChange";
     const progressVersion = 5;
-    const contentVersion = "2026-08-17-ai-course-v3";
-    const rubricVersion = "2026-08-17-course-gate-v4";
+    const contentVersion = "2026-08-18-ai-course-v4";
+    const rubricVersion = "2026-08-18-project-bridge-v5";
     const maxTextLength = 8000;
     let saveTimer = 0;
     let versionResetApplied = false;
@@ -3626,6 +3850,11 @@
     const lessonIdSet = new Set(dailyLessons.map(lesson => lesson.id));
     if (lessonIdSet.size !== dailyLessons.length || dailyLessons.some(lesson => !/^[a-z0-9-]+$/.test(lesson.id))) {
       throw new Error("課程 ID 必須存在、唯一且只能使用小寫英數與連字號");
+    }
+    if (Object.keys(lessonExperienceDetails).length !== dailyLessons.length
+      || dailyLessons.some(lesson => !Object.hasOwn(lessonExperienceDetails, lesson.id))
+      || Object.values(lessonExperienceDetails).some(item => !Object.hasOwn(lessonExperienceStatusNotes, item.kind))) {
+      throw new Error("每課都必須有且只能使用既有經驗、案例改寫或求職延伸標示");
     }
 
     function emptyLessonCourseRecord(updatedAt = "") {
@@ -4064,7 +4293,7 @@
         applySavedProgress(JSON.parse(raw));
         if (versionResetApplied) {
           els.saveState.textContent = "內容已更新，請重新檢核";
-          setSyncStatus("已保留舊答案與筆記；課程完成、理解題、feedback 與 readiness 已依新版內容／評分規則重設，請重新作答與檢核。", "ok");
+          setSyncStatus("已保留舊答案與筆記；教材完成、理解題、課程完成、feedback 與 readiness 已依新版內容／評分規則重設，請重新閱讀與檢核。", "ok");
         }
         return true;
       } catch (error) {
@@ -5051,11 +5280,11 @@
         issues.push("可以再補一點「邊想邊講」的語言：例如卡住時會說目前想法、卡在哪、下一步要驗證什麼。");
       }
 
-      if (/Copilot|PostgreSQL|pgvector|API|FastAPI|SQL|Python|pytest|LeetCode|RAG|embedding|chunk|citation|引用|拒答|Agent|tool calling|JSON Schema|HITL|工單|設備|pipeline/i.test(text)) {
+      if (/論文|S-100|S-111|S-104|QGIS|NetCDF|HDF5|GeoJSON|CWA|潮位|海流|Copilot|PostgreSQL|pgvector|API|Flask|FastAPI|SQL|Python|pytest|LeetCode|RAG|embedding|chunk|citation|引用|拒答|Agent|tool calling|JSON Schema|HITL|工單|設備|pipeline/i.test(text)) {
         score += 4;
-        strengths.push("有連到企業維運 Copilot 或具體技術，這會讓回答更有辨識度。");
+        strengths.push("有連到真實專案或具體技術，回答比較像你自己的經驗。");
       } else {
-        issues.push("缺少具體作品或技術名詞。建議連到企業維運 Copilot、Python／SQL／FastAPI、pgvector RAG、評測或 Agent 安全。");
+        issues.push("缺少具體作品或技術名詞。優先連到論文、S-111／S-104、QGIS 或其他做過的專案；沒有合適案例時，再使用 Copilot 規劃。");
       }
 
       if (/驗證|檢查|測試|比對|筆數|log|assert|結果|確認|對帳|抽樣/i.test(text)) {
@@ -5292,11 +5521,11 @@
         issues.push("請先用白話說這個概念是在解決什麼問題。");
       }
 
-      if (/Copilot|PostgreSQL|pgvector|FastAPI|API|RAG|embedding|chunk|citation|引用|拒答|Agent|tool|JSON Schema|HITL|工單|設備|資料庫|pipeline/i.test(answer)) {
+      if (/論文|S-100|S-111|S-104|QGIS|NetCDF|HDF5|GeoJSON|CWA|潮位|海流|Copilot|PostgreSQL|pgvector|Flask|FastAPI|API|Python|SQL|RAG|embedding|chunk|citation|引用|拒答|Agent|tool|JSON Schema|HITL|工單|設備|資料庫|pipeline/i.test(answer)) {
         score += 16;
-        strengths.push("有連到企業維運 Copilot 的具體實作。");
+        strengths.push("有連到論文、既有專案或明確標示的求職延伸。");
       } else {
-        issues.push("請把這課連到企業維運 Copilot 的 Python／SQL／FastAPI、pgvector RAG、評測或 Agent 其中一段。");
+        issues.push("請先連到論文、S-111／S-104、QGIS 或其他做過的專案；真的沒有合適案例，再說會如何延伸到 Copilot。");
       }
 
       if (/我會|先|接著|然後|最後|步驟|流程|檢查|確認|驗證|比對|筆數|測試|log/i.test(answer)) {
@@ -5320,7 +5549,7 @@
       const copiedSignals = conceptWords.filter(word => answer.includes(word)).length;
       if (answer.includes(lesson.concept.slice(0, 18)) || copiedSignals >= 5) {
         score -= 8;
-        issues.push("看起來有點像照抄教材。請換成自己的語氣，再加一個維運 Copilot 實作例子。");
+        issues.push("看起來有點像照抄教材。請換成自己的語氣，再加一個真實專案例子或清楚標示的 Copilot 延伸。");
       }
 
       if (/大概|可能就是|之類|等等|反正|應該可以/.test(answer)) {
@@ -5479,7 +5708,27 @@
       ]
     };
 
+    const lessonVideoOverrides = Object.freeze({
+      "sql-join-grain": {
+        youtube: { label: "30 秒看懂 SQL JOIN（ByteMonk）", url: "https://www.youtube.com/watch?v=7_JNpi-phTg" }
+      },
+      "fastapi-http-contract": {
+        bilibili: { label: "黑馬 FastAPI 實戰課", url: "https://www.bilibili.com/video/BV1zV2QBtE39/" }
+      },
+      "git-linux-docker": {
+        youtube: { label: "Docker in 100 Seconds（Fireship）", url: "https://www.youtube.com/watch?v=Gjnup-PuquQ" }
+      },
+      "pgvector-index": {
+        youtube: { label: "Vector Database 基礎（Fireship，約 3 分鐘）", url: "https://www.youtube.com/watch?v=klTvEwg3oJ4" }
+      },
+      "rag-flow": {
+        youtube: { label: "IBM：RAG 是什麼？", url: "https://www.youtube.com/watch?v=T-D1OfcDW1M" }
+      }
+    });
+
     function videoResource(platform, lesson) {
+      const override = lessonVideoOverrides[lesson.id];
+      if (override && Object.hasOwn(override, platform)) return override[platform];
       const target = `${lesson.title} ${lesson.terms.join(" ")} ${lesson.domain}`;
       const resource = curatedVideos[platform].find(item => item.match.test(target));
       if (resource) return resource;
@@ -5691,6 +5940,7 @@
     }
 
     function learningOutcomes(lesson) {
+      const experience = lessonExperience(lesson);
       const domainOutcome = {
         sql: "能用一個小表或查詢流程說明，不只背語法。",
         python: "能說出檢查、清洗、例外資料與測試方式。",
@@ -5704,7 +5954,7 @@
       return [
         `不用背定義，也能白話說出 ${lesson.terms[0]} 解決什麼問題。`,
         domainOutcome[lesson.domain],
-        `能回答：「${lesson.challenge}」並補一句驗證、風險或取捨。`
+        `能回答：「${experience.challenge}」並補一句驗證、風險或取捨。`
       ];
     }
 
@@ -5967,7 +6217,7 @@
       return teachingDetails.find(item => item.match.test(lesson.title)) || {
         simple: lesson.concept,
         steps: `先定義 ${lesson.terms[0]}，再說它在資料流程中的位置，最後補上你會如何驗證結果。`,
-        interview: `你可以把它連回企業維運 Copilot：${lesson.s111}`,
+        interview: `若談求職作品，可把概念延伸到企業維運 Copilot；目前規劃是：${lesson.s111.replace(/^作品實作：/, "")}`,
         mistake: "不要只背術語。請用一個資料流程或專案例子說明它實際解決什麼問題。"
       };
     }
@@ -5985,13 +6235,14 @@
       const match = lessonChecklists.find(item => item.match.test(lesson.title));
       return match ? match.items : [
         `能白話說出 ${lesson.terms[0]} 的用途。`,
-        "能連到企業維運 Copilot 的具體實作，而不是只講課本定義。",
+        "能連到真實專案，或清楚標示為求職延伸，而不是只講課本定義。",
         "能補一句驗證、風險或取捨。"
       ];
     }
 
     function renderTeachingCards(lesson, hasVideo = false) {
       const detail = teachingDetailFor(lesson);
+      const experience = lessonExperience(lesson);
       const terms = lesson.terms.map(term => `
         <div class="term-row">
           <b>${term}</b>
@@ -6004,32 +6255,39 @@
         <h4 class="lesson-teaching-title">${hasVideo ? "影片重點摘要：理解題以此摘要為準" : "本課短文：理解題以此內容為準"}</h4>
         <div class="lesson-deep">
           <section class="lesson-deep-section">
-            <strong>1. 先抓大意</strong>
+            <strong>1. 先想像這個畫面</strong>
+            <p>${experience.hook}</p>
             <p>${detail.simple}</p>
-            <p>${domainInterviewReasons[lesson.domain]}</p>
           </section>
           <div class="lesson-deep-grid">
             <section class="lesson-deep-section">
-              <strong>2. 你實作時要做什麼</strong>
+              <strong>2. 把概念拆成動作</strong>
               <p>${detail.steps}</p>
             </section>
-            <section class="lesson-deep-section lesson-s111-bridge">
-              <strong>3. 連到企業維運 Copilot</strong>
-              <p>${projectBridge}</p>
+            <section class="lesson-deep-section lesson-project-bridge">
+              <strong>3. ${experience.kind}</strong>
+              <span class="lesson-status-note">${lessonExperienceStatusNotes[experience.kind]}</span>
+              <p>${experience.project}</p>
             </section>
           </div>
+          <section class="lesson-deep-section lesson-s111-bridge">
+              <strong>4. 再延伸到企業維運 Copilot</strong>
+              <p>${projectBridge}</p>
+              <p class="lesson-evidence-note">「既有經驗」可當面試證據；「延伸／改寫」是這次要完成的練習，不能說成已經實作。</p>
+          </section>
           <section class="lesson-term-list">
-            <strong>4. 今天先記這些詞</strong>
+            <strong>5. 今天先記這些詞</strong>
             <div class="term-rows">${terms}</div>
           </section>
           <div class="lesson-deep-grid">
             <section class="lesson-deep-section">
-              <strong>5. 面試可以怎麼說</strong>
+              <strong>6. 面試可以怎麼說</strong>
               <p>${detail.interview}</p>
-              <p class="lesson-answer-frame">回答順序：先白話定義，再講使用情境，接著連到企業維運 Copilot，最後補驗證、風險或取捨。</p>
+              <p>${domainInterviewReasons[lesson.domain]}</p>
+              <p class="lesson-answer-frame">回答順序：先白話定義，再講你真正做過或看過的情境；接著說如何延伸到 Copilot，最後補驗證、風險或取捨。</p>
             </section>
             <section class="lesson-deep-section">
-              <strong>6. 讀完後檢查自己</strong>
+              <strong>7. 讀完後檢查自己</strong>
               <ul class="lesson-checklist">${checklist}</ul>
             </section>
           </div>
@@ -6221,7 +6479,7 @@
         questionsForLesson.forEach(question => explanationList.append(textElement("li", question.explanation)));
         els.lessonQuizResult.replaceChildren(
           textElement("strong", passed ? `理解題通過｜${correctCount} / ${questionsForLesson.length}` : `答對 ${correctCount} / ${questionsForLesson.length}，請看解析後重答`),
-          textElement("span", "以下是本版教材的標準答案解析；開放式 Copilot 題仍可能有多種合理做法。"),
+          textElement("span", "以下是本版教材的標準答案解析；後面的專案轉譯題仍可能有多種合理做法。"),
           explanationList
         );
       }
@@ -6298,13 +6556,14 @@
     function renderDailyKnowledge() {
       const offset = todayLearningOffset();
       const lesson = dailyLessons[offset];
+      const experience = lessonExperience(lesson);
       const questionIndex = todayLearningIndex();
       const learned = isLessonLearned(offset);
       els.dailyKnowledgeDay.textContent = `第 ${offset + 1} 天 / 28 天面試練習`;
       els.dailyKnowledgeTitle.textContent = lesson.title;
       els.dailyKnowledgeConcept.textContent = lesson.concept;
       els.dailyKnowledgeTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
-      els.dailyKnowledgeS111.textContent = lesson.s111;
+      els.dailyKnowledgeS111.textContent = `本課轉譯題：${experience.challenge}`;
       const resources = lessonResourceSequence(lesson);
       setResourceLink(els.dailyYoutubeLink, resources[0].prefix, resources[0].resource, { offset, step: 0 });
       setResourceLink(els.dailyBilibiliLink, resources[1].prefix, resources[1].resource, { offset, step: 1 });
@@ -6317,7 +6576,7 @@
       els.dailyKnowledgeBtnText.textContent = learned
         ? "用本課考我"
         : isLessonQuizPassed(offset)
-          ? "寫 Copilot 應用題"
+          ? "寫專案轉譯題"
           : isLessonSourceDone(offset)
             ? "做教材理解題"
             : "開始本課";
@@ -6359,14 +6618,14 @@
         els.lessonReadinessResult.classList.add("error");
         els.lessonReadinessResult.replaceChildren(
           textElement("strong", "先通過教材理解題"),
-          textElement("span", "兩題都有固定答案；通過後才會開放這一題 Copilot 應用練習。")
+          textElement("span", "兩題都有固定答案；通過後才會開放這一題專案轉譯練習。")
         );
         return;
       }
       if (!readiness) {
         els.lessonReadinessResult.replaceChildren(
           textElement("strong", "尚未檢核"),
-          textElement("span", "寫完後按「檢查應用回答」；達到 60 分會開放本課面試實戰。")
+          textElement("span", "寫完後按「檢查專案回答」；達到 60 分會開放本課面試實戰。")
         );
         return;
       }
@@ -6383,6 +6642,7 @@
       const week = currentWeekNumber();
       const offset = activeLearningOffset();
       const lesson = dailyLessons[offset];
+      const experience = lessonExperience(lesson);
       const questionIndex = learningQuestionIndex(offset);
       const learned = isLessonLearned(offset);
       const maxMinutes = Math.max(...learningCadence.map(item => item[1]));
@@ -6392,7 +6652,7 @@
       els.learningLessonTitle.textContent = lesson.title;
       els.learningLessonConcept.textContent = lesson.concept;
       els.learningLessonTags.innerHTML = lesson.terms.map(term => `<span>${term}</span>`).join("");
-      els.learningLessonS111.textContent = lesson.s111;
+      els.learningLessonS111.textContent = `本課轉譯題：${experience.challenge}`;
       renderCoursePrimary(offset);
       const resources = lessonResourceSequence(lesson);
       setResourceLink(els.learningYoutubeLink, resources[0].prefix, resources[0].resource, { offset, step: 0 });
@@ -6401,7 +6661,7 @@
       setResourceLink(els.learningPracticeLink, resources[3].prefix, resources[3].resource, { offset, step: 3 });
       els.learningResourceStatus.textContent = resourceStatusText(offset);
       els.learningOutcomes.innerHTML = learningOutcomes(lesson).map(outcome => `<li>${outcome}</li>`).join("");
-      els.lessonReflectionInput.placeholder = `例如：我理解 ${lesson.title} 是... 它會用在... 在企業維運 Copilot 裡我可以連到... 我會用...確認結果。`;
+      els.lessonReflectionInput.placeholder = `例如：我理解 ${lesson.title} 是... 在我的論文／專案中最接近... 若延伸到 Copilot，我會... 我會用...確認結果。`;
       renderLessonQuiz(offset);
       renderLessonReadiness(offset);
       renderCourseStages(offset);
@@ -6410,9 +6670,9 @@
       const challengeUnlocked = isLessonChallengeUnlocked(offset);
       els.startLessonChallengeBtn.textContent = learned
         ? offset < dailyLessons.length - 1 ? "前往下一天" : "已完成全部課程"
-        : !quizPassed ? "先通過教材理解題" : state.lessonReadiness[offset] ? "重新檢查應用回答" : "檢查應用回答";
+        : !quizPassed ? "先通過教材理解題" : state.lessonReadiness[offset] ? "重新檢查專案回答" : "檢查專案回答";
       els.openTodayLessonBtn.disabled = !challengeUnlocked;
-      els.openTodayLessonBtn.textContent = learned ? "再次挑戰本課" : challengeUnlocked ? "進入面試實戰" : "應用題達 60 分後開放";
+      els.openTodayLessonBtn.textContent = learned ? "再次挑戰本課" : challengeUnlocked ? "進入面試實戰" : "轉譯題達 60 分後開放";
       els.learningPlanTopic.textContent = lesson.title;
       els.learningPlanTime.innerHTML = learningCadence.map(([label, minutes]) => `
         <div class="time-row">
@@ -6519,7 +6779,7 @@
         const offset = target - dailyLessonStartIndex;
         if (!isLessonChallengeUnlocked(offset)) {
           openLearning(offset);
-          setSyncStatus("請先完成教材、通過兩題理解題，再讓 Copilot 應用回答達到 60 分。", "error");
+          setSyncStatus("請先完成教材、通過兩題理解題，再讓專案轉譯回答達到 60 分。", "error");
           return;
         }
       }
@@ -6751,13 +7011,13 @@
       state.lessonReadiness[offset] = readiness;
       if (readiness.passed) {
         save();
-        setSyncStatus(`D${offset + 1} Copilot 應用回答通過；現在完成面試實戰，技術要點至少命中 3 / 4。`, "ok");
+        setSyncStatus(`D${offset + 1} 專案轉譯回答通過；現在完成面試實戰，技術要點至少命中 3 / 4。`, "ok");
         openQuestion(learningQuestionIndex(offset));
       } else {
         renderLessonReadiness(offset);
         save();
         maybeAutoUploadProgress();
-        setSyncStatus(`D${offset + 1} 應用回答目前 ${readiness.score} 分，補到 60 分後可進入面試實戰。`, "error");
+        setSyncStatus(`D${offset + 1} 專案轉譯回答目前 ${readiness.score} 分，補到 60 分後可進入面試實戰。`, "error");
       }
     }
 
@@ -6790,7 +7050,7 @@
       renderCourseNav();
       const passed = isLessonQuizPassed(offset);
       setSyncStatus(passed
-        ? `D${offset + 1} 理解題 2 / 2 通過，已開放 Copilot 應用題。`
+        ? `D${offset + 1} 理解題 2 / 2 通過，已開放專案轉譯題。`
         : `D${offset + 1} 理解題尚未全對；請看解析後重新作答。`, passed ? "ok" : "error");
       els.lessonQuizResult.focus({ preventScroll: true });
       els.lessonQuizResult.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "nearest" });
@@ -6901,7 +7161,7 @@
     }
 
     function updateAnswerModeText() {
-      els.answerInput.placeholder = "請像面試現場一樣回答。先釐清題目與假設，再講結論、步驟、企業維運 Copilot 連結、主動測試方式，以及風險或取捨。";
+      els.answerInput.placeholder = "請像面試現場一樣回答。先釐清題目與假設，再講結論、步驟、論文／既有專案或 Copilot 延伸、主動測試方式，以及風險或取捨。";
     }
 
     function renderAll(options = {}) {
